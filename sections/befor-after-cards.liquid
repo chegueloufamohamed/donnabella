@@ -1,0 +1,569 @@
+{% comment %}
+  Section: Before/After Slider + Product Cards (Turbo)
+  Arabic / English bilingual — auto-switches via request.locale
+{% endcomment %}
+
+{% comment %} ============================================================
+  ARABIC / ENGLISH LANGUAGE DETECTION
+================================================================ {% endcomment %}
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+{% comment %} Assign active labels based on language {% endcomment %}
+{% if is_arabic %}
+  {% assign active_label_before = section.settings.label_before_ar | default: section.settings.label_before %}
+  {% assign active_label_after  = section.settings.label_after_ar  | default: section.settings.label_after %}
+  {% assign active_below        = section.settings.below_content_ar | default: section.settings.below_content %}
+{% else %}
+  {% assign active_label_before = section.settings.label_before %}
+  {% assign active_label_after  = section.settings.label_after %}
+  {% assign active_below        = section.settings.below_content %}
+{% endif %}
+
+<section id="ba-{{ section.id }}" class="ba-wrap" dir="{{ text_dir }}">
+  <div class="ba-container">
+    <div class="ba-frame">
+      {% if active_label_before != blank %}
+        <div class="ba-label ba-label--before">{{ active_label_before }}</div>
+      {% endif %}
+      {% if active_label_after != blank %}
+        <div class="ba-label ba-label--after">{{ active_label_after }}</div>
+      {% endif %}
+
+      <div class="ba-stage" data-initial="{{ section.settings.initial_percent | default: 50 }}">
+        <div class="ba-img ba-img--before">
+          {% if section.settings.before_image %}
+            <img
+              src="{{ section.settings.before_image | image_url: width: 1600 }}"
+              srcset="
+                {{ section.settings.before_image | image_url: width: 800 }} 800w,
+                {{ section.settings.before_image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.before_image | image_url: width: 1600 }} 1600w
+              "
+              sizes="(max-width: 749px) 100vw, 1400px"
+              alt="{{ section.settings.before_image.alt | escape }}"
+              loading="lazy"
+            >
+          {% else %}
+            <div class="ba-placeholder">{% if is_arabic %}أضف صورة قبل{% else %}Add Before Image{% endif %}</div>
+          {% endif %}
+        </div>
+
+        <div class="ba-img ba-img--after" data-after>
+          {% if section.settings.after_image %}
+            <img
+              src="{{ section.settings.after_image | image_url: width: 1600 }}"
+              srcset="
+                {{ section.settings.after_image | image_url: width: 800 }} 800w,
+                {{ section.settings.after_image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.after_image | image_url: width: 1600 }} 1600w
+              "
+              sizes="(max-width: 749px) 100vw, 1400px"
+              alt="{{ section.settings.after_image.alt | escape }}"
+              loading="lazy"
+            >
+          {% else %}
+            <div class="ba-placeholder">{% if is_arabic %}أضف صورة بعد{% else %}Add After Image{% endif %}</div>
+          {% endif %}
+        </div>
+
+        <div class="ba-divider" data-divider>
+          <button class="ba-handle" type="button" aria-label="{% if is_arabic %}اسحب للمقارنة{% else %}Drag to compare{% endif %}" data-handle>
+            <span class="ba-arrows" aria-hidden="true">↔</span>
+          </button>
+        </div>
+
+        <div class="ba-cards" data-cards>
+          {% assign left_block  = nil %}
+          {% assign right_block = nil %}
+
+          {% for block in section.blocks %}
+            {% if block.type == 'card' %}
+              {% if block.settings.position == 'left' %}
+                {% assign left_block = block %}
+              {% elsif block.settings.position == 'right' %}
+                {% assign right_block = block %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+          {% comment %} In RTL we flip which card sits on which side visually {% endcomment %}
+          {% if left_block %}
+            {% if is_arabic %}
+              {% assign card_kicker = left_block.settings.kicker_ar | default: left_block.settings.kicker %}
+              {% assign card_title  = left_block.settings.title_ar  | default: left_block.settings.title %}
+              {% assign card_cta    = left_block.settings.cta_ar    | default: left_block.settings.cta %}
+            {% else %}
+              {% assign card_kicker = left_block.settings.kicker %}
+              {% assign card_title  = left_block.settings.title %}
+              {% assign card_cta    = left_block.settings.cta %}
+            {% endif %}
+
+            <a class="ba-card ba-card--left" href="{{ left_block.settings.link | default: '#' }}" {{ left_block.shopify_attributes }}>
+              <div class="ba-card__media">
+                {% if left_block.settings.image %}
+                  <img src="{{ left_block.settings.image | image_url: width: 220 }}" alt="{{ left_block.settings.image.alt | escape }}" loading="lazy">
+                {% else %}
+                  <div class="ba-card__ph"></div>
+                {% endif %}
+              </div>
+              <div class="ba-card__text">
+                {% if card_kicker != blank %}
+                  <div class="ba-card__kicker">{{ card_kicker }}</div>
+                {% endif %}
+                <div class="ba-card__title">{{ card_title | escape }}</div>
+                <div class="ba-card__cta">{{ card_cta | escape }}</div>
+              </div>
+            </a>
+          {% endif %}
+
+          {% if right_block %}
+            {% if is_arabic %}
+              {% assign card_kicker = right_block.settings.kicker_ar | default: right_block.settings.kicker %}
+              {% assign card_title  = right_block.settings.title_ar  | default: right_block.settings.title %}
+              {% assign card_cta    = right_block.settings.cta_ar    | default: right_block.settings.cta %}
+            {% else %}
+              {% assign card_kicker = right_block.settings.kicker %}
+              {% assign card_title  = right_block.settings.title %}
+              {% assign card_cta    = right_block.settings.cta %}
+            {% endif %}
+
+            <a class="ba-card ba-card--right" href="{{ right_block.settings.link | default: '#' }}" {{ right_block.shopify_attributes }}>
+              <div class="ba-card__media">
+                {% if right_block.settings.image %}
+                  <img src="{{ right_block.settings.image | image_url: width: 220 }}" alt="{{ right_block.settings.image.alt | escape }}" loading="lazy">
+                {% else %}
+                  <div class="ba-card__ph"></div>
+                {% endif %}
+              </div>
+              <div class="ba-card__text">
+                {% if card_kicker != blank %}
+                  <div class="ba-card__kicker">{{ card_kicker }}</div>
+                {% endif %}
+                <div class="ba-card__title">{{ card_title | escape }}</div>
+                <div class="ba-card__cta">{{ card_cta | escape }}</div>
+              </div>
+            </a>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {% if active_below != blank %}
+    <div class="ba-below">{{ active_below }}</div>
+  {% endif %}
+</section>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap');
+
+  #ba-{{ section.id }} {
+    padding-top: {{ section.settings.pad_top }}px;
+    padding-bottom: {{ section.settings.pad_bottom }}px;
+  }
+
+  #ba-{{ section.id }} {
+    background-color: {{ section.settings.section_bg }} !important;
+  }
+
+  #ba-{{ section.id }} .ba-container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #ba-{{ section.id }} .ba-frame {
+    position: relative;
+    border-radius: {{ section.settings.radius }}px;
+    overflow: hidden;
+    background: {{ section.settings.frame_bg }} !important;
+    box-shadow: 0 18px 55px rgba(0,0,0,0.10);
+    padding: {{ section.settings.frame_border_size }}px !important;
+  }
+
+  #ba-{{ section.id }} .ba-stage {
+    position: relative;
+    width: 100%;
+    height: {{ section.settings.height_desktop }}px;
+    user-select: none;
+    touch-action: pan-y;
+    background: {{ section.settings.image_bg }} !important;
+    border-radius: {{ section.settings.radius | minus: section.settings.frame_border_size | at_least: 0 }}px !important;
+    overflow: hidden !important;
+  }
+
+  @media (max-width: 749px) {
+    #ba-{{ section.id }} .ba-stage { height: {{ section.settings.height_mobile }}px; }
+  }
+
+  #ba-{{ section.id }} .ba-img {
+    position: absolute;
+    inset: {{ section.settings.inner_pad }}px;
+  }
+
+  #ba-{{ section.id }} .ba-img img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-position: center {{ section.settings.image_focus }}%;
+    {% if section.settings.fit_mode == 'contain' %}
+      object-fit: contain;
+    {% else %}
+      object-fit: cover;
+    {% endif %}
+  }
+
+  #ba-{{ section.id }} .ba-img--after {
+    clip-path: inset(0 0 0 50%);
+    will-change: clip-path;
+  }
+
+  #ba-{{ section.id }} .ba-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: rgba(0,0,0,0.55);
+    background: rgba(255,255,255,0.5);
+    {% if is_arabic %}font-family: 'Cairo', sans-serif;{% endif %}
+  }
+
+  /* Labels */
+  #ba-{{ section.id }} .ba-label {
+    position: absolute;
+    top: 34px;
+    z-index: 5;
+    font-size: clamp(36px, 5vw, 84px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: {{ section.settings.label_color }};
+    opacity: 0.95;
+    pointer-events: none;
+    {% if is_arabic %}
+    font-family: 'Cairo', sans-serif;
+    letter-spacing: 0;
+    {% endif %}
+  }
+
+  /* In LTR: Before=left, After=right  |  In RTL: Before=right, After=left */
+  {% if is_arabic %}
+  #ba-{{ section.id }} .ba-label--before { right: 48px; left: auto; }
+  #ba-{{ section.id }} .ba-label--after  { left: 48px; right: auto; }
+  {% else %}
+  #ba-{{ section.id }} .ba-label--before { left: 48px; }
+  #ba-{{ section.id }} .ba-label--after  { right: 48px; }
+  {% endif %}
+
+  @media (max-width: 749px) {
+    #ba-{{ section.id }} .ba-label { top: 18px; }
+    {% if is_arabic %}
+    #ba-{{ section.id }} .ba-label--before { right: 18px; left: auto; }
+    #ba-{{ section.id }} .ba-label--after  { left: 18px; right: auto; }
+    {% else %}
+    #ba-{{ section.id }} .ba-label--before { left: 18px; }
+    #ba-{{ section.id }} .ba-label--after  { right: 18px; }
+    {% endif %}
+  }
+
+  /* Divider */
+  #ba-{{ section.id }} .ba-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    z-index: 6;
+  }
+  #ba-{{ section.id }} .ba-divider::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    left: -3px;
+    width: 6px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 999px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  }
+
+  #ba-{{ section.id }} .ba-handle {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px; height: 64px;
+    border-radius: 999px;
+    border: 0;
+    background: rgba(255,255,255,0.96);
+    cursor: grab;
+    box-shadow: 0 18px 55px rgba(0,0,0,0.16);
+  }
+  #ba-{{ section.id }} .ba-handle:active { cursor: grabbing; }
+  #ba-{{ section.id }} .ba-arrows {
+    font-size: 22px;
+    line-height: 1;
+    color: rgba(0,0,0,0.8);
+    display: inline-block;
+  }
+
+  /* Cards */
+  #ba-{{ section.id }} .ba-cards {
+    position: absolute;
+    left: 0; right: 0; bottom: 22px;
+    z-index: 7;
+    pointer-events: none;
+  }
+
+  #ba-{{ section.id }} .ba-card {
+    pointer-events: auto;
+    position: absolute;
+    bottom: 0;
+    width: min(460px, calc(50% - 48px));
+    background: rgba(255,255,255,0.92);
+    border-radius: 18px;
+    padding: 16px 18px;
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: 16px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 18px 55px rgba(0,0,0,0.12);
+    transition: transform .25s ease, opacity .35s ease;
+    opacity: 1;
+    {% if is_arabic %}
+    direction: rtl;
+    text-align: right;
+    {% endif %}
+  }
+
+  {% if is_arabic %}
+  /* RTL: flip card positions */
+  #ba-{{ section.id }} .ba-card--left  { right: 22px; left: auto; }
+  #ba-{{ section.id }} .ba-card--right { left: 22px; right: auto; }
+  {% else %}
+  #ba-{{ section.id }} .ba-card--left  { left: 22px; }
+  #ba-{{ section.id }} .ba-card--right { right: 22px; }
+  {% endif %}
+
+  @media (max-width: 749px) {
+    #ba-{{ section.id }} .ba-cards { display: none; }
+  }
+
+  #ba-{{ section.id }} .ba-card__media {
+    width: 84px; height: 84px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #ba-{{ section.id }} .ba-card__media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform .35s ease;
+  }
+  #ba-{{ section.id }} .ba-card:hover .ba-card__media img {
+    transform: scale(1.08);
+  }
+
+  #ba-{{ section.id }} .ba-card__kicker {
+    {% if is_arabic %}font-family: 'Cairo', sans-serif; letter-spacing: 0;{% endif %}
+    font-size: 11px; font-weight: 600; opacity: 0.5; text-transform: uppercase; margin-bottom: 4px;
+  }
+  #ba-{{ section.id }} .ba-card__title {
+    {% if is_arabic %}font-family: 'Cairo', sans-serif; letter-spacing: 0;{% endif %}
+    font-size: 15px; font-weight: 600; line-height: 1.3; margin-bottom: 6px;
+  }
+  #ba-{{ section.id }} .ba-card__cta {
+    {% if is_arabic %}font-family: 'Tajawal', sans-serif; letter-spacing: 0;{% endif %}
+    font-size: 13px; opacity: 0.6;
+  }
+
+  /* Fade while dragging */
+  #ba-{{ section.id }} .ba-stage.is-dragging .ba-card {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  #ba-{{ section.id }} .ba-below {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 18px auto 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    {% if is_arabic %}
+    direction: rtl;
+    text-align: right;
+    font-family: 'Tajawal', sans-serif;
+    {% endif %}
+  }
+</style>
+
+<script>
+  (function() {
+    var root = document.getElementById("ba-{{ section.id }}");
+    if (!root) return;
+
+    var stage      = root.querySelector(".ba-stage");
+    var afterLayer = root.querySelector("[data-after]");
+    var divider    = root.querySelector("[data-divider]");
+    var handle     = root.querySelector("[data-handle]");
+    if (!stage || !afterLayer || !divider || !handle) return;
+
+    var initial = parseFloat(stage.getAttribute("data-initial") || "50");
+    initial = Math.max(0, Math.min(100, initial));
+
+    function setPercent(pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      afterLayer.style.clipPath = "inset(0 0 0 " + pct + "%)";
+      divider.style.left = pct + "%";
+    }
+
+    setPercent(initial);
+
+    var dragging    = false;
+    var revealTimer = null;
+
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      revealTimer = setTimeout(function() {
+        stage.classList.remove("is-dragging");
+      }, 1000);
+    }
+
+    var startX = 0;
+    var startY = 0;
+    var dragStarted = false;
+
+    handle.addEventListener("pointerdown", function(e) {
+      e.preventDefault();
+      startX = e.clientX;
+      startY = e.clientY;
+      dragStarted = false;
+      dragging = true;
+      stage.classList.add("is-dragging");
+      if (revealTimer) clearTimeout(revealTimer);
+      stage.setPointerCapture && stage.setPointerCapture(e.pointerId);
+    });
+
+    stage.addEventListener("pointermove", function(e) {
+      if (!dragging) return;
+      var dx = Math.abs(e.clientX - startX);
+      var dy = Math.abs(e.clientY - startY);
+      if (!dragStarted) {
+        if (dy > dx) { endDrag(); return; }
+        if (dx > 4) dragStarted = true;
+      }
+      if (dragStarted) {
+        e.preventDefault();
+        var rect = stage.getBoundingClientRect();
+        var pct  = ((e.clientX - rect.left) / rect.width) * 100;
+        setPercent(pct);
+      }
+    });
+
+    stage.addEventListener("pointerup",     function() { endDrag(); });
+    stage.addEventListener("pointercancel", function() { endDrag(); });
+    stage.addEventListener("mouseleave",    function() { endDrag(); });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Before/After Slide",
+  "settings": [
+    { "type": "image_picker", "id": "before_image", "label": "Before image" },
+    { "type": "image_picker", "id": "after_image",  "label": "After image" },
+
+    { "type": "header", "content": "🇬🇧 Labels — English" },
+    { "type": "text",  "id": "label_before", "label": "Before label (EN)", "default": "Before" },
+    { "type": "text",  "id": "label_after",  "label": "After label (EN)",  "default": "After" },
+
+    { "type": "header", "content": "🇸🇦 التسميات — العربية" },
+    { "type": "text",  "id": "label_before_ar", "label": "تسمية قبل (AR)", "default": "قبل" },
+    { "type": "text",  "id": "label_after_ar",  "label": "تسمية بعد (AR)",  "default": "بعد" },
+
+    { "type": "color", "id": "label_color", "label": "Label color", "default": "#0B1B3A" },
+
+    { "type": "header", "content": "Slider Settings" },
+    { "type": "range", "id": "initial_percent", "label": "Initial split (%)",  "min": 0,   "max": 100, "step": 1,  "default": 50 },
+    { "type": "range", "id": "height_desktop",  "label": "Height (desktop)",   "min": 280, "max": 900, "step": 10, "default": 420 },
+    { "type": "range", "id": "height_mobile",   "label": "Height (mobile)",    "min": 240, "max": 700, "step": 10, "default": 340 },
+    {
+      "type": "select", "id": "fit_mode", "label": "Image fit mode", "default": "contain",
+      "options": [
+        { "value": "contain", "label": "Contain (no zoom)" },
+        { "value": "cover",   "label": "Cover (fills box)" }
+      ]
+    },
+    { "type": "color", "id": "image_bg",    "label": "Image background (contain mode)", "default": "#F2F2F2" },
+    { "type": "range", "id": "inner_pad",   "label": "Inner padding",                   "min": 0, "max": 60,   "step": 2,  "default": 18 },
+    { "type": "range", "id": "image_focus", "label": "Image focus (vertical %)",        "min": 0, "max": 100,  "step": 1,  "default": 40 },
+    { "type": "range", "id": "radius",    "label": "Corner radius",     "min": 0,   "max": 48,   "step": 2,  "default": 28 },
+    { "type": "header", "content": "Section & Frame Colors" },
+    { "type": "color", "id": "section_bg", "label": "Section background color", "default": "#ffffff", "info": "Background color of the whole section" },
+    { "type": "color", "id": "frame_bg",  "label": "Frame border color", "default": "#E7D9C6", "info": "Color of the border/frame around the slider" },
+    { "type": "range", "id": "frame_border_size", "label": "Frame border thickness", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 18 },
+    { "type": "range", "id": "max_width", "label": "Max width",         "min": 900, "max": 1600, "step": 20, "default": 1400 },
+    { "type": "range", "id": "pad_top",    "label": "Section padding top",    "min": 0, "max": 120, "step": 4, "default": 24 },
+    { "type": "range", "id": "pad_bottom", "label": "Section padding bottom", "min": 0, "max": 120, "step": 4, "default": 24 },
+
+    { "type": "header", "content": "🇬🇧 Below Content — English" },
+    { "type": "richtext", "id": "below_content",    "label": "Content below (EN)" },
+
+    { "type": "header", "content": "🇸🇦 المحتوى أسفل القسم — العربية" },
+    { "type": "richtext", "id": "below_content_ar", "label": "المحتوى أسفل القسم (AR)" }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Bottom card",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "select", "id": "position", "label": "Position", "default": "left",
+          "options": [
+            { "value": "left",  "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ]
+        },
+        { "type": "header", "content": "🇬🇧 Card Content — English" },
+        { "type": "text", "id": "kicker", "label": "Kicker (EN)", "default": "SKIN" },
+        { "type": "text", "id": "title",  "label": "Title (EN)",  "default": "Radiance Cream Cleanser" },
+        { "type": "text", "id": "cta",    "label": "CTA text (EN)", "default": "View Product" },
+
+        { "type": "header", "content": "🇸🇦 محتوى البطاقة — العربية" },
+        { "type": "text", "id": "kicker_ar", "label": "التصنيف (AR)", "default": "بشرة" },
+        { "type": "text", "id": "title_ar",  "label": "العنوان (AR)",  "default": "كريم منظف مضيء" },
+        { "type": "text", "id": "cta_ar",    "label": "نص الزر (AR)",  "default": "عرض المنتج" },
+
+        { "type": "header", "content": "🔗 Media & Link (Shared)" },
+        { "type": "image_picker", "id": "image", "label": "Card image" },
+        { "type": "url",          "id": "link",  "label": "Card link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before/After Slider",
+      "blocks": [
+        { "type": "card", "settings": { "position": "left"  } },
+        { "type": "card", "settings": { "position": "right" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

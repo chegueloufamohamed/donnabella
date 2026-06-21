@@ -1,0 +1,73 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "services_hero_wHyqdL": {
+      "type": "services-hero",
+      "name": "Service Hero",
+      "settings": {
+        "enable_rtl_on_arabic": true,
+        "force_rtl_text_align": true,
+        "desktop_image": "shopify://shop_images/197331.jpg",
+        "image_fit": "cover",
+        "image_position": "center center",
+        "image_fit_mobile": "cover",
+        "image_position_mobile": "center center",
+        "hero_height_desktop": 70,
+        "min_height_desktop": 500,
+        "hero_height_mobile": 60,
+        "min_height_mobile": 400,
+        "overlay_color": "#000000",
+        "overlay_opacity": 40,
+        "title_en": "",
+        "subtitle_en": "",
+        "title_ar": "خدمات المساج",
+        "subtitle_ar": "استرخِ واستعد حيويتك واستعد توازنك في راحة منزلك",
+        "title_font_family": "Merriweather",
+        "title_size_desktop": 72,
+        "title_size_mobile": 42,
+        "title_font_weight": "700",
+        "title_letter_spacing": 0,
+        "title_line_height": 1.1,
+        "title_text_transform": "none",
+        "title_color": "#ffffff",
+        "subtitle_font_family": "Montserrat",
+        "subtitle_size_desktop": 20,
+        "subtitle_size_mobile": 16,
+        "subtitle_font_weight": "400",
+        "subtitle_letter_spacing": 0,
+        "subtitle_line_height": 1.5,
+        "subtitle_color": "#ffffff",
+        "subtitle_margin_top": 20,
+        "content_vertical_align": "center",
+        "content_horizontal_align": "center",
+        "text_align": "center",
+        "content_max_width": 900,
+        "content_padding": 40,
+        "content_padding_mobile": 30,
+        "enable_text_shadow": true,
+        "text_shadow_x": 0,
+        "text_shadow_y": 2,
+        "text_shadow_blur": 8,
+        "text_shadow_opacity": 60,
+        "enable_title_animation": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "services_hero_wHyqdL"
+  ]
+}

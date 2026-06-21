@@ -1,0 +1,1053 @@
+{% comment %}
+  Section: Skin Care (Bilingual) — Belladona Care
+  - Auto switches EN/AR using request.locale.iso_code
+  - Scoped CSS/JS to section.id (no global body/html edits)
+  - Preserves your layout, styling, and reveal animations
+{% endcomment %}
+
+{%- liquid
+  assign locale_code = request.locale.iso_code | downcase
+  assign is_ar = false
+  if locale_code contains 'ar'
+    assign is_ar = true
+  endif
+-%}
+
+<section
+  id="skincare-{{ section.id }}"
+  class="sc-page"
+  {% if is_ar %}dir="rtl" lang="ar"{% else %}dir="ltr" lang="en"{% endif %}
+  data-sc-root
+>
+  <style>
+    #skincare-{{ section.id }} .mini-icon,
+#skincare-{{ section.id }} .trio-dur .dicon,
+#skincare-{{ section.id }} .dur-tag,
+#skincare-{{ section.id }} .tagline-diamond,
+#skincare-{{ section.id }} .dur-dot {
+  display: none !important;
+}
+
+#skincare-{{ section.id }} {
+  font-variant-emoji: text;
+}
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap');
+
+    /* Scoped Reset */
+    #skincare-{{ section.id }} *, 
+    #skincare-{{ section.id }} *::before, 
+    #skincare-{{ section.id }} *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    #skincare-{{ section.id }} {
+      --bg:        #405264;
+      --bg-dark:   #2f3d4d;
+      --bg-light:  #4d6275;
+      --bg-deeper: #354656;
+      --gold:      #c9a96e;
+      --gold-dim:  rgba(201,169,110,0.18);
+      --gold-line: rgba(201,169,110,0.35);
+      --rose:      #d4a5a5;
+      --rose-dim:  rgba(212,165,165,0.12);
+      --white:     #ffffff;
+      --white-60:  rgba(255,255,255,0.6);
+      --white-20:  rgba(255,255,255,0.08);
+      --glass:     rgba(255,255,255,0.06);
+      --glass-b:   rgba(255,255,255,0.11);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'Jost', sans-serif;
+
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 1px;
+    }
+
+    /* Noise texture */
+    #skincare-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    @keyframes scRingPulse {
+      0%,100% { opacity: 0.35; transform: translate(-50%,-50%) scale(1); }
+      50%      { opacity: 0.75; transform: translate(-50%,-50%) scale(1.05); }
+    }
+    @keyframes scFadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* ── HERO ── */
+    #skincare-{{ section.id }} .hero {
+      position: relative;
+      min-height: 56vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 30px 50px;
+      overflow: hidden;
+      z-index: 1;
+    }
+    #skincare-{{ section.id }} .hero::before {
+      content: '';
+      position: absolute;
+      width: 640px; height: 640px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,165,165,0.09) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    #skincare-{{ section.id }} .hero::after {
+      content: '';
+      position: absolute;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,165,165,0.3);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: scRingPulse 4.5s ease-in-out infinite;
+    }
+
+    #skincare-{{ section.id }} .hero-eyebrow {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.42em; text-transform: uppercase;
+      color: var(--rose); margin-bottom: 20px;
+      position: relative; z-index: 1;
+      opacity: 0; transform: translateY(16px);
+      animation: scFadeUp 0.8s ease 0.2s forwards;
+    }
+    #skincare-{{ section.id }} .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(50px, 9vw, 96px);
+      font-weight: 300; font-style: italic;
+      line-height: 0.95; letter-spacing: -0.01em;
+      color: var(--white);
+      position: relative; z-index: 1;
+      opacity: 0; transform: translateY(20px);
+      animation: scFadeUp 0.9s ease 0.4s forwards;
+    }
+    #skincare-{{ section.id }} .hero-title span { color: var(--gold); font-style: normal; font-weight: 500; }
+    #skincare-{{ section.id }} .hero-desc {
+      margin-top: 26px;
+      font-size: 13px; letter-spacing: 0.14em;
+      color: var(--white-60); text-transform: uppercase;
+      position: relative; z-index: 1;
+      opacity: 0; transform: translateY(16px);
+      animation: scFadeUp 0.9s ease 0.6s forwards;
+    }
+    #skincare-{{ section.id }} .hero-divider {
+      margin-top: 40px;
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      opacity: 0;
+      animation: scFadeUp 0.9s ease 0.8s forwards;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    #skincare-{{ section.id }} .section { position: relative; z-index: 1; padding: 60px 0 70px; }
+    #skincare-{{ section.id }} .section-inner { max-width: 1160px; margin: 0 auto; padding: 0 30px; }
+
+    #skincare-{{ section.id }} .section-label {
+      display: flex; align-items: center; gap: 18px;
+      margin-bottom: 48px;
+      opacity: 0; transform: translateX(-20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    #skincare-{{ section.id }} .section-label.visible { opacity: 1; transform: translateX(0); }
+    #skincare-{{ section.id }} .section-label-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, var(--gold-line), transparent);
+    }
+    #skincare-{{ section.id }} .section-label-text {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--gold); white-space: nowrap;
+    }
+
+    /* RTL adjustments */
+    #skincare-{{ section.id }}[dir="rtl"] .section-label { transform: translateX(20px); }
+    #skincare-{{ section.id }}[dir="rtl"] .section-label.visible { transform: translateX(0); }
+    #skincare-{{ section.id }}[dir="rtl"] .section-label-line { background: linear-gradient(to left, var(--gold-line), transparent); }
+
+    /* ── HERO TREATMENT CARD ── */
+    #skincare-{{ section.id }} .hero-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(201,169,110,0.12) 0%, rgba(201,169,110,0.03) 100%);
+      border: 1px solid var(--gold-line);
+      padding: 52px 52px 46px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
+      overflow: hidden;
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease, background 0.4s ease;
+      cursor: default;
+      margin-bottom: 2px;
+    }
+    #skincare-{{ section.id }} .hero-card.visible { opacity: 1; transform: translateY(0); }
+    #skincare-{{ section.id }} .hero-card:hover {
+      background: linear-gradient(135deg, rgba(201,169,110,0.18) 0%, rgba(201,169,110,0.06) 100%);
+    }
+    #skincare-{{ section.id }} .hero-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, transparent 5%, var(--gold) 50%, transparent 95%);
+    }
+    #skincare-{{ section.id }} .hero-card-num {
+      position: absolute; bottom: 24px; right: 36px;
+      font-family: var(--serif); font-size: 120px; font-weight: 300;
+      color: rgba(201,169,110,0.07); line-height: 1;
+      user-select: none; pointer-events: none;
+    }
+    #skincare-{{ section.id }}[dir="rtl"] .hero-card-num { right: auto; left: 36px; }
+
+    #skincare-{{ section.id }} .hero-card-tag {
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.42em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    #skincare-{{ section.id }} .hero-card-title {
+      font-family: var(--serif);
+      font-size: 42px; font-weight: 400;
+      color: var(--white); line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    #skincare-{{ section.id }} .hero-card-subtitle {
+      font-family: var(--serif);
+      font-size: 15px; font-style: italic;
+      color: var(--gold); margin-bottom: 16px; opacity: 0.9;
+    }
+    #skincare-{{ section.id }} .hero-card-desc {
+      font-size: 13px; line-height: 1.78;
+      color: var(--white-60); max-width: 520px;
+    }
+    #skincare-{{ section.id }} .hero-card-right { text-align: right; flex-shrink: 0; }
+    #skincare-{{ section.id }}[dir="rtl"] .hero-card-right { text-align: left; }
+
+    #skincare-{{ section.id }} .price-label {
+      font-size: 9px; letter-spacing: 0.38em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 6px;
+    }
+    #skincare-{{ section.id }} .price-big {
+      font-family: var(--serif); font-size: 58px;
+      font-weight: 300; color: var(--white); line-height: 1;
+    }
+    #skincare-{{ section.id }} .price-big sup {
+      font-size: 18px; font-family: var(--sans);
+      font-weight: 300; vertical-align: super; opacity: 0.7;
+    }
+    #skincare-{{ section.id }} .dur-tag {
+      margin-top: 10px; font-size: 11px;
+      color: var(--white-60); letter-spacing: 0.1em;
+    }
+
+    /* ── 3-COLUMN CARD GRID ── */
+    #skincare-{{ section.id }} .trio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+    #skincare-{{ section.id }} .trio-card {
+      position: relative;
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      padding: 40px 32px 36px;
+      overflow: hidden;
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease, background 0.35s ease, border-color 0.35s ease;
+      cursor: default;
+      display: flex; flex-direction: column;
+    }
+    #skincare-{{ section.id }} .trio-card.visible { opacity: 1; transform: translateY(0); }
+    #skincare-{{ section.id }} .trio-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
+    #skincare-{{ section.id }} .trio-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      opacity: 0; transition: opacity 0.4s ease;
+    }
+    #skincare-{{ section.id }} .trio-card:hover::before { opacity: 1; }
+    #skincare-{{ section.id }} .trio-num {
+      font-family: var(--serif); font-size: 64px;
+      font-weight: 300; color: rgba(201,169,110,0.1);
+      position: absolute; top: 14px; right: 20px;
+      line-height: 1; user-select: none;
+      transition: color 0.35s ease;
+    }
+    #skincare-{{ section.id }}[dir="rtl"] .trio-num { right: auto; left: 20px; }
+    #skincare-{{ section.id }} .trio-card:hover .trio-num { color: rgba(201,169,110,0.22); }
+    #skincare-{{ section.id }} .trio-tag {
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    #skincare-{{ section.id }} .trio-title {
+      font-family: var(--serif); font-size: 24px;
+      font-weight: 400; color: var(--white);
+      line-height: 1.15; margin-bottom: 6px;
+    }
+    #skincare-{{ section.id }} .trio-subtitle {
+      font-family: var(--serif); font-size: 12px;
+      font-style: italic; color: var(--gold);
+      margin-bottom: 14px; opacity: 0.88;
+    }
+    #skincare-{{ section.id }} .trio-desc {
+      font-size: 12.5px; line-height: 1.74;
+      color: var(--white-60); margin-bottom: 28px; flex: 1;
+    }
+    #skincare-{{ section.id }} .trio-footer {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      border-top: 1px solid var(--glass-b);
+      padding-top: 16px; margin-top: auto;
+    }
+    #skincare-{{ section.id }} .trio-price {
+      font-family: var(--serif); font-size: 30px;
+      font-weight: 300; color: var(--white);
+    }
+    #skincare-{{ section.id }} .trio-price sup {
+      font-size: 13px; font-family: var(--sans);
+      vertical-align: super; opacity: 0.7;
+    }
+    #skincare-{{ section.id }} .trio-dur {
+      font-size: 10.5px; color: var(--white-60);
+      text-align: right; letter-spacing: 0.06em; line-height: 1.5;
+    }
+    #skincare-{{ section.id }}[dir="rtl"] .trio-dur { text-align: left; }
+    #skincare-{{ section.id }} .trio-dur .dicon { display: block; color: var(--gold); font-size: 13px; margin-bottom: 3px; }
+
+    /* ── 2-COLUMN LIST CARD ── */
+    #skincare-{{ section.id }} .list-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+    #skincare-{{ section.id }} .list-card {
+      position: relative;
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      padding: 32px 30px 28px;
+      display: flex; gap: 20px; align-items: flex-start;
+      overflow: hidden;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.65s ease, transform 0.65s ease, background 0.3s ease, border-color 0.3s ease;
+      cursor: default;
+    }
+    #skincare-{{ section.id }} .list-card.visible { opacity: 1; transform: translateY(0); }
+    #skincare-{{ section.id }} .list-card:hover { background: rgba(255,255,255,0.09); border-color: var(--gold-line); }
+    #skincare-{{ section.id }} .list-num {
+      font-family: var(--serif); font-size: 34px;
+      font-weight: 300; color: var(--gold);
+      opacity: 0.3; line-height: 1; flex-shrink: 0;
+      min-width: 36px; transition: opacity 0.3s ease;
+    }
+    #skincare-{{ section.id }} .list-card:hover .list-num { opacity: 0.65; }
+    #skincare-{{ section.id }} .list-body { flex: 1; min-width: 0; }
+    #skincare-{{ section.id }} .list-title {
+      font-family: var(--serif); font-size: 20px;
+      font-weight: 400; color: var(--white);
+      margin-bottom: 4px; line-height: 1.2;
+    }
+    #skincare-{{ section.id }} .list-subtitle {
+      font-family: var(--serif); font-size: 12px;
+      font-style: italic; color: var(--gold);
+      margin-bottom: 10px; opacity: 0.85;
+    }
+    #skincare-{{ section.id }} .list-desc {
+      font-size: 12px; line-height: 1.72;
+      color: var(--white-60); margin-bottom: 18px;
+    }
+    #skincare-{{ section.id }} .list-meta {
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    #skincare-{{ section.id }} .list-price {
+      font-family: var(--serif); font-size: 26px;
+      font-weight: 300; color: var(--white);
+    }
+    #skincare-{{ section.id }} .list-price sup {
+      font-size: 11px; font-family: var(--sans);
+      vertical-align: super; opacity: 0.7;
+    }
+    #skincare-{{ section.id }} .list-dur {
+      font-size: 10px; color: var(--white-60);
+      text-align: right; letter-spacing: 0.08em; line-height: 1.5;
+    }
+    #skincare-{{ section.id }}[dir="rtl"] .list-dur { text-align: left; }
+    #skincare-{{ section.id }} .dur-dot {
+      display: inline-block; width: 5px; height: 5px;
+      border-radius: 50%; background: var(--gold);
+      opacity: 0.5; margin-right: 5px; vertical-align: middle;
+    }
+    #skincare-{{ section.id }}[dir="rtl"] .dur-dot { margin-right: 0; margin-left: 5px; }
+
+    /* ── DERMALOGICA BANNER ── */
+    #skincare-{{ section.id }} .pro-banner {
+      position: relative;
+      background: linear-gradient(to right, var(--bg-dark), var(--bg-deeper), var(--bg-dark));
+      border: 1px solid var(--glass-b);
+      border-top: 2px solid var(--gold);
+      padding: 44px 48px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 36px;
+      align-items: center;
+      overflow: hidden;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      cursor: default;
+    }
+    #skincare-{{ section.id }} .pro-banner.visible { opacity: 1; transform: translateY(0); }
+    #skincare-{{ section.id }} .pro-banner:hover { border-color: rgba(255,255,255,0.18); }
+
+    #skincare-{{ section.id }} .pro-logo-mark {
+      width: 60px; height: 60px; border-radius: 50%;
+      border: 1px solid var(--gold-line);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    #skincare-{{ section.id }} .pro-logo-mark span { font-family: var(--serif); font-size: 22px; color: var(--gold); }
+
+    #skincare-{{ section.id }} .pro-tag {
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.42em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 8px;
+    }
+    #skincare-{{ section.id }} .pro-title {
+      font-family: var(--serif); font-size: 28px;
+      font-weight: 400; color: var(--white); margin-bottom: 6px;
+    }
+    #skincare-{{ section.id }} .pro-subtitle {
+      font-family: var(--serif); font-style: italic;
+      font-size: 13px; color: var(--gold); margin-bottom: 10px;
+    }
+    #skincare-{{ section.id }} .pro-desc { font-size: 12.5px; line-height: 1.74; color: var(--white-60); }
+
+    #skincare-{{ section.id }} .pro-right { text-align: right; flex-shrink: 0; }
+    #skincare-{{ section.id }}[dir="rtl"] .pro-right { text-align: left; }
+    #skincare-{{ section.id }} .pro-price {
+      font-family: var(--serif); font-size: 42px;
+      font-weight: 300; color: var(--white); line-height: 1;
+    }
+    #skincare-{{ section.id }} .pro-price sup {
+      font-size: 15px; font-family: var(--sans);
+      vertical-align: super; opacity: 0.7;
+    }
+    #skincare-{{ section.id }} .pro-dur { font-size: 10px; color: var(--white-60); margin-top: 8px; letter-spacing: 0.08em; }
+
+    /* ── MINI PAIR ── */
+    #skincare-{{ section.id }} .mini-pair {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+    #skincare-{{ section.id }} .mini-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      padding: 34px 30px;
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.65s ease, transform 0.65s ease, background 0.3s ease, border-color 0.3s ease;
+      cursor: default;
+      display: flex; flex-direction: column;
+    }
+    #skincare-{{ section.id }} .mini-card.visible { opacity: 1; transform: translateY(0); }
+    #skincare-{{ section.id }} .mini-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
+
+    #skincare-{{ section.id }} .mini-icon { font-size: 22px; margin-bottom: 14px; display: block; }
+    #skincare-{{ section.id }} .mini-title {
+      font-family: var(--serif); font-size: 21px;
+      font-weight: 400; color: var(--white); margin-bottom: 5px;
+    }
+    #skincare-{{ section.id }} .mini-subtitle {
+      font-family: var(--serif); font-style: italic;
+      font-size: 12px; color: var(--gold);
+      margin-bottom: 12px; opacity: 0.85;
+    }
+    #skincare-{{ section.id }} .mini-desc {
+      font-size: 12px; line-height: 1.7;
+      color: var(--white-60); margin-bottom: 22px; flex: 1;
+    }
+    #skincare-{{ section.id }} .mini-bottom {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      border-top: 1px solid var(--glass-b); padding-top: 16px;
+    }
+    #skincare-{{ section.id }} .mini-price {
+      font-family: var(--serif); font-size: 28px;
+      font-weight: 300; color: var(--white);
+    }
+    #skincare-{{ section.id }} .mini-price sup {
+      font-size: 12px; font-family: var(--sans);
+      vertical-align: super; opacity: 0.7;
+    }
+    #skincare-{{ section.id }} .mini-dur { font-size: 10px; color: var(--white-60); letter-spacing: 0.08em; }
+
+    /* ── ACNE CARD ── */
+    #skincare-{{ section.id }} .acne-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(212,165,165,0.1) 0%, rgba(212,165,165,0.02) 100%);
+      border: 1px solid rgba(212,165,165,0.25);
+      padding: 48px 52px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
+      overflow: hidden;
+      margin-bottom: 2px;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease, background 0.4s ease;
+      cursor: default;
+    }
+    #skincare-{{ section.id }} .acne-card.visible { opacity: 1; transform: translateY(0); }
+    #skincare-{{ section.id }} .acne-card:hover {
+      background: linear-gradient(135deg, rgba(212,165,165,0.16) 0%, rgba(212,165,165,0.05) 100%);
+      border-color: rgba(212,165,165,0.4);
+    }
+    #skincare-{{ section.id }} .acne-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, transparent 10%, var(--rose) 50%, transparent 90%);
+    }
+    #skincare-{{ section.id }} .acne-tag {
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.42em; text-transform: uppercase;
+      color: var(--rose); margin-bottom: 12px;
+    }
+    #skincare-{{ section.id }} .acne-title {
+      font-family: var(--serif); font-size: 38px;
+      font-weight: 400; color: var(--white);
+      line-height: 1.1; margin-bottom: 8px;
+    }
+    #skincare-{{ section.id }} .acne-subtitle {
+      font-family: var(--serif); font-size: 15px;
+      font-style: italic; color: var(--rose);
+      margin-bottom: 14px;
+    }
+    #skincare-{{ section.id }} .acne-desc {
+      font-size: 13px; line-height: 1.76;
+      color: var(--white-60); max-width: 500px;
+    }
+    #skincare-{{ section.id }} .acne-right { text-align: right; flex-shrink: 0; }
+    #skincare-{{ section.id }}[dir="rtl"] .acne-right { text-align: left; }
+
+    /* ── BOTTOM TAGLINE ── */
+    #skincare-{{ section.id }} .bottom-tagline {
+      text-align: center;
+      padding: 80px 30px 100px;
+      position: relative; z-index: 1;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    #skincare-{{ section.id }} .bottom-tagline.visible { opacity: 1; transform: translateY(0); }
+    #skincare-{{ section.id }} .tagline-line {
+      display: flex; align-items: center;
+      justify-content: center; gap: 20px; margin-bottom: 30px;
+    }
+    #skincare-{{ section.id }} .tagline-rule { width: 60px; height: 1px; background: var(--gold-line); }
+    #skincare-{{ section.id }} .tagline-diamond { color: var(--gold); font-size: 10px; }
+    #skincare-{{ section.id }} .bottom-tagline h2 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 300; font-style: italic;
+      color: var(--white); line-height: 1.2; margin-bottom: 16px;
+    }
+    #skincare-{{ section.id }} .bottom-tagline p {
+      font-size: 12px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--white-60);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #skincare-{{ section.id }} .trio-grid  { grid-template-columns: 1fr; }
+      #skincare-{{ section.id }} .list-grid  { grid-template-columns: 1fr; }
+      #skincare-{{ section.id }} .mini-pair  { grid-template-columns: 1fr; }
+      #skincare-{{ section.id }} .hero-card  { grid-template-columns: 1fr; }
+      #skincare-{{ section.id }} .hero-card-right { text-align: left; }
+      #skincare-{{ section.id }} .acne-card  { grid-template-columns: 1fr; }
+      #skincare-{{ section.id }} .acne-right { text-align: left; }
+      #skincare-{{ section.id }} .pro-banner { grid-template-columns: 1fr; text-align: center; }
+      #skincare-{{ section.id }} .pro-logo-mark { display: none; }
+      #skincare-{{ section.id }} .pro-right  { text-align: center; }
+    }
+    @media (max-width: 580px) {
+      #skincare-{{ section.id }} .hero-card { padding: 32px 24px; }
+      #skincare-{{ section.id }} .acne-card { padding: 32px 24px; }
+      #skincare-{{ section.id }} .pro-banner { padding: 32px 24px; }
+      #skincare-{{ section.id }} .trio-card  { padding: 30px 22px; }
+    }
+  </style>
+
+  {%- if is_ar -%}
+    <!-- HERO (AR) -->
+    <section class="hero">
+      <p class="hero-eyebrow">Belladona Care · دبي</p>
+      <h1 class="hero-title">فنّ<br><span>البشرة المشرقة</span></h1>
+      <p class="hero-desc">علاجات عناية بالبشرة · خدمة منزلية</p>
+      <div class="hero-divider"></div>
+    </section>
+
+    <!-- FEATURED — DEEP CLEANSING (AR) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">ابدئي من جديد</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="hero-card" data-reveal>
+          <span class="hero-card-num">01</span>
+          <div>
+            <p class="hero-card-tag">تنظيف عميق · تنقية</p>
+            <h2 class="hero-card-title">تنظيف عميق</h2>
+            <p class="hero-card-subtitle">إعادة توازن لبشرتك وإظهار صفائها الطبيعي</p>
+            <p class="hero-card-desc">تنظيف عميق يزيل الزيوت الزائدة والأوساخ وتراكمات المسام بلطف، ويُنعش البشرة ويهيّئها لعناية أفضل ونتائج أوضح.</p>
+          </div>
+          <div class="hero-card-right">
+            <div class="price-label">سعر الخدمة</div>
+            <div class="price-big"><sup>AED </sup>273</div>
+            <div class="dur-tag">◷  ساعة واحدة</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACNE TREATMENT (AR) -->
+    <section class="section" style="padding-top:0">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">عناية مركّزة</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="acne-card" data-reveal>
+          <div>
+            <p class="acne-tag">حبّ الشباب · تحكّم بالشوائب</p>
+            <h2 class="acne-title">علاج حبّ الشباب</h2>
+            <p class="acne-subtitle">لأن الثقة تبدأ من صفاء البشرة</p>
+            <p class="acne-desc">جلسة مخصّصة لتقليل الالتهاب والتحكّم بالزيوت وتنظيف المسام بعمق للمساعدة في تقليل ظهور الحبوب مستقبلاً، واستعادة توازن البشرة الطبيعي.</p>
+          </div>
+          <div class="acne-right">
+            <div class="price-label" style="color:var(--rose)">سعر الخدمة</div>
+            <div class="price-big"><sup>AED </sup>289</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RADIANCE & TONE (AR) -->
+    <section class="section" style="padding-top:20px">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">إشراقة وتوحيد لون</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="trio-grid">
+          <div class="trio-card" data-reveal data-delay="0">
+            <span class="trio-num">04</span>
+            <p class="trio-tag">تصبغات · تفتيح</p>
+            <h3 class="trio-title">جلسة للتصبغات</h3>
+            <p class="trio-subtitle">إشراقة أوضح تبدأ من هنا</p>
+            <p class="trio-desc">علاج موجّه لتخفيف البقع الداكنة وتوحيد لون البشرة وإعادة إشراقة صحّية ومتوازنة.</p>
+            <div class="trio-footer">
+              <div class="trio-price"><sup>AED </sup>294</div>
+              <div class="trio-dur"><span class="dicon">◷</span>ساعة واحدة</div>
+            </div>
+          </div>
+
+          <div class="trio-card" data-reveal data-delay="100">
+            <span class="trio-num">05</span>
+            <p class="trio-tag">تفتيح · لمعان</p>
+            <h3 class="trio-title">جلسة تفتيح</h3>
+            <p class="trio-subtitle">دعي بشرتك تلمع أكثر</p>
+            <p class="trio-desc">يساعد على تحسين تفاوت اللون وتقليل البهتان لتبدو البشرة أصفى وأكثر إشراقاً وانتعاشاً.</p>
+            <div class="trio-footer">
+              <div class="trio-price"><sup>AED </sup>315</div>
+              <div class="trio-dur"><span class="dicon">◷</span>ساعة واحدة</div>
+            </div>
+          </div>
+
+          <div class="trio-card" data-reveal data-delay="200">
+            <span class="trio-num">06</span>
+            <p class="trio-tag">ترطيب · عناية</p>
+            <h3 class="trio-title">جلسة ترطيب</h3>
+            <p class="trio-subtitle">استعادة راحة البشرة</p>
+            <p class="trio-desc">ترطيب عميق للبشرة الجافة أو المجهدة لاستعادة النعومة والملمس المتوازن لبشرة ممتلئة ومريحة.</p>
+            <div class="trio-footer">
+              <div class="trio-price"><sup>AED </sup>273</div>
+              <div class="trio-dur"><span class="dicon">◷</span>ساعة واحدة</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SENSITIVE & RESTORATIVE (AR) -->
+    <section class="section" style="padding-top:20px">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">حساسية وترميم</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="list-grid">
+          <div class="list-card" data-reveal data-delay="0">
+            <span class="list-num">03</span>
+            <div class="list-body">
+              <h3 class="list-title">علاج حساسية البشرة</h3>
+              <p class="list-subtitle">تهدئة، ترطيب، وتقوية</p>
+              <p class="list-desc">مصمّم لتهدئة الاحمرار وتقليل التهيّج وترطيب البشرة بعمق مع دعم حاجز البشرة. مناسب للبشرة الحساسة أو المتفاعلة.</p>
+              <div class="list-meta">
+                <div class="list-price"><sup>AED </sup>168</div>
+                <div class="list-dur"><span class="dur-dot"></span>30 دقيقة</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="list-card" data-reveal data-delay="100">
+            <span class="list-num">08</span>
+            <div class="list-body">
+              <h3 class="list-title">علاج البشرة الدهنية</h3>
+              <p class="list-subtitle">توازن اللمعان</p>
+              <p class="list-desc">جلسة موجّهة للتحكّم بالزيوت وتقليل اللمعان لتبدو البشرة متوازنة ومنتعشة بمظهر مطفّي.</p>
+              <div class="list-meta">
+                <div class="list-price"><sup>AED </sup>158</div>
+                <div class="list-dur"><span class="dur-dot"></span>30 دقيقة</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEEP HYDRATION (AR) -->
+    <section class="section" style="padding-top:20px">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">ترطيب عميق</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="mini-pair">
+          <div class="mini-card" data-reveal data-delay="0">
+            <span class="mini-icon">💧</span>
+            <h3 class="mini-title">علاج البشرة الجافة</h3>
+            <p class="mini-subtitle">ترطيب يعيد النعومة</p>
+            <p class="mini-desc">يرطّب بعمق ويعيد توازن الرطوبة لتخفيف الشدّ والجفاف والتقشّر، ويمنح ملمساً ناعماً ومريحاً.</p>
+            <div class="mini-bottom">
+              <div class="mini-price"><sup>AED </sup>158</div>
+              <div class="mini-dur">30 دقيقة</div>
+            </div>
+          </div>
+
+          <div class="mini-card" data-reveal data-delay="120" style="background: linear-gradient(135deg, rgba(201,169,110,0.08), rgba(201,169,110,0.02)); border-color: var(--gold-line);">
+            <span class="mini-icon">✨</span>
+            <h3 class="mini-title">أي جلسة<br>تناسبك؟</h3>
+            <p class="mini-subtitle" style="color: var(--white-60); font-style: normal;">كل بشرة مختلفة.</p>
+            <p class="mini-desc">سيقوم فريقنا بتقييم نوع بشرتك وترشيح العلاج الأنسب أثناء الجلسة — بدون تخمين، فقط نتائج.</p>
+            <div class="mini-bottom">
+              <div style="font-family: var(--serif); font-size: 14px; font-style: italic; color: var(--gold);">استشارة مخصّصة ضمن الجلسة</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFESSIONAL SERIES (AR) -->
+    <section class="section" style="padding-top:20px">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">سلسلة احترافية</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="pro-banner" data-reveal>
+          <div class="pro-logo-mark"><span>D</span></div>
+          <div class="pro-content">
+            <p class="pro-tag">احترافي · Dermalogica</p>
+            <h3 class="pro-title">جلسات ديرمالوجيكا</h3>
+            <p class="pro-subtitle">عناية احترافية، مخصّصة لك</p>
+            <p class="pro-desc">علاجات عناية بالبشرة بحسب نوع بشرتك باستخدام منتجات Dermalogica عالية الأداء — تركيبات مثبتة تمنح نتائج واضحة وطويلة الأمد.</p>
+          </div>
+          <div class="pro-right">
+            <div class="price-label">ابتداءً من</div>
+            <div class="pro-price"><sup>AED </sup>189</div>
+            <div class="pro-dur">30 دقيقة  ·  ساعة</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM TAGLINE (AR) -->
+    <div class="bottom-tagline" data-reveal>
+      <div class="tagline-line">
+        <div class="tagline-rule"></div>
+        <span class="tagline-diamond">◆</span>
+        <div class="tagline-rule"></div>
+      </div>
+      <h2>بشرتك تستحق<br><em>الأفضل دائماً</em></h2>
+      <p>كل العلاجات متاحة في منزلك داخل الإمارات</p>
+    </div>
+
+  {%- else -%}
+    <!-- HERO (EN) -->
+    <section class="hero">
+      <p class="hero-eyebrow">Belladona Care · Dubai</p>
+      <h1 class="hero-title">The Art of<br><span>Radiant Skin</span></h1>
+      <p class="hero-desc">Premium Skin Care Treatments · Home Service</p>
+      <div class="hero-divider"></div>
+    </section>
+
+    <!-- FEATURED — DEEP CLEANSING (EN) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Start Fresh</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="hero-card" data-reveal>
+          <span class="hero-card-num">01</span>
+          <div>
+            <p class="hero-card-tag">Deep Cleanse · Purifying</p>
+            <h2 class="hero-card-title">Deep Cleansing</h2>
+            <p class="hero-card-subtitle">Reset your skin, reveal its natural clarity</p>
+            <p class="hero-card-desc">Deep Cleansing removes excess oil, dirt, and buildup from the pores while gently refreshing the skin — restoring clarity and preparing your complexion for optimal care.</p>
+          </div>
+          <div class="hero-card-right">
+            <div class="price-label">Treatment Price</div>
+            <div class="price-big"><sup>AED </sup>273</div>
+            <div class="dur-tag">◷  1 Hour</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACNE TREATMENT (EN) -->
+    <section class="section" style="padding-top:0">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Targeted Care</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="acne-card" data-reveal>
+          <div>
+            <p class="acne-tag">Acne · Blemish Control</p>
+            <h2 class="acne-title">Acne Treatment</h2>
+            <p class="acne-subtitle">Because confidence starts with clarity</p>
+            <p class="acne-desc">A focused facial designed to reduce inflammation, control excess oil, and deeply cleanse pores to prevent future breakouts — restoring your skin's natural balance and letting confidence shine through.</p>
+          </div>
+          <div class="acne-right">
+            <div class="price-label" style="color:var(--rose)">Treatment Price</div>
+            <div class="price-big"><sup>AED </sup>289</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RADIANCE & TONE (EN) -->
+    <section class="section" style="padding-top:20px">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Radiance & Tone</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="trio-grid">
+          <div class="trio-card" data-reveal data-delay="0">
+            <span class="trio-num">04</span>
+            <p class="trio-tag">Pigmentation · Brightening</p>
+            <h3 class="trio-title">Pigmentation Facial</h3>
+            <p class="trio-subtitle">Brighter skin starts here</p>
+            <p class="trio-desc">A targeted skincare treatment designed to reduce dark spots, even out skin tone, and restore a brighter, more radiant complexion.</p>
+            <div class="trio-footer">
+              <div class="trio-price"><sup>AED </sup>294</div>
+              <div class="trio-dur"><span class="dicon">◷</span>1 Hour</div>
+            </div>
+          </div>
+
+          <div class="trio-card" data-reveal data-delay="100">
+            <span class="trio-num">05</span>
+            <p class="trio-tag">Whitening · Luminosity</p>
+            <h3 class="trio-title">Whitening Facial</h3>
+            <p class="trio-subtitle">Let your skin shine brighter</p>
+            <p class="trio-desc">Helps improve uneven skin tone and reduce dullness, leaving your skin brighter, clearer, and more refreshed.</p>
+            <div class="trio-footer">
+              <div class="trio-price"><sup>AED </sup>315</div>
+              <div class="trio-dur"><span class="dicon">◷</span>1 Hour</div>
+            </div>
+          </div>
+
+          <div class="trio-card" data-reveal data-delay="200">
+            <span class="trio-num">06</span>
+            <p class="trio-tag">Hydration · Moisture</p>
+            <h3 class="trio-title">Hydrating Facial</h3>
+            <p class="trio-subtitle">Restore comfort to your skin</p>
+            <p class="trio-desc">Delivers intense hydration to dry or tired skin, helping restore softness and smooth texture for a plump, comfortable complexion.</p>
+            <div class="trio-footer">
+              <div class="trio-price"><sup>AED </sup>273</div>
+              <div class="trio-dur"><span class="dicon">◷</span>1 Hour</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SENSITIVE & RESTORATIVE (EN) -->
+    <section class="section" style="padding-top:20px">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Sensitive & Restorative</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="list-grid">
+          <div class="list-card" data-reveal data-delay="0">
+            <span class="list-num">03</span>
+            <div class="list-body">
+              <h3 class="list-title">Skin Sensitivity Treatment</h3>
+              <p class="list-subtitle">Calm, soothe, strengthen</p>
+              <p class="list-desc">Designed to calm redness, reduce irritation, and deeply hydrate while strengthening the skin barrier. Perfect for sensitive or reactive skin.</p>
+              <div class="list-meta">
+                <div class="list-price"><sup>AED </sup>168</div>
+                <div class="list-dur"><span class="dur-dot"></span>30 min</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="list-card" data-reveal data-delay="100">
+            <span class="list-num">08</span>
+            <div class="list-body">
+              <h3 class="list-title">Oiliness Treatment</h3>
+              <p class="list-subtitle">Balance your shine</p>
+              <p class="list-desc">A targeted skincare treatment designed to control excess oil and reduce shine — leaving your skin balanced, matte, and refreshed.</p>
+              <div class="list-meta">
+                <div class="list-price"><sup>AED </sup>158</div>
+                <div class="list-dur"><span class="dur-dot"></span>30 min</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEEP HYDRATION (EN) -->
+    <section class="section" style="padding-top:20px">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Deep Hydration</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="mini-pair">
+          <div class="mini-card" data-reveal data-delay="0">
+            <span class="mini-icon">💧</span>
+            <h3 class="mini-title">Dry Skin Treatment</h3>
+            <p class="mini-subtitle">Restore moisture, reveal softness</p>
+            <p class="mini-desc">Deeply hydrates and restores skin moisture — relieving tightness, flakiness, and discomfort to leave your skin feeling plush, soft, and renewed.</p>
+            <div class="mini-bottom">
+              <div class="mini-price"><sup>AED </sup>158</div>
+              <div class="mini-dur">30 min</div>
+            </div>
+          </div>
+
+          <div class="mini-card" data-reveal data-delay="120" style="background: linear-gradient(135deg, rgba(201,169,110,0.08), rgba(201,169,110,0.02)); border-color: var(--gold-line);">
+            <span class="mini-icon">✨</span>
+            <h3 class="mini-title">Which treatment<br>is right for you?</h3>
+            <p class="mini-subtitle" style="color: var(--white-60); font-style: normal;">Every skin is different.</p>
+            <p class="mini-desc">Our therapists will assess your skin type and recommend the most suitable treatment during your session — no guesswork, just results.</p>
+            <div class="mini-bottom">
+              <div style="font-family: var(--serif); font-size: 14px; font-style: italic; color: var(--gold);">Personalized consultation included</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFESSIONAL SERIES (EN) -->
+    <section class="section" style="padding-top:20px">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Professional Series</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="pro-banner" data-reveal>
+          <div class="pro-logo-mark"><span>D</span></div>
+          <div class="pro-content">
+            <p class="pro-tag">Professional · Dermalogica</p>
+            <h3 class="pro-title">Dermalogica Facials</h3>
+            <p class="pro-subtitle">Professional skincare, personalized for you</p>
+            <p class="pro-desc">Professional skincare treatments tailored to your skin type using high-performance Dermalogica products — clinically proven formulations that deliver visible, lasting results.</p>
+          </div>
+          <div class="pro-right">
+            <div class="price-label">Starting From</div>
+            <div class="pro-price"><sup>AED </sup>189</div>
+            <div class="pro-dur">30 min  ·  1 hr</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM TAGLINE (EN) -->
+    <div class="bottom-tagline" data-reveal>
+      <div class="tagline-line">
+        <div class="tagline-rule"></div>
+        <span class="tagline-diamond">◆</span>
+        <div class="tagline-rule"></div>
+      </div>
+      <h2>Your skin deserves<br><em>nothing less than perfect</em></h2>
+      <p>All treatments available at your home across the UAE</p>
+    </div>
+  {%- endif -%}
+
+  <script>
+    (function() {
+      var root = document.getElementById('skincare-{{ section.id }}');
+      if (!root) return;
+
+      var items = root.querySelectorAll('[data-reveal]');
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(function(el){ el.classList.add('visible'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var el = entry.target;
+            var delay = parseInt(el.dataset.delay || '0', 10);
+            window.setTimeout(function(){ el.classList.add('visible'); }, delay);
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      items.forEach(function(el){ observer.observe(el); });
+    })();
+  </script>
+
+  {% schema %}
+  {
+    "name": "Skin Care (Bilingual)",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Skin Care Women"
+      }
+    ]
+  }
+  {% endschema %}
+</section>

@@ -1,0 +1,871 @@
+{% comment %}
+  ╔══════════════════════════════════════════════════════════════════════════╗
+  ║       DYNAMIC COLLECTION BENTO GRID  —  Shopify Liquid Section          ║
+  ║                                                                          ║
+  ║  NEW IN THIS VERSION:                                                    ║
+  ║  • Label text colour changes on hover (configurable in schema)          ║
+  ║  • Header + description animates in sync with the A/B photo swap        ║
+  ║    — State A shows heading_a + description_a                            ║
+  ║    — State B shows heading_b + description_b                            ║
+  ║    — Stylish fade + slide-up transition between them                    ║
+  ║  • Full Arabic (RTL) support:                                           ║
+  ║    — Separate Arabic heading/description fields (A and B)               ║
+  ║    — Separate Arabic label fields per card (A and B)                    ║
+  ║    — When locale is ar/ar-*, text switches automatically                ║
+  ║    — Layout flips to RTL, labels reposition for RTL                     ║
+  ║                                                                          ║
+  ║  DESKTOP LAYOUT:                                                         ║
+  ║  ┌───────────┬───────────────────────────┬───────────┐                  ║
+  ║  │  Block 1  │       Block 2  (wide)      │  Block 5  ║
+  ║  │  (tall)   ├──────────────┬────────────┤  (tall)   ║
+  ║  │           │   Block 3    │   Block 4  │           ║
+  ║  └───────────┴──────────────┴────────────┴───────────┘                  ║
+  ║                                                                          ║
+  ║  MOBILE LAYOUT (all 5 cards):                                            ║
+  ║  ┌──────────┬──────────┐                                                ║
+  ║  │          │  Card 2  │                                                ║
+  ║  │  Card 1  ├──────────┤                                                ║
+  ║  │  (tall)  │  Card 3  │                                                ║
+  ║  ├──────────┼──────────┤                                                ║
+  ║  │  Card 4  │  Card 5  │                                                ║
+  ║  └──────────┴──────────┘                                                ║
+  ╚══════════════════════════════════════════════════════════════════════════╝
+{% endcomment %}
+
+<style>{{ section.settings.heading_font | font_face: font_display: 'swap' }}</style>
+
+{%- liquid
+  assign rotation_ms   = section.settings.rotation_speed | times: 1000
+  assign mobile_h_size = section.settings.heading_size | times: 0.65 | round
+  assign section_uid   = section.id
+  assign is_arabic     = false
+  if request.locale.iso_code == 'ar' or request.locale.iso_code contains 'ar-'
+    assign is_arabic = true
+  endif
+-%}
+
+{%- style -%}
+
+/* ═══════════════════════════════════════════════════════
+   ROOT CUSTOM PROPERTIES
+═══════════════════════════════════════════════════════ */
+#dcg-{{ section_uid }} {
+  --dcg-radius        : {{ section.settings.border_radius }}px;
+  --dcg-gap           : {{ section.settings.grid_gap }}px;
+  --dcg-max-width     : {{ section.settings.max_width }}px;
+  --dcg-pad-v         : {{ section.settings.section_padding }}px;
+  --dcg-pad-h         : 20px;
+  --dcg-label-bg      : {{ section.settings.label_bg_color }};
+  --dcg-label-color   : {{ section.settings.label_text_color }};
+  --dcg-label-hover   : {{ section.settings.label_hover_text_color }};
+  --dcg-label-hover-bg: {{ section.settings.label_hover_bg_color }};
+  --dcg-label-radius  : {{ section.settings.label_border_radius }}px;
+  --dcg-label-size    : {{ section.settings.label_font_size }}px;
+  --dcg-fade          : {{ section.settings.fade_duration }}ms;
+
+  background-color    : {{ section.settings.section_bg }};
+  padding             : var(--dcg-pad-v) 0;
+  {%- if is_arabic %}direction: rtl;{% endif %}
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECTION HEADER — animated between State A and State B
+═══════════════════════════════════════════════════════ */
+#dcg-{{ section_uid }} .dcg-header {
+  text-align    : center;
+  padding       : 0 var(--dcg-pad-h);
+  margin-bottom : {{ section.settings.header_gap }}px;
+  position      : relative;
+  /* padding-bottom ensures the container is tall enough for whichever
+     state has more text; adjust if state B is much taller than A */
+  padding-bottom: 0;
+}
+
+/* Two heading wrappers stacked — BOTH absolute over the invisible spacer */
+#dcg-{{ section_uid }} .dcg-header-state {
+  transition : opacity {{ section.settings.fade_duration }}ms ease,
+               transform {{ section.settings.fade_duration }}ms ease;
+}
+
+/* State A + B are both absolutely positioned; only the spacer sets height */
+#dcg-{{ section_uid }} .dcg-header-state-a,
+#dcg-{{ section_uid }} .dcg-header-state-b {
+  position : absolute;
+  top      : 0;
+  left     : 0;
+  right    : 0;
+}
+
+/* State A: visible by default */
+#dcg-{{ section_uid }} .dcg-header-state-a {
+  opacity   : 1;
+  transform : translateY(0);
+}
+
+/* State B: hidden below */
+#dcg-{{ section_uid }} .dcg-header-state-b {
+  opacity   : 0;
+  transform : translateY(12px);
+}
+
+/* When showing B, swap */
+#dcg-{{ section_uid }}.dcg-show-b .dcg-header-state-a {
+  opacity   : 0;
+  transform : translateY(-12px);
+}
+#dcg-{{ section_uid }}.dcg-show-b .dcg-header-state-b {
+  opacity   : 1;
+  transform : translateY(0);
+}
+
+#dcg-{{ section_uid }} .dcg-heading {
+  font-family   : {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+  font-weight   : {{ section.settings.heading_font.weight }};
+  font-style    : {{ section.settings.heading_font.style }};
+  font-size     : {{ section.settings.heading_size }}px;
+  color         : {{ section.settings.heading_color }};
+  margin        : 0 0 10px;
+  line-height   : 1.15;
+}
+
+#dcg-{{ section_uid }} .dcg-description {
+  font-size   : {{ section.settings.description_size }}px;
+  color       : {{ section.settings.description_color }};
+  max-width   : 600px;
+  margin      : 0 auto;
+  line-height : 1.65;
+}
+
+/* Reserve space so the header doesn't collapse when state-b is absolute */
+#dcg-{{ section_uid }} .dcg-header-spacer {
+  visibility : hidden;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   BENTO GRID — DESKTOP
+═══════════════════════════════════════════════════════ */
+#dcg-{{ section_uid }} .dcg-grid {
+  display               : grid;
+  grid-template-columns : 1.05fr 1.55fr 1.55fr 1.05fr;
+  grid-template-rows    : {{ section.settings.row1_height }}px {{ section.settings.row2_height }}px;
+  gap                   : var(--dcg-gap);
+  max-width             : var(--dcg-max-width);
+  margin                : 0 auto;
+  padding               : 0 var(--dcg-pad-h);
+}
+
+/* Grid slot positions */
+#dcg-{{ section_uid }} .dcg-grid .dcg-block:nth-child(1) { grid-column: 1;   grid-row: 1 / 3; }
+#dcg-{{ section_uid }} .dcg-grid .dcg-block:nth-child(2) { grid-column: 2/4; grid-row: 1;     }
+#dcg-{{ section_uid }} .dcg-grid .dcg-block:nth-child(3) { grid-column: 2;   grid-row: 2;     }
+#dcg-{{ section_uid }} .dcg-grid .dcg-block:nth-child(4) { grid-column: 3;   grid-row: 2;     }
+#dcg-{{ section_uid }} .dcg-grid .dcg-block:nth-child(5) { grid-column: 4;   grid-row: 1 / 3; }
+
+/* ═══════════════════════════════════════════════════════
+   CARD BASE
+═══════════════════════════════════════════════════════ */
+#dcg-{{ section_uid }} .dcg-block {
+  position      : relative;
+  overflow      : hidden;
+  border-radius : var(--dcg-radius);
+  background    : #c5b5a3;
+}
+
+/* ── Slot stacking ────────────────────────────────── */
+#dcg-{{ section_uid }} .dcg-slot {
+  position        : absolute;
+  inset           : 0;
+  opacity         : 0;
+  transition      : opacity var(--dcg-fade) ease;
+  display         : block;
+  text-decoration : none;
+}
+
+#dcg-{{ section_uid }} .dcg-slot-a {
+  opacity        : 1;
+  z-index        : 1;
+  pointer-events : auto;
+}
+
+#dcg-{{ section_uid }} .dcg-slot-b {
+  pointer-events : none;
+}
+
+#dcg-{{ section_uid }} .dcg-block.dcg-show-b .dcg-slot-a {
+  opacity        : 0;
+  z-index        : 0;
+  pointer-events : none;
+}
+#dcg-{{ section_uid }} .dcg-block.dcg-show-b .dcg-slot-b {
+  opacity        : 1;
+  z-index        : 1;
+  pointer-events : auto;
+}
+
+/* ── Photo ───────────────────────────────────────── */
+#dcg-{{ section_uid }} .dcg-slot img {
+  position   : absolute;
+  inset      : 0;
+  width      : 100%;
+  height     : 100%;
+  object-fit : cover;
+  display    : block;
+  transition : transform 7s ease;
+}
+
+#dcg-{{ section_uid }} .dcg-slot:hover img {
+  transform : scale(1.04);
+}
+
+/* ── Gradient overlay ────────────────────────────── */
+#dcg-{{ section_uid }} .dcg-slot::after {
+  content        : '';
+  position       : absolute;
+  inset          : 0;
+  background     : linear-gradient(165deg, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0.44) 100%);
+  z-index        : 2;
+  pointer-events : none;
+}
+
+/* ── Label ───────────────────────────────────────── */
+#dcg-{{ section_uid }} .dcg-label {
+  position               : absolute;
+  z-index                : 3;
+  bottom                 : 16px;
+  {%- if is_arabic %}
+  right                  : 16px;
+  left                   : auto;
+  {%- else %}
+  left                   : 16px;
+  {%- endif %}
+  color                  : var(--dcg-label-color);
+  font-size              : var(--dcg-label-size);
+  font-weight            : 600;
+  letter-spacing         : 0.05em;
+  text-transform         : uppercase;
+  writing-mode           : horizontal-tb;
+  background-color       : var(--dcg-label-bg);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter        : blur(8px);
+  padding                : 7px 14px;
+  border-radius          : var(--dcg-label-radius);
+  white-space            : nowrap;
+  transition             : background 0.3s ease, color 0.3s ease;
+}
+
+/* ── Hover: change label text colour + background ── */
+#dcg-{{ section_uid }} .dcg-slot:hover .dcg-label {
+  color            : var(--dcg-label-hover);
+  background-color : var(--dcg-label-hover-bg);
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE  ( <= 767px )
+═══════════════════════════════════════════════════════ */
+@media screen and (max-width: 767px) {
+
+  #dcg-{{ section_uid }} .dcg-heading {
+    font-size : {{ mobile_h_size }}px;
+  }
+
+  #dcg-{{ section_uid }} .dcg-header {
+    margin-bottom : 24px;
+  }
+
+  /* 2-column, 3-row — all 5 cards */
+  #dcg-{{ section_uid }} .dcg-grid {
+    grid-template-columns : 1fr 1fr;
+    grid-template-rows    : {{ section.settings.mobile_row1_height }}px
+                            {{ section.settings.mobile_row1_height }}px
+                            {{ section.settings.mobile_row2_height }}px;
+    padding               : 0 10px;
+  }
+
+  #dcg-{{ section_uid }} .dcg-grid .dcg-block:nth-child(1) { grid-column: 1; grid-row: 1/3; }
+  #dcg-{{ section_uid }} .dcg-grid .dcg-block:nth-child(2) { grid-column: 2; grid-row: 1;   }
+  #dcg-{{ section_uid }} .dcg-grid .dcg-block:nth-child(3) { grid-column: 2; grid-row: 2;   }
+  #dcg-{{ section_uid }} .dcg-grid .dcg-block:nth-child(4) { grid-column: 1; grid-row: 3;   }
+  #dcg-{{ section_uid }} .dcg-grid .dcg-block:nth-child(5) { grid-column: 2; grid-row: 3;   }
+
+  /* Vertical labels — bottom of card, rotated */
+  #dcg-{{ section_uid }} .dcg-label {
+    writing-mode   : vertical-rl;
+    {%- if is_arabic %}
+    transform      : rotate(0deg);
+    right          : 10px;
+    left           : auto;
+    {%- else %}
+    transform      : rotate(180deg);
+    left           : 10px;
+    {%- endif %}
+    bottom         : 12px;
+    font-size      : 10px;
+    padding        : 8px 5px;
+    border-radius  : 4px;
+    letter-spacing : 0.07em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #dcg-{{ section_uid }} .dcg-grid {
+    grid-template-rows : {{ section.settings.mobile_row1_height | times: 0.75 | round }}px
+                         {{ section.settings.mobile_row1_height | times: 0.75 | round }}px
+                         {{ section.settings.mobile_row2_height | times: 0.75 | round }}px;
+  }
+}
+
+{%- endstyle -%}
+
+
+<!-- ════════════════════════════════════════════════════
+     SECTION HTML
+════════════════════════════════════════════════════ -->
+<section id="dcg-{{ section_uid }}" class="dcg-section">
+
+  {%- comment -%}
+    Determine which heading/description to render based on locale.
+    Arabic fields fall back to English if left blank.
+  {%- endcomment -%}
+  {%- if is_arabic -%}
+    {%- assign heading_a     = section.settings.heading_a_ar     | default: section.settings.heading_a -%}
+    {%- assign heading_b     = section.settings.heading_b_ar     | default: section.settings.heading_b -%}
+    {%- assign description_a = section.settings.description_a_ar | default: section.settings.description_a -%}
+    {%- assign description_b = section.settings.description_b_ar | default: section.settings.description_b -%}
+  {%- else -%}
+    {%- assign heading_a     = section.settings.heading_a -%}
+    {%- assign heading_b     = section.settings.heading_b -%}
+    {%- assign description_a = section.settings.description_a -%}
+    {%- assign description_b = section.settings.description_b -%}
+  {%- endif -%}
+
+  {%- if heading_a != blank or description_a != blank or heading_b != blank or description_b != blank -%}
+    <div class="dcg-header">
+
+      {%- comment -%} Spacer — clones state-a to hold the height {%- endcomment -%}
+      <div class="dcg-header-state dcg-header-spacer" aria-hidden="true">
+        {%- if heading_a != blank -%}
+          <h2 class="dcg-heading">{{ heading_a | escape }}</h2>
+        {%- endif -%}
+        {%- if description_a != blank -%}
+          <p class="dcg-description">{{ description_a | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} State A — visible first {%- endcomment -%}
+      <div class="dcg-header-state dcg-header-state-a">
+        {%- if heading_a != blank -%}
+          <h2 class="dcg-heading">{{ heading_a | escape }}</h2>
+        {%- endif -%}
+        {%- if description_a != blank -%}
+          <p class="dcg-description">{{ description_a | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} State B — fades in when photos flip to B {%- endcomment -%}
+      <div class="dcg-header-state dcg-header-state-b">
+        {%- if heading_b != blank -%}
+          <h2 class="dcg-heading">{{ heading_b | escape }}</h2>
+        {%- endif -%}
+        {%- if description_b != blank -%}
+          <p class="dcg-description">{{ description_b | escape }}</p>
+        {%- endif -%}
+      </div>
+
+    </div>
+  {%- endif -%}
+
+  <div class="dcg-grid">
+
+    {%- for block in section.blocks -%}
+
+      {%- comment -%} Pick correct locale labels {%- endcomment -%}
+      {%- if is_arabic -%}
+        {%- assign lbl_a = block.settings.label_a_ar | default: block.settings.label_a -%}
+        {%- assign lbl_b = block.settings.label_b_ar | default: block.settings.label_b -%}
+      {%- else -%}
+        {%- assign lbl_a = block.settings.label_a -%}
+        {%- assign lbl_b = block.settings.label_b -%}
+      {%- endif -%}
+
+      <div class="dcg-block" {{ block.shopify_attributes }}>
+
+        <!-- SLOT A -->
+        <a
+          class="dcg-slot dcg-slot-a"
+          href="{{ block.settings.link_a | default: '#' }}"
+          aria-label="{{ lbl_a | default: 'View collection' | escape }}"
+        >
+          {%- if block.settings.image_a != blank -%}
+            <img
+              src="{{ block.settings.image_a | image_url: width: 900 }}"
+              srcset="
+                {{ block.settings.image_a | image_url: width: 400  }} 400w,
+                {{ block.settings.image_a | image_url: width: 700  }} 700w,
+                {{ block.settings.image_a | image_url: width: 900  }} 900w,
+                {{ block.settings.image_a | image_url: width: 1200 }} 1200w
+              "
+              sizes="(max-width: 767px) 50vw, 30vw"
+              alt="{{ block.settings.image_a.alt | default: lbl_a | escape }}"
+              width="{{ block.settings.image_a.width }}"
+              height="{{ block.settings.image_a.height }}"
+              loading="{% if forloop.index == 1 %}eager{% else %}lazy{% endif %}"
+            >
+          {%- endif -%}
+          {%- if lbl_a != blank -%}
+            <span class="dcg-label">{{ lbl_a | escape }}</span>
+          {%- endif -%}
+        </a>
+
+        <!-- SLOT B -->
+        <a
+          class="dcg-slot dcg-slot-b"
+          href="{{ block.settings.link_b | default: '#' }}"
+          aria-label="{{ lbl_b | default: 'View collection' | escape }}"
+        >
+          {%- if block.settings.image_b != blank -%}
+            <img
+              src="{{ block.settings.image_b | image_url: width: 900 }}"
+              srcset="
+                {{ block.settings.image_b | image_url: width: 400  }} 400w,
+                {{ block.settings.image_b | image_url: width: 700  }} 700w,
+                {{ block.settings.image_b | image_url: width: 900  }} 900w,
+                {{ block.settings.image_b | image_url: width: 1200 }} 1200w
+              "
+              sizes="(max-width: 767px) 50vw, 30vw"
+              alt="{{ block.settings.image_b.alt | default: lbl_b | escape }}"
+              width="{{ block.settings.image_b.width }}"
+              height="{{ block.settings.image_b.height }}"
+              loading="lazy"
+            >
+          {%- endif -%}
+          {%- if lbl_b != blank -%}
+            <span class="dcg-label">{{ lbl_b | escape }}</span>
+          {%- endif -%}
+        </a>
+
+      </div>
+    {%- endfor -%}
+
+  </div><!-- /.dcg-grid -->
+
+</section>
+
+
+<!-- ════════════════════════════════════════════════════
+     SYNCHRONIZED ROTATION SCRIPT
+     • All cards + the header/description flip A→B→A in sync
+     • Hovering any card pauses everything
+     • Clicks go to the correct link
+════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  var INTERVAL = {{ rotation_ms }};
+
+  function initSync(sectionEl) {
+    var blocks = sectionEl.querySelectorAll('.dcg-block');
+    var grid   = sectionEl.querySelector('.dcg-grid');
+    if (!blocks.length) return;
+
+    var showingB = false;
+    var timer    = null;
+
+    function flip() {
+      showingB = !showingB;
+
+      /* Flip all photo cards */
+      blocks.forEach(function (block) {
+        block.classList.toggle('dcg-show-b', showingB);
+      });
+
+      /* Flip the section header text in sync */
+      sectionEl.classList.toggle('dcg-show-b', showingB);
+    }
+
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(flip, INTERVAL);
+    }
+
+    /* Pause when hovering the grid */
+    grid.addEventListener('mouseenter', function () {
+      clearInterval(timer);
+      timer = null;
+    });
+
+    /* Resume when mouse leaves the grid */
+    grid.addEventListener('mouseleave', function () {
+      startTimer();
+    });
+
+    startTimer();
+  }
+
+  function boot() {
+    var s = document.getElementById('dcg-{{ section_uid }}');
+    if (s) initSync(s);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+  document.addEventListener('shopify:section:load', function (e) {
+    var s = e.target.querySelector('#dcg-{{ section_uid }}');
+    if (s) initSync(s);
+  });
+
+})();
+</script>
+
+
+{% schema %}
+{
+  "name": "Dynamic Collection Grid",
+  "tag": "section",
+  "class": "section-dynamic-collection-grid",
+  "settings": [
+
+    { "type": "header", "content": "Header — State A (first photo set)" },
+
+    {
+      "type": "text",
+      "id": "heading_a",
+      "label": "Heading A (English)",
+      "default": "Explore Our Women Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "description_a",
+      "label": "Description A (English)",
+      "default": "Curated beauty essentials crafted for every skin type and lifestyle."
+    },
+    {
+      "type": "text",
+      "id": "heading_a_ar",
+      "label": "Heading A (Arabic — optional)",
+      "info": "Shown automatically when the store is in Arabic. Leave blank to use the English version."
+    },
+    {
+      "type": "textarea",
+      "id": "description_a_ar",
+      "label": "Description A (Arabic — optional)"
+    },
+
+    { "type": "header", "content": "Header — State B (second photo set)" },
+
+    {
+      "type": "text",
+      "id": "heading_b",
+      "label": "Heading B (English)",
+      "default": "Explore Our Men Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "description_b",
+      "label": "Description B (English)",
+      "default": "Premium grooming and wellness products designed for him."
+    },
+    {
+      "type": "text",
+      "id": "heading_b_ar",
+      "label": "Heading B (Arabic — optional)"
+    },
+    {
+      "type": "textarea",
+      "id": "description_b_ar",
+      "label": "Description B (Arabic — optional)"
+    },
+
+    { "type": "header", "content": "Header Typography" },
+
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "cormorant_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size (desktop)",
+      "min": 24,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description colour",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "label": "Space below header",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+
+    { "type": "header", "content": "Grid Layout" },
+
+    {
+      "type": "range",
+      "id": "row1_height",
+      "label": "Row 1 height (desktop)",
+      "min": 200,
+      "max": 520,
+      "step": 10,
+      "unit": "px",
+      "default": 330
+    },
+    {
+      "type": "range",
+      "id": "row2_height",
+      "label": "Row 2 height (desktop)",
+      "min": 150,
+      "max": 420,
+      "step": 10,
+      "unit": "px",
+      "default": 260
+    },
+    {
+      "type": "range",
+      "id": "mobile_row1_height",
+      "label": "Row 1+2 height (mobile)",
+      "min": 120,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "default": 190
+    },
+    {
+      "type": "range",
+      "id": "mobile_row2_height",
+      "label": "Row 3 height (mobile)",
+      "min": 100,
+      "max": 280,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Gap between cards",
+      "min": 2,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Grid max width",
+      "min": 800,
+      "max": 1800,
+      "step": 100,
+      "unit": "px",
+      "default": 1400
+    },
+
+    { "type": "header", "content": "Animation" },
+
+    {
+      "type": "range",
+      "id": "rotation_speed",
+      "label": "Seconds between swaps",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "default": 3,
+      "info": "All cards AND the header text flip at the same time."
+    },
+    {
+      "type": "range",
+      "id": "fade_duration",
+      "label": "Crossfade duration",
+      "min": 200,
+      "max": 2000,
+      "step": 100,
+      "unit": "ms",
+      "default": 900
+    },
+
+    { "type": "header", "content": "Card Labels" },
+
+    {
+      "type": "color",
+      "id": "label_bg_color",
+      "label": "Label background (default)",
+      "default": "#00000052"
+    },
+    {
+      "type": "color",
+      "id": "label_text_color",
+      "label": "Label text colour (default)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "label_hover_bg_color",
+      "label": "Label background (on hover)",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "label_hover_text_color",
+      "label": "Label text colour (on hover)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Label font size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "label_border_radius",
+      "label": "Label corner radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 6
+    },
+
+    { "type": "header", "content": "Section Styling" },
+
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section top/bottom padding",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+
+  ],
+
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Collection Card",
+      "limit": 5,
+      "settings": [
+
+        { "type": "header", "content": "Photo A (shown first)" },
+        {
+          "type": "image_picker",
+          "id": "image_a",
+          "label": "Photo A"
+        },
+        {
+          "type": "text",
+          "id": "label_a",
+          "label": "Label A (English)",
+          "default": "Category Name"
+        },
+        {
+          "type": "text",
+          "id": "label_a_ar",
+          "label": "Label A (Arabic — optional)",
+          "info": "Shown automatically when store language is Arabic."
+        },
+        {
+          "type": "url",
+          "id": "link_a",
+          "label": "Link A"
+        },
+
+        { "type": "header", "content": "Photo B (shown second)" },
+        {
+          "type": "image_picker",
+          "id": "image_b",
+          "label": "Photo B"
+        },
+        {
+          "type": "text",
+          "id": "label_b",
+          "label": "Label B (English)",
+          "default": "Category Name"
+        },
+        {
+          "type": "text",
+          "id": "label_b_ar",
+          "label": "Label B (Arabic — optional)"
+        },
+        {
+          "type": "url",
+          "id": "link_b",
+          "label": "Link B"
+        }
+
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Dynamic Collection Grid",
+      "blocks": [
+        { "type": "collection_card", "settings": { "label_a": "Face Oils",      "label_b": "Skin Care"   } },
+        { "type": "collection_card", "settings": { "label_a": "Hair Care",      "label_b": "Body Care"   } },
+        { "type": "collection_card", "settings": { "label_a": "Glow Boosters",  "label_b": "Makeup"      } },
+        { "type": "collection_card", "settings": { "label_a": "Makeup Remover", "label_b": "Accessories" } },
+        { "type": "collection_card", "settings": { "label_a": "Body Care",      "label_b": "Tools"       } }
+      ]
+    }
+  ]
+}
+{% endschema %}

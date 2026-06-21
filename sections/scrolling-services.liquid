@@ -1,0 +1,406 @@
+<div class="parallax-services-section">
+  <div class="parallax-container">
+    
+    <!-- Images Column - Moves DOWN -->
+    <div class="parallax-col parallax-images">
+      {% for block in section.blocks %}
+        <div class="parallax-image-item">
+          {% if block.settings.image %}
+            <div class="image-wrap">
+              {{ block.settings.image | image_url: width: 700 | image_tag: 
+                loading: 'lazy',
+                alt: block.settings.title
+              }}
+            </div>
+          {% else %}
+            <div class="image-placeholder">
+              <span>{{ block.settings.title }}</span>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Text Column - Moves UP -->
+    <div class="parallax-col parallax-text">
+      {% for block in section.blocks %}
+        <div class="parallax-text-item">
+          <div class="text-content">
+            {% if block.settings.title != blank %}
+              <h3>{{ block.settings.title }}</h3>
+            {% endif %}
+            
+            {% if block.settings.description != blank %}
+              <p>{{ block.settings.description }}</p>
+            {% endif %}
+            
+            {% if section.settings.show_button %}
+              <a href="{{ block.settings.button_link | default: '#' }}" class="book-btn">
+                {{ section.settings.button_text }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .parallax-services-section {
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #f9f7f4 0%, #f3f0eb 100%);
+    padding: 100px 0;
+    position: relative;
+  }
+
+  .parallax-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    position: relative;
+  }
+
+  /* Columns */
+  .parallax-col {
+    position: relative;
+    transition: transform 0.1s linear;
+  }
+
+  .parallax-images {
+    padding-top: 150px;
+  }
+
+  .parallax-text {
+    padding-bottom: 150px;
+  }
+
+  /* Image Items */
+  .parallax-image-item {
+    margin-bottom: 100px;
+  }
+
+  .image-wrap {
+    position: relative;
+    width: 100%;
+    padding-bottom: 125%;
+    background: #e8e4df;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.1);
+  }
+
+  .image-wrap img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease-out;
+  }
+
+  .image-wrap:hover img {
+    transform: scale(1.08);
+  }
+
+  .image-placeholder {
+    position: relative;
+    width: 100%;
+    padding-bottom: 125%;
+    background: linear-gradient(135deg, #e0dcd7 0%, #e8e4df 100%);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .image-placeholder span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    color: #a39d95;
+    text-align: center;
+    padding: 20px;
+  }
+
+  /* Text Items */
+  .parallax-text-item {
+    margin-bottom: 100px;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+  }
+
+  .text-content {
+    max-width: 500px;
+  }
+
+  .text-content h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 60px;
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #2b2521;
+    margin: 0 0 28px 0;
+  }
+
+  .text-content p {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 18px;
+    line-height: 1.75;
+    color: #6e6862;
+    margin: 0 0 40px 0;
+    font-weight: 300;
+  }
+
+  .book-btn {
+    display: inline-block;
+    padding: 18px 50px;
+    background: #2b2521;
+    color: #f9f7f4;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: all 0.4s ease;
+    border: 2px solid #2b2521;
+  }
+
+  .book-btn:hover {
+    background: transparent;
+    color: #2b2521;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(43, 37, 33, 0.15);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .parallax-services-section {
+      padding: 60px 0;
+    }
+
+    .parallax-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+      padding: 0 20px;
+    }
+
+    .parallax-images,
+    .parallax-text {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .parallax-image-item,
+    .parallax-text-item {
+      margin-bottom: 60px;
+    }
+
+    .parallax-text-item {
+      min-height: auto;
+    }
+
+    .text-content {
+      max-width: 100%;
+    }
+
+    .text-content h3 {
+      font-size: 42px;
+    }
+
+    .text-content p {
+      font-size: 16px;
+    }
+
+    .book-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  'use strict';
+  
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initParallax);
+  } else {
+    initParallax();
+  }
+  
+  function initParallax() {
+    const section = document.querySelector('.parallax-services-section');
+    if (!section) return;
+    
+    const imagesCol = section.querySelector('.parallax-images');
+    const textCol = section.querySelector('.parallax-text');
+    
+    if (!imagesCol || !textCol) return;
+    
+    let ticking = false;
+    
+    function updateParallax() {
+      // Check if we're on mobile
+      if (window.innerWidth <= 768) {
+        imagesCol.style.transform = 'translateY(0)';
+        textCol.style.transform = 'translateY(0)';
+        return;
+      }
+      
+      const scrolled = window.pageYOffset;
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const windowHeight = window.innerHeight;
+      
+      // Check if section is in viewport
+      if (scrolled + windowHeight > sectionTop && scrolled < sectionTop + sectionHeight) {
+        // Calculate relative scroll position
+        const relativeScroll = scrolled - sectionTop + windowHeight;
+        
+        // Images move DOWN (slower than scroll)
+        const imageMove = relativeScroll * 0.4;
+        imagesCol.style.transform = `translateY(${imageMove}px)`;
+        
+        // Text moves UP (opposite direction)
+        const textMove = relativeScroll * -0.4;
+        textCol.style.transform = `translateY(${textMove}px)`;
+      }
+      
+      ticking = false;
+    }
+    
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }
+    
+    // Listen for scroll
+    window.addEventListener('scroll', requestTick, { passive: true });
+    
+    // Initial call
+    updateParallax();
+    
+    // Update on resize
+    window.addEventListener('resize', function() {
+      updateParallax();
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Parallax Services",
+  "tag": "section",
+  "class": "section-parallax-services",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show booking button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Book Now"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "Service",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Service image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Service title",
+          "default": "Service Name"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Service description",
+          "default": "Describe your service here"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Parallax Services",
+      "blocks": [
+        {
+          "type": "service",
+          "settings": {
+            "title": "Massage",
+            "description": "Indulge in a therapeutic massage experience designed to melt away tension and restore balance. Our skilled therapists customize each session to address your specific needs, promoting deep relaxation and renewed vitality."
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Hair Care",
+            "description": "Transform your tresses with our comprehensive hair care services. From precision cuts to luxurious treatments, our expert stylists bring out your hair's natural beauty while ensuring optimal health and shine."
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Nails",
+            "description": "Treat yourself to pristine manicures and pedicures in a serene atmosphere. Our meticulous nail artists combine artistry with care, delivering impeccable results that elevate your everyday elegance."
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Facial / Express Facial",
+            "description": "Discover radiant, glowing skin with our signature facial treatments. Whether you choose our comprehensive facial or express option, each treatment is tailored to rejuvenate, nourish, and reveal your natural luminosity."
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Waxing",
+            "description": "Experience smooth, flawless skin with our professional waxing services. Using gentle techniques and premium products, we ensure comfort and lasting results for silky-smooth perfection."
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "title": "Eyebrow & Lashes",
+            "description": "Frame your eyes beautifully with our eyebrow shaping and lash enhancement services. From precise brow sculpting to lash lifts and tints, we enhance your natural features for captivating, effortless beauty."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

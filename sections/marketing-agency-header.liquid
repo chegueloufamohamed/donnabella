@@ -1,0 +1,533 @@
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+{% if is_arabic %}
+  {% assign cta_label = section.settings.cta_label_ar | default: section.settings.cta_label %}
+{% else %}
+  {% assign cta_label = section.settings.cta_label %}
+{% endif %}
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500;600;700&family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+
+<style>
+.db-hd-wrap *, .db-hd-wrap *::before, .db-hd-wrap *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.db-hd-wrap {
+  --bg-darker: #202c38;
+  --bg-dark:   #2f3d4d;
+  --gold:      #c9a96e;
+  --gold-line: rgba(201,169,110,0.35);
+  --gold-dim:  rgba(201,169,110,0.15);
+  --white:     #ffffff;
+  --white-80:  rgba(255,255,255,0.8);
+  --white-60:  rgba(255,255,255,0.6);
+  --white-10:  rgba(255,255,255,0.06);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Jost', sans-serif;
+  --arabic: 'Cairo', 'Tajawal', sans-serif;
+
+  /* Switcher colors from schema */
+  --sw-border:       {{ section.settings.sw_border_color }};
+  --sw-active-bg:    {{ section.settings.sw_active_bg }};
+  --sw-active-text:  {{ section.settings.sw_active_text }};
+  --sw-inactive-text:{{ section.settings.sw_inactive_text }};
+  --sw-hover-text:   {{ section.settings.sw_hover_text }};
+
+  /* CTA button colors from schema */
+  --cta-bg:          {{ section.settings.cta_bg }};
+  --cta-border:      {{ section.settings.cta_border_color }};
+  --cta-text:        {{ section.settings.cta_text_color }};
+  --cta-hover-bg:    {{ section.settings.cta_hover_bg }};
+  --cta-hover-border:{{ section.settings.cta_hover_border_color }};
+  --cta-hover-text:  {{ section.settings.cta_hover_text_color }};
+}
+
+/* ── NAV ── */
+.db-hd-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(32, 44, 56, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--white-10);
+  transition: padding 0.4s ease, background 0.4s ease;
+  direction: {{ text_dir }};
+}
+.db-hd-nav.db-hd-scrolled {
+  padding: 13px 48px;
+  background: rgba(32, 44, 56, 0.97);
+}
+
+/* ── LOGO ── */
+.db-hd-logo {
+  display: flex; align-items: center;
+  text-decoration: none; flex-shrink: 0;
+  transition: opacity 0.3s;
+}
+.db-hd-logo:hover { opacity: 0.85; }
+.db-hd-logo img {
+  height: {{ section.settings.logo_height | default: 40 }}px;
+  width: auto; display: block; object-fit: contain;
+}
+.db-hd-logo-text {
+  font-family: var(--serif);
+  font-size: 24px; font-weight: 400; font-style: italic;
+  color: var(--white); letter-spacing: 0.02em;
+}
+.db-hd-logo-text span { color: var(--gold); font-style: normal; }
+
+/* ── DESKTOP LINKS ── */
+.db-hd-links {
+  display: flex; align-items: center; gap: 4px;
+  list-style: none;
+}
+.db-hd-links a {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.35em;
+  text-transform: uppercase; color: var(--white-60);
+  text-decoration: none; padding: 8px 12px;
+  position: relative; transition: color 0.3s ease; cursor: pointer;
+  {% if is_arabic %}
+  font-family: var(--arabic);
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 500;
+  {% else %}
+  font-family: var(--sans);
+  {% endif %}
+}
+.db-hd-links a::after {
+  content: ''; position: absolute;
+  bottom: 4px; left: 12px; right: 12px;
+  height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: {% if is_arabic %}right{% else %}left{% endif %};
+  transition: transform 0.3s ease;
+}
+.db-hd-links a:hover { color: var(--white); }
+.db-hd-links a:hover::after { transform: scaleX(1); }
+.db-hd-links a.db-hd-active { color: var(--gold); }
+.db-hd-links a.db-hd-active::after { transform: scaleX(1); }
+
+/* ── RIGHT CLUSTER ── */
+.db-hd-right {
+  display: flex; align-items: center; gap: 16px; flex-shrink: 0;
+}
+
+/* ── LANGUAGE SWITCHER ── */
+.db-hd-switcher {
+  display: flex; align-items: center;
+  border: 1.5px solid var(--sw-border);
+  border-radius: 20px; overflow: hidden; height: 32px;
+}
+.db-hd-switcher form { display: flex; height: 100%; }
+.db-hd-switcher-btn {
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 12px; height: 100%;
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.1em; cursor: pointer;
+  background: transparent; color: var(--sw-inactive-text);
+  border: none; white-space: nowrap; line-height: 1;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.db-hd-switcher-btn:hover { color: var(--sw-hover-text); background: rgba(0,0,0,0.08); }
+.db-hd-switcher-btn--active {
+  background: var(--sw-active-bg);
+  color: var(--sw-active-text);
+  cursor: default;
+  font-weight: 600;
+}
+.db-hd-switcher-divider {
+  color: var(--sw-border); font-size: 11px;
+  pointer-events: none; line-height: 1; padding: 0 1px;
+}
+
+/* ── CTA BUTTON ── */
+.db-hd-cta {
+  padding: 10px 24px;
+  border: 1px solid var(--cta-border);
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.3em;
+  text-transform: uppercase; text-decoration: none;
+  transition: all 0.3s ease; cursor: pointer; flex-shrink: 0;
+  display: inline-block;
+  {% if is_arabic %}
+  font-family: var(--arabic);
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+  {% else %}
+  font-family: var(--sans);
+  {% endif %}
+}
+.db-hd-cta:hover {
+  background: var(--cta-hover-bg);
+  border-color: var(--cta-hover-border);
+  color: var(--cta-hover-text);
+}
+
+/* ── HAMBURGER ── */
+.db-hd-burger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px; background: none; border: none;
+}
+.db-hd-burger span {
+  display: block; width: 24px; height: 1.5px;
+  background: var(--white-60); transition: all 0.35s ease;
+  transform-origin: center;
+}
+.db-hd-burger.db-hd-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); background: var(--gold); }
+.db-hd-burger.db-hd-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.db-hd-burger.db-hd-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); background: var(--gold); }
+
+/* ── MOBILE MENU ── */
+.db-hd-mobile {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 9998;
+  background: rgba(32,44,56,0.98);
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 6px;
+  opacity: 0; pointer-events: none;
+  transform: translateY(-16px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.db-hd-mobile.db-hd-open { opacity: 1; pointer-events: all; transform: translateY(0); }
+.db-hd-mobile-link {
+  font-family: var(--serif); font-size: clamp(26px, 6vw, 46px);
+  font-weight: 300; font-style: italic;
+  color: var(--white-60); text-decoration: none;
+  letter-spacing: 0.02em; cursor: pointer;
+  transition: color 0.3s ease; padding: 7px 0;
+  {% if is_arabic %}
+  font-family: var(--arabic);
+  font-style: normal;
+  letter-spacing: 0;
+  {% endif %}
+}
+.db-hd-mobile-link:hover { color: var(--gold); }
+.db-hd-mobile-divider { width: 40px; height: 1px; background: var(--gold-line); margin: 10px 0; }
+.db-hd-mobile-cta {
+  margin-top: 20px; padding: 13px 44px;
+  border: 1px solid var(--cta-border);
+  background: var(--cta-bg);
+  color: var(--cta-text);
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; transition: all 0.3s;
+  {% if is_arabic %}
+  font-family: var(--arabic);
+  font-size: 13px; letter-spacing: 0; text-transform: none;
+  {% else %}
+  font-family: var(--sans);
+  {% endif %}
+}
+.db-hd-mobile-cta:hover {
+  background: var(--cta-hover-bg);
+  border-color: var(--cta-hover-border);
+  color: var(--cta-hover-text);
+}
+
+/* Mobile switcher */
+.db-hd-mobile-switcher {
+  margin-top: 20px;
+  display: flex; align-items: center;
+  border: 1.5px solid var(--sw-border);
+  border-radius: 20px; overflow: hidden; height: 36px;
+}
+.db-hd-mobile-switcher form { display: flex; height: 100%; }
+.db-hd-mobile-switcher .db-hd-switcher-btn { padding: 0 18px; font-size: 12px; }
+
+/* ── SPACER ── */
+.db-hd-spacer { height: 72px; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .db-hd-links         { display: none; }
+  .db-hd-switcher      { display: none; }
+  .db-hd-cta           { display: none; }
+  .db-hd-burger        { display: flex; }
+  .db-hd-nav           { padding: 18px 24px; }
+  .db-hd-nav.db-hd-scrolled { padding: 14px 24px; }
+  .db-hd-right         { gap: 12px; }
+}
+</style>
+
+<div class="db-hd-spacer"></div>
+
+<div class="db-hd-wrap">
+
+  <nav class="db-hd-nav" id="db-hd-nav">
+
+    <!-- Logo -->
+    <a href="{{ section.settings.logo_link | default: '/' }}" class="db-hd-logo">
+      {% if section.settings.logo_image != blank %}
+        <img
+          src="{{ section.settings.logo_image | image_url: width: 400 }}"
+          alt="{{ section.settings.logo_image.alt | default: 'Donnabella' }}"
+          loading="eager"
+        >
+      {% else %}
+        <span class="db-hd-logo-text">Donna<span>bella</span></span>
+      {% endif %}
+    </a>
+
+    <!-- Desktop nav links -->
+    <ul class="db-hd-links" id="db-hd-links">
+      {% for i in (1..8) %}
+        {% assign label_en_key  = 'nav_label_en_' | append: i %}
+        {% assign label_ar_key  = 'nav_label_ar_' | append: i %}
+        {% assign target_key    = 'nav_target_'   | append: i %}
+        {% assign label_en = section.settings[label_en_key] %}
+        {% assign label_ar = section.settings[label_ar_key] %}
+        {% assign target   = section.settings[target_key] %}
+        {% if label_en != blank %}
+          {% if is_arabic %}
+            {% assign nav_label = label_ar | default: label_en %}
+          {% else %}
+            {% assign nav_label = label_en %}
+          {% endif %}
+          <li>
+            <a href="{{ target | default: '#' }}"
+               {% if target contains '#' %}data-db-scroll="true"{% endif %}>
+              {{ nav_label }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    <!-- Right cluster -->
+    <div class="db-hd-right">
+
+      <!-- Language Switcher Desktop -->
+      <div class="db-hd-switcher">
+        {% if is_arabic %}
+          <form action="/localization" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="return_to" value="{{ request.path }}">
+            <input type="hidden" name="locale_code" value="en">
+            <button type="submit" class="db-hd-switcher-btn">EN</button>
+          </form>
+          <span class="db-hd-switcher-divider">|</span>
+          <button class="db-hd-switcher-btn db-hd-switcher-btn--active" disabled>عربي</button>
+        {% else %}
+          <button class="db-hd-switcher-btn db-hd-switcher-btn--active" disabled>EN</button>
+          <span class="db-hd-switcher-divider">|</span>
+          <form action="/localization" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="return_to" value="{{ request.path }}">
+            <input type="hidden" name="locale_code" value="ar">
+            <button type="submit" class="db-hd-switcher-btn">عربي</button>
+          </form>
+        {% endif %}
+      </div>
+
+      <!-- CTA -->
+      <a href="{{ section.settings.cta_url | default: '#ma-contact' }}"
+         class="db-hd-cta"
+         {% if section.settings.cta_url contains '#' %}data-db-scroll="true"{% endif %}>
+        {{ cta_label | default: 'Get Started' }}
+      </a>
+
+      <!-- Hamburger -->
+      <button class="db-hd-burger" id="db-hd-burger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="db-hd-mobile" id="db-hd-mobile">
+    {% for i in (1..8) %}
+      {% assign label_en_key = 'nav_label_en_' | append: i %}
+      {% assign label_ar_key = 'nav_label_ar_' | append: i %}
+      {% assign target_key   = 'nav_target_'   | append: i %}
+      {% assign label_en = section.settings[label_en_key] %}
+      {% assign label_ar = section.settings[label_ar_key] %}
+      {% assign target   = section.settings[target_key] %}
+      {% if label_en != blank %}
+        {% if is_arabic %}
+          {% assign nav_label = label_ar | default: label_en %}
+        {% else %}
+          {% assign nav_label = label_en %}
+        {% endif %}
+        <a href="{{ target | default: '#' }}"
+           class="db-hd-mobile-link"
+           {% if target contains '#' %}data-db-scroll="true"{% endif %}>
+          {{ nav_label }}
+        </a>
+      {% endif %}
+    {% endfor %}
+
+    <div class="db-hd-mobile-divider"></div>
+
+    <a href="{{ section.settings.cta_url | default: '#ma-contact' }}"
+       class="db-hd-mobile-cta"
+       {% if section.settings.cta_url contains '#' %}data-db-scroll="true"{% endif %}>
+      {{ cta_label | default: 'Get Started' }}
+    </a>
+
+    <!-- Language Switcher Mobile -->
+    <div class="db-hd-mobile-switcher">
+      {% if is_arabic %}
+        <form action="/localization" method="POST">
+          <input type="hidden" name="_method" value="PUT">
+          <input type="hidden" name="return_to" value="{{ request.path }}">
+          <input type="hidden" name="locale_code" value="en">
+          <button type="submit" class="db-hd-switcher-btn">EN</button>
+        </form>
+        <span class="db-hd-switcher-divider">|</span>
+        <button class="db-hd-switcher-btn db-hd-switcher-btn--active" disabled>عربي</button>
+      {% else %}
+        <button class="db-hd-switcher-btn db-hd-switcher-btn--active" disabled>EN</button>
+        <span class="db-hd-switcher-divider">|</span>
+        <form action="/localization" method="POST">
+          <input type="hidden" name="_method" value="PUT">
+          <input type="hidden" name="return_to" value="{{ request.path }}">
+          <input type="hidden" name="locale_code" value="ar">
+          <button type="submit" class="db-hd-switcher-btn">عربي</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+
+  var nav    = document.getElementById('db-hd-nav');
+  var burger = document.getElementById('db-hd-burger');
+  var mobile = document.getElementById('db-hd-mobile');
+
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('db-hd-scrolled', window.scrollY > 60);
+    updateActiveLink();
+  }, { passive: true });
+
+  burger.addEventListener('click', function () {
+    burger.classList.toggle('db-hd-open');
+    mobile.classList.toggle('db-hd-open');
+    document.body.style.overflow = mobile.classList.contains('db-hd-open') ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('[data-db-scroll="true"]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      var href = el.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      var target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      burger.classList.remove('db-hd-open');
+      mobile.classList.remove('db-hd-open');
+      document.body.style.overflow = '';
+      var navHeight = nav.offsetHeight;
+      var top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  });
+
+  function updateActiveLink () {
+    var navHeight = nav.offsetHeight;
+    var scrollPos = window.scrollY + navHeight + 40;
+    var links = document.querySelectorAll('#db-hd-links a[data-db-scroll="true"]');
+    var active = null;
+    links.forEach(function (link) {
+      var id = link.getAttribute('href');
+      if (!id || !id.startsWith('#')) return;
+      var sec = document.querySelector(id);
+      if (sec && sec.offsetTop <= scrollPos) active = link;
+    });
+    links.forEach(function (l) { l.classList.remove('db-hd-active'); });
+    if (active) active.classList.add('db-hd-active');
+  }
+
+  updateActiveLink();
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Donnabella Header",
+  "settings": [
+    { "type": "header", "content": "🏷️ Logo" },
+    { "type": "image_picker", "id": "logo_image",  "label": "Logo image" },
+    { "type": "range",        "id": "logo_height", "label": "Logo height", "min": 24, "max": 80, "step": 2, "unit": "px", "default": 40 },
+    { "type": "text",         "id": "logo_link",   "label": "Logo link URL", "default": "/" },
+
+    { "type": "header", "content": "🔘 CTA Button — Labels" },
+    { "type": "text", "id": "cta_label",    "label": "Button label (EN)", "default": "Get Started" },
+    { "type": "text", "id": "cta_label_ar", "label": "نص الزر (AR)",      "default": "ابدأ الآن" },
+    { "type": "text", "id": "cta_url",      "label": "Button link (#section-id or /page)", "default": "#ma-contact" },
+
+    { "type": "header", "content": "🎨 CTA Button — Colors" },
+    { "type": "color", "id": "cta_bg",               "label": "Background",       "default": "#c9a96e" },
+    { "type": "color", "id": "cta_border_color",      "label": "Border",           "default": "#c9a96e" },
+    { "type": "color", "id": "cta_text_color",        "label": "Text",             "default": "#202c38" },
+    { "type": "color", "id": "cta_hover_bg",          "label": "Hover background", "default": "#d4b87e" },
+    { "type": "color", "id": "cta_hover_border_color","label": "Hover border",     "default": "#d4b87e" },
+    { "type": "color", "id": "cta_hover_text_color",  "label": "Hover text",       "default": "#ffffff" },
+
+    { "type": "header", "content": "🌐 Language Switcher — Colors" },
+    { "type": "color", "id": "sw_border_color",  "label": "Border color",        "default": "#c9a96e" },
+    { "type": "color", "id": "sw_active_bg",     "label": "Active pill background", "default": "#c9a96e" },
+    { "type": "color", "id": "sw_active_text",   "label": "Active text",         "default": "#202c38" },
+    { "type": "color", "id": "sw_inactive_text", "label": "Inactive text",       "default": "#c9a96e" },
+    { "type": "color", "id": "sw_hover_text",    "label": "Hover text",           "default": "#ffffff" },
+
+    { "type": "header", "content": "🔗 Link 1" },
+    { "type": "text", "id": "nav_label_en_1", "label": "Label (EN)", "default": "Services" },
+    { "type": "text", "id": "nav_label_ar_1", "label": "التسمية (AR)", "default": "خدماتنا" },
+    { "type": "text", "id": "nav_target_1",   "label": "Target (#section-id or /page)", "default": "#ma-services" },
+
+    { "type": "header", "content": "🔗 Link 2" },
+    { "type": "text", "id": "nav_label_en_2", "label": "Label (EN)", "default": "Why Us" },
+    { "type": "text", "id": "nav_label_ar_2", "label": "التسمية (AR)", "default": "لماذا نحن" },
+    { "type": "text", "id": "nav_target_2",   "label": "Target (#section-id or /page)", "default": "#ma-why" },
+
+    { "type": "header", "content": "🔗 Link 3" },
+    { "type": "text", "id": "nav_label_en_3", "label": "Label (EN)", "default": "How We Work" },
+    { "type": "text", "id": "nav_label_ar_3", "label": "التسمية (AR)", "default": "كيف نعمل" },
+    { "type": "text", "id": "nav_target_3",   "label": "Target (#section-id or /page)", "default": "#ma-process" },
+
+    { "type": "header", "content": "🔗 Link 4" },
+    { "type": "text", "id": "nav_label_en_4", "label": "Label (EN)", "default": "Results" },
+    { "type": "text", "id": "nav_label_ar_4", "label": "التسمية (AR)", "default": "نتائجنا" },
+    { "type": "text", "id": "nav_target_4",   "label": "Target (#section-id or /page)", "default": "#ma-results" },
+
+    { "type": "header", "content": "🔗 Link 5" },
+    { "type": "text", "id": "nav_label_en_5", "label": "Label (EN)", "default": "Contact" },
+    { "type": "text", "id": "nav_label_ar_5", "label": "التسمية (AR)", "default": "تواصل معنا" },
+    { "type": "text", "id": "nav_target_5",   "label": "Target (#section-id or /page)", "default": "#ma-contact" },
+
+    { "type": "header", "content": "🔗 Link 6" },
+    { "type": "text", "id": "nav_label_en_6", "label": "Label (EN)" },
+    { "type": "text", "id": "nav_label_ar_6", "label": "التسمية (AR)" },
+    { "type": "text", "id": "nav_target_6",   "label": "Target" },
+
+    { "type": "header", "content": "🔗 Link 7" },
+    { "type": "text", "id": "nav_label_en_7", "label": "Label (EN)" },
+    { "type": "text", "id": "nav_label_ar_7", "label": "التسمية (AR)" },
+    { "type": "text", "id": "nav_target_7",   "label": "Target" },
+
+    { "type": "header", "content": "🔗 Link 8" },
+    { "type": "text", "id": "nav_label_en_8", "label": "Label (EN)" },
+    { "type": "text", "id": "nav_label_ar_8", "label": "التسمية (AR)" },
+    { "type": "text", "id": "nav_target_8",   "label": "Target" }
+  ],
+  "presets": [{ "name": "Marketing Agency Header" }]
+}
+{% endschema %}

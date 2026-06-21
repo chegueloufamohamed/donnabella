@@ -1,0 +1,551 @@
+{% comment %}
+  Team Showcase Section
+  Arabic / English bilingual — auto-switches via request.locale
+{% endcomment %}
+
+{% comment %} ============================================================
+  ARABIC / ENGLISH LANGUAGE DETECTION
+================================================================ {% endcomment %}
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+{% comment %} Assign active section text based on language {% endcomment %}
+{% if is_arabic %}
+  {% assign active_title    = section.settings.section_title_ar    | default: section.settings.section_title %}
+  {% assign active_subtitle = section.settings.section_subtitle_ar | default: section.settings.section_subtitle %}
+{% else %}
+  {% assign active_title    = section.settings.section_title %}
+  {% assign active_subtitle = section.settings.section_subtitle %}
+{% endif %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+{% comment %} Always load Arabic fonts {% endcomment %}
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+{% comment %} Conditionally load selected EN fonts {% endcomment %}
+{% assign fonts_to_load = '' %}
+{% if section.settings.title_font != 'inherit' %}
+  {% assign fonts_to_load = fonts_to_load | append: section.settings.title_font | replace: ' ', '+' | append: ':wght@300;400;600;700;800;900&family=' %}
+{% endif %}
+{% if section.settings.subtitle_font != 'inherit' and section.settings.subtitle_font != section.settings.title_font %}
+  {% assign fonts_to_load = fonts_to_load | append: section.settings.subtitle_font | replace: ' ', '+' | append: ':wght@300;400;600;700;800;900&family=' %}
+{% endif %}
+{% if fonts_to_load != '' %}
+  {% assign fonts_to_load = fonts_to_load | remove_last: '&family=' %}
+  <link href="https://fonts.googleapis.com/css2?family={{ fonts_to_load }}&display=swap" rel="stylesheet">
+{% endif %}
+
+<div class="section-team-showcase section-padding" id="team-showcase-{{ section.id }}" dir="{{ text_dir }}">
+  <div class="page-width">
+
+    <!-- Section Header -->
+    <div class="team-showcase-header">
+      <h2 class="team-showcase-title {% if is_arabic %}team-showcase-title--ar{% endif %}">
+        {{ active_title }}
+      </h2>
+      {% if active_subtitle != blank %}
+        <p class="team-showcase-subtitle {% if is_arabic %}team-showcase-subtitle--ar{% endif %}">
+          {{ active_subtitle }}
+        </p>
+      {% endif %}
+    </div>
+
+    <!-- Team Layout: Left Large | Middle 2x2 Grid | Right Large -->
+    <!-- In RTL the grid columns flow right-to-left automatically -->
+    <div class="team-showcase-grid">
+
+      <!-- LEFT COLUMN (becomes right in RTL) - Large Photo -->
+      <div class="team-column team-column--large">
+        {% for block in section.blocks %}
+          {% if block.settings.position == 'left' %}
+            {% if is_arabic %}
+              {% assign member_name = block.settings.name_ar | default: block.settings.name %}
+            {% else %}
+              {% assign member_name = block.settings.name %}
+            {% endif %}
+            <div class="team-member-large" {{ block.shopify_attributes }}>
+              {% if block.settings.image %}
+                <div class="team-member-image-wrap">
+                  {{ block.settings.image | image_url: width: 950 | image_tag:
+                    loading: 'lazy',
+                    sizes: '(min-width: 1200px) 400w, 100vw',
+                    widths: '400, 600, 800, 950',
+                    alt: member_name,
+                    class: 'team-member-image'
+                  }}
+                  <div class="team-member-overlay {% if is_arabic %}team-member-overlay--ar{% endif %}">
+                    <h3 class="team-member-name">{{ member_name }}</h3>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- MIDDLE COLUMN - 2x2 Grid -->
+      <div class="team-column team-column--grid">
+        <div class="team-grid-2x2">
+          {% for block in section.blocks %}
+            {% if block.settings.position == 'middle' %}
+              {% if is_arabic %}
+                {% assign member_name = block.settings.name_ar | default: block.settings.name %}
+              {% else %}
+                {% assign member_name = block.settings.name %}
+              {% endif %}
+              <div class="team-member-small" {{ block.shopify_attributes }}>
+                {% if block.settings.image %}
+                  <div class="team-member-image-wrap">
+                    {{ block.settings.image | image_url: width: 600 | image_tag:
+                      loading: 'lazy',
+                      sizes: '(min-width: 1200px) 300w, 50vw',
+                      widths: '300, 400, 600',
+                      alt: member_name,
+                      class: 'team-member-image'
+                    }}
+                    <div class="team-member-overlay {% if is_arabic %}team-member-overlay--ar{% endif %}">
+                      <h3 class="team-member-name">{{ member_name }}</h3>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN (becomes left in RTL) - Large Photo -->
+      <div class="team-column team-column--large">
+        {% for block in section.blocks %}
+          {% if block.settings.position == 'right' %}
+            {% if is_arabic %}
+              {% assign member_name = block.settings.name_ar | default: block.settings.name %}
+            {% else %}
+              {% assign member_name = block.settings.name %}
+            {% endif %}
+            <div class="team-member-large" {{ block.shopify_attributes }}>
+              {% if block.settings.image %}
+                <div class="team-member-image-wrap">
+                  {{ block.settings.image | image_url: width: 950 | image_tag:
+                    loading: 'lazy',
+                    sizes: '(min-width: 1200px) 400w, 100vw',
+                    widths: '400, 600, 800, 950',
+                    alt: member_name,
+                    class: 'team-member-image'
+                  }}
+                  <div class="team-member-overlay {% if is_arabic %}team-member-overlay--ar{% endif %}">
+                    <h3 class="team-member-name">{{ member_name }}</h3>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Section */
+  #team-showcase-{{ section.id }} {
+    background-color: {{ section.settings.background_color | default: '#ffffff' }};
+  }
+
+  .section-padding {
+    padding: 50px 0;
+  }
+
+  /* Header */
+  #team-showcase-{{ section.id }} .team-showcase-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+  }
+
+  #team-showcase-{{ section.id }} .team-showcase-title {
+    font-family: '{{ section.settings.title_font }}', sans-serif;
+    font-size: {{ section.settings.title_size }}px;
+    font-weight: {{ section.settings.title_weight }};
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: {{ section.settings.title_color }};
+    margin: 0 0 12px 0;
+    text-transform: {{ section.settings.title_transform }};
+  }
+
+  /* Arabic title — Cairo, no letter-spacing, no uppercase */
+  #team-showcase-{{ section.id }} .team-showcase-title--ar {
+    font-family: 'Cairo', sans-serif;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+
+  #team-showcase-{{ section.id }} .team-showcase-subtitle {
+    font-family: '{{ section.settings.subtitle_font }}', sans-serif;
+    font-size: {{ section.settings.subtitle_size }}px;
+    font-weight: {{ section.settings.subtitle_weight }};
+    line-height: 1.6;
+    color: {{ section.settings.subtitle_color }};
+    margin: 0;
+  }
+
+  #team-showcase-{{ section.id }} .team-showcase-subtitle--ar {
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  /* Main Grid Layout */
+  #team-showcase-{{ section.id }} .team-showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 480px;
+  }
+
+  /* Column Styles */
+  #team-showcase-{{ section.id }} .team-column {
+    position: relative;
+  }
+
+  #team-showcase-{{ section.id }} .team-column--large {
+    display: flex;
+    align-items: stretch;
+  }
+
+  #team-showcase-{{ section.id }} .team-column--grid {
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* 2x2 Grid in Middle */
+  #team-showcase-{{ section.id }} .team-grid-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+  }
+
+  /* Large Team Member */
+  #team-showcase-{{ section.id }} .team-member-large {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius, 8px);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Small Team Member */
+  #team-showcase-{{ section.id }} .team-member-small {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius, 8px);
+    overflow: hidden;
+    position: relative;
+    min-height: 220px;
+  }
+
+  /* Image Wrapper */
+  #team-showcase-{{ section.id }} .team-member-image-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Images */
+  #team-showcase-{{ section.id }} .team-member-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #team-showcase-{{ section.id }} .team-member-image-wrap:hover .team-member-image {
+    transform: scale(1.05);
+  }
+
+  /* Overlay — defaults to left-aligned (LTR) */
+  #team-showcase-{{ section.id }} .team-member-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    z-index: 2;
+    text-align: left;
+  }
+
+  /* RTL overlay — name aligns to the right */
+  #team-showcase-{{ section.id }} .team-member-overlay--ar {
+    text-align: right;
+  }
+
+  #team-showcase-{{ section.id }} .team-member-name {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ffffff;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  /* Arabic name — Cairo, no transforms */
+  #team-showcase-{{ section.id }} .team-member-overlay--ar .team-member-name {
+    font-family: 'Cairo', sans-serif;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+  }
+
+  #team-showcase-{{ section.id }} .team-member-small .team-member-name {
+    font-size: 20px;
+  }
+
+  #team-showcase-{{ section.id }} .team-member-small .team-member-overlay {
+    padding: 16px;
+  }
+
+  /* Tablet */
+  @media screen and (max-width: 1024px) {
+    #team-showcase-{{ section.id }} .team-showcase-grid {
+      grid-template-columns: 1fr 1.5fr 1fr;
+      gap: 12px;
+      min-height: 400px;
+    }
+
+    #team-showcase-{{ section.id }} .team-showcase-title {
+      font-size: 32px;
+    }
+
+    #team-showcase-{{ section.id }} .team-member-name {
+      font-size: 24px;
+    }
+
+    #team-showcase-{{ section.id }} .team-member-small .team-member-name {
+      font-size: 18px;
+    }
+  }
+
+  /* Mobile */
+  @media screen and (max-width: 767px) {
+    .section-padding { padding: 40px 0; }
+
+    #team-showcase-{{ section.id }} .team-showcase-header {
+      margin-bottom: 30px;
+    }
+
+    #team-showcase-{{ section.id }} .team-showcase-title {
+      font-size: 28px;
+    }
+
+    #team-showcase-{{ section.id }} .team-showcase-subtitle {
+      font-size: 14px;
+    }
+
+    /* Stack vertically on mobile */
+    #team-showcase-{{ section.id }} .team-showcase-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      min-height: auto;
+    }
+
+    #team-showcase-{{ section.id }} .team-grid-2x2 {
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    #team-showcase-{{ section.id }} .team-member-large {
+      min-height: 350px;
+    }
+
+    #team-showcase-{{ section.id }} .team-member-small {
+      min-height: 180px;
+    }
+
+    #team-showcase-{{ section.id }} .team-member-name {
+      font-size: 20px;
+    }
+
+    #team-showcase-{{ section.id }} .team-member-small .team-member-name {
+      font-size: 16px;
+    }
+
+    #team-showcase-{{ section.id }} .team-member-overlay {
+      padding: 16px;
+    }
+
+    #team-showcase-{{ section.id }} .team-member-small .team-member-overlay {
+      padding: 12px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Team Showcase",
+  "settings": [
+    { "type": "header", "content": "🇬🇧 Section Header — English" },
+    {
+      "type": "text", "id": "section_title",
+      "label": "Section title (EN)", "default": "OUR TEAM"
+    },
+    {
+      "type": "textarea", "id": "section_subtitle",
+      "label": "Section subtitle (EN)", "default": "Our certified beauty specialists bring professional salon services straight to your door."
+    },
+
+    { "type": "header", "content": "🇸🇦 عنوان القسم — العربية" },
+    {
+      "type": "text", "id": "section_title_ar",
+      "label": "عنوان القسم (AR)", "default": "فريقنا"
+    },
+    {
+      "type": "textarea", "id": "section_subtitle_ar",
+      "label": "وصف القسم (AR)", "default": "متخصصاتنا المعتمدات يجلبن خدمات صالون احترافية مباشرة إلى باب منزلكِ."
+    },
+
+    { "type": "header", "content": "🎨 Style" },
+    {
+      "type": "color", "id": "background_color",
+      "label": "Background Color", "default": "#ffffff"
+    },
+
+    { "type": "header", "content": "✍️ Title Typography" },
+    {
+      "type": "select", "id": "title_font", "label": "Title font (EN)", "default": "inherit",
+      "options": [
+        { "value": "inherit",        "label": "Theme default" },
+        { "value": "Playfair Display","label": "Playfair Display" },
+        { "value": "Montserrat",     "label": "Montserrat" },
+        { "value": "Raleway",        "label": "Raleway" },
+        { "value": "Oswald",         "label": "Oswald" },
+        { "value": "Poppins",        "label": "Poppins" },
+        { "value": "Inter",          "label": "Inter" },
+        { "value": "Lato",           "label": "Lato" },
+        { "value": "Nunito",         "label": "Nunito" },
+        { "value": "Cinzel",         "label": "Cinzel" },
+        { "value": "Cormorant Garamond","label": "Cormorant Garamond" },
+        { "value": "Merriweather",     "label": "Merriweather" }
+      ]
+    },
+    { "type": "range", "id": "title_size", "label": "Title size", "min": 20, "max": 80, "step": 2, "unit": "px", "default": 40 },
+    {
+      "type": "select", "id": "title_weight", "label": "Title weight", "default": "700",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "select", "id": "title_transform", "label": "Title case", "default": "uppercase",
+      "options": [
+        { "value": "none",       "label": "None" },
+        { "value": "uppercase",  "label": "UPPERCASE" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ]
+    },
+    { "type": "color", "id": "title_color", "label": "Title color", "default": "#000000" },
+
+    { "type": "header", "content": "✍️ Subtitle Typography" },
+    {
+      "type": "select", "id": "subtitle_font", "label": "Subtitle font (EN)", "default": "inherit",
+      "options": [
+        { "value": "inherit",        "label": "Theme default" },
+        { "value": "Playfair Display","label": "Playfair Display" },
+        { "value": "Montserrat",     "label": "Montserrat" },
+        { "value": "Raleway",        "label": "Raleway" },
+        { "value": "Oswald",         "label": "Oswald" },
+        { "value": "Poppins",        "label": "Poppins" },
+        { "value": "Inter",          "label": "Inter" },
+        { "value": "Lato",           "label": "Lato" },
+        { "value": "Nunito",         "label": "Nunito" }
+      ]
+    },
+    { "type": "range", "id": "subtitle_size", "label": "Subtitle size", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 16 },
+    {
+      "type": "select", "id": "subtitle_weight", "label": "Subtitle weight", "default": "400",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    { "type": "color", "id": "subtitle_color", "label": "Subtitle color", "default": "#555555" }
+  ],
+  "blocks": [
+    {
+      "type": "team_member",
+      "name": "Team Member",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Team Member Photo" },
+        {
+          "type": "select", "id": "position", "label": "Position in Layout", "default": "middle",
+          "options": [
+            { "value": "left",   "label": "Left Large Photo" },
+            { "value": "middle", "label": "Middle Grid (2x2)" },
+            { "value": "right",  "label": "Right Large Photo" }
+          ],
+          "info": "Left = 1 photo, Middle = 4 photos, Right = 1 photo"
+        },
+        { "type": "header", "content": "🇬🇧 Name — English" },
+        { "type": "text", "id": "name",    "label": "Name (EN)", "default": "Team Member" },
+        { "type": "header", "content": "🇸🇦 الاسم — العربية" },
+        { "type": "text", "id": "name_ar", "label": "الاسم (AR)", "default": "عضو الفريق" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Team Showcase",
+      "blocks": [
+        {
+          "type": "team_member",
+          "settings": { "name": "SARA", "name_ar": "سارة", "position": "left" }
+        },
+        {
+          "type": "team_member",
+          "settings": { "name": "LAYLA", "name_ar": "ليلى", "position": "middle" }
+        },
+        {
+          "type": "team_member",
+          "settings": { "name": "NOUR", "name_ar": "نور", "position": "middle" }
+        },
+        {
+          "type": "team_member",
+          "settings": { "name": "HANA", "name_ar": "هناء", "position": "middle" }
+        },
+        {
+          "type": "team_member",
+          "settings": { "name": "DANA", "name_ar": "دانا", "position": "middle" }
+        },
+        {
+          "type": "team_member",
+          "settings": { "name": "MAYA", "name_ar": "مايا", "position": "right" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,529 @@
+{% comment %}
+  GLASSY COLLECTIONS SLIDER
+  Copy this ENTIRE file and paste it as a new section
+{% endcomment %}
+
+<style>
+  .glassy-collections-{{ section.id }} {
+    position: relative !important;
+    width: 100% !important;
+    padding: {{ section.settings.top_space }}px 0 {{ section.settings.bottom_space }}px !important;
+    overflow: hidden !important;
+    
+    --glassy-blur: {{ section.settings.blur }}px;
+    --glassy-saturate: {{ section.settings.saturation }}%;
+    --glassy-bg: {{ section.settings.bg_color | color_to_rgb | replace: 'rgb', 'rgba' | replace: ')', ', ' | append: section.settings.transparency | divided_by: 100.0 | append: ')' }};
+  }
+
+  {% if section.settings.bg_image %}
+  .glassy-collections-{{ section.id }}::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    opacity: {{ section.settings.image_opacity | divided_by: 100.0 }} !important;
+    z-index: -2 !important;
+    pointer-events: none !important;
+  }
+  {% endif %}
+
+  .glassy-container-{{ section.id }} {
+    position: relative !important;
+    z-index: 1 !important;
+    max-width: {{ section.settings.container_width }}px !important;
+    margin: 0 auto !important;
+    padding: 0 30px !important;
+  }
+
+  .glassy-title-{{ section.id }} {
+    font-size: {{ section.settings.title_size }}px !important;
+    font-weight: 600 !important;
+    color: {{ section.settings.title_color }} !important;
+    text-align: center !important;
+    margin-bottom: 50px !important;
+    line-height: 1.2 !important;
+  }
+
+  .glassy-wrapper-{{ section.id }} {
+    position: relative !important;
+    padding: 0 60px !important;
+  }
+
+  .glassy-slider-{{ section.id }} {
+    display: flex !important;
+    gap: {{ section.settings.card_gap }}px !important;
+    overflow-x: auto !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: none !important;
+    cursor: grab !important;
+    user-select: none !important;
+    touch-action: pan-y !important;
+  }
+
+  .glassy-slider-{{ section.id }}.active {
+    cursor: grabbing !important;
+  }
+
+  .glassy-slider-{{ section.id }}::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .glassy-card-{{ section.id }} {
+    flex: 0 0 calc((100% - ({{ section.settings.per_row | minus: 1 }} * {{ section.settings.card_gap }}px)) / {{ section.settings.per_row }}) !important;
+    position: relative !important;
+    border-radius: {{ section.settings.radius }}px !important;
+    overflow: hidden !important;
+    height: {{ section.settings.height }}px !important;
+    cursor: pointer !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .glassy-card-{{ section.id }}:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .glassy-card-img-{{ section.id }} {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  .glassy-card-img-{{ section.id }} img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    transition: transform 0.5s ease !important;
+  }
+
+  .glassy-card-{{ section.id }}:hover .glassy-card-img-{{ section.id }} img {
+    transform: scale(1.1) !important;
+  }
+
+  .glassy-card-overlay-{{ section.id }} {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 25px !important;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .glassy-card-text-{{ section.id }} {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    line-height: 1.3 !important;
+  }
+
+  .glassy-card-arrow-{{ section.id }} {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: transform 0.3s ease !important;
+  }
+
+  .glassy-card-{{ section.id }}:hover .glassy-card-arrow-{{ section.id }} {
+    transform: translateX(5px) !important;
+  }
+
+  .glassy-card-arrow-{{ section.id }} svg {
+    width: 20px !important;
+    height: 20px !important;
+    fill: #000000 !important;
+  }
+
+  .glassy-nav-{{ section.id }} {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .glassy-nav-{{ section.id }}:hover {
+    background: #f0f0f0 !important;
+    transform: translateY(-50%) scale(1.1) !important;
+  }
+
+  .glassy-nav-{{ section.id }}.prev { left: 0 !important; }
+  .glassy-nav-{{ section.id }}.next { right: 0 !important; }
+
+  .glassy-nav-{{ section.id }} svg {
+    width: 24px !important;
+    height: 24px !important;
+    fill: #000000 !important;
+  }
+
+  @media (max-width: 768px) {
+    .glassy-card-{{ section.id }} {
+      flex: 0 0 calc((100% - {{ section.settings.card_gap }}px) / 2) !important;
+    }
+    .glassy-wrapper-{{ section.id }} { padding: 0 50px !important; }
+    .glassy-nav-{{ section.id }} { width: 40px !important; height: 40px !important; }
+  }
+
+  @media (max-width: 480px) {
+    .glassy-card-{{ section.id }} { flex: 0 0 80% !important; }
+  }
+</style>
+
+<section class="glassy-collections-{{ section.id }} glassy-section">
+  <div class="glassy-container-{{ section.id }}">
+    {% if section.settings.title != blank %}
+      <h2 class="glassy-title-{{ section.id }}">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="glassy-wrapper-{{ section.id }}">
+
+      <button class="glassy-nav-{{ section.id }} prev" type="button"
+              onclick="slideGlassy{{ section.id }}('prev')" aria-label="Previous">
+        <svg viewBox="0 0 24 24">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+      </button>
+
+      <div class="glassy-slider-{{ section.id }}" id="glassySlider{{ section.id }}">
+        {% for block in section.blocks %}
+          <a href="{{ block.settings.link }}" class="glassy-card-{{ section.id }}" style="text-decoration: none;">
+            {% if block.settings.image != blank %}
+              <div class="glassy-card-img-{{ section.id }}">
+                <img src="{{ block.settings.image | image_url: width: 800 }}"
+                     alt="{{ block.settings.text | escape }}" loading="lazy">
+              </div>
+            {% endif %}
+
+            <div class="glassy-card-overlay-{{ section.id }}">
+              <span class="glassy-card-text-{{ section.id }}">{{ block.settings.text }}</span>
+              <div class="glassy-card-arrow-{{ section.id }}">
+                <svg viewBox="0 0 24 24">
+                  <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+
+      <button class="glassy-nav-{{ section.id }} next" type="button"
+              onclick="slideGlassy{{ section.id }}('next')" aria-label="Next">
+        <svg viewBox="0 0 24 24">
+          <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  'use strict';
+
+  function init(sid) {
+    var slider = document.getElementById('glassySlider' + sid);
+    if (!slider) return;
+
+    window['slideGlassy' + sid] = function(dir) {
+      var card = slider.querySelector('.glassy-card-' + sid);
+      if (!card) return;
+      var gap = {{ section.settings.card_gap }};
+      var amount = card.getBoundingClientRect().width + gap;
+      slider.scrollBy({
+        left: dir === 'next' ? amount : -amount,
+        behavior: 'smooth'
+      });
+    };
+
+    var dragging = false, startX = 0, startScroll = 0, moved = 0;
+
+    slider.addEventListener('pointerdown', function(e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      dragging = true;
+      moved = 0;
+      slider.classList.add('active');
+      startX = e.clientX;
+      startScroll = slider.scrollLeft;
+      try { slider.setPointerCapture(e.pointerId); } catch (_) {}
+    });
+
+    slider.addEventListener('pointermove', function(e) {
+      if (!dragging) return;
+      var dx = e.clientX - startX;
+      moved = Math.max(moved, Math.abs(dx));
+      slider.scrollLeft = startScroll - dx;
+    });
+
+    function end(e) {
+      if (!dragging) return;
+      dragging = false;
+      slider.classList.remove('active');
+      try { slider.releasePointerCapture(e.pointerId); } catch (_) {}
+    }
+
+    slider.addEventListener('pointerup', end);
+    slider.addEventListener('pointercancel', end);
+
+    slider.querySelectorAll('.glassy-card-' + sid).forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        if (moved > 8) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { init("{{ section.id }}"); });
+  } else {
+    init("{{ section.id }}");
+  }
+
+  document.addEventListener('shopify:section:load', function(e) {
+    if (e && e.detail && e.detail.sectionId === "{{ section.id }}") {
+      init("{{ section.id }}");
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Glassy Slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Glassy Blur Effect"
+    },
+    {
+      "type": "paragraph",
+      "content": "Creates frosted glass effect that blurs content underneath. Works best with 50-70% transparency and no background image."
+    },
+    {
+      "type": "range",
+      "id": "blur",
+      "label": "Blur strength",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 14,
+      "info": "14-16px matches typical headers"
+    },
+    {
+      "type": "range",
+      "id": "saturation",
+      "label": "Color saturation",
+      "min": 100,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "default": 120,
+      "info": "Boosts colors behind the glass"
+    },
+    {
+      "type": "range",
+      "id": "transparency",
+      "label": "Transparency",
+      "min": 30,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 60,
+      "info": "Lower = more see-through"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff",
+      "info": "Shows through the glass effect"
+    },
+    {
+      "type": "header",
+      "content": "Optional Background Image"
+    },
+    {
+      "type": "paragraph",
+      "content": "Optional: Add image behind glass effect. Leave empty for best results."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "image_opacity",
+      "label": "Image opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "top_space",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "bottom_space",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "container_width",
+      "label": "Container width",
+      "min": 1000,
+      "max": 2000,
+      "step": 100,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Everyday Essentials"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "range",
+      "id": "per_row",
+      "label": "Cards per row",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Card height",
+      "min": 200,
+      "max": 600,
+      "step": 20,
+      "unit": "px",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Collection"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glassy Slider",
+      "blocks": [
+        { "type": "card", "settings": { "text": "Skin" } },
+        { "type": "card", "settings": { "text": "Hair" } },
+        { "type": "card", "settings": { "text": "Body" } },
+        { "type": "card", "settings": { "text": "Fragrance" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

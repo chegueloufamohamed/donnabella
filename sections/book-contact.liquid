@@ -1,0 +1,861 @@
+{% comment %}
+  Book Now Section - Two Column Layout
+  Left: Photo | Right: Header + Form
+  Arabic/English bilingual - auto-switches via request.locale
+{% endcomment %}
+
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+{% if is_arabic %}
+  {% assign active_heading = section.settings.heading_ar | default: section.settings.heading %}
+  {% assign active_subheading = section.settings.subheading_ar | default: section.settings.subheading %}
+  {% assign active_button_text = section.settings.button_text_ar | default: section.settings.button_text %}
+  {% assign label_name = section.settings.label_name_ar | default: "الاسم الكامل" %}
+  {% assign label_phone = section.settings.label_phone_ar | default: "رقم الهاتف" %}
+  {% assign label_email = section.settings.label_email_ar | default: "البريد الإلكتروني" %}
+  {% assign label_date = section.settings.label_date_ar | default: "التاريخ المفضل" %}
+  {% assign label_message = section.settings.label_message_ar | default: "طلبات خاصة" %}
+  {% assign label_optional = section.settings.label_optional_ar | default: "(اختياري)" %}
+  {% assign placeholder_name = section.settings.placeholder_name_ar | default: "أدخل اسمك" %}
+  {% assign placeholder_phone = section.settings.placeholder_phone_ar | default: "+971 XX XXX XXXX" %}
+  {% assign placeholder_email = section.settings.placeholder_email_ar | default: "بريدك@example.com" %}
+  {% assign placeholder_message = section.settings.placeholder_message_ar | default: "أخبرينا عن أي متطلبات خاصة..." %}
+  {% assign trust_1 = section.settings.trust_1_ar | default: "تأكيد فوري" %}
+  {% assign trust_2 = section.settings.trust_2_ar | default: "حجز آمن" %}
+  {% assign trust_3 = section.settings.trust_3_ar | default: "خدمة احترافية" %}
+  {% assign active_heading_font = section.settings.heading_font_family_ar %}
+  {% assign active_subheading_font = section.settings.subheading_font_family_ar %}
+  {% assign active_body_font = section.settings.body_font_family_ar %}
+  {% assign active_label_font = section.settings.label_font_family_ar %}
+{% else %}
+  {% assign active_heading = section.settings.heading %}
+  {% assign active_subheading = section.settings.subheading %}
+  {% assign active_button_text = section.settings.button_text | default: "Book Your Appointment" %}
+  {% assign label_name = "Full Name" %}
+  {% assign label_phone = "Phone Number" %}
+  {% assign label_email = "Email Address" %}
+  {% assign label_date = "Preferred Date" %}
+  {% assign label_message = "Special Requests" %}
+  {% assign label_optional = "(Optional)" %}
+  {% assign placeholder_name = "Enter your name" %}
+  {% assign placeholder_phone = "+971 XX XXX XXXX" %}
+  {% assign placeholder_email = "your@email.com" %}
+  {% assign placeholder_message = "Tell us about any specific requirements..." %}
+  {% assign trust_1 = "Instant Confirmation" %}
+  {% assign trust_2 = "Secure Booking" %}
+  {% assign trust_3 = "Professional Service" %}
+  {% assign active_heading_font = section.settings.heading_font_family %}
+  {% assign active_subheading_font = section.settings.subheading_font_family %}
+  {% assign active_body_font = section.settings.body_font_family %}
+  {% assign active_label_font = section.settings.label_font_family %}
+{% endif %}
+
+{% assign default_photo = blank %}
+{% if section.settings.photo_women != blank %}
+  {% assign default_photo = section.settings.photo_women %}
+{% elsif section.settings.photo_men != blank %}
+  {% assign default_photo = section.settings.photo_men %}
+{% endif %}
+
+<section id="{{ section.settings.anchor_id | default: 'book-now' }}" class="book-section-{{ section.id }}" dir="{{ text_dir }}">
+
+  <div class="book-bg-{{ section.id }}" aria-hidden="true">
+    <div class="book-blob-1-{{ section.id }}"></div>
+    <div class="book-blob-2-{{ section.id }}"></div>
+    <div class="book-blob-3-{{ section.id }}"></div>
+  </div>
+
+  <div class="book-layout-{{ section.id }}">
+
+    <div class="book-photo-col-{{ section.id }}">
+      {% if default_photo != blank %}
+        <div class="book-photo-wrap-{{ section.id }}">
+          <img
+            src="{{ default_photo | image_url: width: 1200 }}"
+            alt="{{ section.settings.photo_alt | default: 'Booking image' }}"
+            class="book-photo-{{ section.id }} book-dynamic-photo-{{ section.id }}"
+            loading="eager"
+            {% if section.settings.photo_women != blank %}data-photo-women="{{ section.settings.photo_women | image_url: width: 1200 }}"{% endif %}
+            {% if section.settings.photo_men != blank %}data-photo-men="{{ section.settings.photo_men | image_url: width: 1200 }}"{% endif %}
+          >
+          {% if section.settings.photo_overlay_opacity > 0 %}
+            <div class="book-photo-overlay-{{ section.id }}"></div>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="book-photo-placeholder-{{ section.id }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <path d="M21 15l-5-5L5 21"></path>
+          </svg>
+          <span>Add a photo in settings</span>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="book-right-col-{{ section.id }}">
+
+      <div class="book-header-{{ section.id }}">
+        {% if active_heading != blank %}
+          <h2 class="book-heading-{{ section.id }}">{{ active_heading }}</h2>
+        {% endif %}
+        {% if active_subheading != blank %}
+          <p class="book-subheading-{{ section.id }}">{{ active_subheading }}</p>
+        {% endif %}
+      </div>
+
+      <div class="book-glass-{{ section.id }}">
+
+        {% if section.settings.enable_glow %}
+          <div class="book-glow-border-{{ section.id }}" aria-hidden="true"></div>
+        {% endif %}
+
+        <form class="book-form-{{ section.id }}" action="{{ section.settings.form_action }}" method="post" accept-charset="UTF-8">
+
+          <div class="book-row-{{ section.id }}">
+            <div class="book-field-{{ section.id }}">
+              <label for="book-name-{{ section.id }}" class="book-label-{{ section.id }}">{{ label_name }}</label>
+              <input type="text" id="book-name-{{ section.id }}" name="name" class="book-input-{{ section.id }}" placeholder="{{ placeholder_name }}" required>
+            </div>
+            <div class="book-field-{{ section.id }}">
+              <label for="book-phone-{{ section.id }}" class="book-label-{{ section.id }}">{{ label_phone }}</label>
+              <input type="tel" id="book-phone-{{ section.id }}" name="phone" class="book-input-{{ section.id }}" placeholder="{{ placeholder_phone }}" required>
+            </div>
+          </div>
+
+          <div class="book-row-{{ section.id }}">
+            <div class="book-field-{{ section.id }}">
+              <label for="book-email-{{ section.id }}" class="book-label-{{ section.id }}">{{ label_email }}</label>
+              <input type="email" id="book-email-{{ section.id }}" name="email" class="book-input-{{ section.id }}" placeholder="{{ placeholder_email }}" required>
+            </div>
+            <div class="book-field-{{ section.id }}">
+              <label for="book-date-{{ section.id }}" class="book-label-{{ section.id }}">{{ label_date }}</label>
+              <input type="date" id="book-date-{{ section.id }}" name="date" class="book-input-{{ section.id }}" required>
+            </div>
+          </div>
+
+          <div class="book-field-{{ section.id }}">
+            <label for="book-message-{{ section.id }}" class="book-label-{{ section.id }}">
+              {{ label_message }} <span style="opacity:0.5;font-weight:400">{{ label_optional }}</span>
+            </label>
+            <textarea id="book-message-{{ section.id }}" name="message" class="book-textarea-{{ section.id }}" rows="2" placeholder="{{ placeholder_message }}"></textarea>
+          </div>
+
+          <button type="submit" class="book-btn-{{ section.id }}">
+            <span>{{ active_button_text }}</span>
+            {% if is_arabic %}
+              <span class="book-btn-arrow-{{ section.id }}">←</span>
+            {% else %}
+              <span class="book-btn-arrow-{{ section.id }}">→</span>
+            {% endif %}
+          </button>
+
+        </form>
+
+        {% if section.settings.show_trust_badges %}
+          <div class="book-trust-{{ section.id }}">
+            <div class="book-trust-item-{{ section.id }}"><span>⚡</span> {{ trust_1 }}</div>
+            <div class="book-trust-item-{{ section.id }}"><span>🔒</span> {{ trust_2 }}</div>
+            <div class="book-trust-item-{{ section.id }}"><span>💫</span> {{ trust_3 }}</div>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Merriweather:wght@300;400;700;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lato:wght@300;400;700;900&family=Raleway:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=EB+Garamond:wght@400;500;600;700;800&family=Cinzel:wght@400;500;600;700;800;900&family=Crimson+Text:wght@400;600;700&family=Roboto:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&family=Nunito:wght@300;400;600;700;800;900&family=Work+Sans:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&family=Almarai:wght@300;400;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap');
+
+  {% assign bg_color = section.settings.background_color %}
+  {% assign bg_r = bg_color | color_extract: 'red' %}
+  {% assign bg_g = bg_color | color_extract: 'green' %}
+  {% assign bg_b = bg_color | color_extract: 'blue' %}
+  {% assign frame_color = section.settings.frame_color %}
+  {% assign frame_r = frame_color | color_extract: 'red' %}
+  {% assign frame_g = frame_color | color_extract: 'green' %}
+  {% assign frame_b = frame_color | color_extract: 'blue' %}
+  {% assign input_bg = section.settings.input_bg_color %}
+  {% assign input_r = input_bg | color_extract: 'red' %}
+  {% assign input_g = input_bg | color_extract: 'green' %}
+  {% assign input_b = input_bg | color_extract: 'blue' %}
+
+  .book-section-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    min-height: {{ section.settings.section_min_height }}px;
+    background: rgba({{ bg_r }}, {{ bg_g }}, {{ bg_b }}, {{ section.settings.bg_opacity_pct | divided_by: 100.0 }});
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    font-family: '{{ active_body_font }}', sans-serif;
+    padding-top: {{ section.settings.section_padding_top }}px;
+    padding-bottom: {{ section.settings.section_padding_bottom }}px;
+  }
+
+  {% if is_arabic %}
+  .book-section-{{ section.id }} .book-header-{{ section.id }},
+  .book-section-{{ section.id }} .book-heading-{{ section.id }},
+  .book-section-{{ section.id }} .book-subheading-{{ section.id }},
+  .book-section-{{ section.id }} .book-label-{{ section.id }},
+  .book-section-{{ section.id }} .book-input-{{ section.id }},
+  .book-section-{{ section.id }} .book-textarea-{{ section.id }} {
+    direction: rtl !important;
+    text-align: right !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+  {% endif %}
+
+  .book-bg-{{ section.id }} {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .book-blob-1-{{ section.id }},
+  .book-blob-2-{{ section.id }},
+  .book-blob-3-{{ section.id }} {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: {{ section.settings.blob_opacity | divided_by: 100.0 }};
+    animation: blobFloat-{{ section.id }} 20s ease-in-out infinite;
+  }
+
+  .book-blob-1-{{ section.id }} {
+    width: 420px;
+    height: 420px;
+    background: {{ section.settings.blob_1_color }};
+    top: -120px;
+    left: -100px;
+  }
+
+  .book-blob-2-{{ section.id }} {
+    width: 360px;
+    height: 360px;
+    background: {{ section.settings.blob_2_color }};
+    bottom: -80px;
+    right: -80px;
+    animation-delay: -7s;
+  }
+
+  .book-blob-3-{{ section.id }} {
+    width: 280px;
+    height: 280px;
+    background: {{ section.settings.blob_3_color }};
+    top: 40%;
+    right: 15%;
+    animation-delay: -13s;
+  }
+
+  @keyframes blobFloat-{{ section.id }} {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -30px) scale(0.95); }
+  }
+
+  .book-layout-{{ section.id }} {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: {{ section.settings.container_width }}px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: grid;
+    grid-template-columns: {{ section.settings.photo_col_width }}fr {{ 100 | minus: section.settings.photo_col_width }}fr;
+    gap: {{ section.settings.column_gap }}px;
+    align-items: stretch;
+  }
+
+  .book-photo-col-{{ section.id }} {
+    position: relative;
+    min-width: 0;
+    min-height: {{ section.settings.photo_min_height }}px;
+    max-height: {{ section.settings.photo_max_height }}px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .book-photo-wrap-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    border-radius: {{ section.settings.photo_radius }}px;
+    overflow: hidden;
+    {% if section.settings.photo_shadow %}
+    box-shadow: {{ section.settings.photo_shadow_x }}px {{ section.settings.photo_shadow_y }}px {{ section.settings.photo_shadow_blur }}px rgba(0,0,0,{{ section.settings.photo_shadow_opacity | divided_by: 100.0 }});
+    {% endif %}
+  }
+
+  .book-photo-{{ section.id }} {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: {{ section.settings.photo_fit }};
+    object-position: {{ section.settings.photo_position }};
+    display: block;
+    {% if section.settings.photo_scale != 100 %}
+    transform: scale({{ section.settings.photo_scale | divided_by: 100.0 }});
+    transform-origin: {{ section.settings.photo_position }};
+    {% endif %}
+  }
+
+  {% if section.settings.photo_overlay_opacity > 0 %}
+  .book-photo-overlay-{{ section.id }} {
+    position: absolute;
+    inset: 0;
+    background: {{ section.settings.photo_overlay_color }};
+    opacity: {{ section.settings.photo_overlay_opacity | divided_by: 100.0 }};
+    pointer-events: none;
+  }
+  {% endif %}
+
+  .book-photo-placeholder-{{ section.id }} {
+    flex: 1;
+    min-height: {{ section.settings.photo_min_height }}px;
+    background: rgba({{ frame_r }}, {{ frame_g }}, {{ frame_b }}, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: {{ section.settings.heading_color }};
+    opacity: 0.4;
+    border-radius: {{ section.settings.photo_radius }}px;
+    overflow: hidden;
+  }
+
+  .book-photo-placeholder-{{ section.id }} svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .book-photo-placeholder-{{ section.id }} span {
+    font-size: 13px;
+  }
+
+  .book-right-col-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.header_form_gap }}px;
+    align-self: center;
+    min-width: 0;
+  }
+
+  .book-header-{{ section.id }} {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .book-heading-{{ section.id }} {
+    font-family: '{{ active_heading_font }}', serif;
+    font-size: clamp(22px, 2.8vw, {{ section.settings.heading_size }}px);
+    font-weight: {{ section.settings.heading_weight }};
+    letter-spacing: {{ section.settings.heading_letter_spacing }}px;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 8px;
+    line-height: 1.15;
+  }
+
+  .book-subheading-{{ section.id }} {
+    font-family: '{{ active_subheading_font }}', sans-serif;
+    font-size: clamp(13px, 1.1vw, {{ section.settings.subheading_size }}px);
+    font-weight: {{ section.settings.subheading_weight }};
+    letter-spacing: {{ section.settings.subheading_letter_spacing }}px;
+    color: {{ section.settings.subheading_color }};
+    margin: 0;
+    line-height: 1.5;
+    opacity: 0.8;
+  }
+
+  .book-glass-{{ section.id }} {
+    position: relative;
+    background: rgba({{ frame_r }}, {{ frame_g }}, {{ frame_b }}, {{ section.settings.frame_opacity_pct | divided_by: 100.0 }});
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: {{ section.settings.frame_radius }}px;
+    padding: {{ section.settings.form_padding }}px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  {% if section.settings.enable_glow %}
+  .book-glow-border-{{ section.id }} {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(90deg, transparent 0%, transparent 10%, {{ section.settings.glow_color }} 50%, transparent 90%, transparent 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: glowMove-{{ section.id }} {{ section.settings.glow_speed }}s linear infinite;
+    pointer-events: none;
+    opacity: {{ section.settings.glow_opacity | divided_by: 100.0 }};
+  }
+
+  @keyframes glowMove-{{ section.id }} {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  {% endif %}
+
+  .book-form-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .book-row-{{ section.id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .book-field-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .book-label-{{ section.id }} {
+    font-family: '{{ active_label_font }}', sans-serif;
+    font-size: {{ section.settings.label_font_size }}px;
+    font-weight: {{ section.settings.label_font_weight }};
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: {{ section.settings.label_color }};
+  }
+
+  .book-input-{{ section.id }},
+  .book-textarea-{{ section.id }} {
+    padding: 9px 13px;
+    background: rgba({{ input_r }}, {{ input_g }}, {{ input_b }}, {{ section.settings.input_opacity_pct | divided_by: 100.0 }});
+    border: none;
+    border-radius: 8px;
+    font-size: {{ section.settings.input_font_size }}px;
+    font-family: '{{ active_body_font }}', sans-serif;
+    color: {{ section.settings.input_text_color }};
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  {% if section.settings.enable_glow %}
+  .book-input-{{ section.id }}:focus,
+  .book-textarea-{{ section.id }}:focus {
+    outline: none;
+    background: rgba({{ input_r }}, {{ input_g }}, {{ input_b }}, {{ section.settings.input_focus_opacity_pct | divided_by: 100.0 }});
+    box-shadow: 0 0 0 2px {{ section.settings.glow_color }};
+    transform: translateY(-1px);
+  }
+  {% else %}
+  .book-input-{{ section.id }}:focus,
+  .book-textarea-{{ section.id }}:focus {
+    outline: none;
+    background: rgba({{ input_r }}, {{ input_g }}, {{ input_b }}, {{ section.settings.input_focus_opacity_pct | divided_by: 100.0 }});
+    transform: translateY(-1px);
+  }
+  {% endif %}
+
+  .book-input-{{ section.id }}::placeholder,
+  .book-textarea-{{ section.id }}::placeholder {
+    color: {{ section.settings.placeholder_color }};
+    opacity: 0.45;
+  }
+
+  .book-textarea-{{ section.id }} {
+    resize: none;
+    min-height: 56px;
+  }
+
+  .book-btn-{{ section.id }} {
+    width: 100%;
+    padding: 12px 24px;
+    background: {{ section.settings.button_bg_color }};
+    color: {{ section.settings.button_text_color }};
+    border: none;
+    border-radius: 8px;
+    font-size: {{ section.settings.button_font_size }}px;
+    font-weight: {{ section.settings.button_font_weight }};
+    font-family: '{{ active_body_font }}', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+    margin-top: 2px;
+  }
+
+  .book-btn-{{ section.id }}:hover {
+    background: {{ section.settings.button_hover_color }};
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  }
+
+  .book-btn-arrow-{{ section.id }} {
+    font-size: 17px;
+    transition: transform 0.25s;
+  }
+
+  {% if is_arabic %}
+  .book-btn-{{ section.id }}:hover .book-btn-arrow-{{ section.id }} {
+    transform: translateX(-4px);
+  }
+  {% else %}
+  .book-btn-{{ section.id }}:hover .book-btn-arrow-{{ section.id }} {
+    transform: translateX(4px);
+  }
+  {% endif %}
+
+  .book-trust-{{ section.id }} {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    padding-top: 14px;
+    margin-top: 4px;
+    border-top: 1px solid {{ section.settings.trust_border_color }};
+    flex-wrap: wrap;
+  }
+
+  .book-trust-item-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: '{{ active_body_font }}', sans-serif;
+    color: {{ section.settings.trust_text_color }};
+    opacity: 0.75;
+  }
+
+  @media (max-width: 768px) {
+    .book-section-{{ section.id }} {
+      padding-top: {{ section.settings.section_padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.section_padding_bottom_mobile }}px;
+    }
+
+    .book-layout-{{ section.id }} {
+      grid-template-columns: 1fr;
+      padding: 0 20px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .book-photo-col-{{ section.id }} {
+      min-height: 260px;
+      max-height: 320px;
+    }
+
+    .book-photo-wrap-{{ section.id }} {
+      border-radius: {{ section.settings.photo_radius | times: 0.7 | round }}px;
+    }
+
+    .book-right-col-{{ section.id }} {
+      height: auto;
+    }
+
+    .book-row-{{ section.id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .book-heading-{{ section.id }} {
+      font-size: {{ section.settings.heading_size | times: 0.7 }}px;
+    }
+
+    .book-subheading-{{ section.id }} {
+      font-size: {{ section.settings.subheading_size | times: 0.9 }}px;
+    }
+  }
+</style>
+
+<script>
+(function () {
+  var id = '{{ section.id }}';
+  var bookingParam = new URLSearchParams(window.location.search).get('booking');
+  var gender = bookingParam === 'men' ? 'men' : 'women';
+
+  if (!id) return;
+
+  var themes = {
+    women: {
+      sectionBg: [
+        'radial-gradient(ellipse 80% 60% at 20% 50%, rgba(255,182,193,0.22) 0%, transparent 60%)',
+        'radial-gradient(ellipse 60% 80% at 80% 30%, rgba(221,160,221,0.18) 0%, transparent 55%)',
+        'radial-gradient(ellipse 50% 50% at 50% 90%, rgba(255,240,245,0.15) 0%, transparent 50%)',
+        'linear-gradient(135deg, #1a0a1e 0%, #2d1b35 30%, #1e0f2a 60%, #120818 100%)'
+      ].join(','),
+      blob1: 'radial-gradient(circle, rgba(255,182,193,0.5) 0%, transparent 70%)',
+      blob2: 'radial-gradient(circle, rgba(221,160,221,0.45) 0%, transparent 70%)',
+      blob3: 'radial-gradient(circle, rgba(255,200,230,0.4) 0%, transparent 70%)',
+      headingColor: '#ffffff',
+      subheadingColor: 'rgba(255,200,215,0.85)',
+      labelColor: 'rgba(255,220,230,0.9)',
+      inputBg: 'rgba(255,255,255,0.12)',
+      inputBorder: '1px solid rgba(255,200,215,0.25)',
+      inputText: '#ffffff',
+      inputFocusBg: 'rgba(255,255,255,0.2)',
+      inputFocusShadow: 'rgba(255,182,193,0.7)',
+      placeholder: 'rgba(255,255,255,0.4)',
+      cardBg: 'rgba(255,255,255,0.09)',
+      cardBorder: '1px solid rgba(255,200,215,0.3)',
+      cardShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)',
+      btnBg: 'linear-gradient(135deg, rgba(255,100,150,0.55) 0%, rgba(200,80,180,0.55) 100%)',
+      btnBorder: '1px solid rgba(255,182,193,0.5)',
+      btnHoverBg: 'linear-gradient(135deg, rgba(255,100,150,0.75) 0%, rgba(200,80,180,0.75) 100%)',
+      glowColor: 'rgba(255,182,193,0.9)',
+      trustBorder: 'rgba(255,200,215,0.25)',
+      trustText: 'rgba(255,220,230,0.75)',
+      calendarFilter: 'invert(1) opacity(0.6)'
+    },
+    men: {
+      sectionBg: [
+        'radial-gradient(ellipse 80% 60% at 80% 50%, rgba(100,149,237,0.18) 0%, transparent 60%)',
+        'radial-gradient(ellipse 60% 80% at 20% 30%, rgba(70,130,180,0.15) 0%, transparent 55%)',
+        'radial-gradient(ellipse 50% 50% at 50% 90%, rgba(200,220,255,0.1) 0%, transparent 50%)',
+        'linear-gradient(135deg, #080e1a 0%, #0f1e30 30%, #0a1525 60%, #060d18 100%)'
+      ].join(','),
+      blob1: 'radial-gradient(circle, rgba(100,149,237,0.45) 0%, transparent 70%)',
+      blob2: 'radial-gradient(circle, rgba(70,130,180,0.4) 0%, transparent 70%)',
+      blob3: 'radial-gradient(circle, rgba(135,206,250,0.35) 0%, transparent 70%)',
+      headingColor: '#ffffff',
+      subheadingColor: 'rgba(180,210,255,0.85)',
+      labelColor: 'rgba(180,210,255,0.9)',
+      inputBg: 'rgba(255,255,255,0.09)',
+      inputBorder: '1px solid rgba(100,149,237,0.25)',
+      inputText: '#ffffff',
+      inputFocusBg: 'rgba(255,255,255,0.16)',
+      inputFocusShadow: 'rgba(100,149,237,0.7)',
+      placeholder: 'rgba(255,255,255,0.35)',
+      cardBg: 'rgba(255,255,255,0.07)',
+      cardBorder: '1px solid rgba(100,149,237,0.3)',
+      cardShadow: '0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08)',
+      btnBg: 'linear-gradient(135deg, rgba(60,120,220,0.55) 0%, rgba(40,100,190,0.55) 100%)',
+      btnBorder: '1px solid rgba(100,149,237,0.5)',
+      btnHoverBg: 'linear-gradient(135deg, rgba(60,120,220,0.75) 0%, rgba(40,100,190,0.75) 100%)',
+      glowColor: 'rgba(100,149,237,0.9)',
+      trustBorder: 'rgba(100,149,237,0.25)',
+      trustText: 'rgba(180,210,255,0.75)',
+      calendarFilter: 'invert(1) opacity(0.6)'
+    }
+  };
+
+  var t = themes[gender];
+  var photoEl = document.querySelector('.book-dynamic-photo-' + id);
+
+  if (photoEl) {
+    if (gender === 'women' && photoEl.dataset.photoWomen) {
+      photoEl.src = photoEl.dataset.photoWomen;
+    } else if (gender === 'men' && photoEl.dataset.photoMen) {
+      photoEl.src = photoEl.dataset.photoMen;
+    }
+  }
+
+  if (!t) return;
+
+  var css = '\n'
+    + '.book-section-' + id + '{background:' + t.sectionBg + '!important}\n'
+    + '.book-blob-1-' + id + '{background:' + t.blob1 + '!important}\n'
+    + '.book-blob-2-' + id + '{background:' + t.blob2 + '!important}\n'
+    + '.book-blob-3-' + id + '{background:' + t.blob3 + '!important}\n'
+    + '.book-heading-' + id + '{color:' + t.headingColor + '!important}\n'
+    + '.book-subheading-' + id + '{color:' + t.subheadingColor + '!important}\n'
+    + '.book-label-' + id + '{color:' + t.labelColor + '!important}\n'
+    + '.book-glass-' + id + '{background:' + t.cardBg + '!important;border:' + t.cardBorder + '!important;box-shadow:' + t.cardShadow + '!important}\n'
+    + '.book-input-' + id + ',.book-textarea-' + id + '{background:' + t.inputBg + '!important;border:' + t.inputBorder + '!important;color:' + t.inputText + '!important}\n'
+    + '.book-input-' + id + ':focus,.book-textarea-' + id + ':focus{background:' + t.inputFocusBg + '!important;box-shadow:0 0 0 2px ' + t.inputFocusShadow + '!important}\n'
+    + '.book-input-' + id + '::placeholder,.book-textarea-' + id + '::placeholder{color:' + t.placeholder + '!important;opacity:1!important}\n'
+    + '.book-input-' + id + '[type="date"]::-webkit-calendar-picker-indicator{filter:' + t.calendarFilter + '}\n'
+    + '.book-btn-' + id + '{background:' + t.btnBg + '!important;border:' + t.btnBorder + '!important;color:#fff!important}\n'
+    + '.book-btn-' + id + ':hover{background:' + t.btnHoverBg + '!important;box-shadow:0 8px 30px rgba(0,0,0,0.35)!important}\n'
+    + '.book-glow-border-' + id + '{background:linear-gradient(90deg,transparent 0%,transparent 10%,' + t.glowColor + ' 50%,transparent 90%,transparent 100%)!important}\n'
+    + '.book-trust-' + id + '{border-top-color:' + t.trustBorder + '!important}\n'
+    + '.book-trust-item-' + id + '{color:' + t.trustText + '!important}\n';
+
+  var el = document.createElement('style');
+  el.textContent = css;
+  document.head.appendChild(el);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Book Now Contact",
+  "settings": [
+    { "type": "header", "content": "Content - English" },
+    { "type": "text", "id": "heading", "label": "Heading (EN)", "default": "Book Your Appointment" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading (EN)", "default": "Experience luxury beauty services in the comfort of your home." },
+    { "type": "text", "id": "button_text", "label": "Button text (EN)", "default": "Book Your Appointment" },
+
+    { "type": "header", "content": "المحتوى - العربية" },
+    { "type": "text", "id": "heading_ar", "label": "العنوان (AR)", "default": "احجزي موعدك" },
+    { "type": "textarea", "id": "subheading_ar", "label": "العنوان الفرعي (AR)", "default": "استمتعي بخدمات التجميل الفاخرة في راحة منزلك." },
+    { "type": "text", "id": "button_text_ar", "label": "نص الزر (AR)", "default": "احجزي موعدك الآن" },
+
+    { "type": "header", "content": "تسميات الحقول - العربية" },
+    { "type": "text", "id": "label_name_ar", "label": "تسمية الاسم (AR)", "default": "الاسم الكامل" },
+    { "type": "text", "id": "label_phone_ar", "label": "تسمية الهاتف (AR)", "default": "رقم الهاتف" },
+    { "type": "text", "id": "label_email_ar", "label": "تسمية البريد (AR)", "default": "البريد الإلكتروني" },
+    { "type": "text", "id": "label_date_ar", "label": "تسمية التاريخ (AR)", "default": "التاريخ المفضل" },
+    { "type": "text", "id": "label_message_ar", "label": "تسمية الطلبات (AR)", "default": "طلبات خاصة" },
+    { "type": "text", "id": "label_optional_ar", "label": "نص اختياري (AR)", "default": "(اختياري)" },
+    { "type": "text", "id": "placeholder_name_ar", "label": "نص توضيحي - الاسم (AR)", "default": "أدخل اسمك" },
+    { "type": "text", "id": "placeholder_phone_ar", "label": "نص توضيحي - الهاتف (AR)", "default": "+971 XX XXX XXXX" },
+    { "type": "text", "id": "placeholder_email_ar", "label": "نص توضيحي - البريد (AR)", "default": "بريدك@example.com" },
+    { "type": "text", "id": "placeholder_message_ar", "label": "نص توضيحي - الطلبات (AR)", "default": "أخبرينا عن أي متطلبات خاصة..." },
+
+    { "type": "header", "content": "شارات الثقة - العربية" },
+    { "type": "text", "id": "trust_1_ar", "label": "شارة الثقة 1 (AR)", "default": "تأكيد فوري" },
+    { "type": "text", "id": "trust_2_ar", "label": "شارة الثقة 2 (AR)", "default": "حجز آمن" },
+    { "type": "text", "id": "trust_3_ar", "label": "شارة الثقة 3 (AR)", "default": "خدمة احترافية" },
+
+    { "type": "header", "content": "Heading Font - English" },
+    { "type": "select", "id": "heading_font_family", "label": "Heading font (EN)", "default": "Playfair Display", "options": [ { "value": "Merriweather", "label": "Merriweather" }, { "value": "Playfair Display", "label": "Playfair Display" }, { "value": "Cormorant Garamond", "label": "Cormorant Garamond" }, { "value": "EB Garamond", "label": "EB Garamond" }, { "value": "Crimson Text", "label": "Crimson Text" }, { "value": "Cinzel", "label": "Cinzel" }, { "value": "Montserrat", "label": "Montserrat" }, { "value": "Raleway", "label": "Raleway" }, { "value": "Oswald", "label": "Oswald" }, { "value": "Poppins", "label": "Poppins" }, { "value": "Inter", "label": "Inter" }, { "value": "Work Sans", "label": "Work Sans" }, { "value": "Roboto", "label": "Roboto" }, { "value": "Open Sans", "label": "Open Sans" }, { "value": "Lato", "label": "Lato" }, { "value": "Nunito", "label": "Nunito" } ] },
+
+    { "type": "header", "content": "خط العنوان - العربية" },
+    { "type": "select", "id": "heading_font_family_ar", "label": "خط العنوان (AR)", "default": "Cairo", "options": [ { "value": "Cairo", "label": "Cairo" }, { "value": "Tajawal", "label": "Tajawal" }, { "value": "Almarai", "label": "Almarai" }, { "value": "Noto Kufi Arabic", "label": "Noto Kufi Arabic" } ] },
+
+    { "type": "header", "content": "Heading Size and Style" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "select", "id": "heading_weight", "label": "Heading weight", "default": "600", "options": [ { "value": "300", "label": "Light" }, { "value": "400", "label": "Normal" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" }, { "value": "800", "label": "Extra Bold" }, { "value": "900", "label": "Black" } ] },
+    { "type": "range", "id": "heading_letter_spacing", "label": "Heading letter spacing (EN only)", "min": -2, "max": 10, "step": 0.5, "unit": "px", "default": 0 },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#1f2937" },
+
+    { "type": "header", "content": "Subheading Font - English" },
+    { "type": "select", "id": "subheading_font_family", "label": "Subheading font (EN)", "default": "Montserrat", "options": [ { "value": "Merriweather", "label": "Merriweather" }, { "value": "Playfair Display", "label": "Playfair Display" }, { "value": "Cormorant Garamond", "label": "Cormorant Garamond" }, { "value": "EB Garamond", "label": "EB Garamond" }, { "value": "Crimson Text", "label": "Crimson Text" }, { "value": "Cinzel", "label": "Cinzel" }, { "value": "Montserrat", "label": "Montserrat" }, { "value": "Raleway", "label": "Raleway" }, { "value": "Oswald", "label": "Oswald" }, { "value": "Poppins", "label": "Poppins" }, { "value": "Inter", "label": "Inter" }, { "value": "Work Sans", "label": "Work Sans" }, { "value": "Roboto", "label": "Roboto" }, { "value": "Open Sans", "label": "Open Sans" }, { "value": "Lato", "label": "Lato" }, { "value": "Nunito", "label": "Nunito" } ] },
+
+    { "type": "header", "content": "خط العنوان الفرعي - العربية" },
+    { "type": "select", "id": "subheading_font_family_ar", "label": "خط العنوان الفرعي (AR)", "default": "Tajawal", "options": [ { "value": "Cairo", "label": "Cairo" }, { "value": "Tajawal", "label": "Tajawal" }, { "value": "Almarai", "label": "Almarai" }, { "value": "Noto Kufi Arabic", "label": "Noto Kufi Arabic" } ] },
+
+    { "type": "header", "content": "Subheading Size and Style" },
+    { "type": "range", "id": "subheading_size", "label": "Subheading size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 15 },
+    { "type": "select", "id": "subheading_weight", "label": "Subheading weight", "default": "400", "options": [ { "value": "300", "label": "Light" }, { "value": "400", "label": "Normal" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" } ] },
+    { "type": "range", "id": "subheading_letter_spacing", "label": "Subheading letter spacing (EN only)", "min": -1, "max": 8, "step": 0.5, "unit": "px", "default": 0 },
+    { "type": "color", "id": "subheading_color", "label": "Subheading color", "default": "#1f2937" },
+
+    { "type": "header", "content": "Form and Body Font - English" },
+    { "type": "select", "id": "body_font_family", "label": "Form / body font (EN)", "default": "Montserrat", "options": [ { "value": "Merriweather", "label": "Merriweather" }, { "value": "Playfair Display", "label": "Playfair Display" }, { "value": "Cormorant Garamond", "label": "Cormorant Garamond" }, { "value": "EB Garamond", "label": "EB Garamond" }, { "value": "Crimson Text", "label": "Crimson Text" }, { "value": "Cinzel", "label": "Cinzel" }, { "value": "Montserrat", "label": "Montserrat" }, { "value": "Raleway", "label": "Raleway" }, { "value": "Oswald", "label": "Oswald" }, { "value": "Poppins", "label": "Poppins" }, { "value": "Inter", "label": "Inter" }, { "value": "Work Sans", "label": "Work Sans" }, { "value": "Roboto", "label": "Roboto" }, { "value": "Open Sans", "label": "Open Sans" }, { "value": "Lato", "label": "Lato" }, { "value": "Nunito", "label": "Nunito" } ] },
+
+    { "type": "header", "content": "خط النموذج - العربية" },
+    { "type": "select", "id": "body_font_family_ar", "label": "خط النموذج (AR)", "default": "Tajawal", "options": [ { "value": "Cairo", "label": "Cairo" }, { "value": "Tajawal", "label": "Tajawal" }, { "value": "Almarai", "label": "Almarai" }, { "value": "Noto Kufi Arabic", "label": "Noto Kufi Arabic" } ] },
+
+    { "type": "header", "content": "Label Font - English" },
+    { "type": "select", "id": "label_font_family", "label": "Label font (EN)", "default": "Montserrat", "options": [ { "value": "Merriweather", "label": "Merriweather" }, { "value": "Playfair Display", "label": "Playfair Display" }, { "value": "Cormorant Garamond", "label": "Cormorant Garamond" }, { "value": "EB Garamond", "label": "EB Garamond" }, { "value": "Crimson Text", "label": "Crimson Text" }, { "value": "Cinzel", "label": "Cinzel" }, { "value": "Montserrat", "label": "Montserrat" }, { "value": "Raleway", "label": "Raleway" }, { "value": "Oswald", "label": "Oswald" }, { "value": "Poppins", "label": "Poppins" }, { "value": "Inter", "label": "Inter" }, { "value": "Work Sans", "label": "Work Sans" }, { "value": "Roboto", "label": "Roboto" }, { "value": "Open Sans", "label": "Open Sans" }, { "value": "Lato", "label": "Lato" }, { "value": "Nunito", "label": "Nunito" } ] },
+
+    { "type": "header", "content": "خط التسميات - العربية" },
+    { "type": "select", "id": "label_font_family_ar", "label": "خط التسميات (AR)", "default": "Cairo", "options": [ { "value": "Cairo", "label": "Cairo" }, { "value": "Tajawal", "label": "Tajawal" }, { "value": "Almarai", "label": "Almarai" }, { "value": "Noto Kufi Arabic", "label": "Noto Kufi Arabic" } ] },
+
+    { "type": "header", "content": "Font Sizes and Weights" },
+    { "type": "range", "id": "input_font_size", "label": "Input field font size", "min": 11, "max": 18, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "label_font_size", "label": "Label font size", "min": 9, "max": 16, "step": 1, "unit": "px", "default": 11 },
+    { "type": "select", "id": "label_font_weight", "label": "Label font weight", "default": "600", "options": [ { "value": "400", "label": "Normal" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" } ] },
+    { "type": "range", "id": "button_font_size", "label": "Button font size", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14 },
+    { "type": "select", "id": "button_font_weight", "label": "Button font weight", "default": "600", "options": [ { "value": "400", "label": "Normal" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" } ] },
+
+    { "type": "header", "content": "Photo Uploads" },
+    { "type": "image_picker", "id": "photo_women", "label": "Photo for women" },
+    { "type": "image_picker", "id": "photo_men", "label": "Photo for men" },
+    { "type": "text", "id": "photo_alt", "label": "Photo alt text", "default": "Booking photo" },
+
+    { "type": "header", "content": "Photo Size" },
+    { "type": "range", "id": "photo_col_width", "label": "Column width vs form", "min": 25, "max": 60, "step": 5, "default": 45 },
+    { "type": "range", "id": "photo_min_height", "label": "Minimum height", "min": 200, "max": 700, "step": 20, "unit": "px", "default": 420 },
+    { "type": "range", "id": "photo_max_height", "label": "Maximum height", "min": 400, "max": 900, "step": 20, "unit": "px", "default": 780 },
+
+    { "type": "header", "content": "Photo Shape" },
+    { "type": "range", "id": "photo_radius", "label": "Corner radius", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 20 },
+    { "type": "select", "id": "photo_fit", "label": "Fit mode", "default": "cover", "options": [ { "value": "cover", "label": "Cover" }, { "value": "contain", "label": "Contain" }, { "value": "fill", "label": "Fill" } ] },
+    { "type": "select", "id": "photo_position", "label": "Focus point", "default": "center center", "options": [ { "value": "center center", "label": "Center" }, { "value": "top center", "label": "Top center" }, { "value": "bottom center", "label": "Bottom center" }, { "value": "center left", "label": "Center left" }, { "value": "center right", "label": "Center right" }, { "value": "top left", "label": "Top left" }, { "value": "top right", "label": "Top right" }, { "value": "bottom left", "label": "Bottom left" }, { "value": "bottom right", "label": "Bottom right" } ] },
+    { "type": "range", "id": "photo_scale", "label": "Zoom (%)", "min": 80, "max": 150, "step": 5, "unit": "%", "default": 100 },
+
+    { "type": "header", "content": "Photo Overlay" },
+    { "type": "color", "id": "photo_overlay_color", "label": "Overlay color", "default": "#000000" },
+    { "type": "range", "id": "photo_overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 0 },
+
+    { "type": "header", "content": "Photo Shadow" },
+    { "type": "checkbox", "id": "photo_shadow", "label": "Enable drop shadow", "default": false },
+    { "type": "range", "id": "photo_shadow_opacity", "label": "Shadow opacity", "min": 5, "max": 80, "step": 5, "unit": "%", "default": 30 },
+    { "type": "range", "id": "photo_shadow_x", "label": "Shadow horizontal", "min": -30, "max": 30, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "photo_shadow_y", "label": "Shadow vertical", "min": -10, "max": 50, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "photo_shadow_blur", "label": "Shadow blur", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "container_width", "label": "Container max width", "min": 900, "max": 1600, "step": 50, "unit": "px", "default": 1200 },
+    { "type": "range", "id": "column_gap", "label": "Gap between columns", "min": 16, "max": 80, "step": 8, "unit": "px", "default": 40 },
+    { "type": "range", "id": "header_form_gap", "label": "Gap: header to form", "min": 8, "max": 40, "step": 4, "unit": "px", "default": 20 },
+    { "type": "range", "id": "form_padding", "label": "Form card padding", "min": 16, "max": 48, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "section_min_height", "label": "Section min height", "min": 400, "max": 900, "step": 20, "unit": "px", "default": 600 },
+
+    { "type": "header", "content": "Top and Bottom Spacing" },
+    { "type": "range", "id": "section_padding_top", "label": "Top spacing desktop", "min": 0, "max": 220, "step": 10, "unit": "px", "default": 120 },
+    { "type": "range", "id": "section_padding_bottom", "label": "Bottom spacing desktop", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 40 },
+    { "type": "range", "id": "section_padding_top_mobile", "label": "Top spacing mobile", "min": 0, "max": 180, "step": 10, "unit": "px", "default": 90 },
+    { "type": "range", "id": "section_padding_bottom_mobile", "label": "Bottom spacing mobile", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 40 },
+
+    { "type": "header", "content": "Section Background" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#f9fafb" },
+    { "type": "range", "id": "bg_opacity_pct", "label": "Background opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 100 },
+
+    { "type": "header", "content": "Background Blobs" },
+    { "type": "color", "id": "blob_1_color", "label": "Blob 1 color", "default": "#8b5cf6" },
+    { "type": "color", "id": "blob_2_color", "label": "Blob 2 color", "default": "#ec4899" },
+    { "type": "color", "id": "blob_3_color", "label": "Blob 3 color", "default": "#60a5fa" },
+    { "type": "range", "id": "blob_opacity", "label": "Blob opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 30 },
+
+    { "type": "header", "content": "Form Card" },
+    { "type": "color", "id": "frame_color", "label": "Card color", "default": "#ffffff" },
+    { "type": "range", "id": "frame_opacity_pct", "label": "Card opacity", "min": 10, "max": 95, "step": 5, "unit": "%", "default": 70 },
+    { "type": "range", "id": "frame_radius", "label": "Card border radius", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Glowing Border" },
+    { "type": "checkbox", "id": "enable_glow", "label": "Enable glowing border", "default": true },
+    { "type": "color", "id": "glow_color", "label": "Glow color", "default": "#8b5cf6" },
+    { "type": "range", "id": "glow_opacity", "label": "Glow opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 70 },
+    { "type": "range", "id": "glow_speed", "label": "Glow speed", "min": 1, "max": 10, "step": 1, "unit": "s", "default": 3 },
+
+    { "type": "header", "content": "Form Inputs" },
+    { "type": "color", "id": "label_color", "label": "Label color", "default": "#1f2937" },
+    { "type": "color", "id": "input_bg_color", "label": "Input background", "default": "#ffffff" },
+    { "type": "range", "id": "input_opacity_pct", "label": "Input opacity", "min": 10, "max": 100, "step": 5, "unit": "%", "default": 60 },
+    { "type": "range", "id": "input_focus_opacity_pct", "label": "Input focus opacity", "min": 10, "max": 100, "step": 5, "unit": "%", "default": 85 },
+    { "type": "color", "id": "input_text_color", "label": "Input text color", "default": "#1f2937" },
+    { "type": "color", "id": "placeholder_color", "label": "Placeholder color", "default": "#1f2937" },
+
+    { "type": "header", "content": "Submit Button" },
+    { "type": "color", "id": "button_bg_color", "label": "Button background", "default": "#8b5cf6" },
+    { "type": "color", "id": "button_hover_color", "label": "Button hover", "default": "#7c3aed" },
+    { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" },
+
+    { "type": "header", "content": "Trust Badges" },
+    { "type": "checkbox", "id": "show_trust_badges", "label": "Show trust badges", "default": true },
+    { "type": "color", "id": "trust_text_color", "label": "Trust text color", "default": "#1f2937" },
+    { "type": "color", "id": "trust_border_color", "label": "Trust divider color", "default": "#e5e7eb" },
+
+    { "type": "header", "content": "Form" },
+    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "default": "book-now", "info": "Use this as the link target: #book-now" },
+    { "type": "text", "id": "form_action", "label": "Form action URL" }
+  ],
+  "presets": [
+    { "name": "Book Now Contact" }
+  ]
+}
+{% endschema %}

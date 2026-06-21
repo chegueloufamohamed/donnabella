@@ -1,0 +1,664 @@
+{% comment %}
+  FAQ SECTION - TAPERED GLOWING BORDERS
+  Arabic / English bilingual — auto-switches via request.locale
+  Content tailored for Belladona home beauty services
+{% endcomment %}
+
+{% comment %} ============================================================
+  ARABIC / ENGLISH LANGUAGE DETECTION
+================================================================ {% endcomment %}
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+{% comment %} Active content {% endcomment %}
+{% if is_arabic %}
+  {% assign active_heading       = section.settings.heading_ar       | default: section.settings.heading %}
+  {% assign active_subtitle      = section.settings.subtitle_ar      | default: section.settings.subtitle %}
+  {% assign active_support_title = section.settings.support_title_ar | default: section.settings.support_title %}
+  {% assign active_support_hours = section.settings.support_hours_ar | default: section.settings.support_hours %}
+  {% assign active_response_time = section.settings.response_time_ar | default: section.settings.response_time %}
+{% else %}
+  {% assign active_heading       = section.settings.heading %}
+  {% assign active_subtitle      = section.settings.subtitle %}
+  {% assign active_support_title = section.settings.support_title %}
+  {% assign active_support_hours = section.settings.support_hours %}
+  {% assign active_response_time = section.settings.response_time %}
+{% endif %}
+
+{% liquid
+  assign id = section.id
+  assign bg_image = section.settings.background_image
+  assign bg_opacity = section.settings.background_opacity
+  assign bg_blur = section.settings.background_blur
+  assign bg_color = section.settings.background_color
+  assign frame_color = section.settings.frame_background
+  assign frame_opacity = section.settings.frame_opacity
+  assign frame_blur = section.settings.frame_blur
+  assign text_color = section.settings.text_color
+
+  assign frame_r = frame_color | color_extract: 'red'
+  assign frame_g = frame_color | color_extract: 'green'
+  assign frame_b = frame_color | color_extract: 'blue'
+
+  assign bg_r = bg_color | color_extract: 'red'
+  assign bg_g = bg_color | color_extract: 'green'
+  assign bg_b = bg_color | color_extract: 'blue'
+%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+{% style %}
+  #shopify-section-{{ id }} {
+    position: relative;
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    overflow: hidden;
+    background: rgba({{ bg_r }}, {{ bg_g }}, {{ bg_b }}, {{ section.settings.bg_opacity }});
+  }
+
+  {% if bg_image != blank %}
+    #shopify-section-{{ id }}::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('{{ bg_image | image_url: width: 2000 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: {{ bg_opacity }};
+      filter: blur({{ bg_blur }}px);
+      -webkit-filter: blur({{ bg_blur }}px);
+      z-index: 0;
+      transform: scale(1.1);
+    }
+  {% endif %}
+
+  /* Glassy Container */
+  #faq-{{ id }} .faq-glass-container {
+    background: rgba({{ frame_r }}, {{ frame_g }}, {{ frame_b }}, {{ frame_opacity }});
+    backdrop-filter: blur({{ frame_blur }}px);
+    -webkit-backdrop-filter: blur({{ frame_blur }}px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.5);
+    padding: 50px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  #faq-{{ id }} .faq-glass-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 200px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* Layout — in Arabic, info panel sits on the right, FAQ list on left */
+  #faq-{{ id }} .faq-grid {
+    display: grid;
+    {% if is_arabic %}
+      grid-template-columns: 1.3fr 1fr;
+    {% else %}
+      grid-template-columns: 1fr 1.3fr;
+    {% endif %}
+    gap: 60px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+    direction: {{ text_dir }};
+  }
+
+  #faq-{{ id }} .faq-info {
+    position: sticky;
+    top: 120px;
+    {% if is_arabic %}text-align: right;{% endif %}
+  }
+
+  #faq-{{ id }} .faq-info h2 {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: {{ text_color }};
+    margin: 0 0 16px;
+    {% if is_arabic %}
+      font-family: 'Cairo', sans-serif;
+      letter-spacing: 0;
+    {% else %}
+      letter-spacing: -0.02em;
+    {% endif %}
+  }
+
+  #faq-{{ id }} .faq-info .subtitle {
+    font-size: 16px;
+    line-height: 1.6;
+    color: {{ text_color }};
+    opacity: 0.7;
+    margin-bottom: 32px;
+    {% if is_arabic %}font-family: 'Tajawal', sans-serif;{% endif %}
+  }
+
+  /* Support Team */
+  #faq-{{ id }} .support-team {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    {% if is_arabic %}flex-direction: row-reverse;{% endif %}
+  }
+
+  #faq-{{ id }} .avatar-group {
+    display: flex;
+    {% if is_arabic %}margin-right: -8px;{% else %}margin-left: -8px;{% endif %}
+  }
+
+  #faq-{{ id }} .avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    {% if is_arabic %}margin-right: -8px;{% else %}margin-left: -8px;{% endif %}
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  #faq-{{ id }} .avatar:hover {
+    transform: translateY(-4px) scale(1.1);
+    z-index: 10;
+  }
+
+  #faq-{{ id }} .avatar img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  #faq-{{ id }} .avatar.online::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    {% if is_arabic %}left: 2px;{% else %}right: 2px;{% endif %}
+    width: 11px; height: 11px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+
+  /* Support Info Box */
+  #faq-{{ id }} .support-info {
+    background: rgba(255,255,255,0.4);
+    backdrop-filter: blur(12px);
+    border-radius: 14px;
+    padding: 20px;
+    margin-top: 24px;
+    position: relative;
+    overflow: hidden;
+    {% if is_arabic %}text-align: right;{% endif %}
+  }
+
+  {% if section.settings.enable_glow %}
+  #faq-{{ id }} .support-info::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%, transparent 10%,
+      {{ section.settings.glow_color }} 50%,
+      transparent 90%, transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: borderGlowSupport{{ id }} {{ section.settings.glow_speed }}s linear infinite;
+    pointer-events: none;
+    opacity: {{ section.settings.glow_opacity | divided_by: 100.0 }};
+  }
+
+  @keyframes borderGlowSupport{{ id }} {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  {% endif %}
+
+  #faq-{{ id }} .support-info h4 {
+    font-size: 15px; font-weight: 700;
+    color: {{ text_color }};
+    margin: 0 0 10px;
+    {% if is_arabic %}font-family: 'Cairo', sans-serif;{% endif %}
+  }
+
+  #faq-{{ id }} .support-info p {
+    font-size: 14px;
+    color: {{ text_color }};
+    opacity: 0.8;
+    margin: 6px 0;
+    line-height: 1.5;
+    {% if is_arabic %}font-family: 'Tajawal', sans-serif;{% endif %}
+  }
+
+  #faq-{{ id }} .support-info .highlight {
+    font-weight: 600; opacity: 1;
+  }
+
+  /* FAQ List */
+  #faq-{{ id }} .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #faq-{{ id }} .faq-item {
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  {% if section.settings.enable_glow %}
+  #faq-{{ id }} .faq-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%, transparent 10%,
+      {{ section.settings.glow_color }} 50%,
+      transparent 90%, transparent 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: borderGlow{{ id }} {{ section.settings.glow_speed }}s linear infinite;
+    pointer-events: none;
+    opacity: {{ section.settings.glow_opacity | divided_by: 100.0 }};
+  }
+
+  @keyframes borderGlow{{ id }} {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  {% endif %}
+
+  #faq-{{ id }} .faq-item:hover {
+    background: rgba(255,255,255,0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  #faq-{{ id }} .faq-item.active {
+    background: rgba(255,255,255,0.5);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+  }
+
+  #faq-{{ id }} .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    cursor: pointer;
+    user-select: none;
+    gap: 20px;
+    {% if is_arabic %}flex-direction: row-reverse;{% endif %}
+  }
+
+  #faq-{{ id }} .faq-question h3 {
+    font-size: 17px; font-weight: 700;
+    color: {{ text_color }};
+    margin: 0; flex: 1;
+    {% if is_arabic %}
+      font-family: 'Cairo', sans-serif;
+      letter-spacing: 0;
+      text-align: right;
+    {% else %}
+      letter-spacing: -0.01em;
+    {% endif %}
+  }
+
+  #faq-{{ id }} .faq-icon {
+    width: 30px; height: 30px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  #faq-{{ id }} .faq-item.active .faq-icon {
+    background: rgba(0,0,0,0.15);
+    transform: rotate(180deg);
+  }
+
+  #faq-{{ id }} .faq-icon svg {
+    width: 13px; height: 13px;
+    stroke: {{ text_color }};
+    stroke-width: 3;
+  }
+
+  #faq-{{ id }} .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #faq-{{ id }} .faq-item.active .faq-answer {
+    max-height: 500px;
+  }
+
+  #faq-{{ id }} .faq-answer-content {
+    padding: 0 24px 24px;
+    color: {{ text_color }};
+    opacity: 0.75;
+    font-size: 15px;
+    line-height: 1.7;
+    {% if is_arabic %}
+      font-family: 'Tajawal', sans-serif;
+      text-align: right;
+      direction: rtl;
+    {% endif %}
+  }
+
+  /* Mobile */
+  @media (max-width: 1024px) {
+    #faq-{{ id }} .faq-glass-container { padding: 40px 32px; }
+    #faq-{{ id }} .faq-grid { gap: 40px; }
+    #faq-{{ id }} .faq-info h2 { font-size: 32px; }
+  }
+
+  @media (max-width: 768px) {
+    #faq-{{ id }} .faq-glass-container { border-radius: 20px; padding: 32px 24px; }
+    #faq-{{ id }} .faq-grid { grid-template-columns: 1fr !important; gap: 32px; }
+    #faq-{{ id }} .faq-info { position: static; }
+    #faq-{{ id }} .faq-info h2 { font-size: 28px; }
+    #faq-{{ id }} .faq-info .subtitle { font-size: 15px; }
+    #faq-{{ id }} .faq-question h3 { font-size: 16px; }
+    #faq-{{ id }} .faq-answer-content { font-size: 14px; }
+    #faq-{{ id }} .avatar { width: 40px; height: 40px; }
+  }
+
+  @media (max-width: 480px) {
+    #faq-{{ id }} .faq-glass-container { padding: 24px 20px; }
+    #faq-{{ id }} .faq-question { padding: 18px 20px; }
+    #faq-{{ id }} .faq-answer-content { padding: 0 20px 20px; }
+  }
+{% endstyle %}
+
+<section id="faq-{{ id }}" class="faq-section" dir="{{ text_dir }}">
+  <div class="faq-glass-container">
+    <div class="faq-grid">
+
+      <div class="faq-info">
+        {% if active_heading != blank %}
+          <h2>{{ active_heading }}</h2>
+        {% endif %}
+
+        {% if active_subtitle != blank %}
+          <div class="subtitle">{{ active_subtitle }}</div>
+        {% endif %}
+
+        {% if section.settings.show_support_team %}
+          <div class="support-team">
+            <div class="avatar-group">
+              {% if section.settings.avatar_1 != blank %}
+                <div class="avatar online">
+                  {%- render 'image-element', image: section.settings.avatar_1, alt: 'Support team member' -%}
+                </div>
+              {% endif %}
+              {% if section.settings.avatar_2 != blank %}
+                <div class="avatar online">
+                  {%- render 'image-element', image: section.settings.avatar_2, alt: 'Support team member' -%}
+                </div>
+              {% endif %}
+              {% if section.settings.avatar_3 != blank %}
+                <div class="avatar">
+                  {%- render 'image-element', image: section.settings.avatar_3, alt: 'Support team member' -%}
+                </div>
+              {% endif %}
+              {% if section.settings.avatar_4 != blank %}
+                <div class="avatar">
+                  {%- render 'image-element', image: section.settings.avatar_4, alt: 'Support team member' -%}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if active_support_hours != blank %}
+          <div class="support-info">
+            <h4>{{ active_support_title }}</h4>
+            <p>{{ active_support_hours }}</p>
+            {% if active_response_time != blank %}
+              <p class="highlight">{{ active_response_time }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="faq-list">
+        {% for block in section.blocks %}
+
+          {% if is_arabic %}
+            {% assign active_question = block.settings.question_ar | default: block.settings.question %}
+            {% assign active_answer   = block.settings.answer_ar   | default: block.settings.answer %}
+          {% else %}
+            {% assign active_question = block.settings.question %}
+            {% assign active_answer   = block.settings.answer %}
+          {% endif %}
+
+          <div class="faq-item" data-faq-item>
+            <div class="faq-question" data-faq-trigger>
+              <h3>{{ active_question }}</h3>
+              <div class="faq-icon">
+                <svg viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1L6 6L11 1" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                {{ active_answer }}
+              </div>
+            </div>
+          </div>
+
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var faqItems = document.querySelectorAll('#faq-{{ id }} [data-faq-item]');
+
+  faqItems.forEach(function(item) {
+    var trigger = item.querySelector('[data-faq-trigger]');
+    trigger.addEventListener('click', function() {
+      var isActive = item.classList.contains('active');
+      faqItems.forEach(function(other) {
+        if (other !== item) other.classList.remove('active');
+      });
+      isActive ? item.classList.remove('active') : item.classList.add('active');
+    });
+  });
+
+  if (faqItems.length > 0) faqItems[0].classList.add('active');
+})();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ - Glassy",
+  "class": "faq-section-glassy",
+  "settings": [
+    { "type": "header", "content": "🇬🇧 Heading — English" },
+    {
+      "type": "text", "id": "heading", "label": "Heading (EN)",
+      "default": "Have a question about our services?"
+    },
+    {
+      "type": "textarea", "id": "subtitle", "label": "Subtitle (EN)",
+      "default": "Everything you need to know about our home beauty services — massage, haircare, facials, nails and more. Still have questions? Our team is here to help."
+    },
+
+    { "type": "header", "content": "🇸🇦 العنوان — العربية" },
+    {
+      "type": "text", "id": "heading_ar", "label": "العنوان (AR)",
+      "default": "هل لديكِ سؤال عن خدماتنا؟"
+    },
+    {
+      "type": "textarea", "id": "subtitle_ar", "label": "الوصف (AR)",
+      "default": "كل ما تحتاجين معرفته عن خدمات التجميل المنزلية — مساج، عناية بالشعر، فيشل، مانيكير، باديكير والمزيد. هل لا تزال لديكِ أسئلة؟ فريقنا هنا للمساعدة."
+    },
+
+    { "type": "header", "content": "Background" },
+    { "type": "color", "id": "background_color",  "label": "Background color",  "default": "#ffffff" },
+    { "type": "range", "id": "bg_opacity",         "min": 0.0, "max": 1.0, "step": 0.1, "label": "Background opacity", "default": 0.1 },
+    { "type": "image_picker", "id": "background_image", "label": "Background image (optional)" },
+    { "type": "range", "id": "background_opacity", "min": 0.1, "max": 1.0, "step": 0.1, "label": "Image opacity", "default": 1.0 },
+    { "type": "range", "id": "background_blur",    "min": 0,   "max": 30,  "step": 2, "unit": "px", "label": "Image blur", "default": 0 },
+
+    { "type": "header", "content": "Frame Glass Effect" },
+    { "type": "color", "id": "frame_background", "label": "Frame color",   "default": "#ffffff" },
+    { "type": "range", "id": "frame_opacity",    "min": 0.1, "max": 0.9, "step": 0.1, "label": "Frame opacity", "default": 0.3 },
+    { "type": "range", "id": "frame_blur",       "min": 0,   "max": 30,  "step": 2, "unit": "px", "label": "Frame blur", "default": 16 },
+
+    { "type": "header", "content": "Glowing Border (Tapered)" },
+    { "type": "paragraph", "content": "The glow starts thin, gets wider in the middle, then ends thin for an elegant effect." },
+    { "type": "checkbox", "id": "enable_glow",  "label": "Enable glowing border", "default": true },
+    { "type": "color",    "id": "glow_color",   "label": "Glow color",            "default": "#ff6b6b" },
+    { "type": "range",    "id": "glow_opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "label": "Glow opacity", "default": 70 },
+    { "type": "range",    "id": "glow_speed",   "min": 1, "max": 10,  "step": 1, "unit": "s", "label": "Glow speed",   "default": 3 },
+
+    { "type": "header", "content": "Support Team" },
+    { "type": "checkbox",     "id": "show_support_team", "label": "Show support team avatars", "default": true },
+    { "type": "image_picker", "id": "avatar_1", "label": "Avatar 1 (online)" },
+    { "type": "image_picker", "id": "avatar_2", "label": "Avatar 2 (online)" },
+    { "type": "image_picker", "id": "avatar_3", "label": "Avatar 3" },
+    { "type": "image_picker", "id": "avatar_4", "label": "Avatar 4" },
+
+    { "type": "header", "content": "🇬🇧 Support Info — English" },
+    { "type": "text", "id": "support_title",  "label": "Support title (EN)",  "default": "Our team is available:" },
+    { "type": "text", "id": "support_hours",  "label": "Support hours (EN)",  "default": "Saturday to Thursday: 9am – 10pm" },
+    { "type": "text", "id": "response_time",  "label": "Response time (EN)",  "default": "Average response time: under 1 hour" },
+
+    { "type": "header", "content": "🇸🇦 معلومات الدعم — العربية" },
+    { "type": "text", "id": "support_title_ar", "label": "عنوان الدعم (AR)",   "default": "فريقنا متاح:" },
+    { "type": "text", "id": "support_hours_ar", "label": "ساعات العمل (AR)",   "default": "السبت إلى الخميس: ٩ص – ١٠م" },
+    { "type": "text", "id": "response_time_ar", "label": "وقت الاستجابة (AR)", "default": "متوسط وقت الرد: أقل من ساعة" },
+
+    { "type": "header", "content": "Text" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#000000" },
+
+    { "type": "header", "content": "Section Spacing" },
+    { "type": "range", "id": "padding_top",    "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top spacing",    "default": 60 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom spacing", "default": 60 }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        { "type": "header",   "content": "🇬🇧 Question & Answer — English" },
+        { "type": "text",     "id": "question",    "label": "Question (EN)", "default": "How do I book a home beauty service?" },
+        { "type": "richtext", "id": "answer",      "label": "Answer (EN)",   "default": "<p>Simply choose your service, pick a date and time, and our specialist will come straight to your door.</p>" },
+        { "type": "header",   "content": "🇸🇦 السؤال والجواب — العربية" },
+        { "type": "text",     "id": "question_ar", "label": "السؤال (AR)",   "default": "كيف أحجز خدمة تجميل منزلية؟" },
+        { "type": "richtext", "id": "answer_ar",   "label": "الإجابة (AR)",  "default": "<p>اختاري خدمتكِ، حددي الموعد المناسب، وستصل المختصة إلى باب منزلكِ.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ - Glassy",
+      "category": "FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How do I book a home beauty service?",
+            "answer": "<p>Booking is easy! Browse our services, choose your preferred date and time, and confirm your address. Our trained specialist arrives at your door with all professional equipment included — no preparation needed on your side.</p>",
+            "question_ar": "كيف أحجز خدمة تجميل منزلية؟",
+            "answer_ar": "<p>الحجز سهل جداً! تصفحي خدماتنا، اختاري الموعد المناسب، وأكدي عنوانكِ. ستصل المختصة المدربة إلى باب منزلكِ مع جميع المعدات المهنية — لا يلزم أي تحضير من جانبكِ.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What services do you offer at home?",
+            "answer": "<p>We offer a full range of home beauty services: <strong>Massage</strong> (deep tissue, Swedish, prenatal, aromatherapy, hot stone, couples), <strong>Haircare</strong> (blow dry, treatments, styling), <strong>Facials</strong> (lifting, slimming, deep cleanse), <strong>Manicure & Pedicure</strong>, <strong>Waxing</strong>, <strong>Eyelash extensions</strong>, and <strong>Eyebrow threading & tinting</strong>.</p>",
+            "question_ar": "ما هي الخدمات التي تقدمونها في المنزل؟",
+            "answer_ar": "<p>نقدم مجموعة كاملة من خدمات التجميل المنزلية: <strong>المساج</strong> (أنسجة عميقة، سويدي، للحوامل، بالعطور، بالأحجار الساخنة، للأزواج)، <strong>العناية بالشعر</strong> (تجفيف، علاج، تصفيف)، <strong>الفيشل</strong> (رفع، نحت، تنظيف عميق)، <strong>مانيكير وباديكير</strong>، <strong>إزالة الشعر</strong>، <strong>رموش صناعية</strong>، <strong>تشكيل وصبغ الحواجب</strong>.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What areas do you serve?",
+            "answer": "<p>We currently serve Dubai and select areas across the UAE. Simply enter your location during booking and we'll confirm availability. We're constantly expanding — check back if your area isn't listed yet.</p>",
+            "question_ar": "ما هي المناطق التي تغطونها؟",
+            "answer_ar": "<p>نقدم خدماتنا حالياً في دبي ومناطق مختارة في الإمارات. أدخلي موقعكِ أثناء الحجز وسنؤكد التغطية. نحن في توسع مستمر — تحققي لاحقاً إن لم تكن منطقتكِ مدرجة بعد.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How long does each session take?",
+            "answer": "<p>Session durations vary by service. A massage is typically 60–90 minutes, a facial around 60 minutes, and manicure or pedicure between 45–60 minutes. You can see exact durations on the booking page before confirming.</p>",
+            "question_ar": "كم تستغرق كل جلسة؟",
+            "answer_ar": "<p>تختلف المدة حسب الخدمة. المساج عادةً ٦٠–٩٠ دقيقة، الفيشل حوالي ٦٠ دقيقة، والمانيكير أو الباديكير ٤٥–٦٠ دقيقة. يمكنكِ الاطلاع على المدة الدقيقة في صفحة الحجز قبل التأكيد.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need to prepare anything before my appointment?",
+            "answer": "<p>No major preparation needed. Our specialist arrives with all professional tools and products. For massage services, we set up the treatment table ourselves. We simply ask for a clean, comfortable space — a table or chair nearby is helpful for nail and hair services.</p>",
+            "question_ar": "هل أحتاج إلى تحضير أي شيء قبل موعدي؟",
+            "answer_ar": "<p>لا يلزم أي تحضير كبير. تصل المختصة بجميع الأدوات والمنتجات المهنية. لخدمات المساج، نقوم بإعداد طاولة العلاج بأنفسنا. نطلب فقط مساحة نظيفة ومريحة — طاولة أو كرسي قريب مفيد لخدمات الأظافر والشعر.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Is it safe to have a specialist come to my home?",
+            "answer": "<p>Absolutely. All our specialists are fully vetted, professionally certified, and trained to the highest standards. Your safety and comfort are our top priority. We also offer same-gender specialist options upon request.</p>",
+            "question_ar": "هل من الآمن أن تأتي المختصة إلى منزلي؟",
+            "answer_ar": "<p>بالتأكيد. جميع مختصاتنا تم التحقق منهن بالكامل، معتمدات مهنياً، ومدربات على أعلى المعايير. سلامتكِ وراحتكِ هي أولويتنا القصوى. كما نوفر خيار المختصة من نفس الجنس عند الطلب.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I cancel or reschedule my booking?",
+            "answer": "<p>Yes! You can cancel or reschedule up to 4 hours before your appointment at no charge. Cancellations made within 4 hours of the session may be subject to a small cancellation fee.</p>",
+            "question_ar": "هل يمكنني إلغاء أو تغيير موعد حجزي؟",
+            "answer_ar": "<p>نعم! يمكنكِ الإلغاء أو إعادة الجدولة قبل ٤ ساعات من الموعد دون أي رسوم. قد تخضع الإلغاءات التي تتم خلال أقل من ٤ ساعات لرسوم إلغاء بسيطة.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

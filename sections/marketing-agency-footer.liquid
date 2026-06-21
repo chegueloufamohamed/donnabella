@@ -1,0 +1,386 @@
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500;600;700&family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+.db-ft-wrap *, .db-ft-wrap *::before, .db-ft-wrap *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.db-ft-wrap {
+  --bg-darker: #202c38;
+  --bg-dark:   #2f3d4d;
+  --gold:      #c9a96e;
+  --gold-line: rgba(201,169,110,0.35);
+  --gold-dim:  rgba(201,169,110,0.18);
+  --white:     #ffffff;
+  --white-60:  rgba(255,255,255,0.6);
+  --white-40:  rgba(255,255,255,0.4);
+  --white-10:  rgba(255,255,255,0.06);
+  --glass:     rgba(255,255,255,0.06);
+  --glass-b:   rgba(255,255,255,0.12);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Jost', sans-serif;
+  --arabic: 'Cairo', 'Tajawal', sans-serif;
+  font-family: {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
+  font-weight: 300;
+  color: var(--white);
+  background-color: var(--bg-darker);
+  border-top: 1px solid var(--white-10);
+  direction: {{ text_dir }};
+}
+
+.db-ft-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+.db-ft-main { padding: 72px 0 56px; }
+.db-ft-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; }
+
+/* Brand col */
+.db-ft-logo {
+  font-family: var(--serif); font-size: 28px; font-weight: 400; font-style: italic;
+  color: var(--white); margin-bottom: 18px; display: block; text-decoration: none;
+}
+.db-ft-logo span { color: var(--gold); font-style: normal; }
+.db-ft-tagline { font-size: 12.5px; color: var(--white-40); line-height: 1.85; margin-bottom: 28px; max-width: 290px; }
+
+/* Socials */
+.db-ft-socials { display: flex; gap: 10px; margin-bottom: 36px; {% if is_arabic %}flex-direction: row-reverse; justify-content: flex-end;{% endif %} }
+.db-ft-social { width: 36px; height: 36px; border: 1px solid var(--glass-b); display: flex; align-items: center; justify-content: center; color: var(--white-60); text-decoration: none; font-size: 14px; transition: all 0.3s ease; }
+.db-ft-social:hover { border-color: var(--gold-line); color: var(--gold); background: var(--gold-dim); }
+
+/* License */
+.db-ft-license {
+  font-size: 10px; color: var(--white-40); line-height: 2; letter-spacing: 0.05em;
+  border-{% if is_arabic %}right{% else %}left{% endif %}: 2px solid var(--gold-line);
+  padding-{% if is_arabic %}right{% else %}left{% endif %}: 14px;
+}
+.db-ft-license strong { color: var(--gold); font-weight: 400; }
+
+/* Column titles */
+.db-ft-col-title {
+  font-size: {% if is_arabic %}13px{% else %}10px{% endif %};
+  font-weight: 500;
+  letter-spacing: {% if is_arabic %}0{% else %}0.45em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  color: var(--gold); margin-bottom: 28px;
+  display: flex; align-items: center; gap: 10px;
+}
+.db-ft-col-title::after { content: ''; display: block; flex: 1; height: 1px; background: var(--gold-line); opacity: 0.5; }
+
+/* Links */
+.db-ft-links { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+.db-ft-links a {
+  font-size: 13px; color: var(--white-60); text-decoration: none;
+  transition: color 0.3s ease; display: flex; align-items: center; gap: 8px;
+  {% if is_arabic %}flex-direction: row-reverse; justify-content: flex-end;{% endif %}
+}
+.db-ft-links a::before { content: ''; display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--gold); opacity: 0; transition: opacity 0.3s ease; flex-shrink: 0; }
+.db-ft-links a:hover { color: var(--gold); }
+.db-ft-links a:hover::before { opacity: 1; }
+
+/* Contact */
+.db-ft-contact-item { margin-bottom: 18px; }
+.db-ft-contact-label {
+  font-size: {% if is_arabic %}11px{% else %}9px{% endif %};
+  letter-spacing: {% if is_arabic %}0{% else %}0.35em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  color: var(--gold); margin-bottom: 4px;
+}
+.db-ft-contact-val { font-size: 13px; color: var(--white-60); line-height: 1.6; }
+.db-ft-contact-val a { color: var(--white-60); text-decoration: none; transition: color 0.3s; }
+.db-ft-contact-val a:hover { color: var(--gold); }
+
+/* Divider */
+.db-ft-divider { height: 1px; background: linear-gradient(to {% if is_arabic %}left{% else %}right{% endif %}, transparent, var(--white-10) 20%, var(--white-10) 80%, transparent); margin: 0; }
+
+/* Bottom bar */
+.db-ft-bottom { padding: 24px 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.db-ft-copyright { font-size: 11px; color: var(--white-40); letter-spacing: {% if is_arabic %}0{% else %}0.05em{% endif %}; }
+.db-ft-bottom-links { display: flex; gap: 28px; }
+.db-ft-bottom-links a { font-size: 11px; color: var(--white-40); text-decoration: none; transition: color 0.3s; }
+.db-ft-bottom-links a:hover { color: var(--gold); }
+.db-ft-bottom-right { display: flex; align-items: center; gap: 16px; {% if is_arabic %}flex-direction: row-reverse;{% endif %} }
+.db-ft-badge { font-size: 9px; letter-spacing: {% if is_arabic %}0{% else %}0.3em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); border: 1px solid var(--gold-line); padding: 4px 12px; opacity: 0.7; }
+
+/* Responsive */
+@media (max-width: 1024px) { .db-ft-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
+@media (max-width: 640px) {
+  .db-ft-grid { grid-template-columns: 1fr; gap: 36px; }
+  .db-ft-inner { padding: 0 20px; }
+  .db-ft-main { padding: 48px 0 40px; }
+  .db-ft-bottom { flex-direction: column; text-align: {% if is_arabic %}right{% else %}center{% endif %}; }
+  .db-ft-bottom-links { justify-content: center; }
+}
+</style>
+
+<div class="db-ft-wrap" dir="{{ text_dir }}">
+  <div class="db-ft-main">
+    <div class="db-ft-inner">
+      <div class="db-ft-grid">
+
+        <!-- Brand -->
+        <div>
+          <a href="{{ section.settings.logo_link | default: "/" }}" class="db-ft-logo">
+          {% if section.settings.logo_image != blank %}
+            <img src="{{ section.settings.logo_image | image_url: width: 400 }}" alt="{{ section.settings.logo_image.alt | default: shop.name }}" style="height:{{ section.settings.logo_height | default: 48 }}px;width:auto;display:block;object-fit:contain;">
+          {% else %}
+            Donna<span>bella</span>
+          {% endif %}
+        </a>
+          <p class="db-ft-tagline">
+            {% if is_arabic %}
+              {{ section.settings.tagline_ar | default: section.settings.tagline }}
+            {% else %}
+              {{ section.settings.tagline }}
+            {% endif %}
+          </p>
+
+          <div class="db-ft-socials">
+            {% if section.settings.instagram_url != blank %}
+              <a href="{{ section.settings.instagram_url }}" class="db-ft-social" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </a>
+            {% endif %}
+            {% if section.settings.tiktok_url != blank %}
+              <a href="{{ section.settings.tiktok_url }}" class="db-ft-social" target="_blank" rel="noopener" aria-label="TikTok">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.88a8.16 8.16 0 004.77 1.52V7a4.85 4.85 0 01-1-.31z"/></svg>
+              </a>
+            {% endif %}
+            {% if section.settings.facebook_url != blank %}
+              <a href="{{ section.settings.facebook_url }}" class="db-ft-social" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+              </a>
+            {% endif %}
+            {% if section.settings.whatsapp_number != blank %}
+              <a href="https://wa.me/{{ section.settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' }}" class="db-ft-social" target="_blank" rel="noopener" aria-label="WhatsApp">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+              </a>
+            {% endif %}
+          </div>
+
+          <div class="db-ft-license">
+            {% if is_arabic %}
+              <strong>شركة دونا بيلا لإدارة التسويق ذ.م.م</strong><br>
+              رخصة دائرة الاقتصاد رقم <strong>{{ section.settings.license_no }}</strong><br>
+              السجل التجاري رقم <strong>{{ section.settings.reg_no }}</strong><br>
+              {{ section.settings.address_ar | default: section.settings.address }}
+            {% else %}
+              <strong>Donna Bella Marketing Management L.L.C</strong><br>
+              DET License No. <strong>{{ section.settings.license_no }}</strong><br>
+              Commercial Reg. No. <strong>{{ section.settings.reg_no }}</strong><br>
+              {{ section.settings.address }}
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Column 1 — Services -->
+        <div>
+          <div class="db-ft-col-title">
+            {% if is_arabic %}{{ section.settings.col1_title_ar | default: section.settings.col1_title }}{% else %}{{ section.settings.col1_title }}{% endif %}
+          </div>
+          <ul class="db-ft-links">
+            {% for i in (1..7) %}
+              {% assign label_key    = 'col1_link' | append: i | append: '_label' %}
+              {% assign label_ar_key = 'col1_link' | append: i | append: '_label_ar' %}
+              {% assign url_key      = 'col1_link' | append: i | append: '_url' %}
+              {% assign label    = section.settings[label_key] %}
+              {% assign label_ar = section.settings[label_ar_key] %}
+              {% assign url      = section.settings[url_key] %}
+              {% if label != blank %}
+                <li>
+                  <a href="{{ url | default: '#' }}">
+                    {% if is_arabic %}{{ label_ar | default: label }}{% else %}{{ label }}{% endif %}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- Column 2 — Company -->
+        <div>
+          <div class="db-ft-col-title">
+            {% if is_arabic %}{{ section.settings.col2_title_ar | default: section.settings.col2_title }}{% else %}{{ section.settings.col2_title }}{% endif %}
+          </div>
+          <ul class="db-ft-links">
+            {% for i in (1..7) %}
+              {% assign label_key    = 'col2_link' | append: i | append: '_label' %}
+              {% assign label_ar_key = 'col2_link' | append: i | append: '_label_ar' %}
+              {% assign url_key      = 'col2_link' | append: i | append: '_url' %}
+              {% assign label    = section.settings[label_key] %}
+              {% assign label_ar = section.settings[label_ar_key] %}
+              {% assign url      = section.settings[url_key] %}
+              {% if label != blank %}
+                <li>
+                  <a href="{{ url | default: '#' }}">
+                    {% if is_arabic %}{{ label_ar | default: label }}{% else %}{{ label }}{% endif %}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+
+        <!-- Column 3 — Contact -->
+        <div>
+          <div class="db-ft-col-title">
+            {% if is_arabic %}{{ section.settings.col3_title_ar | default: section.settings.col3_title }}{% else %}{{ section.settings.col3_title }}{% endif %}
+          </div>
+          {% if section.settings.contact_phone != blank %}
+            <div class="db-ft-contact-item">
+              <div class="db-ft-contact-label">{% if is_arabic %}هاتف / واتساب{% else %}Phone / WhatsApp{% endif %}</div>
+              <div class="db-ft-contact-val"><a href="tel:{{ section.settings.contact_phone }}">{{ section.settings.contact_phone }}</a></div>
+            </div>
+          {% endif %}
+          {% if section.settings.contact_email != blank %}
+            <div class="db-ft-contact-item">
+              <div class="db-ft-contact-label">{% if is_arabic %}البريد الإلكتروني{% else %}Email{% endif %}</div>
+              <div class="db-ft-contact-val"><a href="mailto:{{ section.settings.contact_email }}">{{ section.settings.contact_email }}</a></div>
+            </div>
+          {% endif %}
+          {% if section.settings.contact_address != blank %}
+            <div class="db-ft-contact-item">
+              <div class="db-ft-contact-label">{% if is_arabic %}الموقع{% else %}Location{% endif %}</div>
+              <div class="db-ft-contact-val">
+                {% if is_arabic %}{{ section.settings.contact_address_ar | default: section.settings.contact_address }}{% else %}{{ section.settings.contact_address }}{% endif %}
+              </div>
+            </div>
+          {% endif %}
+          {% if section.settings.contact_hours != blank %}
+            <div class="db-ft-contact-item">
+              <div class="db-ft-contact-label">{% if is_arabic %}ساعات العمل{% else %}Hours{% endif %}</div>
+              <div class="db-ft-contact-val">
+                {% if is_arabic %}{{ section.settings.contact_hours_ar | default: section.settings.contact_hours }}{% else %}{{ section.settings.contact_hours }}{% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="db-ft-divider"></div>
+
+  <div class="db-ft-inner">
+    <div class="db-ft-bottom">
+      <span class="db-ft-copyright">
+        {% if is_arabic %}{{ section.settings.copyright_ar | default: section.settings.copyright }}{% else %}{{ section.settings.copyright }}{% endif %}
+      </span>
+      <div class="db-ft-bottom-right">
+        <div class="db-ft-bottom-links">
+          {% if section.settings.privacy_url != blank %}
+            <a href="{{ section.settings.privacy_url }}">{% if is_arabic %}سياسة الخصوصية{% else %}Privacy Policy{% endif %}</a>
+          {% endif %}
+          {% if section.settings.terms_url != blank %}
+            <a href="{{ section.settings.terms_url }}">{% if is_arabic %}شروط الخدمة{% else %}Terms of Service{% endif %}</a>
+          {% endif %}
+          {% if section.settings.cookie_url != blank %}
+            <a href="{{ section.settings.cookie_url }}">{% if is_arabic %}سياسة الكوكيز{% else %}Cookie Policy{% endif %}</a>
+          {% endif %}
+        </div>
+        <span class="db-ft-badge">{% if is_arabic %}دبي، الإمارات{% else %}Dubai, UAE{% endif %}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Donnabella Footer",
+  "settings": [
+    { "type": "header", "content": "🏷️ Brand" },
+    { "type": "image_picker", "id": "logo_image",  "label": "Logo image" },
+    { "type": "range",        "id": "logo_height", "label": "Logo height", "min": 24, "max": 80, "step": 2, "unit": "px", "default": 48 },
+    { "type": "text",         "id": "logo_link",   "label": "Logo link URL", "default": "/" },
+    { "type": "textarea", "id": "tagline",    "label": "Tagline (EN)", "default": "The UAE's beauty salon marketing specialists. Growing salons, spas, and wellness brands across Dubai and the Emirates." },
+    { "type": "textarea", "id": "tagline_ar", "label": "الوصف (AR)",  "default": "المتخصصون في تسويق صالونات التجميل في الإمارات. نُنمّي الصالونات والسبا وعلامات العافية في دبي والإمارات." },
+
+    { "type": "header", "content": "📋 License Info" },
+    { "type": "text", "id": "license_no",  "label": "DET License No.",     "default": "1612331" },
+    { "type": "text", "id": "reg_no",      "label": "Commercial Reg. No.", "default": "2832505" },
+    { "type": "text", "id": "address",     "label": "Address (EN)",        "default": "Office 1102, Barsha 1 · Dubai, UAE" },
+    { "type": "text", "id": "address_ar",  "label": "العنوان (AR)",        "default": "مكتب 1102، برشا 1 · دبي، الإمارات" },
+
+    { "type": "header", "content": "📱 Social Media" },
+    { "type": "url",  "id": "instagram_url",  "label": "Instagram URL" },
+    { "type": "url",  "id": "tiktok_url",     "label": "TikTok URL" },
+    { "type": "url",  "id": "facebook_url",   "label": "Facebook URL" },
+    { "type": "text", "id": "whatsapp_number","label": "WhatsApp Number (digits only)", "default": "971509933488" },
+
+    { "type": "header", "content": "🔗 Column 1 — Services" },
+    { "type": "text", "id": "col1_title",    "label": "Column Title (EN)", "default": "Services" },
+    { "type": "text", "id": "col1_title_ar", "label": "عنوان العمود (AR)", "default": "الخدمات" },
+    { "type": "text", "id": "col1_link1_label",    "label": "Link 1 (EN)", "default": "Social Media" },
+    { "type": "text", "id": "col1_link1_label_ar", "label": "الرابط 1 (AR)", "default": "السوشيال ميديا" },
+    { "type": "url",  "id": "col1_link1_url",      "label": "Link 1 URL" },
+    { "type": "text", "id": "col1_link2_label",    "label": "Link 2 (EN)", "default": "Paid Advertising" },
+    { "type": "text", "id": "col1_link2_label_ar", "label": "الرابط 2 (AR)", "default": "الإعلانات المدفوعة" },
+    { "type": "url",  "id": "col1_link2_url",      "label": "Link 2 URL" },
+    { "type": "text", "id": "col1_link3_label",    "label": "Link 3 (EN)", "default": "Brand Identity" },
+    { "type": "text", "id": "col1_link3_label_ar", "label": "الرابط 3 (AR)", "default": "الهوية البصرية" },
+    { "type": "url",  "id": "col1_link3_url",      "label": "Link 3 URL" },
+    { "type": "text", "id": "col1_link4_label",    "label": "Link 4 (EN)", "default": "Website & SEO" },
+    { "type": "text", "id": "col1_link4_label_ar", "label": "الرابط 4 (AR)", "default": "الموقع وتحسين البحث" },
+    { "type": "url",  "id": "col1_link4_url",      "label": "Link 4 URL" },
+    { "type": "text", "id": "col1_link5_label",    "label": "Link 5 (EN)", "default": "Reputation" },
+    { "type": "text", "id": "col1_link5_label_ar", "label": "الرابط 5 (AR)", "default": "إدارة السمعة" },
+    { "type": "url",  "id": "col1_link5_url",      "label": "Link 5 URL" },
+    { "type": "text", "id": "col1_link6_label",    "label": "Link 6 (EN)", "default": "CRM & Loyalty" },
+    { "type": "text", "id": "col1_link6_label_ar", "label": "الرابط 6 (AR)", "default": "CRM والولاء" },
+    { "type": "url",  "id": "col1_link6_url",      "label": "Link 6 URL" },
+    { "type": "text", "id": "col1_link7_label",    "label": "Link 7 (EN)", "default": "Influencer & PR" },
+    { "type": "text", "id": "col1_link7_label_ar", "label": "الرابط 7 (AR)", "default": "المؤثرون والعلاقات العامة" },
+    { "type": "url",  "id": "col1_link7_url",      "label": "Link 7 URL" },
+
+    { "type": "header", "content": "🔗 Column 2 — Company" },
+    { "type": "text", "id": "col2_title",    "label": "Column Title (EN)", "default": "Company" },
+    { "type": "text", "id": "col2_title_ar", "label": "عنوان العمود (AR)", "default": "الشركة" },
+    { "type": "text", "id": "col2_link1_label",    "label": "Link 1 (EN)", "default": "About Us" },
+    { "type": "text", "id": "col2_link1_label_ar", "label": "الرابط 1 (AR)", "default": "من نحن" },
+    { "type": "url",  "id": "col2_link1_url",      "label": "Link 1 URL" },
+    { "type": "text", "id": "col2_link2_label",    "label": "Link 2 (EN)", "default": "Case Studies" },
+    { "type": "text", "id": "col2_link2_label_ar", "label": "الرابط 2 (AR)", "default": "دراسات الحالة" },
+    { "type": "url",  "id": "col2_link2_url",      "label": "Link 2 URL" },
+    { "type": "text", "id": "col2_link3_label",    "label": "Link 3 (EN)", "default": "How We Work" },
+    { "type": "text", "id": "col2_link3_label_ar", "label": "الرابط 3 (AR)", "default": "كيف نعمل" },
+    { "type": "url",  "id": "col2_link3_url",      "label": "Link 3 URL" },
+    { "type": "text", "id": "col2_link4_label",    "label": "Link 4 (EN)", "default": "Privacy Policy" },
+    { "type": "text", "id": "col2_link4_label_ar", "label": "الرابط 4 (AR)", "default": "سياسة الخصوصية" },
+    { "type": "url",  "id": "col2_link4_url",      "label": "Link 4 URL" },
+    { "type": "text", "id": "col2_link5_label",    "label": "Link 5 (EN)", "default": "Terms of Service" },
+    { "type": "text", "id": "col2_link5_label_ar", "label": "الرابط 5 (AR)", "default": "شروط الخدمة" },
+    { "type": "url",  "id": "col2_link5_url",      "label": "Link 5 URL" },
+    { "type": "text", "id": "col2_link6_label",    "label": "Link 6 (EN)" },
+    { "type": "text", "id": "col2_link6_label_ar", "label": "الرابط 6 (AR)" },
+    { "type": "url",  "id": "col2_link6_url",      "label": "Link 6 URL" },
+    { "type": "text", "id": "col2_link7_label",    "label": "Link 7 (EN)" },
+    { "type": "text", "id": "col2_link7_label_ar", "label": "الرابط 7 (AR)" },
+    { "type": "url",  "id": "col2_link7_url",      "label": "Link 7 URL" },
+
+    { "type": "header", "content": "📞 Column 3 — Contact" },
+    { "type": "text", "id": "col3_title",         "label": "Column Title (EN)", "default": "Contact" },
+    { "type": "text", "id": "col3_title_ar",      "label": "عنوان العمود (AR)", "default": "تواصل معنا" },
+    { "type": "text", "id": "contact_phone",      "label": "Phone",            "default": "+971 50 993 3488" },
+    { "type": "text", "id": "contact_email",      "label": "Email",            "default": "dafer1111@hotmail.com" },
+    { "type": "text", "id": "contact_address",    "label": "Address (EN)",     "default": "Office 1102, Barsha 1, Dubai, UAE" },
+    { "type": "text", "id": "contact_address_ar", "label": "العنوان (AR)",     "default": "مكتب 1102، برشا 1، دبي، الإمارات" },
+    { "type": "text", "id": "contact_hours",      "label": "Hours (EN)",       "default": "Mon – Sat: 9am – 7pm" },
+    { "type": "text", "id": "contact_hours_ar",   "label": "ساعات العمل (AR)", "default": "الإثنين – السبت: 9 ص – 7 م" },
+
+    { "type": "header", "content": "⚖️ Bottom Bar" },
+    { "type": "text", "id": "copyright",    "label": "Copyright (EN)", "default": "© 2026 Donna Bella Marketing Management L.L.C · All rights reserved" },
+    { "type": "text", "id": "copyright_ar", "label": "حقوق النشر (AR)", "default": "© 2026 شركة دونا بيلا لإدارة التسويق · جميع الحقوق محفوظة" },
+    { "type": "url",  "id": "privacy_url",  "label": "Privacy Policy URL" },
+    { "type": "url",  "id": "terms_url",    "label": "Terms of Service URL" },
+    { "type": "url",  "id": "cookie_url",   "label": "Cookie Policy URL" }
+  ],
+  "presets": [{ "name": "Donnabella Footer" }]
+}
+{% endschema %}

@@ -1,0 +1,1113 @@
+{% comment %}
+  Section: Waxing & Threading (Bilingual) — Belladona Care
+  - Uses Shopify localization (request.locale.iso_code) to switch EN/AR automatically
+  - Scoped CSS/JS to section.id to avoid conflicts
+  - Keeps your original structure, styling, and reveal animations
+{% endcomment %}
+
+{%- liquid
+  assign locale_code = request.locale.iso_code | downcase
+  assign is_ar = false
+  if locale_code contains 'ar'
+    assign is_ar = true
+  endif
+-%}
+
+<section id="wax-thread-{{ section.id }}"
+  class="wt-page"
+  {% if is_ar %}dir="rtl" lang="ar"{% else %}dir="ltr" lang="en"{% endif %}
+  data-wt-root
+>
+  <style>
+    #wax-thread-{{ section.id }} .zone-icon,
+#wax-thread-{{ section.id }} .pack-dur span,
+#wax-thread-{{ section.id }} .fc-dur,
+#wax-thread-{{ section.id }} .tl-diamond {
+  display: none !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+    /* Font loading (safe inside section) */
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&display=swap');
+
+    /* Scoped Reset */
+    #wax-thread-{{ section.id }} *, 
+    #wax-thread-{{ section.id }} *::before, 
+    #wax-thread-{{ section.id }} *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    #wax-thread-{{ section.id }} {
+      --bg: #405264; --bg-dark: #2f3d4d; --bg-light: #4d6275; --bg-deeper: #354656;
+      --gold: #c9a96e; --gold-line: rgba(201,169,110,0.35);
+      --jade: #7fb5a0; --jade-dim: rgba(127,181,160,0.1); --jade-line: rgba(127,181,160,0.3);
+      --white: #ffffff; --white-60: rgba(255,255,255,0.6);
+      --glass: rgba(255,255,255,0.06); --glass-b: rgba(255,255,255,0.11);
+      --serif: 'Cormorant Garamond', Georgia, serif; --sans: 'Jost', sans-serif;
+
+      background-color: var(--bg);
+      color: var(--white);
+      font-family: var(--sans);
+      font-weight: 300;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Subtle noise overlay */
+    #wax-thread-{{ section.id }}::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    @keyframes wtFadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes wtRingPulse {
+      0%,100% { opacity: 0.35; transform: translate(-50%,-50%) scale(1); }
+      50% { opacity: 0.8; transform: translate(-50%,-50%) scale(1.05); }
+    }
+
+    /* HERO */
+    #wax-thread-{{ section.id }} .hero {
+      position: relative;
+      min-height: 54vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 30px 50px;
+      overflow: hidden;
+      z-index: 1;
+    }
+    #wax-thread-{{ section.id }} .hero::before {
+      content: '';
+      position: absolute;
+      width: 580px;
+      height: 580px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(127,181,160,0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+    #wax-thread-{{ section.id }} .hero::after {
+      content: '';
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      border: 1px solid var(--jade-line);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      animation: wtRingPulse 4s ease-in-out infinite;
+    }
+    #wax-thread-{{ section.id }} .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--jade);
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: wtFadeUp 0.8s ease 0.2s forwards;
+    }
+    #wax-thread-{{ section.id }} .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(48px, 9vw, 94px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 0.95;
+      color: var(--white);
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: wtFadeUp 0.9s ease 0.4s forwards;
+    }
+    #wax-thread-{{ section.id }} .hero-title span { color: var(--gold); font-style: normal; font-weight: 500; }
+    #wax-thread-{{ section.id }} .hero-desc {
+      margin-top: 26px;
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      color: var(--white-60);
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: wtFadeUp 0.9s ease 0.6s forwards;
+    }
+    #wax-thread-{{ section.id }} .hero-divider {
+      margin-top: 40px;
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      opacity: 0;
+      animation: wtFadeUp 0.9s ease 0.8s forwards;
+    }
+
+    /* LAYOUT */
+    #wax-thread-{{ section.id }} .section { position: relative; z-index: 1; padding: 52px 0 62px; }
+    #wax-thread-{{ section.id }} .section + .section { padding-top: 0; }
+    #wax-thread-{{ section.id }} .section-inner { max-width: 1160px; margin: 0 auto; padding: 0 30px; }
+    #wax-thread-{{ section.id }} .section-label {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 42px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    #wax-thread-{{ section.id }} .section-label.visible { opacity: 1; transform: translateX(0); }
+    #wax-thread-{{ section.id }} .section-label-line { flex: 1; height: 1px; background: linear-gradient(to right, var(--gold-line), transparent); }
+    #wax-thread-{{ section.id }} .section-label-text { font-size: 10px; font-weight: 500; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+
+    /* RTL tweaks */
+    #wax-thread-{{ section.id }}[dir="rtl"] .section-label { transform: translateX(20px); }
+    #wax-thread-{{ section.id }}[dir="rtl"] .section-label.visible { transform: translateX(0); }
+    #wax-thread-{{ section.id }}[dir="rtl"] .section-label-line { background: linear-gradient(to left, var(--gold-line), transparent); }
+    #wax-thread-{{ section.id }}[dir="rtl"] .pack-bg-num { right: auto; left: 26px; }
+    #wax-thread-{{ section.id }}[dir="rtl"] .fc-right { text-align: left; }
+    #wax-thread-{{ section.id }}[dir="rtl"] .pt-row.thread { border-left: none; border-right: 2px solid var(--jade); }
+
+    /* PACKAGE CARDS */
+    #wax-thread-{{ section.id }} .pack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    #wax-thread-{{ section.id }} .pack-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(201,169,110,0.13) 0%, rgba(201,169,110,0.03) 100%);
+      border: 1px solid var(--gold-line);
+      padding: 46px 42px 40px;
+      overflow: hidden;
+      cursor: default;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease, background 0.4s;
+    }
+    #wax-thread-{{ section.id }} .pack-card.visible { opacity: 1; transform: translateY(0); }
+    #wax-thread-{{ section.id }} .pack-card:hover { background: linear-gradient(135deg, rgba(201,169,110,0.2) 0%, rgba(201,169,110,0.06) 100%); }
+    #wax-thread-{{ section.id }} .pack-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%);
+    }
+    #wax-thread-{{ section.id }} .pack-bg-num {
+      position: absolute;
+      bottom: 14px;
+      right: 26px;
+      font-family: var(--serif);
+      font-size: 110px;
+      font-weight: 300;
+      color: rgba(201,169,110,0.07);
+      line-height: 1;
+      user-select: none;
+    }
+    #wax-thread-{{ section.id }} .pack-tag { font-size: 9px; font-weight: 500; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    #wax-thread-{{ section.id }} .pack-title { font-family: var(--serif); font-size: 36px; font-weight: 400; color: var(--white); line-height: 1.1; margin-bottom: 6px; }
+    #wax-thread-{{ section.id }} .pack-subtitle { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--gold); margin-bottom: 14px; opacity: 0.9; }
+    #wax-thread-{{ section.id }} .pack-desc { font-size: 12.5px; line-height: 1.75; color: var(--white-60); margin-bottom: 28px; flex: 1; }
+    #wax-thread-{{ section.id }} .pack-footer { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--gold-line); padding-top: 18px; }
+    #wax-thread-{{ section.id }} .pack-price { font-family: var(--serif); font-size: 44px; font-weight: 300; color: var(--white); line-height: 1; }
+    #wax-thread-{{ section.id }} .pack-price sup { font-size: 16px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+    #wax-thread-{{ section.id }} .pack-dur { font-size: 11px; color: var(--white-60); text-align: right; letter-spacing: 0.08em; line-height: 1.6; }
+    #wax-thread-{{ section.id }} .pack-dur span { display: block; color: var(--gold); font-size: 14px; margin-bottom: 3px; }
+
+    /* ZONE CARDS */
+    #wax-thread-{{ section.id }} .two-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    #wax-thread-{{ section.id }} .three-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
+
+    #wax-thread-{{ section.id }} .zone-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      padding: 32px 26px 26px;
+      cursor: default;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease, background 0.3s, border-color 0.3s;
+    }
+    #wax-thread-{{ section.id }} .zone-card.visible { opacity: 1; transform: translateY(0); }
+    #wax-thread-{{ section.id }} .zone-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
+    #wax-thread-{{ section.id }} .zone-icon { font-size: 20px; margin-bottom: 13px; }
+    #wax-thread-{{ section.id }} .zone-title { font-family: var(--serif); font-size: 20px; font-weight: 400; color: var(--white); margin-bottom: 4px; line-height: 1.2; }
+    #wax-thread-{{ section.id }} .zone-subtitle { font-family: var(--serif); font-style: italic; font-size: 11px; color: var(--gold); margin-bottom: 10px; opacity: 0.85; }
+    #wax-thread-{{ section.id }} .zone-desc { font-size: 11.5px; line-height: 1.7; color: var(--white-60); margin-bottom: 20px; flex: 1; }
+    #wax-thread-{{ section.id }} .zone-bottom { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--glass-b); padding-top: 13px; margin-top: auto; }
+    #wax-thread-{{ section.id }} .zone-price { font-family: var(--serif); font-size: 26px; font-weight: 300; color: var(--white); }
+    #wax-thread-{{ section.id }} .zone-price sup { font-size: 11px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+    #wax-thread-{{ section.id }} .zone-dur { font-size: 10px; color: var(--white-60); letter-spacing: 0.06em; }
+
+    /* BIKINI CARDS */
+    #wax-thread-{{ section.id }} .bk-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      padding: 34px 30px;
+      cursor: default;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.65s ease, transform 0.65s ease, background 0.3s, border-color 0.3s;
+    }
+    #wax-thread-{{ section.id }} .bk-card.visible { opacity: 1; transform: translateY(0); }
+    #wax-thread-{{ section.id }} .bk-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
+    #wax-thread-{{ section.id }} .bk-card.jade-bg {
+      background: linear-gradient(135deg, var(--jade-dim) 0%, rgba(127,181,160,0.02) 100%);
+      border-color: var(--jade-line);
+    }
+    #wax-thread-{{ section.id }} .bk-card.jade-bg:hover {
+      background: linear-gradient(135deg, rgba(127,181,160,0.16) 0%, rgba(127,181,160,0.04) 100%);
+    }
+    #wax-thread-{{ section.id }} .bk-pill { display: inline-block; margin-bottom: 14px; font-size: 9px; font-weight: 500; letter-spacing: 0.38em; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; align-self: flex-start; }
+    #wax-thread-{{ section.id }} .bk-pill.jade { color: var(--jade); border: 1px solid var(--jade-line); }
+    #wax-thread-{{ section.id }} .bk-pill.gold { color: var(--gold); border: 1px solid var(--gold-line); }
+    #wax-thread-{{ section.id }} .bk-title { font-family: var(--serif); font-size: 24px; font-weight: 400; color: var(--white); margin-bottom: 5px; line-height: 1.2; }
+    #wax-thread-{{ section.id }} .bk-subtitle { font-family: var(--serif); font-style: italic; font-size: 12px; color: var(--gold); margin-bottom: 12px; opacity: 0.85; }
+    #wax-thread-{{ section.id }} .bk-desc { font-size: 12px; line-height: 1.72; color: var(--white-60); margin-bottom: 22px; flex: 1; }
+    #wax-thread-{{ section.id }} .bk-meta { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--glass-b); padding-top: 16px; }
+    #wax-thread-{{ section.id }} .bk-price { font-family: var(--serif); font-size: 30px; font-weight: 300; color: var(--white); }
+    #wax-thread-{{ section.id }} .bk-price sup { font-size: 12px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+    #wax-thread-{{ section.id }} .bk-dur { font-size: 10px; color: var(--white-60); letter-spacing: 0.06em; }
+
+    /* FEATURE WIDE CARD */
+    #wax-thread-{{ section.id }} .feature-card {
+      position: relative;
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      padding: 42px 46px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
+      overflow: hidden;
+      margin-bottom: 2px;
+      cursor: default;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.75s ease, transform 0.75s ease, background 0.35s, border-color 0.35s;
+    }
+    #wax-thread-{{ section.id }} .feature-card.visible { opacity: 1; transform: translateY(0); }
+    #wax-thread-{{ section.id }} .feature-card:hover { background: rgba(255,255,255,0.09); border-color: var(--gold-line); }
+    #wax-thread-{{ section.id }} .feature-card.gold-bg {
+      background: linear-gradient(135deg, rgba(201,169,110,0.12) 0%, rgba(201,169,110,0.03) 100%);
+      border-color: var(--gold-line);
+    }
+    #wax-thread-{{ section.id }} .feature-card.gold-bg::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%);
+    }
+    #wax-thread-{{ section.id }} .feature-card.jade-bg {
+      background: linear-gradient(135deg, var(--jade-dim) 0%, rgba(127,181,160,0.02) 100%);
+      border-color: var(--jade-line);
+      border-left: 2px solid var(--jade);
+    }
+    #wax-thread-{{ section.id }} .fc-tag { font-size: 9px; font-weight: 500; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    #wax-thread-{{ section.id }} .fc-tag.jade { color: var(--jade); }
+    #wax-thread-{{ section.id }} .fc-title { font-family: var(--serif); font-size: 30px; font-weight: 400; color: var(--white); line-height: 1.15; margin-bottom: 6px; }
+    #wax-thread-{{ section.id }} .fc-subtitle { font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--gold); margin-bottom: 12px; opacity: 0.9; }
+    #wax-thread-{{ section.id }} .fc-desc { font-size: 12.5px; line-height: 1.75; color: var(--white-60); max-width: 480px; }
+    #wax-thread-{{ section.id }} .fc-right { text-align: right; flex-shrink: 0; }
+    #wax-thread-{{ section.id }} .fc-label { font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; }
+    #wax-thread-{{ section.id }} .fc-label.jade { color: var(--jade); }
+    #wax-thread-{{ section.id }} .fc-price { font-family: var(--serif); font-size: 46px; font-weight: 300; color: var(--white); line-height: 1; }
+    #wax-thread-{{ section.id }} .fc-price sup { font-size: 16px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+    #wax-thread-{{ section.id }} .fc-dur { font-size: 10px; color: var(--white-60); margin-top: 8px; letter-spacing: 0.08em; }
+
+    /* PRICE TABLE */
+    #wax-thread-{{ section.id }} .price-table { border: 1px solid var(--glass-b); overflow: hidden; opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    #wax-thread-{{ section.id }} .price-table.visible { opacity: 1; transform: translateY(0); }
+    #wax-thread-{{ section.id }} .pt-header {
+      background: rgba(201,169,110,0.1);
+      border-bottom: 1px solid var(--gold-line);
+      padding: 15px 28px;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 24px;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    #wax-thread-{{ section.id }} .pt-header span:last-child { text-align: right; }
+    #wax-thread-{{ section.id }} .pt-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 24px;
+      padding: 17px 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      align-items: center;
+      transition: background 0.25s;
+      cursor: default;
+    }
+    #wax-thread-{{ section.id }} .pt-row:last-child { border-bottom: none; }
+    #wax-thread-{{ section.id }} .pt-row:hover { background: rgba(255,255,255,0.05); }
+    #wax-thread-{{ section.id }} .pt-row.thread { border-left: 2px solid var(--jade); }
+    #wax-thread-{{ section.id }} .pt-name { font-family: var(--serif); font-size: 18px; font-weight: 400; color: var(--white); line-height: 1.2; }
+    #wax-thread-{{ section.id }} .pt-name small { display: block; font-family: var(--sans); font-size: 10.5px; color: var(--white-60); font-style: normal; margin-top: 2px; letter-spacing: 0.02em; }
+    #wax-thread-{{ section.id }} .pt-name small.jade { color: var(--jade); }
+    #wax-thread-{{ section.id }} .pt-dur { font-size: 10px; color: var(--white-60); white-space: nowrap; letter-spacing: 0.06em; text-align: right; }
+    #wax-thread-{{ section.id }} .pt-price { font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--white); text-align: right; white-space: nowrap; min-width: 72px; }
+    #wax-thread-{{ section.id }} .pt-price sup { font-size: 10px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+
+    #wax-thread-{{ section.id }} .legend { display: flex; align-items: center; gap: 10px; margin-top: 13px; padding-left: 4px; }
+    #wax-thread-{{ section.id }} .legend-dot { width: 10px; height: 10px; background: var(--jade); border-radius: 2px; flex-shrink: 0; }
+    #wax-thread-{{ section.id }} .legend-text { font-size: 10px; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); }
+
+    /* BOTTOM */
+    #wax-thread-{{ section.id }} .bottom-tagline {
+      text-align: center;
+      padding: 80px 30px 100px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    #wax-thread-{{ section.id }} .bottom-tagline.visible { opacity: 1; transform: translateY(0); }
+    #wax-thread-{{ section.id }} .tl-line { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 30px; }
+    #wax-thread-{{ section.id }} .tl-rule { width: 60px; height: 1px; background: var(--gold-line); }
+    #wax-thread-{{ section.id }} .tl-diamond { color: var(--gold); font-size: 10px; }
+    #wax-thread-{{ section.id }} .bottom-tagline h2 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    #wax-thread-{{ section.id }} .bottom-tagline p {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-60);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 920px) {
+      #wax-thread-{{ section.id }} .pack-grid { grid-template-columns: 1fr; }
+      #wax-thread-{{ section.id }} .three-grid { grid-template-columns: 1fr 1fr; }
+      #wax-thread-{{ section.id }} .two-grid { grid-template-columns: 1fr; }
+      #wax-thread-{{ section.id }} .feature-card { grid-template-columns: 1fr; }
+      #wax-thread-{{ section.id }} .fc-right { text-align: left; }
+      #wax-thread-{{ section.id }} .pt-header,
+      #wax-thread-{{ section.id }} .pt-row { grid-template-columns: 1fr auto; }
+      #wax-thread-{{ section.id }} .pt-header > *:nth-child(2),
+      #wax-thread-{{ section.id }} .pt-row > *:nth-child(2) { display: none; }
+    }
+    @media (max-width: 600px) {
+      #wax-thread-{{ section.id }} .three-grid { grid-template-columns: 1fr; }
+      #wax-thread-{{ section.id }} .pack-card { padding: 30px 22px; }
+      #wax-thread-{{ section.id }} .feature-card { padding: 30px 22px; }
+    }
+  </style>
+
+  {%- if is_ar -%}
+    <!-- HERO (AR) -->
+    <section class="hero">
+      <p class="hero-eyebrow">Belladona Care · دبي</p>
+      <h1 class="hero-title">نعومة<br><span>وتحديد</span></h1>
+      <p class="hero-desc">واكس وخيط · خدمة منزلية</p>
+      <div class="hero-divider"></div>
+    </section>
+
+    <!-- FULL BODY PACKAGES (AR) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">باقات الجسم الكامل</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="pack-grid">
+          <div class="pack-card" data-reveal data-delay="0">
+            <span class="pack-bg-num">09</span>
+            <p class="pack-tag">واكس · من الرأس للقدم</p>
+            <h2 class="pack-title">واكس جسم كامل</h2>
+            <p class="pack-subtitle">نعومة من الرأس حتى القدمين</p>
+            <p class="pack-desc">إزالة الشعر غير المرغوب فيه من كامل الجسم بتقنيات واكس احترافية لنتائج ناعمة تدوم.</p>
+            <div class="pack-footer">
+              <div class="pack-price"><sup>AED </sup>400</div>
+              <div class="pack-dur"><span>◷</span>ساعتان</div>
+            </div>
+          </div>
+
+          <div class="pack-card" data-reveal data-delay="120">
+            <span class="pack-bg-num">18</span>
+            <p class="pack-tag">واكس · كامل</p>
+            <h2 class="pack-title">جسم كامل<br>+ بيكيني</h2>
+            <p class="pack-subtitle">ثقة كاملة ونعومة شاملة</p>
+            <p class="pack-desc">إزالة شعر الجسم بالكامل بما في ذلك منطقة البيكيني بتقنيات واكس احترافية لنتائج تدوم.</p>
+            <div class="pack-footer">
+              <div class="pack-price"><sup>AED </sup>450</div>
+              <div class="pack-dur"><span>◷</span>ساعتان و30 دقيقة</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEGS (AR) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">الساقان</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="two-grid">
+          <div class="zone-card" data-reveal data-delay="0">
+            <span class="zone-icon">🦵</span>
+            <h3 class="zone-title">واكس ساق كاملة</h3>
+            <p class="zone-subtitle">خطوات واثقة ونعومة فاخرة</p>
+            <p class="zone-desc">إزالة الشعر من كامل الساق بتقنيات واكس احترافية لنعومة تدوم.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>95</div>
+              <div class="zone-dur">20 دقيقة</div>
+            </div>
+          </div>
+
+          <div class="zone-card" data-reveal data-delay="100">
+            <span class="zone-icon">🦵</span>
+            <h3 class="zone-title">واكس نصف ساق</h3>
+            <p class="zone-subtitle">عناية بسيطة ونتيجة حريرية</p>
+            <p class="zone-desc">إزالة الشعر من نصف الساق (علوي أو سفلي) بواكس دافئ لنتائج تدوم.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>48</div>
+              <div class="zone-dur">15 دقيقة</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARMS (AR) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">الذراعان</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="two-grid">
+          <div class="zone-card" data-reveal data-delay="0">
+            <span class="zone-icon">💪</span>
+            <h3 class="zone-title">واكس ذراع كاملة</h3>
+            <p class="zone-subtitle">ثقة ناعمة بلا مجهود</p>
+            <p class="zone-desc">إزالة الشعر من كامل الذراع بتقنيات واكس احترافية لنتيجة ناعمة تدوم.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>74</div>
+              <div class="zone-dur">30 دقيقة</div>
+            </div>
+          </div>
+
+          <div class="zone-card" data-reveal data-delay="100">
+            <span class="zone-icon">💪</span>
+            <h3 class="zone-title">واكس نصف ذراع</h3>
+            <p class="zone-subtitle">نعومة حيث تهمّ التفاصيل</p>
+            <p class="zone-desc">إزالة الشعر من نصف الذراع (علوي أو سفلي) بتقنيات واكس احترافية.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>37</div>
+              <div class="zone-dur">20 دقيقة</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BODY ZONES (AR) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">مناطق الجسم</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="three-grid">
+          <div class="zone-card" data-reveal data-delay="0">
+            <span class="zone-icon">🔙</span>
+            <h3 class="zone-title">واكس الظهر كامل</h3>
+            <p class="zone-subtitle">لأن التفاصيل تصنع الفرق</p>
+            <p class="zone-desc">إزالة الشعر من الظهر بالكامل بواكس دافئ لنعومة تدوم.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>79</div>
+              <div class="zone-dur">30 دقيقة</div>
+            </div>
+          </div>
+
+          <div class="zone-card" data-reveal data-delay="80">
+            <span class="zone-icon">✦</span>
+            <h3 class="zone-title">واكس الأمام كامل</h3>
+            <p class="zone-subtitle">عناية أمامية متكاملة</p>
+            <p class="zone-desc">إزالة الشعر من المنطقة الأمامية بالكامل بتقنيات واكس احترافية لنتائج تدوم.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>79</div>
+              <div class="zone-dur">30 دقيقة</div>
+            </div>
+          </div>
+
+          <div class="zone-card" data-reveal data-delay="160">
+            <span class="zone-icon">🪶</span>
+            <h3 class="zone-title">واكس تحت الإبط</h3>
+            <p class="zone-subtitle">انتعاش ونظافة وثقة</p>
+            <p class="zone-desc">إزالة الشعر من تحت الإبط بتقنيات واكس احترافية لنعومة نظيفة تدوم.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>42</div>
+              <div class="zone-dur">20 دقيقة</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIKINI (AR) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">البيكيني</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="two-grid">
+          <div class="bk-card jade-bg" data-reveal data-delay="0">
+            <span class="bk-pill jade">كامل</span>
+            <h3 class="bk-title">واكس بيكيني كامل</h3>
+            <p class="bk-subtitle">إحساس نعومة مثالية</p>
+            <p class="bk-desc">إزالة الشعر من منطقة البيكيني بالكامل بواكس دافئ لنعومة نظيفة تدوم.</p>
+            <div class="bk-meta">
+              <div class="bk-price"><sup>AED </sup>100</div>
+              <div class="bk-dur">30 دقيقة</div>
+            </div>
+          </div>
+
+          <div class="bk-card" data-reveal data-delay="120">
+            <span class="bk-pill gold">خط</span>
+            <h3 class="bk-title">واكس خط البيكيني</h3>
+            <p class="bk-subtitle">عناية سريعة ونتيجة تدوم</p>
+            <p class="bk-desc">إزالة الشعر على أطراف البيكيني لنتيجة مرتبة ونظيفة.</p>
+            <div class="bk-meta">
+              <div class="bk-price"><sup>AED </sup>53</div>
+              <div class="bk-dur">20 دقيقة</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FACE FEATURED (AR) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">واكس وخيط الوجه</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="feature-card gold-bg" data-reveal>
+          <div>
+            <p class="fc-tag">واكس أو خيط · باقة كاملة</p>
+            <h3 class="fc-title">وجه كامل مع<br>حواجب واكس / خيط</h3>
+            <p class="fc-subtitle">تحديد ونعومة ولمعة</p>
+            <p class="fc-desc">إزالة شعر الوجه مع تحديد الحواجب لمظهر متوازن ونظيف — تجربة كاملة في جلسة واحدة.</p>
+          </div>
+          <div class="fc-right">
+            <div class="fc-label">سعر الخدمة</div>
+            <div class="fc-price"><sup>AED </sup>126</div>
+            <div class="fc-dur">◷ &nbsp;40 دقيقة</div>
+          </div>
+        </div>
+
+        <div class="feature-card" data-reveal>
+          <div>
+            <p class="fc-tag">واكس · وجه</p>
+            <h3 class="fc-title">واكس وجه كامل</h3>
+            <p class="fc-subtitle">انتعاش ونعومة فورية</p>
+            <p class="fc-desc">إزالة لطيفة لشعر الوجه بالكامل لملمس ناعم ونهاية مرتبة تمنح البشرة مظهراً مصقولاً.</p>
+          </div>
+          <div class="fc-right">
+            <div class="fc-label">سعر الخدمة</div>
+            <div class="fc-price"><sup>AED </sup>84</div>
+            <div class="fc-dur">◷ &nbsp;40 دقيقة</div>
+          </div>
+        </div>
+
+        <div class="feature-card jade-bg" data-reveal>
+          <div>
+            <p class="fc-tag jade">خيط · وجه</p>
+            <h3 class="fc-title">خيط وجه كامل</h3>
+            <p class="fc-subtitle">مظهر نقي وتحديد أنيق</p>
+            <p class="fc-desc">إزالة شعر الوجه بالخيط بدقة عالية لنتيجة ناعمة ونظيفة — الطريقة التقليدية بإتقان.</p>
+          </div>
+          <div class="fc-right">
+            <div class="fc-label jade">سعر الخدمة</div>
+            <div class="fc-price"><sup>AED </sup>95</div>
+            <div class="fc-dur">◷ &nbsp;20 دقيقة</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BROWS & FACIAL DETAILS TABLE (AR) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">تفاصيل الحواجب والوجه</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="price-table" data-reveal>
+          <div class="pt-header">
+            <span>الخدمة</span>
+            <span>المدة</span>
+            <span>السعر</span>
+          </div>
+
+          <!-- WAXING -->
+          <div class="pt-row">
+            <div class="pt-name">واكس حواجب<small>تحديد أنيق يبرز قوس الحاجب الطبيعي</small></div>
+            <div class="pt-dur">15 دقيقة</div>
+            <div class="pt-price"><sup>AED </sup>37</div>
+          </div>
+          <div class="pt-row">
+            <div class="pt-name">واكس الشفة العليا<small>تفصيل صغير يغيّر المظهر</small></div>
+            <div class="pt-dur">15 دقيقة</div>
+            <div class="pt-price"><sup>AED </sup>27</div>
+          </div>
+          <div class="pt-row">
+            <div class="pt-name">واكس الذقن<small>نظافة ونعومة بثقة</small></div>
+            <div class="pt-dur">15 دقيقة</div>
+            <div class="pt-price"><sup>AED </sup>27</div>
+          </div>
+          <div class="pt-row">
+            <div class="pt-name">واكس الجبهة<small>لمسة مصقولة لمظهر مرتب</small></div>
+            <div class="pt-dur">15 دقيقة</div>
+            <div class="pt-price"><sup>AED </sup>32</div>
+          </div>
+          <div class="pt-row">
+            <div class="pt-name">واكس الأنف<small>لأن التفاصيل مهمة</small></div>
+            <div class="pt-dur">10 دقائق</div>
+            <div class="pt-price"><sup>AED </sup>21</div>
+          </div>
+
+          <!-- THREADING -->
+          <div class="pt-row thread">
+            <div class="pt-name">خيط وتحديد الحواجب<small class="jade">خيط · حواجب محددة بجمال هادئ</small></div>
+            <div class="pt-dur">15 دقيقة</div>
+            <div class="pt-price"><sup>AED </sup>42</div>
+          </div>
+          <div class="pt-row thread">
+            <div class="pt-name">خيط الشفة العليا<small class="jade">خيط · لمسة بسيطة وفرق واضح</small></div>
+            <div class="pt-dur">15 دقيقة</div>
+            <div class="pt-price"><sup>AED </sup>27</div>
+          </div>
+          <div class="pt-row thread">
+            <div class="pt-name">خيط الذقن<small class="jade">خيط · نعومة ونظافة وثقة</small></div>
+            <div class="pt-dur">5 دقائق</div>
+            <div class="pt-price"><sup>AED </sup>27</div>
+          </div>
+          <div class="pt-row thread">
+            <div class="pt-name">خيط الجبهة<small class="jade">خيط · جبهة ناعمة وتحديد أنيق</small></div>
+            <div class="pt-dur">15 دقيقة</div>
+            <div class="pt-price"><sup>AED </sup>32</div>
+          </div>
+        </div>
+
+        <div class="legend">
+          <div class="legend-dot"></div>
+          <span class="legend-text">الإطار الأخضر يشير إلى خدمات الخيط</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM (AR) -->
+    <div class="bottom-tagline" data-reveal>
+      <div class="tl-line">
+        <div class="tl-rule"></div>
+        <span class="tl-diamond">◆</span>
+        <div class="tl-rule"></div>
+      </div>
+      <h2>بشرة ناعمة<br><em>ببساطة لك</em></h2>
+      <p>كل الخدمات متاحة في منزلك داخل الإمارات</p>
+    </div>
+
+  {%- else -%}
+
+    <!-- HERO (EN) -->
+    <section class="hero">
+      <p class="hero-eyebrow">Belladona Care · Dubai</p>
+      <h1 class="hero-title">Smooth &<br><span>Defined</span></h1>
+      <p class="hero-desc">Waxing & Threading · Home Service</p>
+      <div class="hero-divider"></div>
+    </section>
+
+    <!-- FULL BODY PACKAGES (EN) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Full Body Packages</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="pack-grid">
+          <div class="pack-card" data-reveal data-delay="0">
+            <span class="pack-bg-num">09</span>
+            <p class="pack-tag">Waxing · Head to Toe</p>
+            <h2 class="pack-title">Full Body Wax</h2>
+            <p class="pack-subtitle">Smooth from head to toe</p>
+            <p class="pack-desc">Removes unwanted hair from head to toe using professional waxing techniques for smooth, long-lasting results.</p>
+            <div class="pack-footer">
+              <div class="pack-price"><sup>AED </sup>400</div>
+              <div class="pack-dur"><span>◷</span>2 Hours</div>
+            </div>
+          </div>
+
+          <div class="pack-card" data-reveal data-delay="120">
+            <span class="pack-bg-num">18</span>
+            <p class="pack-tag">Waxing · Complete</p>
+            <h2 class="pack-title">Full Body<br>+ Bikini</h2>
+            <p class="pack-subtitle">Total smoothness, complete confidence</p>
+            <p class="pack-desc">Removes unwanted hair from the entire body including the bikini area using professional waxing techniques for smooth, long-lasting results.</p>
+            <div class="pack-footer">
+              <div class="pack-price"><sup>AED </sup>450</div>
+              <div class="pack-dur"><span>◷</span>2 hr 30 min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEGS (EN) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Legs</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="two-grid">
+          <div class="zone-card" data-reveal data-delay="0">
+            <span class="zone-icon">🦵</span>
+            <h3 class="zone-title">Full Leg Waxing</h3>
+            <p class="zone-subtitle">Smooth legs, confident steps</p>
+            <p class="zone-desc">Removes unwanted hair from the entire leg using professional waxing techniques for smooth, long-lasting results.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>95</div>
+              <div class="zone-dur">20 min</div>
+            </div>
+          </div>
+
+          <div class="zone-card" data-reveal data-delay="100">
+            <span class="zone-icon">🦵</span>
+            <h3 class="zone-title">Half Leg Waxing</h3>
+            <p class="zone-subtitle">Simple care, silky results</p>
+            <p class="zone-desc">Removes unwanted hair from either the lower or upper half of the legs using warm wax for long-lasting, smooth results.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>48</div>
+              <div class="zone-dur">15 min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARMS (EN) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Arms</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="two-grid">
+          <div class="zone-card" data-reveal data-delay="0">
+            <span class="zone-icon">💪</span>
+            <h3 class="zone-title">Full Arm Waxing</h3>
+            <p class="zone-subtitle">Smooth arms, effortless confidence</p>
+            <p class="zone-desc">Removes unwanted hair from the entire arm using professional waxing techniques for smooth, long-lasting results.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>74</div>
+              <div class="zone-dur">30 min</div>
+            </div>
+          </div>
+
+          <div class="zone-card" data-reveal data-delay="100">
+            <span class="zone-icon">💪</span>
+            <h3 class="zone-title">Half Arm Waxing</h3>
+            <p class="zone-subtitle">Smooth where it matters</p>
+            <p class="zone-desc">Removes unwanted hair from either the upper or lower half of the arms using professional waxing techniques.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>37</div>
+              <div class="zone-dur">20 min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BODY ZONES (EN) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Body Zones</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="three-grid">
+          <div class="zone-card" data-reveal data-delay="0">
+            <span class="zone-icon">🔙</span>
+            <h3 class="zone-title">Full Back Waxing</h3>
+            <p class="zone-subtitle">Because details matter</p>
+            <p class="zone-desc">Removes unwanted hair from the entire back using warm wax for smooth, long-lasting results.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>79</div>
+              <div class="zone-dur">30 min</div>
+            </div>
+          </div>
+
+          <div class="zone-card" data-reveal data-delay="80">
+            <span class="zone-icon">✦</span>
+            <h3 class="zone-title">Full Front Waxing</h3>
+            <p class="zone-subtitle">Complete front care</p>
+            <p class="zone-desc">Removes unwanted hair from the full front body area using professional waxing techniques for smooth, long-lasting results.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>79</div>
+              <div class="zone-dur">30 min</div>
+            </div>
+          </div>
+
+          <div class="zone-card" data-reveal data-delay="160">
+            <span class="zone-icon">🪶</span>
+            <h3 class="zone-title">Underarms Waxing</h3>
+            <p class="zone-subtitle">Fresh, clean, confident</p>
+            <p class="zone-desc">Removes unwanted hair from the underarm area using professional waxing techniques for clean, long-lasting smoothness.</p>
+            <div class="zone-bottom">
+              <div class="zone-price"><sup>AED </sup>42</div>
+              <div class="zone-dur">20 min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIKINI (EN) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Bikini</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="two-grid">
+          <div class="bk-card jade-bg" data-reveal data-delay="0">
+            <span class="bk-pill jade">Full</span>
+            <h3 class="bk-title">Full Bikini Waxing</h3>
+            <p class="bk-subtitle">Feel perfectly smooth</p>
+            <p class="bk-desc">Removes unwanted hair from the entire bikini area using warm wax for clean, long-lasting smoothness.</p>
+            <div class="bk-meta">
+              <div class="bk-price"><sup>AED </sup>100</div>
+              <div class="bk-dur">30 min</div>
+            </div>
+          </div>
+
+          <div class="bk-card" data-reveal data-delay="120">
+            <span class="bk-pill gold">Line</span>
+            <h3 class="bk-title">Bikini Line Waxing</h3>
+            <p class="bk-subtitle">Quick care, lasting smoothness</p>
+            <p class="bk-desc">Removes unwanted hair along the edges of the bikini area for a clean, neat finish.</p>
+            <div class="bk-meta">
+              <div class="bk-price"><sup>AED </sup>53</div>
+              <div class="bk-dur">20 min</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FACE FEATURED (EN) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Face Waxing & Threading</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="feature-card gold-bg" data-reveal>
+          <div>
+            <p class="fc-tag">Waxing or Threading · Complete Package</p>
+            <h3 class="fc-title">Full Face with<br>Eyebrows Wax / Thread</h3>
+            <p class="fc-subtitle">Shape, smooth, glow</p>
+            <p class="fc-desc">Removes unwanted facial hair while shaping and defining the eyebrows for a clean, balanced look — the complete facial hair removal experience in one session.</p>
+          </div>
+          <div class="fc-right">
+            <div class="fc-label">Treatment Price</div>
+            <div class="fc-price"><sup>AED </sup>126</div>
+            <div class="fc-dur">◷ &nbsp;40 min</div>
+          </div>
+        </div>
+
+        <div class="feature-card" data-reveal>
+          <div>
+            <p class="fc-tag">Waxing · Face</p>
+            <h3 class="fc-title">Full Face Waxing</h3>
+            <p class="fc-subtitle">Feel fresh and smooth</p>
+            <p class="fc-desc">Gently removes unwanted hair from the entire face for a smooth, clean finish — leaving your complexion refined and polished.</p>
+          </div>
+          <div class="fc-right">
+            <div class="fc-label">Treatment Price</div>
+            <div class="fc-price"><sup>AED </sup>84</div>
+            <div class="fc-dur">◷ &nbsp;40 min</div>
+          </div>
+        </div>
+
+        <div class="feature-card jade-bg" data-reveal>
+          <div>
+            <p class="fc-tag jade">Threading · Face</p>
+            <h3 class="fc-title">Full Face Threading</h3>
+            <p class="fc-subtitle">Clean face, refined look</p>
+            <p class="fc-desc">Removes unwanted facial hair using precise threading techniques for a clean, smooth finish — the traditional method, perfected.</p>
+          </div>
+          <div class="fc-right">
+            <div class="fc-label jade">Treatment Price</div>
+            <div class="fc-price"><sup>AED </sup>95</div>
+            <div class="fc-dur">◷ &nbsp;20 min</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BROWS & FACIAL DETAILS TABLE (EN) -->
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-label" data-reveal>
+          <span class="section-label-text">Brows & Facial Details</span>
+          <div class="section-label-line"></div>
+        </div>
+
+        <div class="price-table" data-reveal>
+          <div class="pt-header">
+            <span>Treatment</span>
+            <span>Duration</span>
+            <span>Price</span>
+          </div>
+
+          <div class="pt-row">
+            <div class="pt-name">Eyebrow Waxing<small>Shape your confidence — defines your natural arch</small></div>
+            <div class="pt-dur">15 min</div>
+            <div class="pt-price"><sup>AED </sup>37</div>
+          </div>
+          <div class="pt-row">
+            <div class="pt-name">Upper Lip Waxing<small>Small detail, visible difference</small></div>
+            <div class="pt-dur">15 min</div>
+            <div class="pt-price"><sup>AED </sup>27</div>
+          </div>
+          <div class="pt-row">
+            <div class="pt-name">Chin Waxing<small>Smooth and confidently clean</small></div>
+            <div class="pt-dur">15 min</div>
+            <div class="pt-price"><sup>AED </sup>27</div>
+          </div>
+          <div class="pt-row">
+            <div class="pt-name">Forehead Waxing<small>Smooth forehead, polished finish</small></div>
+            <div class="pt-dur">15 min</div>
+            <div class="pt-price"><sup>AED </sup>32</div>
+          </div>
+          <div class="pt-row">
+            <div class="pt-name">Nose Waxing<small>Clean details matter</small></div>
+            <div class="pt-dur">10 min</div>
+            <div class="pt-price"><sup>AED </sup>21</div>
+          </div>
+
+          <div class="pt-row thread">
+            <div class="pt-name">Eyebrow Threading & Shaping<small class="jade">Threading · Defined brows, effortless beauty</small></div>
+            <div class="pt-dur">15 min</div>
+            <div class="pt-price"><sup>AED </sup>42</div>
+          </div>
+          <div class="pt-row thread">
+            <div class="pt-name">Upper Lip Threading<small class="jade">Threading · Small touch, visible difference</small></div>
+            <div class="pt-dur">15 min</div>
+            <div class="pt-price"><sup>AED </sup>27</div>
+          </div>
+          <div class="pt-row thread">
+            <div class="pt-name">Chin Threading<small class="jade">Threading · Smooth, clean, confident</small></div>
+            <div class="pt-dur">5 min</div>
+            <div class="pt-price"><sup>AED </sup>27</div>
+          </div>
+          <div class="pt-row thread">
+            <div class="pt-name">Forehead Threading<small class="jade">Threading · Smooth forehead, refined shape</small></div>
+            <div class="pt-dur">15 min</div>
+            <div class="pt-price"><sup>AED </sup>32</div>
+          </div>
+        </div>
+
+        <div class="legend">
+          <div class="legend-dot"></div>
+          <span class="legend-text">Jade border indicates threading technique</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM (EN) -->
+    <div class="bottom-tagline" data-reveal>
+      <div class="tl-line">
+        <div class="tl-rule"></div>
+        <span class="tl-diamond">◆</span>
+        <div class="tl-rule"></div>
+      </div>
+      <h2>Smooth skin,<br><em>effortlessly yours</em></h2>
+      <p>All services available at your home across the UAE</p>
+    </div>
+  {%- endif -%}
+
+  <script>
+    (function() {
+      var root = document.getElementById('wax-thread-{{ section.id }}');
+      if (!root) return;
+
+      var elements = root.querySelectorAll('[data-reveal]');
+      if (!('IntersectionObserver' in window)) {
+        elements.forEach(function(el){ el.classList.add('visible'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var el = entry.target;
+            var delay = parseInt(el.dataset.delay || '0', 10);
+            window.setTimeout(function(){ el.classList.add('visible'); }, delay);
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      elements.forEach(function(el){ observer.observe(el); });
+    })();
+  </script>
+
+  {% schema %}
+  {
+    "name": "Waxing & Threading Women",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Waxing & Threading Women"
+      }
+    ]
+  }
+  {% endschema %}
+</section>

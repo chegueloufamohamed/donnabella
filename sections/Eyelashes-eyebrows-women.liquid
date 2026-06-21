@@ -1,0 +1,636 @@
+{% comment %}
+  Eyelash & Brow — Belladona Care
+  Bilingual section: auto-detects EN/AR via request.locale
+  Save as: sections/eyelash-brow.liquid
+  Add to page via: Customize → Page → Add section → Eyelash & Brow
+{% endcomment %}
+
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign dir = 'rtl' %}
+{% endif %}
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div class="eb-{{ section.id }}" dir="{{ dir }}">
+<style>
+  .eb-{{ section.id }} .ec-icon,
+.eb-{{ section.id }} .lc-icon,
+.eb-{{ section.id }} .rm-icon {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  margin-bottom: 0 !important;
+  display: none !important;
+}
+  .eb-{{ section.id }} {
+    --bg: {{ section.settings.bg_color }};
+    --bg-dark: #2f3d4d; --bg-deeper: #354656;
+    --gold: {{ section.settings.gold_color }};
+    --gold-line: rgba(201,169,110,0.35);
+    --mist: {{ section.settings.mist_color }};
+    --mist-dim: rgba(168,184,200,0.1); --mist-line: rgba(168,184,200,0.28);
+    --white: #ffffff; --white-60: rgba(255,255,255,0.6);
+    --glass: rgba(255,255,255,0.06); --glass-b: rgba(255,255,255,0.11);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', sans-serif;
+    --arabic: 'Cairo', sans-serif;
+    --font-main: {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
+    --font-display: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %};
+    background-color: var(--bg);
+    color: var(--white);
+    font-family: var(--font-main);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  @keyframes eb-fadeUp-{{ section.id }} { to { opacity: 1; transform: translateY(0); } }
+  @keyframes eb-ring-{{ section.id }} {
+    0%,100% { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
+    50%      { opacity: 0.75; transform: translate(-50%,-50%) scale(1.05); }
+  }
+
+  /* ── HERO ── */
+  .eb-{{ section.id }} .eb-hero {
+    position: relative; min-height: 56vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 80px 30px 50px; overflow: hidden;
+  }
+  .eb-{{ section.id }} .eb-hero::before {
+    content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,184,200,0.09) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none;
+  }
+  .eb-{{ section.id }} .eb-hero::after {
+    content: ''; position: absolute; width: 360px; height: 360px; border-radius: 50%;
+    border: 1px solid var(--mist-line); top: 50%; left: 50%;
+    transform: translate(-50%,-50%); pointer-events: none;
+    animation: eb-ring-{{ section.id }} 4s ease-in-out infinite;
+  }
+  .eb-{{ section.id }} .eb-hero-ring2 {
+    position: absolute; width: 480px; height: 480px; border-radius: 50%;
+    border: 1px solid rgba(168,184,200,0.1);
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    pointer-events: none; animation: eb-ring-{{ section.id }} 5.5s ease-in-out infinite 1.5s;
+  }
+  .eb-{{ section.id }} .eb-eyebrow {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--mist); margin-bottom: 20px; position: relative; z-index: 1;
+    opacity: 0; transform: translateY(16px);
+    animation: eb-fadeUp-{{ section.id }} 0.8s ease 0.2s forwards;
+  }
+  .eb-{{ section.id }} .eb-title {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 9vw, 96px);
+    font-weight: {% if is_arabic %}400{% else %}300{% endif %};
+    font-style: {% if is_arabic %}normal{% else %}italic{% endif %};
+    line-height: {% if is_arabic %}1.2{% else %}0.95{% endif %};
+    color: var(--white); position: relative; z-index: 1;
+    opacity: 0; transform: translateY(20px);
+    animation: eb-fadeUp-{{ section.id }} 0.9s ease 0.4s forwards;
+  }
+  .eb-{{ section.id }} .eb-title span { color: var(--gold); font-style: normal; font-weight: 500; }
+  .eb-{{ section.id }} .eb-desc {
+    margin-top: 26px; font-size: 13px;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.14em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--white-60); position: relative; z-index: 1;
+    opacity: 0; transform: translateY(16px);
+    animation: eb-fadeUp-{{ section.id }} 0.9s ease 0.6s forwards;
+  }
+  .eb-{{ section.id }} .eb-divider {
+    margin-top: 40px; width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0; animation: eb-fadeUp-{{ section.id }} 0.9s ease 0.8s forwards;
+  }
+
+  /* ── LAYOUT ── */
+  .eb-{{ section.id }} .eb-section { position: relative; z-index: 1; padding: 52px 0 62px; }
+  .eb-{{ section.id }} .eb-section + .eb-section { padding-top: 0; }
+  .eb-{{ section.id }} .eb-inner { max-width: 1160px; margin: 0 auto; padding: 0 30px; }
+
+  /* ── SECTION LABEL ── */
+  .eb-{{ section.id }} .eb-label {
+    display: flex; align-items: center; gap: 18px; margin-bottom: 42px;
+    opacity: 0;
+    transform: translateX({% if is_arabic %}20px{% else %}-20px{% endif %});
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .eb-{{ section.id }} .eb-label.visible { opacity: 1; transform: translateX(0); }
+  .eb-{{ section.id }} .eb-label-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to {% if is_arabic %}left{% else %}right{% endif %}, var(--gold-line), transparent);
+  }
+  .eb-{{ section.id }} .eb-label-text {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.45em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); white-space: nowrap;
+  }
+
+  /* ── EXTENSION CARDS (full sets) ── */
+  .eb-{{ section.id }} .eb-ext-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin-bottom: 2px; }
+
+  .eb-{{ section.id }} .eb-ext-card {
+    position: relative; padding: 42px 34px 36px; overflow: hidden;
+    cursor: default; display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(26px);
+    transition: opacity 0.7s ease, transform 0.7s ease, background 0.4s;
+  }
+  .eb-{{ section.id }} .eb-ext-card.visible { opacity: 1; transform: translateY(0); }
+
+  .eb-{{ section.id }} .eb-ext-card.classic {
+    background: linear-gradient(135deg, var(--mist-dim) 0%, rgba(168,184,200,0.02) 100%);
+    border: 1px solid var(--mist-line);
+  }
+  .eb-{{ section.id }} .eb-ext-card.classic:hover { background: linear-gradient(135deg, rgba(168,184,200,0.16) 0%, rgba(168,184,200,0.04) 100%); border-color: rgba(168,184,200,0.45); }
+  .eb-{{ section.id }} .eb-ext-card.classic::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--mist) 50%, transparent 90%); }
+
+  .eb-{{ section.id }} .eb-ext-card.russian {
+    background: linear-gradient(135deg, rgba(201,169,110,0.14) 0%, rgba(201,169,110,0.03) 100%);
+    border: 1px solid var(--gold-line);
+  }
+  .eb-{{ section.id }} .eb-ext-card.russian:hover { background: linear-gradient(135deg, rgba(201,169,110,0.21) 0%, rgba(201,169,110,0.06) 100%); }
+  .eb-{{ section.id }} .eb-ext-card.russian::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
+
+  .eb-{{ section.id }} .eb-ext-card.hybrid {
+    background: linear-gradient(135deg, rgba(201,169,110,0.1) 0%, rgba(168,184,200,0.06) 100%);
+    border: 1px solid var(--gold-line);
+  }
+  .eb-{{ section.id }} .eb-ext-card.hybrid:hover { background: linear-gradient(135deg, rgba(201,169,110,0.17) 0%, rgba(168,184,200,0.1) 100%); }
+  .eb-{{ section.id }} .eb-ext-card.hybrid::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 5%, var(--mist) 30%, var(--gold) 70%, transparent 95%); }
+
+  .eb-{{ section.id }} .eb-ext-bg {
+    position: absolute; bottom: 12px;
+    {% if is_arabic %}left{% else %}right{% endif %}: 18px;
+    font-family: var(--serif); font-size: 90px; font-weight: 300;
+    color: rgba(255,255,255,0.04); line-height: 1; user-select: none;
+  }
+  .eb-{{ section.id }} .ec-icon { font-size: 24px; margin-bottom: 15px; display: block; }
+  .eb-{{ section.id }} .ec-tag {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    margin-bottom: 10px;
+  }
+  .eb-{{ section.id }} .ec-tag.mist { color: var(--mist); }
+  .eb-{{ section.id }} .ec-tag.gold { color: var(--gold); }
+  .eb-{{ section.id }} .ec-tag.duo { background: linear-gradient(to right, var(--mist), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .eb-{{ section.id }} .ec-title { font-family: var(--font-display); font-size: 26px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 5px; line-height: 1.15; }
+  .eb-{{ section.id }} .ec-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 12px; margin-bottom: 13px; opacity: 0.9; }
+  .eb-{{ section.id }} .ec-sub.mist { color: var(--mist); }
+  .eb-{{ section.id }} .ec-sub.gold { color: var(--gold); }
+  .eb-{{ section.id }} .ec-desc { font-size: 12px; line-height: 1.73; color: var(--white-60); margin-bottom: 26px; flex: 1; }
+  .eb-{{ section.id }} .ec-foot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: auto; }
+  .eb-{{ section.id }} .ec-price { font-family: var(--serif); font-size: 36px; font-weight: 300; color: var(--white); line-height: 1; }
+  .eb-{{ section.id }} .ec-price sup { font-size: 13px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .eb-{{ section.id }} .ec-dur { font-size: 10px; color: var(--white-60); text-align: {% if is_arabic %}start{% else %}right{% endif %}; letter-spacing: 0.06em; line-height: 1.5; }
+  .eb-{{ section.id }} .ec-dur span { display: block; font-size: 13px; margin-bottom: 2px; }
+  .eb-{{ section.id }} .ec-dur span.mist { color: var(--mist); }
+  .eb-{{ section.id }} .ec-dur span.gold { color: var(--gold); }
+
+  /* ── FEATURE / HALF SET CARD ── */
+  .eb-{{ section.id }} .eb-feat {
+    position: relative; background: var(--glass); border: 1px solid var(--glass-b);
+    padding: 40px 46px; display: grid; grid-template-columns: 1fr auto;
+    gap: 40px; align-items: center; overflow: hidden; margin-top: 2px;
+    cursor: default; opacity: 0; transform: translateY(24px);
+    transition: opacity 0.75s ease, transform 0.75s ease, background 0.35s, border-color 0.35s;
+  }
+  .eb-{{ section.id }} .eb-feat.visible { opacity: 1; transform: translateY(0); }
+  .eb-{{ section.id }} .eb-feat:hover { background: rgba(255,255,255,0.09); border-color: var(--mist-line); }
+  .eb-{{ section.id }} .eb-feat.mist-bg { background: linear-gradient(135deg, var(--mist-dim) 0%, rgba(168,184,200,0.02) 100%); border-color: var(--mist-line); }
+  .eb-{{ section.id }} .eb-feat.mist-bg::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--mist) 50%, transparent 90%); }
+  .eb-{{ section.id }} .fc-tag { font-size: 9px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); margin-bottom: 10px; }
+  .eb-{{ section.id }} .fc-tag.mist { color: var(--mist); }
+  .eb-{{ section.id }} .fc-title { font-family: var(--font-display); font-size: 30px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); line-height: 1.15; margin-bottom: 6px; }
+  .eb-{{ section.id }} .fc-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 13px; color: var(--mist); margin-bottom: 12px; opacity: 0.9; }
+  .eb-{{ section.id }} .fc-desc { font-size: 12.5px; line-height: 1.75; color: var(--white-60); max-width: 460px; }
+  .eb-{{ section.id }} .fc-right { text-align: {% if is_arabic %}start{% else %}right{% endif %}; flex-shrink: 0; }
+  .eb-{{ section.id }} .fc-label { font-size: 9px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.35em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--mist); margin-bottom: 5px; }
+  .eb-{{ section.id }} .fc-price { font-family: var(--serif); font-size: 46px; font-weight: 300; color: var(--white); line-height: 1; }
+  .eb-{{ section.id }} .fc-price sup { font-size: 15px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .eb-{{ section.id }} .fc-dur { font-size: 10px; color: var(--white-60); margin-top: 8px; letter-spacing: 0.08em; }
+
+  /* ── PRICE TABLE ── */
+  .eb-{{ section.id }} .eb-table { border: 1px solid var(--glass-b); overflow: hidden; opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .eb-{{ section.id }} .eb-table.visible { opacity: 1; transform: translateY(0); }
+  .eb-{{ section.id }} .eb-thead { background: rgba(201,169,110,0.1); border-bottom: 1px solid var(--gold-line); padding: 14px 28px; display: grid; grid-template-columns: 1fr auto auto; gap: 24px; font-size: 9px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.4em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); }
+  .eb-{{ section.id }} .eb-thead span:last-child { text-align: {% if is_arabic %}start{% else %}right{% endif %}; }
+  .eb-{{ section.id }} .eb-trow { display: grid; grid-template-columns: 1fr auto auto; gap: 24px; padding: 17px 28px; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: center; transition: background 0.25s; cursor: default; }
+  .eb-{{ section.id }} .eb-trow:last-child { border-bottom: none; }
+  .eb-{{ section.id }} .eb-trow:hover { background: rgba(255,255,255,0.05); }
+  .eb-{{ section.id }} .eb-trow.ref-classic { border-{% if is_arabic %}right{% else %}left{% endif %}: 2px solid var(--mist); }
+  .eb-{{ section.id }} .eb-trow.ref-russian { border-{% if is_arabic %}right{% else %}left{% endif %}: 2px solid var(--gold); }
+  .eb-{{ section.id }} .eb-tname { font-family: var(--font-display); font-size: 18px; font-weight: 400; color: var(--white); line-height: 1.2; }
+  .eb-{{ section.id }} .eb-tname small { display: block; font-family: var(--font-main); font-size: 10px; color: var(--white-60); margin-top: 2px; }
+  .eb-{{ section.id }} .eb-tname small.mist { color: var(--mist); }
+  .eb-{{ section.id }} .eb-tname small.gold { color: var(--gold); }
+  .eb-{{ section.id }} .eb-tdur { font-size: 10px; color: var(--white-60); white-space: nowrap; letter-spacing: 0.06em; text-align: {% if is_arabic %}start{% else %}right{% endif %}; }
+  .eb-{{ section.id }} .eb-tprice { font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--white); text-align: {% if is_arabic %}start{% else %}right{% endif %}; white-space: nowrap; min-width: 72px; }
+  .eb-{{ section.id }} .eb-tprice sup { font-size: 10px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+
+  .eb-{{ section.id }} .eb-legend { display: flex; align-items: center; gap: 20px; margin-top: 13px; padding-{% if is_arabic %}right{% else %}left{% endif %}: 4px; flex-wrap: wrap; }
+  .eb-{{ section.id }} .eb-legend-item { display: flex; align-items: center; gap: 8px; }
+  .eb-{{ section.id }} .eb-legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .eb-{{ section.id }} .eb-legend-text { font-size: 10px; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); }
+
+  /* ── REMOVAL BAR ── */
+  .eb-{{ section.id }} .eb-removal {
+    display: flex; align-items: center; justify-content: space-between; gap: 30px;
+    background: var(--glass); border: 1px solid var(--glass-b);
+    border-{% if is_arabic %}right{% else %}left{% endif %}: 2px solid rgba(255,255,255,0.15);
+    padding: 26px 36px; margin-top: 2px;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.65s ease, transform 0.65s ease, background 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+  .eb-{{ section.id }} .eb-removal.visible { opacity: 1; transform: translateY(0); }
+  .eb-{{ section.id }} .eb-removal:hover { background: rgba(255,255,255,0.09); border-color: var(--mist-line); }
+  .eb-{{ section.id }} .rm-left { display: flex; align-items: center; gap: 18px; }
+  .eb-{{ section.id }} .rm-icon { font-size: 18px; }
+  .eb-{{ section.id }} .rm-title { font-family: var(--font-display); font-size: 20px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 2px; }
+  .eb-{{ section.id }} .rm-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 11px; color: var(--white-60); }
+  .eb-{{ section.id }} .rm-right { text-align: {% if is_arabic %}start{% else %}right{% endif %}; flex-shrink: 0; }
+  .eb-{{ section.id }} .rm-price { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--white); }
+  .eb-{{ section.id }} .rm-price sup { font-size: 11px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .eb-{{ section.id }} .rm-dur { font-size: 10px; color: var(--white-60); margin-top: 3px; letter-spacing: 0.06em; }
+
+  /* ── LIFT & LAMINATION CARDS ── */
+  .eb-{{ section.id }} .eb-lift-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .eb-{{ section.id }} .eb-lift-card {
+    position: relative; padding: 42px 36px 36px; overflow: hidden;
+    cursor: default; display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease, background 0.4s;
+  }
+  .eb-{{ section.id }} .eb-lift-card.visible { opacity: 1; transform: translateY(0); }
+  .eb-{{ section.id }} .eb-lift-card.lash-lift { background: linear-gradient(135deg, var(--mist-dim) 0%, rgba(168,184,200,0.02) 100%); border: 1px solid var(--mist-line); }
+  .eb-{{ section.id }} .eb-lift-card.lash-lift:hover { background: linear-gradient(135deg, rgba(168,184,200,0.16) 0%, rgba(168,184,200,0.04) 100%); border-color: rgba(168,184,200,0.5); }
+  .eb-{{ section.id }} .eb-lift-card.lash-lift::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--mist) 50%, transparent 90%); }
+  .eb-{{ section.id }} .eb-lift-card.brow-lam { background: linear-gradient(135deg, rgba(201,169,110,0.12) 0%, rgba(201,169,110,0.03) 100%); border: 1px solid var(--gold-line); }
+  .eb-{{ section.id }} .eb-lift-card.brow-lam:hover { background: linear-gradient(135deg, rgba(201,169,110,0.19) 0%, rgba(201,169,110,0.06) 100%); }
+  .eb-{{ section.id }} .eb-lift-card.brow-lam::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
+  .eb-{{ section.id }} .lc-bg {
+    position: absolute; bottom: 10px;
+    {% if is_arabic %}left{% else %}right{% endif %}: 20px;
+    font-family: var(--serif); font-size: 100px; font-weight: 300;
+    color: rgba(255,255,255,0.04); line-height: 1; user-select: none;
+  }
+  .eb-{{ section.id }} .lc-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+  .eb-{{ section.id }} .lc-tag { font-size: 9px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} margin-bottom: 10px; }
+  .eb-{{ section.id }} .lc-tag.mist { color: var(--mist); }
+  .eb-{{ section.id }} .lc-tag.gold { color: var(--gold); }
+  .eb-{{ section.id }} .lc-title { font-family: var(--font-display); font-size: 32px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 6px; line-height: 1.1; }
+  .eb-{{ section.id }} .lc-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 14px; margin-bottom: 14px; opacity: 0.9; }
+  .eb-{{ section.id }} .lc-sub.mist { color: var(--mist); }
+  .eb-{{ section.id }} .lc-sub.gold { color: var(--gold); }
+  .eb-{{ section.id }} .lc-desc { font-size: 12.5px; line-height: 1.74; color: var(--white-60); margin-bottom: 28px; flex: 1; }
+  .eb-{{ section.id }} .lc-foot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 18px; margin-top: auto; }
+  .eb-{{ section.id }} .lc-price { font-family: var(--serif); font-size: 42px; font-weight: 300; color: var(--white); line-height: 1; }
+  .eb-{{ section.id }} .lc-price sup { font-size: 15px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .eb-{{ section.id }} .lc-dur { font-size: 11px; color: var(--white-60); text-align: {% if is_arabic %}start{% else %}right{% endif %}; letter-spacing: 0.06em; line-height: 1.6; }
+  .eb-{{ section.id }} .lc-dur span { display: block; font-size: 14px; margin-bottom: 3px; }
+  .eb-{{ section.id }} .lc-dur span.mist { color: var(--mist); }
+  .eb-{{ section.id }} .lc-dur span.gold { color: var(--gold); }
+
+  /* ── TINTING ── */
+  .eb-{{ section.id }} .eb-tint-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .eb-{{ section.id }} .eb-tint-card {
+    background: var(--glass); border: 1px solid var(--glass-b);
+    padding: 30px 28px; cursor: default; display: flex; gap: 20px; align-items: flex-start;
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 0.65s ease, transform 0.65s ease, background 0.3s, border-color 0.3s;
+  }
+  .eb-{{ section.id }} .eb-tint-card.visible { opacity: 1; transform: translateY(0); }
+  .eb-{{ section.id }} .eb-tint-card:hover { background: rgba(255,255,255,0.1); border-color: var(--mist-line); }
+  .eb-{{ section.id }} .tn-num { font-family: var(--serif); font-size: 40px; font-weight: 300; color: var(--gold); opacity: 0.25; line-height: 1; flex-shrink: 0; min-width: 38px; transition: opacity 0.3s; }
+  .eb-{{ section.id }} .eb-tint-card:hover .tn-num { opacity: 0.55; }
+  .eb-{{ section.id }} .tn-body { flex: 1; }
+  .eb-{{ section.id }} .tn-tag { font-size: 9px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--mist); margin-bottom: 8px; }
+  .eb-{{ section.id }} .tn-title { font-family: var(--font-display); font-size: 20px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 4px; line-height: 1.2; }
+  .eb-{{ section.id }} .tn-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 11px; color: var(--gold); margin-bottom: 10px; opacity: 0.85; }
+  .eb-{{ section.id }} .tn-desc { font-size: 12px; line-height: 1.7; color: var(--white-60); margin-bottom: 18px; }
+  .eb-{{ section.id }} .tn-meta { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--glass-b); padding-top: 12px; }
+  .eb-{{ section.id }} .tn-price { font-family: var(--serif); font-size: 26px; font-weight: 300; color: var(--white); }
+  .eb-{{ section.id }} .tn-price sup { font-size: 11px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .eb-{{ section.id }} .tn-dur { font-size: 10px; color: var(--white-60); letter-spacing: 0.06em; }
+
+  /* ── BOTTOM ── */
+  .eb-{{ section.id }} .eb-bottom { text-align: center; padding: 80px 30px 100px; position: relative; z-index: 1; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .eb-{{ section.id }} .eb-bottom.visible { opacity: 1; transform: translateY(0); }
+  .eb-{{ section.id }} .eb-bottom-line { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 30px; }
+  .eb-{{ section.id }} .eb-bottom-rule { width: 60px; height: 1px; background: var(--gold-line); }
+  .eb-{{ section.id }} .eb-bottom-diamond { color: var(--gold); font-size: 10px; }
+  .eb-{{ section.id }} .eb-bottom h2 { font-family: var(--font-display); font-size: clamp(28px, 5vw, 52px); font-weight: 300; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; color: var(--white); line-height: 1.2; margin-bottom: 16px; }
+  .eb-{{ section.id }} .eb-bottom p { font-size: 12px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.2em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-60); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 920px) {
+    .eb-{{ section.id }} .eb-ext-grid { grid-template-columns: 1fr 1fr; }
+    .eb-{{ section.id }} .eb-ext-grid > .hybrid { grid-column: 1 / -1; max-width: 500px; }
+    .eb-{{ section.id }} .eb-lift-pair { grid-template-columns: 1fr; }
+    .eb-{{ section.id }} .eb-tint-pair { grid-template-columns: 1fr; }
+    .eb-{{ section.id }} .eb-feat { grid-template-columns: 1fr; }
+    .eb-{{ section.id }} .fc-right { text-align: start; }
+    .eb-{{ section.id }} .eb-thead, .eb-{{ section.id }} .eb-trow { grid-template-columns: 1fr auto; }
+    .eb-{{ section.id }} .eb-thead > *:nth-child(2), .eb-{{ section.id }} .eb-trow > *:nth-child(2) { display: none; }
+    .eb-{{ section.id }} .eb-removal { flex-direction: column; align-items: flex-start; }
+    .eb-{{ section.id }} .rm-right { text-align: start; }
+  }
+  @media (max-width: 600px) {
+    .eb-{{ section.id }} .eb-ext-grid { grid-template-columns: 1fr; }
+    .eb-{{ section.id }} .eb-ext-grid > .hybrid { grid-column: auto; max-width: none; }
+    .eb-{{ section.id }} .eb-tint-pair { grid-template-columns: 1fr; }
+  }
+</style>
+
+<!-- ════════ HERO ════════ -->
+<section class="eb-hero">
+  <div class="eb-hero-ring2"></div>
+  <p class="eb-eyebrow">{% if is_arabic %}{{ section.settings.eyebrow_ar }}{% else %}{{ section.settings.eyebrow_en }}{% endif %}</p>
+  <h1 class="eb-title">
+    {% if is_arabic %}عيون<br><span>تأسر القلوب</span>
+    {% else %}Eyes that<br><span>Captivate</span>
+    {% endif %}
+  </h1>
+  <p class="eb-desc">{% if is_arabic %}خدمات الرموش والحواجب · خدمة منزلية{% else %}Eyelash & Brow Services · Home Service{% endif %}</p>
+  <div class="eb-divider"></div>
+</section>
+
+<!-- ════════ LASH EXTENSIONS — FULL SETS ════════ -->
+<section class="eb-section"><div class="eb-inner">
+  <div class="eb-label" data-eb-reveal>
+    <span class="eb-label-text">{% if is_arabic %}إضافات الرموش — طقم كامل{% else %}Lash Extensions — Full Sets{% endif %}</span>
+    <div class="eb-label-line"></div>
+  </div>
+
+  <div class="eb-ext-grid">
+    <!-- Classic Full Set -->
+    <div class="eb-ext-card classic" data-eb-reveal data-delay="0">
+      <span class="eb-ext-bg">05</span>
+      <span class="ec-icon">✨</span>
+      <p class="ec-tag mist">{% if is_arabic %}كلاسيك · طقم كامل{% else %}Classic · Full Set{% endif %}</p>
+      <h3 class="ec-title">{% if is_arabic %}كلاسيك طقم كامل{% else %}Classic Full Set{% endif %}</h3>
+      <p class="ec-sub mist">{% if is_arabic %}أكثر كثافة بشكل طبيعي، محددة بشكل جميل{% else %}Naturally fuller, beautifully defined{% endif %}</p>
+      <p class="ec-desc">{% if is_arabic %}إضافات رموش فردية تُطبَّق على كل رمشة طبيعية لنتيجة أطول وأكثر كثافة وتبدو طبيعية تماماً.{% else %}Individual lash extensions applied to each natural lash for a longer, fuller, yet completely natural-looking result.{% endif %}</p>
+      <div class="ec-foot">
+        <div class="ec-price"><sup>AED </sup>320</div>
+        <div class="ec-dur"><span class="mist">◷</span>{% if is_arabic %}ساعتان{% else %}2 hrs{% endif %}</div>
+      </div>
+    </div>
+
+    <!-- Russian Full Set -->
+    <div class="eb-ext-card russian" data-eb-reveal data-delay="100">
+      <span class="eb-ext-bg">06</span>
+      <span class="ec-icon">✦</span>
+      <p class="ec-tag gold">{% if is_arabic %}روسي · طقم كامل{% else %}Russian · Full Set{% endif %}</p>
+      <h3 class="ec-title">{% if is_arabic %}روسي طقم كامل{% else %}Russian Full Set{% endif %}</h3>
+      <p class="ec-sub gold">{% if is_arabic %}حجم أقصى، إنهاء مثالي{% else %}Maximum volume, flawless finish{% endif %}</p>
+      <p class="ec-desc">{% if is_arabic %}مراوح حجمية خفيفة الوزن تُطبَّق على كل رمشة طبيعية لمظهر أكثر كثافة وكمالاً وأكثر دراماتيكية.{% else %}Lightweight volume fans applied to each natural lash for a fuller, denser, and more dramatic statement look.{% endif %}</p>
+      <div class="ec-foot">
+        <div class="ec-price"><sup>AED </sup>400</div>
+        <div class="ec-dur"><span class="gold">◷</span>{% if is_arabic %}ساعتان{% else %}2 hrs{% endif %}</div>
+      </div>
+    </div>
+
+    <!-- Hybrid Full Set -->
+    <div class="eb-ext-card hybrid" data-eb-reveal data-delay="200">
+      <span class="eb-ext-bg">01</span>
+      <span class="ec-icon">🌙</span>
+      <p class="ec-tag duo">{% if is_arabic %}هجين · طقم كامل{% else %}Hybrid · Full Set{% endif %}</p>
+      <h3 class="ec-title">{% if is_arabic %}رموش هجينة{% else %}Hybrid Lashes{% endif %}</h3>
+      <p class="ec-sub gold">{% if is_arabic %}ارفعي مستوى رموشك اليومية{% else %}Elevate your everyday lashes{% endif %}</p>
+      <p class="ec-desc">{% if is_arabic %}تمزج بين الإضافات الكلاسيكية والحجمية لخلق مظهر أكثر كثافة وملمساً مع توازن طبيعي — أفضل ما في العالمين.{% else %}Blends classic and volume extensions for a fuller, textured look with natural balance — the best of both worlds.{% endif %}</p>
+      <div class="ec-foot">
+        <div class="ec-price"><sup>AED </sup>400</div>
+        <div class="ec-dur"><span class="gold">◷</span>{% if is_arabic %}ساعتان{% else %}2 hrs{% endif %}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Classic Half Set -->
+  <div class="eb-feat mist-bg" data-eb-reveal>
+    <div>
+      <p class="fc-tag mist">{% if is_arabic %}كلاسيك · نصف طقم{% else %}Classic · Half Set{% endif %}</p>
+      <h3 class="fc-title">{% if is_arabic %}كلاسيك نصف طقم{% else %}Classic Half Set{% endif %}</h3>
+      <p class="fc-sub">{% if is_arabic %}طبيعية لكن ملحوظة{% else %}Natural, but noticeable{% endif %}</p>
+      <p class="fc-desc">{% if is_arabic %}تُطبَّق إضافات رموش فردية على النصف الخارجي من خط الرموش لتأثير ناعم ومرفوع وفاتح للعين — مثالية للتحسين الطبيعي.{% else %}Applies individual lash extensions to the outer half of your lash line for a soft, lifted, and eye-opening effect — perfect for a natural enhancement.{% endif %}</p>
+    </div>
+    <div class="fc-right">
+      <div class="fc-label">{% if is_arabic %}سعر الخدمة{% else %}Service Price{% endif %}</div>
+      <div class="fc-price"><sup>AED </sup>245</div>
+      <div class="fc-dur">◷ {% if is_arabic %}ساعة و30 دقيقة{% else %}1 hr 30 min{% endif %}</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ════════ REFILLS ════════ -->
+<section class="eb-section"><div class="eb-inner">
+  <div class="eb-label" data-eb-reveal>
+    <span class="eb-label-text">{% if is_arabic %}إعادة تعبئة الرموش{% else %}Lash Refills{% endif %}</span>
+    <div class="eb-label-line"></div>
+  </div>
+
+  <div class="eb-table" data-eb-reveal>
+    <div class="eb-thead">
+      <span>{% if is_arabic %}خدمة الإعادة{% else %}Refill Service{% endif %}</span>
+      <span>{% if is_arabic %}المدة{% else %}Duration{% endif %}</span>
+      <span>{% if is_arabic %}السعر{% else %}Price{% endif %}</span>
+    </div>
+    <div class="eb-trow ref-classic">
+      <div class="eb-tname">{% if is_arabic %}إعادة تعبئة كلاسيك{% else %}Classic Refill{% endif %}<small class="mist">{% if is_arabic %}كلاسيك · جددي مظهرك الكلاسيكي — يملأ الرموش المتساقطة{% else %}Classic · Refresh your classic look — fills grown or shed lashes{% endif %}</small></div>
+      <div class="eb-tdur">{% if is_arabic %}ساعة و30 دقيقة{% else %}1 hr 30 min{% endif %}</div>
+      <div class="eb-tprice"><sup>AED </sup>215</div>
+    </div>
+    <div class="eb-trow ref-russian">
+      <div class="eb-tname">{% if is_arabic %}إعادة تعبئة روسي{% else %}Russian Refill{% endif %}<small class="gold">{% if is_arabic %}روسي · استعادة الكثافة والحجم الكامل{% else %}Russian Volume · Restore full density and volume{% endif %}</small></div>
+      <div class="eb-tdur">{% if is_arabic %}ساعتان{% else %}2 hrs{% endif %}</div>
+      <div class="eb-tprice"><sup>AED </sup>245</div>
+    </div>
+  </div>
+
+  <div class="eb-legend">
+    <div class="eb-legend-item"><div class="eb-legend-dot" style="background:var(--mist)"></div><span class="eb-legend-text">{% if is_arabic %}إضافات كلاسيكية{% else %}Classic extensions{% endif %}</span></div>
+    <div class="eb-legend-item"><div class="eb-legend-dot" style="background:var(--gold)"></div><span class="eb-legend-text">{% if is_arabic %}إضافات روسية{% else %}Russian volume extensions{% endif %}</span></div>
+  </div>
+
+  <!-- Removal -->
+  <div class="eb-removal" data-eb-reveal>
+    <div class="rm-left">
+      <span class="rm-icon">🪄</span>
+      <div>
+        <div class="rm-title">{% if is_arabic %}إزالة الرموش{% else %}Eyelash Removal{% endif %}</div>
+        <div class="rm-sub">{% if is_arabic %}إزالة آمنة، رموش صحية — منتجات احترافية تحمي رموشك الطبيعية{% else %}Safe removal, healthy lashes — professional products that protect your natural lashes{% endif %}</div>
+      </div>
+    </div>
+    <div class="rm-right">
+      <div class="rm-price"><sup>AED </sup>90</div>
+      <div class="rm-dur">{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ════════ LIFT & LAMINATION ════════ -->
+<section class="eb-section"><div class="eb-inner">
+  <div class="eb-label" data-eb-reveal>
+    <span class="eb-label-text">{% if is_arabic %}الرفع واللامينيشن{% else %}Lift & Lamination{% endif %}</span>
+    <div class="eb-label-line"></div>
+  </div>
+
+  <div class="eb-lift-pair">
+    <div class="eb-lift-card lash-lift" data-eb-reveal data-delay="0">
+      <span class="lc-bg">{% if is_arabic %}رفع{% else %}lift{% endif %}</span>
+      <span class="lc-icon">🌿</span>
+      <p class="lc-tag mist">{% if is_arabic %}الرموش الطبيعية · رفع{% else %}Natural Lashes · Lift{% endif %}</p>
+      <h3 class="lc-title">{% if is_arabic %}رفع الرموش{% else %}Lash Lift{% endif %}</h3>
+      <p class="lc-sub mist">{% if is_arabic %}افتحي عينيكِ{% else %}Open up your eyes{% endif %}</p>
+      <p class="lc-desc">{% if is_arabic %}يُحسِّن رموشك الطبيعية برفعها وتجعيدها من الجذر لتأثير أطول وفاتح للعين — بدون إضافات، بدون رموش مستعارة، فقط رموشك في أفضل حالاتها.{% else %}Enhances your natural lashes by lifting and curling them from the root for a longer, eye-opening effect — no extensions, no falsies, just your lashes at their most elevated.{% endif %}</p>
+      <div class="lc-foot">
+        <div class="lc-price"><sup>AED </sup>184</div>
+        <div class="lc-dur"><span class="mist">◷</span>{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div>
+      </div>
+    </div>
+
+    <div class="eb-lift-card brow-lam" data-eb-reveal data-delay="120">
+      <span class="lc-bg">{% if is_arabic %}حواجب{% else %}brow{% endif %}</span>
+      <span class="lc-icon">🪷</span>
+      <p class="lc-tag gold">{% if is_arabic %}الحواجب · لامينيشن{% else %}Brows · Lamination{% endif %}</p>
+      <h3 class="lc-title">{% if is_arabic %}لامينيشن الحواجب{% else %}Brow Lamination{% endif %}</h3>
+      <p class="lc-sub gold">{% if is_arabic %}مثبتة بشكل مثالي، طبيعية وكثيفة{% else %}Perfectly set, naturally full{% endif %}</p>
+      <p class="lc-desc">{% if is_arabic %}تُنعِّم وتُثبِّت شعيرات حاجبيكِ في مكانها لخلق مظهر أكثر كثافة ومرفوع — يمنحكِ تأثير الحاجب المفروش للأعلى الريشي الذي يدوم لأسابيع دون تصفيف يومي.{% else %}Smooths and sets your brow hairs in place to create a fuller, lifted look — giving you that brushed-up, feathered brow effect that lasts weeks without daily styling.{% endif %}</p>
+      <div class="lc-foot">
+        <div class="lc-price"><sup>AED </sup>184</div>
+        <div class="lc-dur"><span class="gold">◷</span>{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ════════ TINTING ════════ -->
+<section class="eb-section"><div class="eb-inner">
+  <div class="eb-label" data-eb-reveal>
+    <span class="eb-label-text">{% if is_arabic %}صبغة{% else %}Tinting{% endif %}</span>
+    <div class="eb-label-line"></div>
+  </div>
+
+  <div class="eb-tint-pair">
+    <div class="eb-tint-card" data-eb-reveal data-delay="0">
+      <span class="tn-num">10</span>
+      <div class="tn-body">
+        <p class="tn-tag">{% if is_arabic %}الحواجب · صبغة{% else %}Brows · Tinting{% endif %}</p>
+        <h3 class="tn-title">{% if is_arabic %}صبغة الحواجب{% else %}Eyebrow Tinting{% endif %}</h3>
+        <p class="tn-sub">{% if is_arabic %}الشكل، اللون، الثقة{% else %}Shape, color, confidence{% endif %}</p>
+        <p class="tn-desc">{% if is_arabic %}يُحسِّن حواجبك الطبيعية بإضافة لون غني وعمق للشعيرات لإطار أكثر جرأة وتحديداً حول العينين.{% else %}Enhances your natural brows by adding rich color and depth to the hairs for a bolder, more defined frame around the eyes.{% endif %}</p>
+        <div class="tn-meta">
+          <div class="tn-price"><sup>AED </sup>65</div>
+          <div class="tn-dur">{% if is_arabic %}15 دقيقة{% else %}15 min{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eb-tint-card" data-eb-reveal data-delay="100">
+      <span class="tn-num">11</span>
+      <div class="tn-body">
+        <p class="tn-tag">{% if is_arabic %}الرموش · صبغة{% else %}Lashes · Tinting{% endif %}</p>
+        <h3 class="tn-title">{% if is_arabic %}صبغة الرموش{% else %}Eyelash Tinting{% endif %}</h3>
+        <p class="tn-sub">{% if is_arabic %}حددي عينيكِ بشكل طبيعي{% else %}Define your eyes naturally{% endif %}</p>
+        <p class="tn-desc">{% if is_arabic %}يُضيف لوناً داكناً غنياً لرموشك الطبيعية لمظهر أكثر كثافة وتحديداً — تحسين خفي يحدث فرقاً ملحوظاً بدون ماسكارا.{% else %}Adds rich, dark color to your natural lashes for a fuller, more defined look — a subtle enhancement that makes a visible difference without mascara.{% endif %}</p>
+        <div class="tn-meta">
+          <div class="tn-price"><sup>AED </sup>65</div>
+          <div class="tn-dur">{% if is_arabic %}15 دقيقة{% else %}15 min{% endif %}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ════════ BOTTOM ════════ -->
+<div class="eb-bottom" data-eb-reveal>
+  <div class="eb-bottom-line">
+    <div class="eb-bottom-rule"></div>
+    <span class="eb-bottom-diamond">◆</span>
+    <div class="eb-bottom-rule"></div>
+  </div>
+  <h2>{% if is_arabic %}عيون جميلة تبدأ<br>برموش جميلة{% else %}Beautiful eyes begin<br><em>with beautiful lashes</em>{% endif %}</h2>
+  <p>{% if is_arabic %}جميع الخدمات متاحة في منزلكِ في جميع أنحاء الإمارات{% else %}All services available at your home across the UAE{% endif %}</p>
+</div>
+
+</div>
+
+<script>
+  (function() {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const el = e.target, delay = parseInt(el.dataset.delay || 0);
+          setTimeout(() => el.classList.add('visible'), delay);
+          obs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.eb-{{ section.id }} [data-eb-reveal]').forEach(el => obs.observe(el));
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Eyelash & Brow",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🎨 Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#405264"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Gold accent",
+      "default": "#c9a96e"
+    },
+    {
+      "type": "color",
+      "id": "mist_color",
+      "label": "Mist / blue accent",
+      "default": "#a8b8c8"
+    },
+    {
+      "type": "header",
+      "content": "🇬🇧 Hero — English"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_en",
+      "label": "Eyebrow text (EN)",
+      "default": "Belladona Care · Dubai"
+    },
+    {
+      "type": "header",
+      "content": "🇸🇦 Hero — العربية"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_ar",
+      "label": "النص الصغير فوق العنوان (AR)",
+      "default": "بيلادونا كير · دبي"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Eyelash & Brow Women"
+    }
+  ]
+}
+{% endschema %}

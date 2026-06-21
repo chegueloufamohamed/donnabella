@@ -1,0 +1,377 @@
+{% comment %}
+  Section: Client Glow Gallery
+  Arabic / English bilingual — auto-switches via request.locale
+{% endcomment %}
+
+{% comment %} ============================================================
+  ARABIC / ENGLISH LANGUAGE DETECTION
+================================================================ {% endcomment %}
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+{% comment %} Assign active content based on language {% endcomment %}
+{% if is_arabic %}
+  {% assign active_heading     = section.settings.heading_ar     | default: section.settings.heading %}
+  {% assign active_description = section.settings.description_ar | default: section.settings.description %}
+{% else %}
+  {% assign active_heading     = section.settings.heading %}
+  {% assign active_description = section.settings.description %}
+{% endif %}
+
+{% comment %} Load Google Fonts only if needed {% endcomment %}
+{% assign gf = '' %}
+{% assign fonts_used = section.settings.heading_font | append: ',' | append: section.settings.desc_font %}
+
+{% if fonts_used contains 'Merriweather' %}{% assign gf = gf | append: 'Merriweather:wght@300;400;700&family=' %}{% endif %}
+{% if fonts_used contains 'Playfair Display' %}{% assign gf = gf | append: 'Playfair+Display:wght@400;600;700&family=' %}{% endif %}
+{% if fonts_used contains 'Montserrat' %}{% assign gf = gf | append: 'Montserrat:wght@300;400;600;700&family=' %}{% endif %}
+{% if fonts_used contains 'Raleway' %}{% assign gf = gf | append: 'Raleway:wght@300;400;600;700&family=' %}{% endif %}
+{% if fonts_used contains 'Lato' %}{% assign gf = gf | append: 'Lato:wght@300;400;700&family=' %}{% endif %}
+{% if fonts_used contains 'Nunito' %}{% assign gf = gf | append: 'Nunito:wght@300;400;600;700&family=' %}{% endif %}
+
+{% comment %} Always append Arabic fonts {% endcomment %}
+{% assign gf = gf | append: 'Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700' %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% if gf != '' %}
+  <link href="https://fonts.googleapis.com/css2?family={{ gf }}&display=swap" rel="stylesheet">
+{% endif %}
+
+<section
+  id="client-gallery-{{ section.id }}"
+  class="cg-gallery"
+  dir="{{ text_dir }}"
+  style="
+    --cg-bg: {{ section.settings.bg_color }};
+    --cg-height: {{ section.settings.height_desktop }}px;
+    --cg-height-mobile: {{ section.settings.height_mobile }}px;
+    --cg-speed: {{ section.settings.speed }}s;
+    --cg-hover-speed: {{ section.settings.hover_speed }}s;
+    --cg-radius: {{ section.settings.radius }}px;
+    --cg-gap: {{ section.settings.gap }}px;
+    {% if is_arabic %}
+    --cg-heading-font: 'Cairo', sans-serif;
+    --cg-desc-font: 'Tajawal', sans-serif;
+    {% else %}
+    --cg-heading-font: '{{ section.settings.heading_font }}', {{ section.settings.heading_font_fallback }}, sans-serif;
+    --cg-desc-font: '{{ section.settings.desc_font }}', {{ section.settings.desc_font_fallback }}, sans-serif;
+    {% endif %}
+    --cg-heading-size: {{ section.settings.heading_size }}px;
+    --cg-heading-weight: {{ section.settings.heading_weight }};
+    --cg-heading-color: {{ section.settings.heading_color }};
+    --cg-heading-width: {{ section.settings.heading_max_width }}px;
+    --cg-desc-size: {{ section.settings.desc_size }}px;
+    --cg-desc-weight: {{ section.settings.desc_weight }};
+    --cg-desc-color: {{ section.settings.desc_color }};
+    --cg-desc-width: {{ section.settings.desc_max_width }}px;
+  "
+>
+
+  {% if active_heading != blank or active_description != blank %}
+    <div class="cg-header">
+      {% if active_heading != blank %}
+        <h2 class="cg-title {% if is_arabic %}cg-title--ar{% endif %}">{{ active_heading }}</h2>
+      {% endif %}
+      {% if active_description != blank %}
+        <div class="cg-desc {% if is_arabic %}cg-desc--ar{% endif %}">{{ active_description }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="cg-track-wrapper">
+    <div class="cg-track">
+
+      {% for repeat in (1..2) %}
+        {% for block in section.blocks %}
+
+          {% comment %} Pick alt text based on locale {% endcomment %}
+          {% if is_arabic %}
+            {% assign item_alt = block.settings.alt_ar | default: block.settings.alt | default: 'عميلة سعيدة' %}
+          {% else %}
+            {% assign item_alt = block.settings.alt | default: 'Happy Client' %}
+          {% endif %}
+
+          <div class="cg-item" {{ block.shopify_attributes }}>
+            {% if block.settings.image != blank %}
+              <img
+                src="{{ block.settings.image | image_url: width: 1000 }}"
+                alt="{{ item_alt }}"
+                loading="lazy"
+              >
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% endfor %}
+
+    </div>
+  </div>
+
+</section>
+
+<style>
+#client-gallery-{{ section.id }} {
+  background: var(--cg-bg);
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+/* Header */
+#client-gallery-{{ section.id }} .cg-header {
+  max-width: 1200px;
+  margin: 0 auto 16px auto;
+  padding: 0 16px;
+  text-align: center;
+}
+
+#client-gallery-{{ section.id }} .cg-title {
+  margin: 0 0 8px 0;
+  font-family: var(--cg-heading-font);
+  font-size: var(--cg-heading-size);
+  font-weight: var(--cg-heading-weight);
+  color: var(--cg-heading-color);
+  max-width: var(--cg-heading-width);
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.2;
+}
+
+/* Arabic heading — reset letter-spacing, disable transforms */
+#client-gallery-{{ section.id }} .cg-title--ar {
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+#client-gallery-{{ section.id }} .cg-desc {
+  font-family: var(--cg-desc-font);
+  font-size: var(--cg-desc-size);
+  font-weight: var(--cg-desc-weight);
+  color: var(--cg-desc-color);
+  max-width: var(--cg-desc-width);
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+#client-gallery-{{ section.id }} .cg-desc--ar {
+  letter-spacing: 0 !important;
+}
+
+#client-gallery-{{ section.id }} .cg-desc p {
+  margin: 0;
+}
+
+/* Track — marquee always scrolls left-to-right visually regardless of dir */
+#client-gallery-{{ section.id }} .cg-track-wrapper {
+  height: var(--cg-height);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  direction: ltr;
+}
+
+#client-gallery-{{ section.id }} .cg-track {
+  display: flex;
+  gap: var(--cg-gap);
+  animation: cg_scroll_{{ section.id }} var(--cg-speed) linear infinite;
+  transition: animation-duration 0.4s ease;
+}
+
+@keyframes cg_scroll_{{ section.id }} {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+#client-gallery-{{ section.id }} .cg-item {
+  flex: 0 0 auto;
+}
+
+#client-gallery-{{ section.id }} img {
+  height: var(--cg-height);
+  width: auto;
+  border-radius: var(--cg-radius);
+  object-fit: cover;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+{% if section.settings.grayscale %}
+#client-gallery-{{ section.id }} img {
+  filter: grayscale(100%);
+}
+#client-gallery-{{ section.id }} img:hover {
+  filter: grayscale(0%);
+}
+{% endif %}
+
+{% if section.settings.zoom %}
+#client-gallery-{{ section.id }} img:hover {
+  transform: scale(1.05);
+}
+{% endif %}
+
+/* Desktop hover slow down */
+@media (hover: hover) and (pointer: fine) {
+  #client-gallery-{{ section.id }}:hover .cg-track {
+    animation-duration: var(--cg-hover-speed);
+  }
+}
+
+/* Mobile tap pause */
+@media (hover: none) and (pointer: coarse) {
+  #client-gallery-{{ section.id }}:active .cg-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  #client-gallery-{{ section.id }} .cg-track-wrapper {
+    height: var(--cg-height-mobile);
+  }
+  #client-gallery-{{ section.id }} img {
+    height: var(--cg-height-mobile);
+  }
+  #client-gallery-{{ section.id }} .cg-title {
+    font-size: calc(var(--cg-heading-size) * 0.8);
+  }
+  #client-gallery-{{ section.id }} .cg-desc {
+    font-size: calc(var(--cg-desc-size) * 0.9);
+  }
+}
+
+/* Bigger immersive mobile images */
+@media (max-width: 768px) {
+  #client-gallery-{{ section.id }} .cg-track-wrapper {
+    height: 60vh;
+  }
+  #client-gallery-{{ section.id }} img {
+    height: 60vh;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Client Glow Gallery",
+  "settings": [
+    { "type": "header", "content": "🇬🇧 Heading — English" },
+    { "type": "text",     "id": "heading",     "label": "Heading (EN)",     "default": "Loved by our clients" },
+    { "type": "richtext", "id": "description", "label": "Description (EN)", "default": "<p>Real feedback and real results. Here are some of the moments our clients shared with us.</p>" },
+
+    { "type": "header", "content": "🇸🇦 العنوان — العربية" },
+    { "type": "text",     "id": "heading_ar",     "label": "العنوان (AR)",  "default": "عملاؤنا يحبوننا" },
+    { "type": "richtext", "id": "description_ar", "label": "الوصف (AR)",    "default": "<p>آراء حقيقية ونتائج ملموسة. إليكِ بعض اللحظات التي شاركها عملاؤنا معنا.</p>" },
+
+    { "type": "header", "content": "Heading Style" },
+    {
+      "type": "select", "id": "heading_font", "label": "Font (EN)", "default": "Arial",
+      "options": [
+        { "value": "Arial",            "label": "Arial (System)" },
+        { "value": "Helvetica",        "label": "Helvetica (System)" },
+        { "value": "Georgia",          "label": "Georgia (System)" },
+        { "value": "Times New Roman",  "label": "Times New Roman (System)" },
+        { "value": "Merriweather",     "label": "Merriweather (Google)" },
+        { "value": "Playfair Display", "label": "Playfair Display (Google)" },
+        { "value": "Montserrat",       "label": "Montserrat (Google)" },
+        { "value": "Raleway",          "label": "Raleway (Google)" },
+        { "value": "Lato",             "label": "Lato (Google)" },
+        { "value": "Nunito",           "label": "Nunito (Google)" }
+      ]
+    },
+    {
+      "type": "select", "id": "heading_font_fallback", "label": "Font fallback", "default": "sans-serif",
+      "options": [
+        { "value": "serif",      "label": "Serif" },
+        { "value": "sans-serif", "label": "Sans-serif" }
+      ]
+    },
+    { "type": "range",  "id": "heading_size",      "label": "Size",      "min": 20,  "max": 72,   "step": 2, "unit": "px", "default": 28 },
+    {
+      "type": "select", "id": "heading_weight", "label": "Weight", "default": "700",
+      "options": [
+        { "value": "300", "label": "Light" }, { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" }
+      ]
+    },
+    { "type": "color", "id": "heading_color",     "label": "Color",     "default": "#111111" },
+    { "type": "range", "id": "heading_max_width", "label": "Max width", "min": 300, "max": 1200, "step": 50, "unit": "px", "default": 700 },
+
+    { "type": "header", "content": "Description Style" },
+    {
+      "type": "select", "id": "desc_font", "label": "Font (EN)", "default": "Arial",
+      "options": [
+        { "value": "Arial",            "label": "Arial (System)" },
+        { "value": "Helvetica",        "label": "Helvetica (System)" },
+        { "value": "Georgia",          "label": "Georgia (System)" },
+        { "value": "Times New Roman",  "label": "Times New Roman (System)" },
+        { "value": "Merriweather",     "label": "Merriweather (Google)" },
+        { "value": "Playfair Display", "label": "Playfair Display (Google)" },
+        { "value": "Montserrat",       "label": "Montserrat (Google)" },
+        { "value": "Raleway",          "label": "Raleway (Google)" },
+        { "value": "Lato",             "label": "Lato (Google)" },
+        { "value": "Nunito",           "label": "Nunito (Google)" }
+      ]
+    },
+    {
+      "type": "select", "id": "desc_font_fallback", "label": "Font fallback", "default": "sans-serif",
+      "options": [
+        { "value": "serif",      "label": "Serif" },
+        { "value": "sans-serif", "label": "Sans-serif" }
+      ]
+    },
+    { "type": "range", "id": "desc_size",      "label": "Size",      "min": 12, "max": 28,   "step": 1,  "unit": "px", "default": 16 },
+    {
+      "type": "select", "id": "desc_weight", "label": "Weight", "default": "400",
+      "options": [
+        { "value": "300", "label": "Light" }, { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi Bold" }
+      ]
+    },
+    { "type": "color", "id": "desc_color",     "label": "Color",     "default": "#333333" },
+    { "type": "range", "id": "desc_max_width", "label": "Max width", "min": 300, "max": 1200, "step": 50, "unit": "px", "default": 600 },
+
+    { "type": "header", "content": "Gallery" },
+    { "type": "color", "id": "bg_color",       "label": "Background color",       "default": "#ffffff" },
+    { "type": "range", "id": "height_desktop", "label": "Image height (desktop)", "min": 100, "max": 400, "step": 10, "unit": "px", "default": 220 },
+    { "type": "range", "id": "height_mobile",  "label": "Image height (mobile)",  "min": 80,  "max": 250, "step": 10, "unit": "px", "default": 150 },
+    { "type": "range", "id": "speed",          "label": "Normal speed (s/loop)",  "min": 10,  "max": 80,  "step": 2,  "unit": "s",  "default": 30 },
+    { "type": "range", "id": "hover_speed",    "label": "Hover speed (desktop)",  "min": 20,  "max": 120, "step": 5,  "unit": "s",  "default": 60 },
+    { "type": "range", "id": "radius",         "label": "Image corner radius",    "min": 0,   "max": 40,  "step": 2,  "unit": "px", "default": 18 },
+    { "type": "range", "id": "gap",            "label": "Space between images",   "min": 0,   "max": 60,  "step": 4,  "unit": "px", "default": 20 },
+    { "type": "checkbox", "id": "grayscale",   "label": "Enable grayscale → color hover", "default": false },
+    { "type": "checkbox", "id": "zoom",        "label": "Enable subtle zoom on hover",    "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Client Photo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Client Image" },
+        { "type": "header", "content": "🇬🇧 Alt Text — English" },
+        { "type": "text", "id": "alt",    "label": "Alt text (EN)", "default": "Happy Client" },
+        { "type": "header", "content": "🇸🇦 النص البديل — العربية" },
+        { "type": "text", "id": "alt_ar", "label": "النص البديل (AR)", "default": "عميلة سعيدة" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Client Glow Gallery",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

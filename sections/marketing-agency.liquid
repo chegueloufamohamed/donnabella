@@ -1,0 +1,726 @@
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500;600;700&family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+.ma-wrap *, .ma-wrap *::before, .ma-wrap *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.ma-wrap {
+  --bg:        #3d5060;
+  --bg-dark:   #2f3d4d;
+  --bg-darker: #202c38;
+  --bg-light:  #4d6275;
+  --gold:      #c9a96e;
+  --gold-dim:  rgba(201,169,110,0.18);
+  --gold-line: rgba(201,169,110,0.35);
+  --white:     #ffffff;
+  --white-80:  rgba(255,255,255,0.8);
+  --white-60:  rgba(255,255,255,0.6);
+  --white-40:  rgba(255,255,255,0.4);
+  --white-20:  rgba(255,255,255,0.12);
+  --white-10:  rgba(255,255,255,0.06);
+  --glass:     rgba(255,255,255,0.06);
+  --glass-b:   rgba(255,255,255,0.12);
+  --serif:  'Cormorant Garamond', Georgia, serif;
+  --sans:   'Jost', sans-serif;
+  --arabic: 'Cairo', 'Tajawal', sans-serif;
+  font-family: {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
+  font-weight: 300;
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+  background-color: var(--bg);
+  direction: {{ text_dir }};
+}
+
+@keyframes ma-fadeUp   { to { opacity: 1; transform: translateY(0); } }
+@keyframes ma-fadeIn   { to { opacity: 1; } }
+@keyframes ma-ringPulse {
+  0%,100%{ opacity:0.3; transform:translate(-50%,-50%) scale(1); }
+  50%    { opacity:0.7; transform:translate(-50%,-50%) scale(1.06); }
+}
+@keyframes ma-scrollLine { 0%{transform:scaleY(0);opacity:0;} 50%{opacity:1;} 100%{transform:scaleY(1);opacity:0;} }
+@keyframes ma-glowSlide { 0%{left:-100%;} 100%{left:200%;} }
+
+.ma-hero {
+  position: relative; min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 100px 40px 80px;
+  overflow: hidden;
+}
+.ma-hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(201,169,110,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 70% at 80% 70%, rgba(77,98,117,0.4) 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg-darker) 0%, var(--bg) 50%, var(--bg-dark) 100%);
+  pointer-events: none;
+}
+.ma-hero-ring {
+  position: absolute; border-radius: 50%;
+  border: 1px solid var(--gold-line);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  pointer-events: none; animation: ma-ringPulse 5s ease-in-out infinite;
+}
+.ma-hero-ring-1 { width: 600px; height: 600px; animation-delay: 0s; opacity: 0.25; }
+.ma-hero-ring-2 { width: 860px; height: 860px; animation-delay: 1.5s; opacity: 0.12; }
+.ma-hero-ring-3 { width: 1100px; height: 1100px; animation-delay: 3s; opacity: 0.06; }
+.ma-hero-content { position: relative; z-index: 2; max-width: 900px; }
+.ma-hero-tag {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: {% if is_arabic %}13px{% else %}10px{% endif %};
+  font-weight: 500;
+  letter-spacing: {% if is_arabic %}0{% else %}0.45em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  color: var(--gold); margin-bottom: 32px;
+  opacity: 0; transform: translateY(16px);
+  animation: ma-fadeUp 0.9s ease 0.3s forwards;
+}
+.ma-hero-tag::before, .ma-hero-tag::after {
+  content: ''; display: block; width: 40px; height: 1px; background: var(--gold-line);
+}
+.ma-hero-title {
+  font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %};
+  font-size: clamp(44px, 9vw, 110px);
+  font-weight: {% if is_arabic %}600{% else %}300{% endif %};
+  line-height: {% if is_arabic %}1.3{% else %}0.95{% endif %};
+  {% unless is_arabic %}letter-spacing: -0.02em; font-style: normal;{% endunless %}
+  color: var(--white); margin-bottom: 32px;
+  opacity: 0; transform: translateY(24px);
+  animation: ma-fadeUp 1s ease 0.5s forwards;
+}
+.ma-hero-title em { font-style: italic; color: var(--gold); {% if is_arabic %}font-style: normal;{% endif %} }
+.ma-hero-title strong { font-weight: {% if is_arabic %}700{% else %}500{% endif %}; display: block; }
+.ma-hero-sub {
+  font-size: {% if is_arabic %}15px{% else %}13px{% endif %};
+  font-weight: 300;
+  letter-spacing: {% if is_arabic %}0{% else %}0.15em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  color: var(--white-60); margin-bottom: 52px; line-height: 1.8;
+  opacity: 0; transform: translateY(16px);
+  animation: ma-fadeUp 0.9s ease 0.7s forwards;
+}
+.ma-hero-btns {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  opacity: 0; animation: ma-fadeUp 0.9s ease 0.9s forwards;
+}
+.ma-btn-primary {
+  padding: 16px 44px; background: var(--gold); color: var(--bg-darker);
+  font-size: {% if is_arabic %}13px{% else %}11px{% endif %};
+  font-weight: 600;
+  letter-spacing: {% if is_arabic %}0{% else %}0.35em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  text-decoration: none; position: relative; overflow: hidden;
+  transition: all 0.35s ease; display: inline-block;
+  font-family: {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
+}
+.ma-btn-primary::after {
+  content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: ma-glowSlide 3s ease-in-out infinite;
+}
+.ma-btn-primary:hover { background: #d4b87e; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,169,110,0.35); }
+.ma-btn-outline {
+  padding: 16px 44px; border: 1px solid var(--glass-b);
+  color: var(--white-80);
+  font-size: {% if is_arabic %}13px{% else %}11px{% endif %};
+  font-weight: 400;
+  letter-spacing: {% if is_arabic %}0{% else %}0.35em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  text-decoration: none; transition: all 0.3s ease; display: inline-block;
+  font-family: {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
+}
+.ma-btn-outline:hover { border-color: var(--gold-line); color: var(--gold); background: var(--gold-dim); }
+.ma-scroll-hint {
+  position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  opacity: 0; animation: ma-fadeIn 1s ease 1.5s forwards;
+}
+.ma-scroll-hint span {
+  font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--white-40);
+}
+.ma-scroll-line {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: ma-scrollLine 2s ease-in-out infinite;
+}
+
+.ma-inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+.ma-sec-label {
+  display: flex; align-items: center; gap: 18px; margin-bottom: 56px;
+  opacity: 0; transform: translateX({% if is_arabic %}20px{% else %}-20px{% endif %});
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.ma-sec-label.ma-visible { opacity: 1; transform: translateX(0); }
+.ma-sec-label-text {
+  font-size: {% if is_arabic %}12px{% else %}10px{% endif %};
+  font-weight: 500;
+  letter-spacing: {% if is_arabic %}0{% else %}0.45em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  color: var(--gold); white-space: nowrap;
+}
+.ma-sec-label-line { flex: 1; height: 1px; background: linear-gradient(to {% if is_arabic %}left{% else %}right{% endif %}, var(--gold-line), transparent); }
+
+.ma-stats-bar { background: var(--bg-dark); border-top: 1px solid var(--white-10); border-bottom: 1px solid var(--white-10); padding: 48px 0; }
+.ma-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+.ma-stat-item { text-align: center; padding: 0 24px; border-{% if is_arabic %}left{% else %}right{% endif %}: 1px solid var(--white-10); opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.ma-stat-item:last-child { border: none; }
+.ma-stat-item.ma-visible { opacity: 1; transform: translateY(0); }
+.ma-stat-num { font-family: var(--serif); font-size: 52px; font-weight: 300; color: var(--white); line-height: 1; margin-bottom: 6px; }
+.ma-stat-num em { font-style: normal; color: var(--gold); }
+.ma-stat-label { font-size: {% if is_arabic %}12px{% else %}10px{% endif %}; font-weight: 400; letter-spacing: {% if is_arabic %}0{% else %}0.3em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-40); }
+
+.ma-services-sec { padding: 100px 0; }
+.ma-services-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; margin-bottom: 72px; }
+.ma-services-title { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-size: clamp(32px, 5vw, 64px); font-weight: {% if is_arabic %}600{% else %}300{% endif %}; line-height: {% if is_arabic %}1.4{% else %}1.1{% endif %}; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.ma-services-title.ma-visible { opacity: 1; transform: translateY(0); }
+.ma-services-title em { font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; color: var(--gold); }
+.ma-services-desc { font-size: 14px; line-height: 1.9; color: var(--white-60); opacity: 0; transform: translateY(16px); transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s; }
+.ma-services-desc.ma-visible { opacity: 1; transform: translateY(0); }
+.ma-services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.ma-svc-card { background: var(--glass); border: 1px solid var(--glass-b); padding: 44px 36px 40px; position: relative; overflow: hidden; cursor: default; opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease, background 0.4s, border-color 0.4s; }
+.ma-svc-card.ma-visible { opacity: 1; transform: translateY(0); }
+.ma-svc-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
+.ma-svc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); opacity: 0; transition: opacity 0.4s; }
+.ma-svc-card:hover::before { opacity: 1; }
+.ma-svc-num { font-family: var(--serif); font-size: 80px; font-weight: 300; color: rgba(201,169,110,0.08); line-height: 1; position: absolute; top: 16px; {% if is_arabic %}left{% else %}right{% endif %}: 24px; user-select: none; transition: color 0.4s; }
+.ma-svc-card:hover .ma-svc-num { color: rgba(201,169,110,0.18); }
+.ma-svc-icon { width: 48px; height: 48px; margin-bottom: 24px; border: 1px solid var(--gold-line); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--gold); transition: transform 0.4s ease; }
+.ma-svc-card:hover .ma-svc-icon { transform: rotate(-6deg) scale(1.1); }
+.ma-svc-name { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-size: {% if is_arabic %}20px{% else %}24px{% endif %}; font-weight: {% if is_arabic %}600{% else %}400{% endif %}; color: var(--white); margin-bottom: 8px; line-height: 1.3; }
+.ma-svc-sub { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 13px; color: var(--gold); margin-bottom: 16px; opacity: 0.85; }
+.ma-svc-desc { font-size: 12.5px; line-height: 1.75; color: var(--white-60); }
+.ma-svc-card-wide { grid-column: span 3; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 48px; padding: 40px 44px; }
+.ma-svc-card-wide .ma-svc-name { font-size: {% if is_arabic %}22px{% else %}28px{% endif %}; }
+
+.ma-why-sec { padding: 100px 0; background: var(--bg-dark); border-top: 1px solid var(--white-10); border-bottom: 1px solid var(--white-10); }
+.ma-why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.ma-why-tagline { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-size: clamp(30px, 5vw, 60px); font-weight: {% if is_arabic %}600{% else %}300{% endif %}; line-height: {% if is_arabic %}1.4{% else %}1.15{% endif %}; margin-bottom: 28px; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.ma-why-tagline.ma-visible { opacity: 1; transform: translateY(0); }
+.ma-why-tagline em { font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; color: var(--gold); display: block; }
+.ma-why-body { font-size: 14px; line-height: 1.9; color: var(--white-60); margin-bottom: 36px; opacity: 0; transition: opacity 0.8s ease 0.2s; }
+.ma-why-body.ma-visible { opacity: 1; }
+.ma-why-points { display: flex; flex-direction: column; gap: 16px; }
+.ma-why-point { display: flex; gap: 16px; align-items: flex-start; opacity: 0; transform: translateX({% if is_arabic %}16px{% else %}-16px{% endif %}); transition: opacity 0.6s ease, transform 0.6s ease; }
+.ma-why-point.ma-visible { opacity: 1; transform: translateX(0); }
+.ma-why-dot { width: 32px; height: 32px; flex-shrink: 0; border: 1px solid var(--gold-line); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--gold); }
+.ma-why-point-text strong { display: block; font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+.ma-why-point-text span { font-size: 12px; color: var(--white-60); }
+.ma-why-right { display: flex; flex-direction: column; gap: 2px; }
+.ma-why-card { background: var(--glass); border: 1px solid var(--glass-b); padding: 28px 32px; display: flex; gap: 20px; align-items: flex-start; opacity: 0; transform: translateX({% if is_arabic %}-20px{% else %}20px{% endif %}); transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s; }
+.ma-why-card.ma-visible { opacity: 1; transform: translateX(0); }
+.ma-why-card:hover { background: rgba(255,255,255,0.09); }
+.ma-why-card-num { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--gold); opacity: 0.4; flex-shrink: 0; line-height: 1; }
+.ma-why-card-title { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-size: 18px; font-weight: {% if is_arabic %}600{% else %}400{% endif %}; color: var(--white); margin-bottom: 4px; }
+.ma-why-card-desc { font-size: 12px; color: var(--white-60); line-height: 1.7; }
+
+.ma-industries-sec { padding: 80px 0; background: var(--bg-darker); border-top: 1px solid var(--white-10); }
+.ma-industries-label { text-align: center; font-size: {% if is_arabic %}13px{% else %}10px{% endif %}; font-weight: 500; letter-spacing: {% if is_arabic %}0{% else %}0.45em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); margin-bottom: 48px; }
+.ma-industries-scroll { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; {% if is_arabic %}direction: rtl;{% endif %} }
+.ma-industries-scroll::-webkit-scrollbar { display: none; }
+.ma-industry-tag { flex-shrink: 0; padding: 20px 32px; border: 1px solid var(--glass-b); background: var(--glass); font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-size: 18px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white-60); white-space: nowrap; transition: all 0.3s ease; cursor: default; }
+.ma-industry-tag:hover, .ma-industry-tag.ma-featured { border-color: var(--gold-line); color: var(--gold); background: var(--gold-dim); }
+
+.ma-process-sec { padding: 100px 0; }
+.ma-process-title { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-size: clamp(32px, 5vw, 60px); font-weight: {% if is_arabic %}600{% else %}300{% endif %}; line-height: {% if is_arabic %}1.4{% else %}1.2{% endif %}; text-align: center; margin-bottom: 72px; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.ma-process-title.ma-visible { opacity: 1; transform: translateY(0); }
+.ma-process-title em { font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; color: var(--gold); }
+.ma-process-track { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+.ma-process-track::before { content: ''; position: absolute; top: 48px; left: 10%; right: 10%; height: 1px; background: linear-gradient(to right, transparent, var(--gold-line) 20%, var(--gold-line) 80%, transparent); z-index: 0; }
+.ma-process-step { text-align: center; padding: 0 16px 40px; position: relative; z-index: 1; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.ma-process-step.ma-visible { opacity: 1; transform: translateY(0); }
+.ma-process-circle { width: 80px; height: 80px; border-radius: 50%; border: 1px solid var(--gold-line); background: var(--bg-dark); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--gold); transition: background 0.3s, border-color 0.3s; }
+.ma-process-step:hover .ma-process-circle { background: var(--gold-dim); border-color: var(--gold); }
+.ma-process-name { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-size: {% if is_arabic %}15px{% else %}17px{% endif %}; font-weight: {% if is_arabic %}600{% else %}400{% endif %}; color: var(--white); margin-bottom: 8px; }
+.ma-process-desc { font-size: 11.5px; color: var(--white-60); line-height: 1.7; }
+
+.ma-results-sec { padding: 100px 0; }
+.ma-results-card { position: relative; background: linear-gradient(135deg, rgba(201,169,110,0.14) 0%, rgba(201,169,110,0.04) 100%); border: 1px solid var(--gold-line); padding: 72px 80px; display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; overflow: hidden; opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.ma-results-card.ma-visible { opacity: 1; transform: translateY(0); }
+.ma-results-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
+.ma-results-card::after { content: '"'; position: absolute; font-family: var(--serif); font-size: 280px; font-weight: 300; font-style: italic; color: rgba(201,169,110,0.06); line-height: 1; top: -20px; {% if is_arabic %}left{% else %}right{% endif %}: 40px; pointer-events: none; }
+.ma-results-badge { position: absolute; top: 20px; {% if is_arabic %}right{% else %}left{% endif %}: 32px; background: var(--gold); color: var(--bg-darker); font-size: 9px; font-weight: 600; letter-spacing: {% if is_arabic %}0{% else %}0.3em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} padding: 6px 14px; font-family: {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %}; }
+.ma-results-title { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-size: clamp(24px, 4vw, 46px); font-weight: {% if is_arabic %}600{% else %}300{% endif %}; line-height: {% if is_arabic %}1.4{% else %}1.2{% endif %}; margin-bottom: 8px; }
+.ma-results-sub { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 15px; color: var(--gold); margin-bottom: 20px; }
+.ma-results-body { font-size: 14px; color: var(--white-60); line-height: 1.8; }
+.ma-results-numbers { display: flex; flex-direction: column; gap: 28px; flex-shrink: 0; }
+.ma-result-num { text-align: center; border: 1px solid var(--gold-line); padding: 20px 32px; background: rgba(201,169,110,0.06); }
+.ma-result-num-val { font-family: var(--serif); font-size: 42px; font-weight: 300; color: var(--white); line-height: 1; }
+.ma-result-num-val em { font-style: normal; color: var(--gold); }
+.ma-result-num-label { font-size: {% if is_arabic %}11px{% else %}10px{% endif %}; letter-spacing: {% if is_arabic %}0{% else %}0.25em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-40); margin-top: 5px; font-family: {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %}; }
+
+.ma-testi-sec { padding: 100px 0; background: var(--bg-dark); border-top: 1px solid var(--white-10); }
+.ma-testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.ma-testi-card { background: var(--glass); border: 1px solid var(--glass-b); padding: 40px 36px; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s; }
+.ma-testi-card.ma-visible { opacity: 1; transform: translateY(0); }
+.ma-testi-card:hover { background: rgba(255,255,255,0.09); }
+.ma-testi-stars { color: var(--gold); font-size: 14px; letter-spacing: 3px; margin-bottom: 20px; }
+.ma-testi-text { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: {% if is_arabic %}15px{% else %}17px{% endif %}; font-weight: 300; line-height: 1.7; color: var(--white-80); margin-bottom: 28px; }
+.ma-testi-divider { height: 1px; background: var(--white-10); margin-bottom: 20px; }
+.ma-testi-name { font-size: 12px; font-weight: 600; letter-spacing: {% if is_arabic %}0{% else %}0.2em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white); margin-bottom: 4px; }
+.ma-testi-biz { font-size: 11px; color: var(--gold); opacity: 0.8; }
+
+.ma-cta-sec { padding: 120px 0; text-align: center; position: relative; overflow: hidden; }
+.ma-cta-sec::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201,169,110,0.1) 0%, transparent 70%); pointer-events: none; }
+.ma-cta-ring { position: absolute; border-radius: 50%; border: 1px solid var(--gold-line); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; animation: ma-ringPulse 4s ease-in-out infinite; }
+.ma-cta-ring-1 { width: 500px; height: 500px; opacity: 0.15; }
+.ma-cta-ring-2 { width: 750px; height: 750px; opacity: 0.07; animation-delay: 2s; }
+.ma-cta-content { position: relative; z-index: 2; }
+.ma-cta-eyebrow { font-size: {% if is_arabic %}13px{% else %}10px{% endif %}; font-weight: 500; letter-spacing: {% if is_arabic %}0{% else %}0.5em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); margin-bottom: 28px; opacity: 0; transition: opacity 0.8s ease; }
+.ma-cta-eyebrow.ma-visible { opacity: 1; }
+.ma-cta-title { font-family: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %}; font-size: clamp(36px, 6vw, 80px); font-weight: {% if is_arabic %}600{% else %}300{% endif %}; line-height: {% if is_arabic %}1.4{% else %}1.05{% endif %}; margin-bottom: 24px; opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s; }
+.ma-cta-title.ma-visible { opacity: 1; transform: translateY(0); }
+.ma-cta-title em { font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; color: var(--gold); display: block; }
+.ma-cta-sub { font-size: {% if is_arabic %}14px{% else %}13px{% endif %}; color: var(--white-60); letter-spacing: {% if is_arabic %}0{% else %}0.12em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} margin-bottom: 52px; opacity: 0; transition: opacity 0.8s ease 0.2s; }
+.ma-cta-sub.ma-visible { opacity: 1; }
+.ma-cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; opacity: 0; transition: opacity 0.8s ease 0.3s; }
+.ma-cta-btns.ma-visible { opacity: 1; }
+.ma-cta-note { margin-top: 28px; font-size: 11px; color: var(--white-40); letter-spacing: 0.15em; opacity: 0; transition: opacity 0.8s ease 0.4s; }
+.ma-cta-note.ma-visible { opacity: 1; }
+
+@media (max-width: 1024px) {
+  .ma-services-intro { grid-template-columns: 1fr; gap: 32px; }
+  .ma-why-grid { grid-template-columns: 1fr; }
+  .ma-process-track { grid-template-columns: repeat(3, 1fr); }
+  .ma-process-track::before { display: none; }
+  .ma-testi-grid { grid-template-columns: 1fr 1fr; }
+  .ma-results-card { grid-template-columns: 1fr; }
+  .ma-results-numbers { flex-direction: row; justify-content: center; }
+}
+@media (max-width: 768px) {
+  .ma-hero-title { font-size: 44px; }
+  .ma-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .ma-services-grid { grid-template-columns: 1fr; }
+  .ma-svc-card-wide { grid-template-columns: 1fr; gap: 20px; }
+  .ma-testi-grid { grid-template-columns: 1fr; }
+  .ma-process-track { grid-template-columns: 1fr 1fr; }
+  .ma-results-card { padding: 48px 32px; }
+  .ma-inner { padding: 0 20px; }
+}
+</style>
+
+<div class="ma-wrap" dir="{{ text_dir }}">
+
+<!-- ── HERO ── -->
+<section class="ma-hero">
+  <div class="ma-hero-bg"></div>
+  <div class="ma-hero-ring ma-hero-ring-1"></div>
+  <div class="ma-hero-ring ma-hero-ring-2"></div>
+  <div class="ma-hero-ring ma-hero-ring-3"></div>
+  <div class="ma-hero-content">
+    <div class="ma-hero-tag">
+      {% if is_arabic %}تسويق صالونات التجميل · دبي، الإمارات{% else %}Beauty Salon Marketing · Dubai, UAE{% endif %}
+    </div>
+    <h1 class="ma-hero-title">
+      {% if is_arabic %}
+        نُحوّل<br><em>صالونات التجميل</em><br><strong>إلى علامات تجارية</strong>
+      {% else %}
+        We Grow<br><em>Beauty Salons</em><br><strong>Into Brands</strong>
+      {% endif %}
+    </h1>
+    <p class="ma-hero-sub">
+      {% if is_arabic %}إدارة تسويق متكاملة · حصرياً لصناعة التجميل{% else %}Full-service marketing management · Exclusively for the beauty industry{% endif %}
+    </p>
+    <div class="ma-hero-btns">
+      <a href="#ma-contact" class="ma-btn-primary">
+        {% if is_arabic %}احجز استشارة مجانية{% else %}Book a Free Strategy Call{% endif %}
+      </a>
+      <a href="#ma-services" class="ma-btn-outline">
+        {% if is_arabic %}اكتشف خدماتنا{% else %}See Our Services{% endif %}
+      </a>
+    </div>
+  </div>
+  <div class="ma-scroll-hint">
+    <span>{% if is_arabic %}تمرير{% else %}Scroll{% endif %}</span>
+    <div class="ma-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── STATS BAR ── -->
+<div class="ma-stats-bar">
+  <div class="ma-inner">
+    <div class="ma-stats-grid">
+      <div class="ma-stat-item" data-ma-reveal>
+        <div class="ma-stat-num">250<em>+</em></div>
+        <div class="ma-stat-label">{% if is_arabic %}صالون يُدار{% else %}Salons Managed{% endif %}</div>
+      </div>
+      <div class="ma-stat-item" data-ma-reveal style="transition-delay:0.1s">
+        <div class="ma-stat-num">5<em>×</em></div>
+        <div class="ma-stat-label">{% if is_arabic %}متوسط نمو الإيرادات{% else %}Avg. Revenue Growth{% endif %}</div>
+      </div>
+      <div class="ma-stat-item" data-ma-reveal style="transition-delay:0.2s">
+        <div class="ma-stat-num">98<em>%</em></div>
+        <div class="ma-stat-label">{% if is_arabic %}معدل الاحتفاظ بالعملاء{% else %}Client Retention Rate{% endif %}</div>
+      </div>
+      <div class="ma-stat-item" data-ma-reveal style="transition-delay:0.3s">
+        <div class="ma-stat-num">7<em>+</em></div>
+        <div class="ma-stat-label">{% if is_arabic %}سنوات في السوق الإماراتي{% else %}Years in UAE Market{% endif %}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SERVICES ── -->
+<section class="ma-services-sec" id="ma-services">
+  <div class="ma-inner">
+    <div class="ma-sec-label" data-ma-reveal>
+      <span class="ma-sec-label-text">{% if is_arabic %}ما نقدمه{% else %}What We Do{% endif %}</span>
+      <div class="ma-sec-label-line"></div>
+    </div>
+    <div class="ma-services-intro">
+      <h2 class="ma-services-title" data-ma-reveal>
+        {% if is_arabic %}كل ما يحتاجه صالونك<br>لـ<em>تصدّر سوقه</em>{% else %}Everything your salon needs<br>to <em>dominate its market</em>{% endif %}
+      </h2>
+      <p class="ma-services-desc" data-ma-reveal>
+        {% if is_arabic %}نحن الوكالة الإماراتية الوحيدة المتخصصة حصرياً في صالونات التجميل والسبا ومراكز العافية. من اللحظة التي يكتشفك فيها العميل أونلاين حتى لحظة دخوله بابك — نحن نمتلك كل نقطة تواصل في هذه الرحلة.{% else %}We are the UAE's only marketing management agency dedicated exclusively to beauty salons, spas, and wellness businesses. From the moment a client discovers you online to the moment they walk through your door — we own every touchpoint of that journey.{% endif %}
+      </p>
+    </div>
+    <div class="ma-services-grid">
+
+      <div class="ma-svc-card" data-ma-reveal>
+        <div class="ma-svc-num">01</div>
+        <div class="ma-svc-icon">◈</div>
+        <div class="ma-svc-name">{% if is_arabic %}إدارة وسائل التواصل الاجتماعي{% else %}Social Media Management{% endif %}</div>
+        <div class="ma-svc-sub">{% if is_arabic %}محتوى يحوّل المتابعين إلى عملاء{% else %}Content that converts followers into clients{% endif %}</div>
+        <div class="ma-svc-desc">{% if is_arabic %}إنشاء محتوى يومي وجدولة وإدارة المجتمع وتنسيق المؤثرين عبر إنستغرام وتيك توك وسناب شات وغيرها — مصمم خصيصاً لجمهور التجميل في الإمارات.{% else %}Daily content creation, scheduling, community management, and influencer coordination across Instagram, TikTok, Snapchat, and beyond — tailored to UAE beauty audiences.{% endif %}</div>
+      </div>
+
+      <div class="ma-svc-card" data-ma-reveal style="transition-delay:0.1s">
+        <div class="ma-svc-num">02</div>
+        <div class="ma-svc-icon">⬡</div>
+        <div class="ma-svc-name">{% if is_arabic %}الإعلانات المدفوعة{% else %}Paid Advertising{% endif %}</div>
+        <div class="ma-svc-sub">{% if is_arabic %}كل درهم يعمل بجدية أكبر{% else %}Every dirham working harder for you{% endif %}</div>
+        <div class="ma-svc-desc">{% if is_arabic %}حملات إعلانية على ميتا وجوجل وتيك توك وسناب شات مصممة لتحقيق أفضل عائد. نتولى الإبداع والاستهداف والاختبار والتقارير الكاملة.{% else %}Meta, Google, TikTok, and Snapchat ad campaigns engineered for beauty salon ROI. We handle creative, targeting, A/B testing, and full performance reporting.{% endif %}</div>
+      </div>
+
+      <div class="ma-svc-card" data-ma-reveal style="transition-delay:0.2s">
+        <div class="ma-svc-num">03</div>
+        <div class="ma-svc-icon">◇</div>
+        <div class="ma-svc-name">{% if is_arabic %}الهوية البصرية{% else %}Brand Identity{% endif %}</div>
+        <div class="ma-svc-sub">{% if is_arabic %}من الاسم إلى العالم البصري{% else %}From name to visual universe{% endif %}</div>
+        <div class="ma-svc-desc">{% if is_arabic %}تصميم الشعار وإرشادات العلامة التجارية وتوجيه التصوير وهوية بصرية كاملة تضع صالونك كخيار متميز في منطقتك.{% else %}Logo design, brand guidelines, photography direction, and a full brand language that positions your salon as the premium choice in your area.{% endif %}</div>
+      </div>
+
+      <div class="ma-svc-card ma-svc-card-wide" data-ma-reveal>
+        <div class="ma-svc-icon" style="flex-shrink:0">⬟</div>
+        <div>
+          <div class="ma-svc-name">{% if is_arabic %}الموقع الإلكتروني وتحسين محركات البحث{% else %}Website & SEO{% endif %}</div>
+          <div class="ma-svc-sub">{% if is_arabic %}ماكينة الحجز على مدار الساعة، مبنية للتصدر{% else %}Your 24/7 booking machine, built to rank{% endif %}</div>
+          <div class="ma-svc-desc">{% if is_arabic %}مواقع سريعة وأنيقة ومتوافقة مع الجوال مع أنظمة حجز متكاملة. مقرونة بتحسين محركات البحث المحلية لتظهر في مقدمة نتائج "أفضل صالون بالقرب مني" في دبي والإمارات.{% else %}Stunning, fast, mobile-first websites with integrated booking systems. Paired with local SEO that puts you at the top of "best salon near me" searches across Dubai and the UAE.{% endif %}</div>
+        </div>
+        <div style="text-align:{% if is_arabic %}start{% else %}right{% endif %};flex-shrink:0">
+          <div style="font-family:var(--serif);font-size:48px;font-weight:300;color:var(--gold)">04</div>
+          <div style="font-size:10px;letter-spacing:{% if is_arabic %}0{% else %}0.3em{% endif %};{% unless is_arabic %}text-transform:uppercase;{% endunless %}color:var(--white-40);margin-top:4px">{% if is_arabic %}خدمة أساسية{% else %}Core Service{% endif %}</div>
+        </div>
+      </div>
+
+      <div class="ma-svc-card" data-ma-reveal>
+        <div class="ma-svc-num">05</div>
+        <div class="ma-svc-icon">◉</div>
+        <div class="ma-svc-name">{% if is_arabic %}السمعة والتقييمات{% else %}Reputation & Reviews{% endif %}</div>
+        <div class="ma-svc-sub">{% if is_arabic %}نجومك، مضخّمة{% else %}Your stars, amplified{% endif %}</div>
+        <div class="ma-svc-desc">{% if is_arabic %}توليد تقييمات منهجي عبر جوجل وتريت ويل ومنصات التواصل. مراقبة السمعة وإدارة الردود الاحترافية لبناء ثقة دائمة.{% else %}Systematic review generation across Google, Treatwell, and social platforms. Reputation monitoring and professional response management that builds lasting trust.{% endif %}</div>
+      </div>
+
+      <div class="ma-svc-card" data-ma-reveal style="transition-delay:0.1s">
+        <div class="ma-svc-num">06</div>
+        <div class="ma-svc-icon">◈</div>
+        <div class="ma-svc-name">{% if is_arabic %}أنظمة CRM والولاء{% else %}CRM & Loyalty Systems{% endif %}</div>
+        <div class="ma-svc-sub">{% if is_arabic %}حوّل الزيارة الأولى إلى عميل مدى الحياة{% else %}Turn first visits into lifelong clients{% endif %}</div>
+        <div class="ma-svc-desc">{% if is_arabic %}أتمتة واتساب وبرامج الولاء وحملات أعياد الميلاد وتذكيرات الحجز وتصنيف العملاء — كل ذلك يبقي كراسيك ممتلئة أسبوعياً.{% else %}WhatsApp automation, loyalty programs, birthday campaigns, rebooking reminders, and client segmentation that keeps your chairs full every week.{% endif %}</div>
+      </div>
+
+      <div class="ma-svc-card" data-ma-reveal style="transition-delay:0.2s">
+        <div class="ma-svc-num">07</div>
+        <div class="ma-svc-icon">⬡</div>
+        <div class="ma-svc-name">{% if is_arabic %}المؤثرون والعلاقات العامة{% else %}Influencer & PR{% endif %}</div>
+        <div class="ma-svc-sub">{% if is_arabic %}التسويق الشفهي، مُهندَس{% else %}Word-of-mouth, engineered{% endif %}</div>
+        <div class="ma-svc-desc">{% if is_arabic %}شراكات مختارة مع مؤثري التجميل في الإمارات. نشر إعلامي وتسويق فعاليات وحملات إطلاق تخلق ضجة حقيقية.{% else %}Curated micro and macro influencer partnerships in the UAE beauty space. Press placements, event marketing, and launch campaigns that create genuine buzz.{% endif %}</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY US ── -->
+<section class="ma-why-sec" id="ma-why">
+  <div class="ma-inner">
+    <div class="ma-why-grid">
+      <div>
+        <div class="ma-sec-label" data-ma-reveal>
+          <span class="ma-sec-label-text">{% if is_arabic %}لماذا دونابيلا{% else %}Why Donnabella{% endif %}</span>
+          <div class="ma-sec-label-line"></div>
+        </div>
+        <h2 class="ma-why-tagline" data-ma-reveal>
+          {% if is_arabic %}نتحدث<br><em>لغة التجميل بطلاقة</em>{% else %}We speak<br><em>fluent beauty</em>{% endif %}
+        </h2>
+        <p class="ma-why-body" data-ma-reveal>
+          {% if is_arabic %}معظم الوكالات تتعلم صناعتك من الصفر. نحن لم نحتج إلى ذلك أبداً. دونابيلا نشأت في قلب قطاع التجميل الإماراتي — نفهم إيقاع المواسم والعميل الثنائي اللغة والمشهد التنافسي من الوصل إلى جي بي آر. لا نكتفي بإدارة الحملات، بل ندير تسويقك كمؤسس شريك.{% else %}Most agencies learn your industry from scratch. We never had to. Donnabella was built inside the UAE beauty sector — we understand the seasonal rhythms, the Arabic-English bilingual client, the competitive landscape from Al Wasl to JBR. We don't just run campaigns. We manage your marketing like a co-founder would.{% endif %}
+        </p>
+        <div class="ma-why-points">
+          <div class="ma-why-point" data-ma-reveal>
+            <div class="ma-why-dot">✦</div>
+            <div class="ma-why-point-text">
+              <strong>{% if is_arabic %}تركيز حصري على التجميل{% else %}Beauty-exclusive focus{% endif %}</strong>
+              <span>{% if is_arabic %}100% من عملائنا في التجميل والعافية والعناية الشخصية{% else %}100% of our clients are in beauty, wellness & personal care{% endif %}</span>
+            </div>
+          </div>
+          <div class="ma-why-point" data-ma-reveal style="transition-delay:0.1s">
+            <div class="ma-why-dot">✦</div>
+            <div class="ma-why-point-text">
+              <strong>{% if is_arabic %}ثنائي اللغة: عربي وإنجليزي{% else %}Bilingual Arabic & English{% endif %}</strong>
+              <span>{% if is_arabic %}محتوى احترافي لكلا المجتمعين في الإمارات{% else %}Native-quality content for both UAE communities{% endif %}</span>
+            </div>
+          </div>
+          <div class="ma-why-point" data-ma-reveal style="transition-delay:0.2s">
+            <div class="ma-why-dot">✦</div>
+            <div class="ma-why-point-text">
+              <strong>{% if is_arabic %}مرخّص وخاضع للمساءلة{% else %}Licensed & fully accountable{% endif %}</strong>
+              <span>{% if is_arabic %}رخصة دائرة الاقتصاد رقم 1612331 · دبي، الإمارات{% else %}DET License No. 1612331 · Dubai, UAE{% endif %}</span>
+            </div>
+          </div>
+          <div class="ma-why-point" data-ma-reveal style="transition-delay:0.3s">
+            <div class="ma-why-dot">✦</div>
+            <div class="ma-why-point-text">
+              <strong>{% if is_arabic %}فريق واحد، ملكية كاملة{% else %}One team, total ownership{% endif %}</strong>
+              <span>{% if is_arabic %}الاستراتيجية والإبداع والإعلانات والتقارير تحت سقف واحد{% else %}Strategy, creative, ads, and reporting under one roof{% endif %}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ma-why-right">
+        <div class="ma-why-card" data-ma-reveal>
+          <div class="ma-why-card-num">01</div>
+          <div>
+            <div class="ma-why-card-title">{% if is_arabic %}لا قيود طويلة الأمد{% else %}No long-term lock-ins{% endif %}</div>
+            <div class="ma-why-card-desc">{% if is_arabic %}تعاقد شهري. نكسب ثقتك كل شهر — بلا عقود 12 شهراً تخفي نتائج متوسطة.{% else %}Month-to-month engagements. We earn your business every single month — no 12-month contracts hiding mediocre results.{% endif %}</div>
+          </div>
+        </div>
+        <div class="ma-why-card" data-ma-reveal style="transition-delay:0.1s">
+          <div class="ma-why-card-num">02</div>
+          <div>
+            <div class="ma-why-card-title">{% if is_arabic %}مدير حساب مخصص{% else %}Dedicated account manager{% endif %}</div>
+            <div class="ma-why-card-desc">{% if is_arabic %}شخص واحد يعرف صالونك من الداخل. متاح على واتساب، يرد خلال ساعة، ويحضر إطلاقاتك.{% else %}One person who knows your salon inside out. Available on WhatsApp, replies within the hour, and attends your launches.{% endif %}</div>
+          </div>
+        </div>
+        <div class="ma-why-card" data-ma-reveal style="transition-delay:0.2s">
+          <div class="ma-why-card-num">03</div>
+          <div>
+            <div class="ma-why-card-title">{% if is_arabic %}تقارير شهرية شفافة{% else %}Transparent monthly reporting{% endif %}</div>
+            <div class="ma-why-card-desc">{% if is_arabic %}وصول كامل للوحة تحكم تضم كل مقياس مهم — الوصول والحجوزات وتكلفة الاكتساب والعائد على الإنفاق الإعلاني — دائماً مرئية ودائماً صادقة.{% else %}Full-dashboard access to every metric that matters — reach, bookings, cost per acquisition, return on ad spend — always visible, always honest.{% endif %}</div>
+          </div>
+        </div>
+        <div class="ma-why-card" data-ma-reveal style="transition-delay:0.3s">
+          <div class="ma-why-card-num">04</div>
+          <div>
+            <div class="ma-why-card-title">{% if is_arabic %}إبداع يعكس مستوى صالونك{% else %}Creative that feels premium{% endif %}</div>
+            <div class="ma-why-card-desc">{% if is_arabic %}صالونك يستحق محتوى يرقى إلى مستواه. نصوّر ونصمم وننتج كل شيء بمعايير الرفاهية.{% else %}Your salon deserves content that matches its level. We shoot, design, and produce everything to a luxury standard that elevates your brand perception instantly.{% endif %}</div>
+          </div>
+        </div>
+        <div class="ma-why-card" data-ma-reveal style="transition-delay:0.4s">
+          <div class="ma-why-card-num">05</div>
+          <div>
+            <div class="ma-why-card-title">{% if is_arabic %}خبرة حصرية في الإمارات{% else %}UAE-only expertise{% endif %}</div>
+            <div class="ma-why-card-desc">{% if is_arabic %}حملات رمضان واليوم الوطني واستراتيجيات الصيف. نعرف متى يتباطأ دبي وكيف نحافظ على حجوزاتك مرتفعة بغض النظر.{% else %}Ramadan campaigns, National Day activations, summer retention strategies. We know when Dubai slows down and how to keep your bookings high regardless.{% endif %}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INDUSTRIES ── -->
+<section class="ma-industries-sec">
+  <div class="ma-inner">
+    <div class="ma-industries-label">{% if is_arabic %}قطاعات التجميل التي نخدمها{% else %}Beauty Verticals We Serve{% endif %}</div>
+    <div class="ma-industries-scroll">
+      {% if is_arabic %}
+        <div class="ma-industry-tag ma-featured">صالونات نساء</div>
+        <div class="ma-industry-tag">صالونات رجال</div>
+        <div class="ma-industry-tag ma-featured">مساج وسبا</div>
+        <div class="ma-industry-tag">استوديوهات أظافر</div>
+        <div class="ma-industry-tag">عيادات التجميل</div>
+        <div class="ma-industry-tag ma-featured">بلو-دراي بارز</div>
+        <div class="ma-industry-tag">استوديوهات رموش وحواجب</div>
+        <div class="ma-industry-tag">مراكز العافية</div>
+        <div class="ma-industry-tag">عيادات زراعة الشعر</div>
+        <div class="ma-industry-tag ma-featured">خدمات التجميل المنزلية</div>
+        <div class="ma-industry-tag">صالات العرائس</div>
+        <div class="ma-industry-tag">ميدي سبا</div>
+      {% else %}
+        <div class="ma-industry-tag ma-featured">Ladies Salons</div>
+        <div class="ma-industry-tag">Gents Salons</div>
+        <div class="ma-industry-tag ma-featured">Massage & Spa</div>
+        <div class="ma-industry-tag">Nail Studios</div>
+        <div class="ma-industry-tag">Aesthetic Clinics</div>
+        <div class="ma-industry-tag ma-featured">Blow-Dry Bars</div>
+        <div class="ma-industry-tag">Lash & Brow Studios</div>
+        <div class="ma-industry-tag">Wellness Centers</div>
+        <div class="ma-industry-tag">Hair Transplant Clinics</div>
+        <div class="ma-industry-tag ma-featured">Home Beauty Services</div>
+        <div class="ma-industry-tag">Bridal Suites</div>
+        <div class="ma-industry-tag">Medi-Spas</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section class="ma-process-sec" id="ma-process">
+  <div class="ma-inner">
+    <div class="ma-sec-label" data-ma-reveal style="justify-content:center;margin-bottom:24px">
+      <div class="ma-sec-label-line" style="max-width:60px"></div>
+      <span class="ma-sec-label-text">{% if is_arabic %}كيف نعمل{% else %}How We Work{% endif %}</span>
+      <div class="ma-sec-label-line" style="max-width:60px"></div>
+    </div>
+    <h2 class="ma-process-title" data-ma-reveal>
+      {% if is_arabic %}من أول مكالمة إلى <em>النمو الكامل</em><br>في خمس خطوات{% else %}From first call to <em>full growth</em><br>in five steps{% endif %}
+    </h2>
+    <div class="ma-process-track">
+      <div class="ma-process-step" data-ma-reveal>
+        <div class="ma-process-circle">1</div>
+        <div class="ma-process-name">{% if is_arabic %}مكالمة الاكتشاف{% else %}Discovery Call{% endif %}</div>
+        <div class="ma-process-desc">{% if is_arabic %}نتعرف على صالونك وأهدافك وتسويقك الحالي ومنافسيك. مجاناً، بلا التزام، 45 دقيقة.{% else %}We learn your salon, your goals, your current marketing, and your competition. Free, no obligation, 45 minutes.{% endif %}</div>
+      </div>
+      <div class="ma-process-step" data-ma-reveal style="transition-delay:0.1s">
+        <div class="ma-process-circle">2</div>
+        <div class="ma-process-name">{% if is_arabic %}التدقيق والاستراتيجية{% else %}Audit & Strategy{% endif %}</div>
+        <div class="ma-process-desc">{% if is_arabic %}تدقيق شامل لحضورك الرقمي وإعلاناتك وتقييماتك ومنافسيك. خارطة طريق نمو مخصصة لـ 90 يوماً خلال 5 أيام.{% else %}Full audit of your online presence, ads, reviews, and competitors. A custom 90-day growth roadmap delivered within 5 days.{% endif %}</div>
+      </div>
+      <div class="ma-process-step" data-ma-reveal style="transition-delay:0.2s">
+        <div class="ma-process-circle">3</div>
+        <div class="ma-process-name">{% if is_arabic %}العلامة والإبداع{% else %}Brand & Creative{% endif %}</div>
+        <div class="ma-process-desc">{% if is_arabic %}نجدد أو نبني أصول علامتك وخطة المحتوى والإعلانات الإبداعية. صالونك يحصل على مظهر متسق ومميز فوراً.{% else %}We refresh or build your brand assets, content calendar, and ad creative. Your salon gets a consistent, elevated look immediately.{% endif %}</div>
+      </div>
+      <div class="ma-process-step" data-ma-reveal style="transition-delay:0.3s">
+        <div class="ma-process-circle">4</div>
+        <div class="ma-process-name">{% if is_arabic %}الإطلاق والتوسع{% else %}Launch & Scale{% endif %}</div>
+        <div class="ma-process-desc">{% if is_arabic %}تنطلق الحملات. ندير ونُحسّن ونُكيّف في الوقت الفعلي بناءً على ما يحقق الحجوزات وما لا يفعل.{% else %}Campaigns go live. We manage, optimise, and iterate in real time based on what's driving bookings and what isn't.{% endif %}</div>
+      </div>
+      <div class="ma-process-step" data-ma-reveal style="transition-delay:0.4s">
+        <div class="ma-process-circle">5</div>
+        <div class="ma-process-name">{% if is_arabic %}التقرير والنمو{% else %}Report & Grow{% endif %}</div>
+        <div class="ma-process-desc">{% if is_arabic %}مراجعات أداء شهرية ومقاييس واضحة. نضع أهداف الشهر القادم معاً ونرفع السقف في كل دورة.{% else %}Monthly performance reviews. Clear metrics. We set next month's targets together and raise the bar every cycle.{% endif %}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESULTS ── -->
+<section class="ma-results-sec" id="ma-results">
+  <div class="ma-inner">
+    <div class="ma-sec-label" data-ma-reveal>
+      <span class="ma-sec-label-text">{% if is_arabic %}نتائج عملائنا{% else %}Client Results{% endif %}</span>
+      <div class="ma-sec-label-line"></div>
+    </div>
+    <div class="ma-results-card" data-ma-reveal>
+      <div class="ma-results-badge">{% if is_arabic %}دراسة حالة{% else %}Case Study{% endif %}</div>
+      <div>
+        <div class="ma-results-title">{% if is_arabic %}كيف ضاعف صالون نسائي في دبي حجوزاته الشهرية ثلاث مرات{% else %}How a Dubai ladies salon tripled its monthly bookings{% endif %}</div>
+        <div class="ma-results-sub">{% if is_arabic %}في أقل من ستة أشهر، بلا تخفيضات في الأسعار{% else %}in under six months, with no price discounting{% endif %}</div>
+        <div class="ma-results-body">{% if is_arabic %}جاءنا صالون نسائي متوسط الحجم في جميرا بخدمات ممتازة وحضور رقمي ضعيف. لا موقع إلكتروني، إنستغرام غير منتظم، وصفر إعلانات مدفوعة. خلال 90 يوماً من إطلاق استراتيجيتنا التسويقية الشاملة — السوشيال والإعلانات والسيو وواتساب — ارتفعت حجوزاتهم من 180 إلى 540 شهرياً. تحسّن الاحتفاظ بنسبة 44%. وارتفع تقييمهم على جوجل من 3.9 إلى 4.8 نجوم.{% else %}A mid-size ladies salon in Jumeirah came to us with strong services and a weak online presence. No website, inconsistent Instagram, and zero paid ads. Within 90 days of launching our full-stack marketing strategy — social, ads, SEO, and WhatsApp CRM — they went from 180 to 540 bookings per month. Retention improved by 44%. Their Google rating climbed from 3.9 to 4.8 stars.{% endif %}</div>
+      </div>
+      <div class="ma-results-numbers">
+        <div class="ma-result-num">
+          <div class="ma-result-num-val">3<em>×</em></div>
+          <div class="ma-result-num-label">{% if is_arabic %}الحجوزات الشهرية{% else %}Monthly Bookings{% endif %}</div>
+        </div>
+        <div class="ma-result-num">
+          <div class="ma-result-num-val">4.8<em>★</em></div>
+          <div class="ma-result-num-label">{% if is_arabic %}تقييم جوجل{% else %}Google Rating{% endif %}</div>
+        </div>
+        <div class="ma-result-num">
+          <div class="ma-result-num-val">44<em>%</em></div>
+          <div class="ma-result-num-label">{% if is_arabic %}تحسن الاحتفاظ{% else %}Retention Uplift{% endif %}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="ma-testi-sec">
+  <div class="ma-inner">
+    <div class="ma-sec-label" data-ma-reveal>
+      <span class="ma-sec-label-text">{% if is_arabic %}آراء عملائنا{% else %}Client Voices{% endif %}</span>
+      <div class="ma-sec-label-line"></div>
+    </div>
+    <div class="ma-testi-grid">
+      <div class="ma-testi-card" data-ma-reveal>
+        <div class="ma-testi-stars">★★★★★</div>
+        <div class="ma-testi-text">{% if is_arabic %}"قبل دونابيلا، كان إنستغرامنا مجرد صور. الآن أصبح مصدرنا الرئيسي للعملاء الجدد. يفهمون التجميل، يفهمون دبي، ويحققون النتائج."{% else %}"Before Donnabella, our Instagram was just pictures. Now it's our main source of new clients. They understand beauty, they understand Dubai, and they deliver."{% endif %}</div>
+        <div class="ma-testi-divider"></div>
+        <div class="ma-testi-name">{% if is_arabic %}ليلى الرشيدي{% else %}Layla Al Rashidi{% endif %}</div>
+        <div class="ma-testi-biz">{% if is_arabic %}صالون لومير للسيدات · جي بي آر، دبي{% else %}Lumière Ladies Salon · JBR, Dubai{% endif %}</div>
+      </div>
+      <div class="ma-testi-card" data-ma-reveal style="transition-delay:0.1s">
+        <div class="ma-testi-stars">★★★★★</div>
+        <div class="ma-testi-text">{% if is_arabic %}"افتتحنا فرعنا الثاني بعد ستة أشهر من الانضمام إلى دونابيلا. الطلب الذي أوجدناه أونلاين جعل ذلك ممكناً. يستحق كل درهم."{% else %}"We opened our second branch six months after joining Donnabella. The demand we created online made it possible. Worth every dirham."{% endif %}</div>
+        <div class="ma-testi-divider"></div>
+        <div class="ma-testi-name">{% if is_arabic %}طارق المنصوري{% else %}Tariq Mansouri{% endif %}</div>
+        <div class="ma-testi-biz">{% if is_arabic %}بليد جنتس لاونج · بيزنس باي{% else %}Blade Gents Lounge · Business Bay{% endif %}</div>
+      </div>
+      <div class="ma-testi-card" data-ma-reveal style="transition-delay:0.2s">
+        <div class="ma-testi-stars">★★★★★</div>
+        <div class="ma-testi-text">{% if is_arabic %}"انتقلت خدماتنا المنزلية من 50 حجزاً شهرياً إلى أكثر من 400. نظام الواتساب الذي أعدوه يعمل وحده. نحن نركز فقط على تقديم الخدمة."{% else %}"Our home services brand went from 50 bookings a month to over 400. The WhatsApp system they set up runs itself. We just focus on the treatments."{% endif %}</div>
+        <div class="ma-testi-divider"></div>
+        <div class="ma-testi-name">{% if is_arabic %}نور كمال{% else %}Nour Kamal{% endif %}</div>
+        <div class="ma-testi-biz">{% if is_arabic %}سيرينيتي هوم سبا · دبي{% else %}Serenity Home Spa · Dubai{% endif %}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="ma-cta-sec" id="ma-contact">
+  <div class="ma-cta-ring ma-cta-ring-1"></div>
+  <div class="ma-cta-ring ma-cta-ring-2"></div>
+  <div class="ma-inner ma-cta-content">
+    <div class="ma-cta-eyebrow" data-ma-reveal>{% if is_arabic %}مستعد للنمو؟{% else %}Ready to grow?{% endif %}</div>
+    <h2 class="ma-cta-title" data-ma-reveal>
+      {% if is_arabic %}لنبني معاً<br><em>الميزة التنافسية</em> لصالونك{% else %}Let's build your salon's<br><em>unfair advantage</em>{% endif %}
+    </h2>
+    <p class="ma-cta-sub" data-ma-reveal>
+      {% if is_arabic %}استشارة استراتيجية مجانية · بلا التزام · نتائج خلال 30 يوماً{% else %}Free strategy call · No commitment · Results within 30 days{% endif %}
+    </p>
+    <div class="ma-cta-btns" data-ma-reveal>
+      <a href="https://wa.me/971509933488" class="ma-btn-primary">{% if is_arabic %}تواصل معنا عبر واتساب{% else %}WhatsApp Us Now{% endif %}</a>
+      <a href="mailto:dafer1111@hotmail.com" class="ma-btn-outline">{% if is_arabic %}أرسل بريداً إلكترونياً{% else %}Send an Email{% endif %}</a>
+    </div>
+    <div class="ma-cta-note" data-ma-reveal>+971 50 993 3488 &nbsp;·&nbsp; dafer1111@hotmail.com &nbsp;·&nbsp; {% if is_arabic %}دبي، الإمارات{% else %}Dubai, UAE{% endif %}</div>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function () {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var el = e.target;
+        var delay = parseInt(el.style.transitionDelay) || 0;
+        setTimeout(function() { el.classList.add('ma-visible'); }, delay * 1000);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('[data-ma-reveal]').forEach(function(el) { observer.observe(el); });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Marketing Agency",
+  "presets": [{ "name": "Marketing Agency" }]
+}
+{% endschema %}

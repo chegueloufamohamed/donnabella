@@ -1,0 +1,367 @@
+{% comment %}
+  Social Media Sidebar - Snippet version
+{% endcomment %}
+
+{% assign sb_facebook   = '' %}
+{% assign sb_instagram  = 'https://www.instagram.com/donnabella_care/' %}
+{% assign sb_tiktok     = '' %}
+{% assign sb_snapchat   = '' %}
+
+{% assign sb_bg_color       = 'rgba(0,0,0,0.3)' %}
+{% assign sb_border_radius  = '50px' %}
+{% assign sb_icon_color     = '#ffffff' %}
+{% assign sb_hover_icon     = '#000000' %}
+{% assign sb_hover_circle   = '#ffffff' %}
+{% assign sb_blur           = '4px' %}
+
+<div id="ssb-root">
+  <!-- DESKTOP Sticky Sidebar -->
+  <div class="ssb-desktop">
+    <div class="ssb-icons">
+      <span class="ssb-icon" aria-label="Facebook">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="currentColor"/></svg>
+      </span>
+      <span class="ssb-icon" aria-label="Instagram">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" fill="currentColor"/></svg>
+      </span>
+      <span class="ssb-icon" aria-label="TikTok">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" fill="currentColor"/></svg>
+      </span>
+      <span class="ssb-icon" aria-label="Snapchat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.029.465.298.136.638.287.93.417.485.215 1.001.449 1.409.449.044 0 .087-.002.13-.005.102-.013.122-.013.143-.013.065 0 .123.011.177.033.449.174.553.67.556.996 0 .002 0 .003.001.005.001.038.003.076.003.114 0 .188-.053.36-.133.5-.238.404-.804.571-1.279.666-.113.023-.24.047-.367.073-.041.008-.076.017-.11.024-.146.031-.292.063-.437.093-.27.057-.54.111-.804.158-.028.005-.055.01-.082.014-.551.095-1.003.207-1.383.337-.032.011-.065.024-.098.037-.183.073-.356.196-.497.546-.18.448-.645 1.122-1.182 1.802-.688.872-1.544 1.457-2.439 1.457-.182 0-.347-.024-.504-.072-.235-.07-.438-.12-.637-.166-.02-.005-.038-.009-.057-.013-.162-.036-.315-.068-.469-.097-.396-.074-.765-.115-1.097-.115-.332 0-.701.041-1.097.115-.154.029-.307.061-.469.097-.019.004-.037.008-.057.013-.199.046-.402.096-.637.166-.157.048-.322.072-.504.072-.895 0-1.751-.585-2.439-1.457-.537-.68-1.002-1.354-1.182-1.802-.141-.35-.314-.473-.497-.546-.033-.013-.066-.026-.098-.037-.38-.13-.832-.242-1.383-.337-.027-.004-.054-.009-.082-.014-.264-.047-.534-.101-.804-.158-.145-.03-.291-.062-.437-.093-.034-.007-.069-.016-.11-.024-.127-.026-.254-.05-.367-.073-.475-.095-1.041-.262-1.279-.666-.08-.14-.133-.312-.133-.5 0-.038.002-.076.003-.114.001-.002.001-.003.001-.005.003-.326.107-.822.556-.996.054-.022.112-.033.177-.033.021 0 .041 0 .143.013.043.003.086.005.13.005.408 0 .924-.234 1.409-.449.292-.13.632-.281.93-.417-.007-.12-.017-.285-.029-.465l-.003-.06c-.104-1.628-.23-3.654.299-4.847C7.859 1.069 11.216.793 12.206.793z" fill="currentColor"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <!-- MOBILE Sticky Sidebar -->
+  <div class="ssb-mobile" data-threshold="1.2" aria-hidden="true">
+    <button class="ssb-handle" type="button" aria-label="Toggle social links" aria-expanded="false">
+      <span class="ssb-chev" aria-hidden="true"></span>
+    </button>
+    <div class="ssb-icons" role="navigation" aria-label="Social links">
+      <span class="ssb-icon" aria-label="Facebook">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="currentColor"/></svg>
+      </span>
+      <span class="ssb-icon" aria-label="Instagram">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" fill="currentColor"/></svg>
+      </span>
+      <span class="ssb-icon" aria-label="TikTok">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" fill="currentColor"/></svg>
+      </span>
+      <span class="ssb-icon" aria-label="Snapchat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.029.465.298.136.638.287.93.417.485.215 1.001.449 1.409.449.044 0 .087-.002.13-.005.102-.013.122-.013.143-.013.065 0 .123.011.177.033.449.174.553.67.556.996 0 .002 0 .003.001.005.001.038.003.076.003.114 0 .188-.053.36-.133.5-.238.404-.804.571-1.279.666-.113.023-.24.047-.367.073-.041.008-.076.017-.11.024-.146.031-.292.063-.437.093-.27.057-.54.111-.804.158-.028.005-.055.01-.082.014-.551.095-1.003.207-1.383.337-.032.011-.065.024-.098.037-.183.073-.356.196-.497.546-.18.448-.645 1.122-1.182 1.802-.688.872-1.544 1.457-2.439 1.457-.182 0-.347-.024-.504-.072-.235-.07-.438-.12-.637-.166-.02-.005-.038-.009-.057-.013-.162-.036-.315-.068-.469-.097-.396-.074-.765-.115-1.097-.115-.332 0-.701.041-1.097.115-.154.029-.307.061-.469.097-.019.004-.037.008-.057.013-.199.046-.402.096-.637.166-.157.048-.322.072-.504.072-.895 0-1.751-.585-2.439-1.457-.537-.68-1.002-1.354-1.182-1.802-.141-.35-.314-.473-.497-.546-.033-.013-.066-.026-.098-.037-.38-.13-.832-.242-1.383-.337-.027-.004-.054-.009-.082-.014-.264-.047-.534-.101-.804-.158-.145-.03-.291-.062-.437-.093-.034-.007-.069-.016-.11-.024-.127-.026-.254-.05-.367-.073-.475-.095-1.041-.262-1.279-.666-.08-.14-.133-.312-.133-.5 0-.038.002-.076.003-.114.001-.002.001-.003.001-.005.003-.326.107-.822.556-.996.054-.022.112-.033.177-.033.021 0 .041 0 .143.013.043.003.086.005.13.005.408 0 .924-.234 1.409-.449.292-.13.632-.281.93-.417-.007-.12-.017-.285-.029-.465l-.003-.06c-.104-1.628-.23-3.654.299-4.847C7.859 1.069 11.216.793 12.206.793z" fill="currentColor"/></svg>
+      </span>
+    </div>
+  </div>
+</div>
+
+<style>
+  html, body {
+    overflow-x: hidden !important;
+  }
+
+  #ssb-root {
+    position: static;
+    width: 0;
+    height: 0;
+    line-height: 0;
+  }
+
+  #ssb-root * {
+    box-sizing: border-box;
+  }
+
+  #ssb-root .ssb-desktop,
+  #ssb-root .ssb-mobile {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide both by default first */
+  #ssb-root .ssb-desktop,
+  #ssb-root .ssb-mobile {
+    display: none !important;
+  }
+
+  /* DESKTOP */
+  @media screen and (min-width: 1024px) {
+    #ssb-root .ssb-desktop {
+      position: fixed !important;
+      left: 20px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      z-index: 9999 !important;
+      display: block !important;
+    }
+
+    #ssb-root .ssb-mobile {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+  }
+
+  @media screen and (min-width: 1440px) {
+    #ssb-root .ssb-desktop {
+      left: 30px !important;
+    }
+  }
+
+  #ssb-root .ssb-desktop .ssb-icons {
+    background: {{ sb_bg_color }};
+    backdrop-filter: blur({{ sb_blur }});
+    -webkit-backdrop-filter: blur({{ sb_blur }});
+    border-radius: {{ sb_border_radius }};
+    padding: 12px !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  #ssb-root .ssb-desktop .ssb-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ sb_icon_color }};
+    text-decoration: none;
+    border-radius: 50%;
+    position: relative;
+    cursor: default;
+    transition: color 0.3s ease;
+  }
+
+  #ssb-root .ssb-desktop .ssb-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    display: block;
+    position: relative;
+    z-index: 2;
+  }
+
+  #ssb-root .ssb-desktop .ssb-icon::before {
+    content: '';
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: {{ sb_hover_circle }};
+    transform: scale(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+    top: 0;
+    left: 0;
+  }
+
+  #ssb-root .ssb-desktop .ssb-icon:hover {
+    color: {{ sb_hover_icon }};
+  }
+
+  #ssb-root .ssb-desktop .ssb-icon:hover::before {
+    transform: scale(1);
+  }
+
+  /* MOBILE */
+  @media screen and (max-width: 1023px) {
+    #ssb-root .ssb-desktop {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
+    #ssb-root .ssb-mobile {
+      position: fixed !important;
+      left: 0 !important;
+      top: 30vh !important;
+      z-index: 9999 !important;
+      display: block !important;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity 220ms ease, transform 220ms ease;
+      overflow: hidden;
+      max-width: calc(100vw - 8px);
+    }
+
+    #ssb-root .ssb-mobile.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    #ssb-root .ssb-mobile .ssb-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      background: {{ sb_bg_color }};
+      backdrop-filter: blur({{ sb_blur }});
+      -webkit-backdrop-filter: blur({{ sb_blur }});
+      padding: 10px;
+      border-radius: {{ sb_border_radius }};
+      box-shadow: 0 10px 28px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.1);
+      transform: translateX(0);
+      transition: transform 260ms ease;
+      will-change: transform;
+    }
+
+    #ssb-root .ssb-mobile:not(.is-open) .ssb-icons {
+      transform: translateX(calc(-100% + 8px));
+    }
+
+    #ssb-root .ssb-mobile .ssb-handle {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 54px;
+      border-radius: 999px;
+      background: {{ sb_bg_color }};
+      backdrop-filter: blur({{ sb_blur }});
+      -webkit-backdrop-filter: blur({{ sb_blur }});
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #ssb-root .ssb-mobile .ssb-chev {
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid {{ sb_icon_color }};
+      border-bottom: 2px solid {{ sb_icon_color }};
+      transform: rotate(-45deg);
+      transition: transform 260ms ease;
+      display: block;
+    }
+
+    #ssb-root .ssb-mobile.is-open .ssb-chev {
+      transform: rotate(135deg);
+    }
+
+    #ssb-root .ssb-mobile .ssb-icon {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: {{ sb_icon_color }};
+      text-decoration: none;
+      border-radius: 999px;
+      cursor: default;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #ssb-root .ssb-mobile .ssb-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+
+    #ssb-root .ssb-mobile .ssb-icon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: {{ sb_hover_circle }};
+      transform: scale(0);
+      transition: transform 180ms ease;
+      opacity: 0.95;
+      z-index: 1;
+    }
+
+    #ssb-root .ssb-mobile .ssb-icon:active::before {
+      transform: scale(1);
+    }
+
+    #ssb-root .ssb-mobile .ssb-icon:active {
+      color: {{ sb_hover_icon }};
+    }
+  }
+</style>
+
+<script>
+(function () {
+  var sidebar = document.querySelector('#ssb-root .ssb-mobile');
+  if (!sidebar) return;
+
+  var handle = sidebar.querySelector('.ssb-handle');
+  var thresholdRatio = parseFloat(sidebar.getAttribute('data-threshold') || '1.2');
+  var storageKey = 'ssb_mobile_open';
+
+  function setOpen(open) {
+    sidebar.classList.toggle('is-open', open);
+    if (handle) {
+      handle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    try {
+      localStorage.setItem(storageKey, open ? '1' : '0');
+    } catch (e) {}
+  }
+
+  function getSavedOpen() {
+    try {
+      return localStorage.getItem(storageKey) === '1';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function isMobileViewport() {
+    return window.innerWidth <= 1023;
+  }
+
+  function updateVisibility() {
+    if (!isMobileViewport()) {
+      sidebar.classList.remove('is-visible');
+      sidebar.classList.remove('is-open');
+      sidebar.setAttribute('aria-hidden', 'true');
+      return;
+    }
+
+    var shouldShow = window.scrollY > window.innerHeight * thresholdRatio;
+    sidebar.classList.toggle('is-visible', shouldShow);
+    sidebar.setAttribute('aria-hidden', shouldShow ? 'false' : 'true');
+
+    if (shouldShow) {
+      setOpen(getSavedOpen());
+    } else {
+      setOpen(false);
+    }
+  }
+
+  if (handle) {
+    handle.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      setOpen(!sidebar.classList.contains('is-open'));
+    }, { passive: false });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!sidebar.classList.contains('is-visible')) return;
+    if (sidebar.contains(e.target)) return;
+    setOpen(false);
+  });
+
+  window.addEventListener('scroll', updateVisibility, { passive: true });
+  window.addEventListener('resize', updateVisibility);
+
+  setOpen(false);
+  updateVisibility();
+})();
+</script>

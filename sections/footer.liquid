@@ -1,0 +1,753 @@
+{% comment %}
+  Belladona Custom Footer
+{% endcomment %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&family=Lato:wght@300;400;700;900&family=Raleway:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700;900&family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&family=Dancing+Script:wght@400;500;600;700&family=Pacifico&family=Abril+Fatface&family=Righteous&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600;700&family=EB+Garamond:wght@400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700;800;900&family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap');
+
+  #shopify-section-{{ section.id }} .belladona-footer {
+    --footer-text: {{ section.settings.text_color }};
+    --footer-link: {{ section.settings.link_color }};
+    --footer-hover: {{ section.settings.hover_color }};
+    --footer-font-family: '{{ section.settings.footer_font_family }}', sans-serif;
+    --footer-font-size: {{ section.settings.footer_font_size }}px;
+    --footer-heading-size: {{ section.settings.footer_heading_size }}px;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer,
+  #shopify-section-{{ section.id }} .belladona-footer * {
+    box-sizing: border-box !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer {
+    position: relative !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-top-left-radius: {{ section.settings.top_radius }}px !important;
+    border-top-right-radius: {{ section.settings.top_radius }}px !important;
+    background-color: {{ section.settings.background_color }} !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-content {
+    position: relative !important;
+    z-index: 5 !important;
+    max-width: {{ section.settings.max_width }}px !important;
+    margin: 0 auto !important;
+    padding: {{ section.settings.padding_vertical }}px {{ section.settings.padding_horizontal }}px !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer p,
+  #shopify-section-{{ section.id }} .belladona-footer li,
+  #shopify-section-{{ section.id }} .belladona-footer span,
+  #shopify-section-{{ section.id }} .belladona-footer div {
+    font-family: var(--footer-font-family) !important;
+    font-size: var(--footer-font-size) !important;
+    color: var(--footer-text) !important;
+    line-height: 1.6 !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer a {
+    font-family: var(--footer-font-family) !important;
+    font-size: var(--footer-font-size) !important;
+    color: var(--footer-link) !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer a:hover {
+    color: var(--footer-hover) !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer h1,
+  #shopify-section-{{ section.id }} .belladona-footer h2,
+  #shopify-section-{{ section.id }} .belladona-footer h3,
+  #shopify-section-{{ section.id }} .belladona-footer h4,
+  #shopify-section-{{ section.id }} .belladona-footer h5,
+  #shopify-section-{{ section.id }} .belladona-footer h6 {
+    font-family: var(--footer-font-family) !important;
+    font-size: var(--footer-heading-size) !important;
+    color: var(--footer-text) !important;
+    font-weight: {{ section.settings.heading_font_weight }} !important;
+    text-transform: {{ section.settings.text_transform }} !important;
+    letter-spacing: {{ section.settings.letter_spacing }}px !important;
+    margin: 0 0 15px 0 !important;
+    line-height: 1.3 !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax({{ section.settings.column_min_width }}px, {{ section.settings.column_max_width }}px)) !important;
+    gap: 40px !important;
+    margin-bottom: 40px !important;
+    justify-content: flex-start !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-column {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-logo {
+    margin-bottom: 20px !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-logo img {
+    height: auto !important;
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-logo-text {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: var(--footer-text) !important;
+    font-family: var(--footer-font-family) !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer li {
+    margin-bottom: 10px !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .newsletter-form {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin-top: 15px !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer input[type="email"] {
+    width: 100% !important;
+    padding: 12px 15px !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    border-radius: {{ section.settings.input_radius }}px !important;
+    background: rgba(255,255,255,0.1) !important;
+    color: var(--footer-text) !important;
+    font-family: var(--footer-font-family) !important;
+    font-size: var(--footer-font-size) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer input[type="email"]:focus {
+    outline: none !important;
+    border-color: var(--footer-hover) !important;
+    background: rgba(255,255,255,0.15) !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer input::placeholder {
+    color: rgba(255,255,255,0.6) !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer input[type="submit"] {
+    padding: 12px 25px !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    border-radius: {{ section.settings.button_radius }}px !important;
+    background: rgba(255,255,255,0.15) !important;
+    color: var(--footer-text) !important;
+    font-family: var(--footer-font-family) !important;
+    font-size: var(--footer-font-size) !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer input[type="submit"]:hover {
+    background: rgba(255,255,255,0.25) !important;
+    border-color: rgba(255,255,255,0.5) !important;
+    transform: translateY(-2px) !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-social-icons {
+    display: flex !important;
+    gap: 12px !important;
+    margin-top: 20px !important;
+    flex-wrap: wrap !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-social-icons a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: rgba(255,255,255,0.08) !important;
+    transition: all 0.3s ease !important;
+    flex-shrink: 0 !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-social-icons a:hover {
+    background: rgba(255,255,255,0.2) !important;
+    transform: translateY(-3px) !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-social-icons svg {
+    width: 18px !important;
+    height: 18px !important;
+    fill: {{ section.settings.text_color }} !important;
+    flex-shrink: 0 !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+    padding-top: 30px !important;
+    margin-top: 40px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 20px !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-copyright {
+    font-size: 14px !important;
+    color: var(--footer-text) !important;
+    opacity: 0.8 !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .payment-icons {
+    display: flex !important;
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .payment-icons svg {
+    height: 25px !important;
+    width: auto !important;
+    opacity: 0.7 !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .payment-icons svg:hover {
+    opacity: 1 !important;
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .belladona-footer {
+      border-top-left-radius: {{ section.settings.top_radius_mobile }}px !important;
+      border-top-right-radius: {{ section.settings.top_radius_mobile }}px !important;
+    }
+    #shopify-section-{{ section.id }} .belladona-footer .footer-grid {
+      grid-template-columns: 1fr !important;
+      gap: 30px !important;
+    }
+    #shopify-section-{{ section.id }} .belladona-footer .footer-bottom {
+      flex-direction: column !important;
+      text-align: center !important;
+    }
+    #shopify-section-{{ section.id }} .belladona-footer .payment-icons {
+      justify-content: center !important;
+    }
+  }
+</style>
+
+<footer class="belladona-footer">
+  <div class="footer-content">
+    <div class="footer-grid">
+
+      {% for block in section.blocks %}
+        <div class="footer-column" {{ block.shopify_attributes }}>
+
+          {% if block.type == 'brand' %}
+
+            <div class="footer-logo">
+              {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | img_url: '400x' }}"
+                     alt="{{ shop.name }}"
+                     loading="lazy"
+                     style="max-width: {{ block.settings.logo_width }}px;">
+              {% else %}
+                <span class="footer-logo-text">{{ shop.name }}</span>
+              {% endif %}
+            </div>
+
+            {% if block.settings.text != blank %}
+              <div class="footer-text" style="font-size: {{ block.settings.text_size }}px;">
+                {{ block.settings.text }}
+              </div>
+            {% endif %}
+
+            <div class="footer-social-icons">
+              {% if block.settings.facebook_url != blank %}
+                <a href="{{ block.settings.facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+              {% endif %}
+              {% if block.settings.instagram_url != blank %}
+                <a href="{{ block.settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+              {% endif %}
+              {% if block.settings.tiktok_url != blank %}
+                <a href="{{ block.settings.tiktok_url }}" target="_blank" rel="noopener" aria-label="TikTok">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+                </a>
+              {% endif %}
+              {% if block.settings.whatsapp_url != blank %}
+                <a href="{{ block.settings.whatsapp_url }}" target="_blank" rel="noopener" aria-label="WhatsApp">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </a>
+              {% endif %}
+              {% if block.settings.snapchat_url != blank %}
+                <a href="{{ block.settings.snapchat_url }}" target="_blank" rel="noopener" aria-label="Snapchat">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.552 1.228.437 3.51.33 5.446l.013.013c.302-.086.79-.512 1.615-.512.733 0 1.518.511 1.518 1.09 0 .439-.39.861-1.218 1.001-.149.026-1.244.257-1.498 1.39-.254 1.133.14 2.493.825 3.944.45.964.927 1.574 1.285 2.042.343.45.536.7.536.937 0 .602-.988.956-1.617 1.18-.22.078-.417.147-.555.218-.458.228-.59.593-.696.945-.064.212-.128.424-.225.556-.12.164-.318.244-.518.244-.174 0-.354-.052-.507-.156-1.346-.906-2.487-1.052-3.254-1.052-.38 0-.656.033-.833.047-.143.01-.301.02-.466.02-.545 0-1.14-.133-1.617-.393-.482-.262-.825-.664-.96-1.122-.113-.39-.256-.773-.423-1.128-.173-.367-.406-.702-.698-.989-.438-.43-.9-.648-1.272-.648-.249 0-.484.077-.693.23l-.065.044c-.295.2-.555.3-.774.3-.303 0-.535-.17-.672-.347-.158-.207-.22-.453-.242-.64-.024-.206-.034-.418-.034-.633 0-.334.025-.675.07-1.01.086-.634.3-1.034.68-1.383.273-.25.616-.393.926-.45.354-.064.722-.204 1.073-.406.56-.322.89-.715.89-1.105 0-.168-.073-.376-.21-.574-.342-.493-.577-1.103-.577-1.688 0-2.46 1.953-3.817 4.14-3.817z"/></svg>
+                </a>
+              {% endif %}
+            </div>
+
+          {% elsif block.type == 'menu' %}
+
+            {% if block.settings.menu != blank %}
+              <h6 style="font-size: {{ block.settings.heading_size }}px;">{{ linklists[block.settings.menu].title }}</h6>
+              <ul>
+                {% for link in linklists[block.settings.menu].links %}
+                  <li><a href="{{ link.url }}" style="font-size: {{ block.settings.link_size }}px;">{{ link.title }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+
+          {% elsif block.type == 'newsletter' %}
+
+            <h6 style="font-size: {{ block.settings.heading_size }}px;">{{ block.settings.title }}</h6>
+            {% if block.settings.text != blank %}
+              <p style="font-size: {{ block.settings.text_size }}px;">{{ block.settings.text }}</p>
+            {% endif %}
+            {% form 'customer' %}
+              <div class="newsletter-form">
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <input type="email" name="contact[email]" placeholder="Your email address" required>
+                <input type="submit" value="Subscribe">
+              </div>
+            {% endform %}
+
+          {% endif %}
+        </div>
+      {% endfor %}
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copyright">
+        <p>&copy; {{ "now" | date: "%Y" }} {{ shop.name }}. {{ section.settings.copyright_text }}</p>
+      </div>
+      {% if section.settings.show_payment_icons %}
+        <div class="payment-icons">
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Belladona Footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 1000,
+      "max": 2000,
+      "step": 50,
+      "unit": "px",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "column_min_width",
+      "label": "Column minimum width",
+      "min": 80,
+      "max": 350,
+      "step": 10,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "column_max_width",
+      "label": "Column maximum width",
+      "min": 100,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "padding_vertical",
+      "label": "Vertical padding",
+      "min": 30,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 20,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Border Radius"
+    },
+    {
+      "type": "range",
+      "id": "top_radius",
+      "label": "Top radius",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "top_radius_mobile",
+      "label": "Top radius (Mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "footer_font_family",
+      "label": "Font family",
+      "options": [
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Montserrat", "label": "Montserrat" },
+        { "value": "Roboto", "label": "Roboto" },
+        { "value": "Open Sans", "label": "Open Sans" },
+        { "value": "Lato", "label": "Lato" },
+        { "value": "Raleway", "label": "Raleway" },
+        { "value": "Poppins", "label": "Poppins" },
+        { "value": "Oswald", "label": "Oswald" },
+        { "value": "Merriweather", "label": "Merriweather" },
+        { "value": "Inter", "label": "Inter" },
+        { "value": "Bebas Neue", "label": "Bebas Neue" },
+        { "value": "Dancing Script", "label": "Dancing Script" },
+        { "value": "Pacifico", "label": "Pacifico" },
+        { "value": "Abril Fatface", "label": "Abril Fatface" },
+        { "value": "Righteous", "label": "Righteous" },
+        { "value": "Cinzel", "label": "Cinzel" },
+        { "value": "Cormorant Garamond", "label": "Cormorant Garamond" },
+        { "value": "Crimson Text", "label": "Crimson Text" },
+        { "value": "EB Garamond", "label": "EB Garamond" },
+        { "value": "Quicksand", "label": "Quicksand" },
+        { "value": "Nunito", "label": "Nunito" },
+        { "value": "Work Sans", "label": "Work Sans" }
+      ],
+      "default": "Montserrat"
+    },
+    {
+      "type": "range",
+      "id": "footer_font_size",
+      "label": "Base font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "footer_heading_size",
+      "label": "Heading size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Heading font weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Heading transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "UPPERCASE" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "hover_color",
+      "label": "Hover color",
+      "default": "#ffd700"
+    },
+    {
+      "type": "header",
+      "content": "Form Styling"
+    },
+    {
+      "type": "range",
+      "id": "input_radius",
+      "label": "Input border radius",
+      "min": 0,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "Footer Bottom"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright text",
+      "default": "All rights reserved."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Logo"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo image"
+        },
+        {
+          "type": "range",
+          "id": "logo_width",
+          "label": "Logo width",
+          "min": 80,
+          "max": 400,
+          "step": 10,
+          "unit": "px",
+          "default": 220
+        },
+        {
+          "type": "header",
+          "content": "Description"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description text"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "label": "Description text size",
+          "min": 12,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "header",
+          "content": "Social Media Links"
+        },
+        {
+          "type": "text",
+          "id": "facebook_url",
+          "label": "Facebook URL",
+          "info": "Paste full URL e.g. https://facebook.com/yourpage"
+        },
+        {
+          "type": "text",
+          "id": "instagram_url",
+          "label": "Instagram URL",
+          "info": "Paste full URL e.g. https://instagram.com/yourhandle"
+        },
+        {
+          "type": "text",
+          "id": "tiktok_url",
+          "label": "TikTok URL",
+          "info": "Paste full URL e.g. https://tiktok.com/@yourhandle"
+        },
+        {
+          "type": "text",
+          "id": "whatsapp_url",
+          "label": "WhatsApp URL",
+          "info": "Paste full URL e.g. https://wa.me/971XXXXXXXXX"
+        },
+        {
+          "type": "text",
+          "id": "snapchat_url",
+          "label": "Snapchat URL",
+          "info": "Paste full URL e.g. https://snapchat.com/add/yourhandle"
+        }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Heading size",
+          "min": 14,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "link_size",
+          "label": "Link size",
+          "min": 12,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 15
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Subscribe"
+        },
+        {
+          "type": "range",
+          "id": "heading_size",
+          "label": "Heading size",
+          "min": 14,
+          "max": 28,
+          "step": 1,
+          "unit": "px",
+          "default": 18
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "label": "Description size",
+          "min": 12,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "brand" },
+      { "type": "menu" },
+      { "type": "newsletter" }
+    ]
+  }
+}
+{% endschema %}

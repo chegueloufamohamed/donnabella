@@ -1,0 +1,128 @@
+<!-- Back to Top Floating Button with Progress Ring -->
+<div class="crony-backtotop" id="crony-backtotop" role="button" aria-label="Back to top">
+  <svg id="crony-progress-ring" viewBox="0 0 56 56">
+    <circle
+      id="crony-progress-circle"
+      cx="28"
+      cy="28"
+      r="21"
+    ></circle>
+  </svg>
+  <img
+  src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/arrow_1.png?v=1771409339"
+  alt="Back to Top"
+  width="45"
+  height="45">
+</div>
+
+<style>
+  .crony-backtotop {
+    position: fixed;
+    bottom: 30px;
+    right: 15px;
+    z-index: 9999;
+    cursor: pointer;
+    transition: transform 0.3s ease, bottom 0.3s ease;
+    display: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden; /* ← clips the square glow artifact at the corners */
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  .crony-backtotop img {
+    width: 45px;
+    height: 45px;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  /* SVG Progress Circle */
+  #crony-progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    pointer-events: none;
+    z-index: 1;
+    /* filter on the SVG element, not the circle — renders as circular shape */
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 18px rgba(255, 255, 255, 0.15));
+    overflow: visible;
+  }
+
+  #crony-progress-circle {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.1s ease;
+    /* removed filter from here — was causing the rectangular box glow */
+  }
+
+  .crony-backtotop:hover {
+    transform: translateY(-6px) scale(1.08);
+    overflow: visible; /* allow scale to show fully on hover */
+  }
+
+  .crony-backtotop:hover img {
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 600px) {
+    .crony-backtotop {
+      bottom: 10px;
+      right: 10px;
+      width: 53px;
+      height: 53px;
+    }
+    .crony-backtotop img {
+      width: 42px;
+      height: 42px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("crony-backtotop");
+    const circle = document.getElementById("crony-progress-circle");
+
+    // Set up the progress circle
+    const radius = 21;
+    const circumference = 2 * Math.PI * radius;
+    circle.style.strokeDasharray = circumference + ' ' + circumference;
+    circle.style.strokeDashoffset = circumference;
+
+    // Update progress based on scroll
+    function updateProgress() {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = Math.min(1, Math.max(0, scrollTop / scrollHeight));
+      const offset = circumference - (progress * circumference);
+      circle.style.strokeDashoffset = offset;
+    }
+
+    // Show button only after scrolling down
+    window.addEventListener("scroll", () => {
+      btn.style.display = window.scrollY > 300 ? "block" : "none";
+      updateProgress();
+    }, { passive: true });
+
+    // Smooth scroll to top on click
+    btn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Initial progress update
+    updateProgress();
+  });
+</script>

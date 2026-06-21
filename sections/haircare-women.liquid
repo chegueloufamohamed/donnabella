@@ -1,0 +1,617 @@
+{% comment %}
+  Hair Care — Women — Belladona Care
+  Bilingual section: auto-detects EN/AR via request.locale
+  Save as: sections/haircare-women.liquid
+  Add to page via: Customize → Page → Add section → Hair Care Women
+{% endcomment %}
+
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign dir = 'rtl' %}
+{% endif %}
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div class="hw-{{ section.id }}" dir="{{ dir }}">
+<style>
+  .hw-{{ section.id }} .cc-icon,
+.hw-{{ section.id }} .bc-icon,
+.hw-{{ section.id }} .hw-notice-icon {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  margin-bottom: 0 !important;
+  display: none !important;
+}
+  .hw-{{ section.id }} {
+    --bg: {{ section.settings.bg_color }};
+    --bg-dark: #2f3d4d; --bg-deeper: #354656;
+    --gold: {{ section.settings.gold_color }};
+    --gold-line: rgba(201,169,110,0.35);
+    --sage: {{ section.settings.sage_color }};
+    --sage-dim: rgba(143,174,173,0.1); --sage-line: rgba(143,174,173,0.3);
+    --white: #ffffff; --white-60: rgba(255,255,255,0.6);
+    --glass: rgba(255,255,255,0.06); --glass-b: rgba(255,255,255,0.11);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans:  'Jost', sans-serif;
+    --arabic: 'Cairo', sans-serif;
+    --font-main:    {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
+    --font-display: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %};
+    background-color: var(--bg);
+    color: var(--white);
+    font-family: var(--font-main);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  @keyframes hw-fadeUp-{{ section.id }} { to { opacity: 1; transform: translateY(0); } }
+  @keyframes hw-ring-{{ section.id }} {
+    0%,100% { opacity: 0.35; transform: translate(-50%,-50%) scale(1); }
+    50%      { opacity: 0.8;  transform: translate(-50%,-50%) scale(1.05); }
+  }
+
+  /* ── HERO ── */
+  .hw-{{ section.id }} .hw-hero {
+    position: relative; min-height: 56vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 80px 30px 50px; overflow: hidden;
+  }
+  .hw-{{ section.id }} .hw-hero::before {
+    content: ''; position: absolute; width: 620px; height: 620px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(143,174,173,0.08) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none;
+  }
+  .hw-{{ section.id }} .hw-hero::after {
+    content: ''; position: absolute; width: 370px; height: 370px; border-radius: 50%;
+    border: 1px solid var(--sage-line); top: 50%; left: 50%;
+    transform: translate(-50%,-50%); pointer-events: none;
+    animation: hw-ring-{{ section.id }} 4s ease-in-out infinite;
+  }
+  .hw-{{ section.id }} .hw-eyebrow {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--sage); margin-bottom: 20px; position: relative; z-index: 1;
+    opacity: 0; transform: translateY(16px);
+    animation: hw-fadeUp-{{ section.id }} 0.8s ease 0.2s forwards;
+  }
+  .hw-{{ section.id }} .hw-title {
+    font-family: var(--font-display);
+    font-size: clamp(50px, 9vw, 96px);
+    font-weight: {% if is_arabic %}400{% else %}300{% endif %};
+    font-style: {% if is_arabic %}normal{% else %}italic{% endif %};
+    line-height: {% if is_arabic %}1.2{% else %}0.95{% endif %};
+    color: var(--white); position: relative; z-index: 1;
+    opacity: 0; transform: translateY(20px);
+    animation: hw-fadeUp-{{ section.id }} 0.9s ease 0.4s forwards;
+  }
+  .hw-{{ section.id }} .hw-title span { color: var(--gold); font-style: normal; font-weight: 500; }
+  .hw-{{ section.id }} .hw-desc {
+    margin-top: 26px; font-size: 13px;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.14em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--white-60); position: relative; z-index: 1;
+    opacity: 0; transform: translateY(16px);
+    animation: hw-fadeUp-{{ section.id }} 0.9s ease 0.6s forwards;
+  }
+  .hw-{{ section.id }} .hw-divider {
+    margin-top: 40px; width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0; animation: hw-fadeUp-{{ section.id }} 0.9s ease 0.8s forwards;
+  }
+
+  /* ── LAYOUT ── */
+  .hw-{{ section.id }} .hw-section { position: relative; z-index: 1; padding: 52px 0 62px; }
+  .hw-{{ section.id }} .hw-section + .hw-section { padding-top: 0; }
+  .hw-{{ section.id }} .hw-inner { max-width: 1160px; margin: 0 auto; padding: 0 30px; }
+
+  /* ── SECTION LABEL ── */
+  .hw-{{ section.id }} .hw-label {
+    display: flex; align-items: center; gap: 18px; margin-bottom: 42px;
+    opacity: 0;
+    transform: translateX({% if is_arabic %}20px{% else %}-20px{% endif %});
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .hw-{{ section.id }} .hw-label.visible { opacity: 1; transform: translateX(0); }
+  .hw-{{ section.id }} .hw-label-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to {% if is_arabic %}left{% else %}right{% endif %}, var(--gold-line), transparent);
+  }
+  .hw-{{ section.id }} .hw-label-text {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.45em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); white-space: nowrap;
+  }
+
+  /* ── CUT TRIO ── */
+  .hw-{{ section.id }} .hw-cut-trio { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin-bottom: 2px; }
+  .hw-{{ section.id }} .hw-cut-card {
+    background: var(--glass); border: 1px solid var(--glass-b);
+    padding: 36px 30px 30px; cursor: default; display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.65s ease, transform 0.65s ease, background 0.3s, border-color 0.3s;
+  }
+  .hw-{{ section.id }} .hw-cut-card.visible { opacity: 1; transform: translateY(0); }
+  .hw-{{ section.id }} .hw-cut-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
+  .hw-{{ section.id }} .hw-cut-card.featured {
+    background: linear-gradient(135deg, rgba(201,169,110,0.13) 0%, rgba(201,169,110,0.03) 100%);
+    border-color: var(--gold-line); position: relative;
+  }
+  .hw-{{ section.id }} .hw-cut-card.featured::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
+  .hw-{{ section.id }} .hw-cut-bg {
+    position: absolute; bottom: 12px;
+    {% if is_arabic %}left{% else %}right{% endif %}: 20px;
+    font-family: var(--serif); font-size: 100px; font-weight: 300;
+    color: rgba(201,169,110,0.07); line-height: 1; user-select: none;
+  }
+  .hw-{{ section.id }} .cc-icon { font-size: 22px; margin-bottom: 14px; display: block; }
+  .hw-{{ section.id }} .cc-tag {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); margin-bottom: 10px;
+  }
+  .hw-{{ section.id }} .cc-title { font-family: var(--font-display); font-size: 26px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 5px; line-height: 1.15; }
+  .hw-{{ section.id }} .cc-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 12px; color: var(--gold); margin-bottom: 12px; opacity: 0.9; }
+  .hw-{{ section.id }} .cc-desc { font-size: 12px; line-height: 1.73; color: var(--white-60); margin-bottom: 22px; flex: 1; }
+  .hw-{{ section.id }} .cc-foot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--glass-b); padding-top: 14px; margin-top: auto; }
+  .hw-{{ section.id }} .cc-price { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--white); }
+  .hw-{{ section.id }} .cc-price sup { font-size: 11px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .hw-{{ section.id }} .cc-dur { font-size: 10px; color: var(--white-60); letter-spacing: 0.06em; text-align: {% if is_arabic %}start{% else %}right{% endif %}; line-height: 1.5; }
+  .hw-{{ section.id }} .cc-dur span { display: block; color: var(--gold); font-size: 13px; margin-bottom: 2px; }
+
+  /* ── STYLE PAIR ── */
+  .hw-{{ section.id }} .hw-style-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .hw-{{ section.id }} .hw-style-card {
+    background: var(--glass); border: 1px solid var(--glass-b);
+    padding: 34px 30px; cursor: default; display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.65s ease, transform 0.65s ease, background 0.3s, border-color 0.3s;
+  }
+  .hw-{{ section.id }} .hw-style-card.visible { opacity: 1; transform: translateY(0); }
+  .hw-{{ section.id }} .hw-style-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
+  .hw-{{ section.id }} .hw-style-card.sage-bg { background: linear-gradient(135deg, var(--sage-dim) 0%, rgba(143,174,173,0.02) 100%); border-color: var(--sage-line); }
+  .hw-{{ section.id }} .hw-style-card.sage-bg:hover { background: linear-gradient(135deg, rgba(143,174,173,0.16) 0%, rgba(143,174,173,0.04) 100%); }
+  .hw-{{ section.id }} .sc-tag {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); margin-bottom: 10px;
+  }
+  .hw-{{ section.id }} .sc-tag.sage { color: var(--sage); }
+  .hw-{{ section.id }} .sc-title { font-family: var(--font-display); font-size: 26px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 5px; line-height: 1.15; }
+  .hw-{{ section.id }} .sc-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 12px; color: var(--gold); margin-bottom: 12px; opacity: 0.9; }
+  .hw-{{ section.id }} .sc-sub.sage { color: var(--sage); }
+  .hw-{{ section.id }} .sc-desc { font-size: 12px; line-height: 1.73; color: var(--white-60); margin-bottom: 22px; flex: 1; }
+  .hw-{{ section.id }} .sc-foot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--glass-b); padding-top: 14px; margin-top: auto; }
+  .hw-{{ section.id }} .sc-price { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--white); }
+  .hw-{{ section.id }} .sc-price sup { font-size: 11px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .hw-{{ section.id }} .sc-dur { font-size: 10px; color: var(--white-60); letter-spacing: 0.06em; text-align: {% if is_arabic %}start{% else %}right{% endif %}; line-height: 1.5; }
+  .hw-{{ section.id }} .hw-inquire {
+    display: inline-block; font-family: var(--font-main); font-size: 9px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.35em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--sage); border: 1px solid var(--sage-line); padding: 4px 14px; border-radius: 20px; margin-top: 4px;
+  }
+
+  /* ── FEATURE CARD ── */
+  .hw-{{ section.id }} .hw-feat {
+    position: relative; background: var(--glass); border: 1px solid var(--glass-b);
+    padding: 40px 46px; display: grid; grid-template-columns: 1fr auto;
+    gap: 40px; align-items: center; overflow: hidden; margin-bottom: 2px;
+    cursor: default; opacity: 0; transform: translateY(24px);
+    transition: opacity 0.75s ease, transform 0.75s ease, background 0.35s, border-color 0.35s;
+  }
+  .hw-{{ section.id }} .hw-feat.visible { opacity: 1; transform: translateY(0); }
+  .hw-{{ section.id }} .hw-feat:hover { background: rgba(255,255,255,0.09); border-color: var(--gold-line); }
+  .hw-{{ section.id }} .hw-feat.gold-bg { background: linear-gradient(135deg, rgba(201,169,110,0.12) 0%, rgba(201,169,110,0.03) 100%); border-color: var(--gold-line); }
+  .hw-{{ section.id }} .hw-feat.gold-bg::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
+  .hw-{{ section.id }} .fc-tag {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); margin-bottom: 10px;
+  }
+  .hw-{{ section.id }} .fc-title { font-family: var(--font-display); font-size: 30px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); line-height: 1.15; margin-bottom: 6px; }
+  .hw-{{ section.id }} .fc-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 13px; color: var(--gold); margin-bottom: 12px; opacity: 0.9; }
+  .hw-{{ section.id }} .fc-desc { font-size: 12.5px; line-height: 1.75; color: var(--white-60); max-width: 460px; }
+  .hw-{{ section.id }} .fc-right { text-align: {% if is_arabic %}start{% else %}right{% endif %}; flex-shrink: 0; }
+  .hw-{{ section.id }} .fc-label {
+    font-size: 9px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.35em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); margin-bottom: 5px;
+  }
+  .hw-{{ section.id }} .fc-price { font-family: var(--serif); font-size: 46px; font-weight: 300; color: var(--white); line-height: 1; }
+  .hw-{{ section.id }} .fc-price sup { font-size: 15px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .hw-{{ section.id }} .fc-dur { font-size: 10px; color: var(--white-60); margin-top: 8px; letter-spacing: 0.08em; }
+
+  /* ── BOTOX GRID ── */
+  .hw-{{ section.id }} .hw-botox-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .hw-{{ section.id }} .hw-botox-card {
+    position: relative; padding: 42px 34px 36px; overflow: hidden;
+    cursor: default; display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(26px);
+    transition: opacity 0.7s ease, transform 0.7s ease, background 0.4s;
+  }
+  .hw-{{ section.id }} .hw-botox-card.visible { opacity: 1; transform: translateY(0); }
+  .hw-{{ section.id }} .hw-botox-card.cold {
+    background: linear-gradient(135deg, var(--sage-dim) 0%, rgba(143,174,173,0.02) 100%);
+    border: 1px solid var(--sage-line);
+  }
+  .hw-{{ section.id }} .hw-botox-card.cold:hover { background: linear-gradient(135deg, rgba(143,174,173,0.16) 0%, rgba(143,174,173,0.05) 100%); border-color: rgba(143,174,173,0.5); }
+  .hw-{{ section.id }} .hw-botox-card.cold::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--sage) 50%, transparent 90%); }
+  .hw-{{ section.id }} .hw-botox-card.premium {
+    background: linear-gradient(135deg, rgba(201,169,110,0.13) 0%, rgba(201,169,110,0.03) 100%);
+    border: 1px solid var(--gold-line);
+  }
+  .hw-{{ section.id }} .hw-botox-card.premium:hover { background: linear-gradient(135deg, rgba(201,169,110,0.2) 0%, rgba(201,169,110,0.06) 100%); }
+  .hw-{{ section.id }} .hw-botox-card.premium::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
+  .hw-{{ section.id }} .hw-botox-bg {
+    position: absolute; bottom: 14px;
+    {% if is_arabic %}left{% else %}right{% endif %}: 20px;
+    font-family: var(--serif); font-size: 72px; font-weight: 300;
+    color: rgba(255,255,255,0.04); line-height: 1; user-select: none;
+  }
+  .hw-{{ section.id }} .bc-icon { font-size: 24px; margin-bottom: 16px; display: block; }
+  .hw-{{ section.id }} .bc-tag {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    margin-bottom: 10px;
+  }
+  .hw-{{ section.id }} .bc-tag.sage { color: var(--sage); }
+  .hw-{{ section.id }} .bc-tag.gold { color: var(--gold); }
+  .hw-{{ section.id }} .bc-title { font-family: var(--font-display); font-size: 26px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 5px; line-height: 1.15; }
+  .hw-{{ section.id }} .bc-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 12px; margin-bottom: 14px; opacity: 0.9; }
+  .hw-{{ section.id }} .bc-sub.sage { color: var(--sage); }
+  .hw-{{ section.id }} .bc-sub.gold { color: var(--gold); }
+  .hw-{{ section.id }} .bc-desc { font-size: 12px; line-height: 1.73; color: var(--white-60); margin-bottom: 26px; flex: 1; }
+  .hw-{{ section.id }} .bc-foot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: auto; }
+  .hw-{{ section.id }} .bc-price { font-family: var(--serif); font-size: 36px; font-weight: 300; color: var(--white); line-height: 1; }
+  .hw-{{ section.id }} .bc-price sup { font-size: 13px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .hw-{{ section.id }} .bc-dur { font-size: 10px; color: var(--white-60); text-align: {% if is_arabic %}start{% else %}right{% endif %}; letter-spacing: 0.06em; line-height: 1.5; }
+  .hw-{{ section.id }} .bc-dur span { display: block; font-size: 13px; margin-bottom: 2px; }
+  .hw-{{ section.id }} .bc-dur span.sage { color: var(--sage); }
+  .hw-{{ section.id }} .bc-dur span.gold { color: var(--gold); }
+
+  /* ── NOTICE ── */
+  .hw-{{ section.id }} .hw-notice {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: rgba(143,174,173,0.07); border: 1px solid var(--sage-line);
+    border-{% if is_arabic %}right{% else %}left{% endif %}: 3px solid var(--sage);
+    padding: 18px 22px; margin-top: 14px;
+    font-size: 12px; color: var(--white-60); line-height: 1.7;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .hw-{{ section.id }} .hw-notice.visible { opacity: 1; transform: translateY(0); }
+  .hw-{{ section.id }} .hw-notice-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── BOTTOM ── */
+  .hw-{{ section.id }} .hw-bottom { text-align: center; padding: 80px 30px 100px; position: relative; z-index: 1; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .hw-{{ section.id }} .hw-bottom.visible { opacity: 1; transform: translateY(0); }
+  .hw-{{ section.id }} .hw-bottom-line { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 30px; }
+  .hw-{{ section.id }} .hw-bottom-rule { width: 60px; height: 1px; background: var(--gold-line); }
+  .hw-{{ section.id }} .hw-bottom-diamond { color: var(--gold); font-size: 10px; }
+  .hw-{{ section.id }} .hw-bottom h2 { font-family: var(--font-display); font-size: clamp(28px, 5vw, 52px); font-weight: 300; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; color: var(--white); line-height: 1.2; margin-bottom: 16px; }
+  .hw-{{ section.id }} .hw-bottom p { font-size: 12px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.2em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-60); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 920px) {
+    .hw-{{ section.id }} .hw-cut-trio { grid-template-columns: 1fr 1fr; }
+    .hw-{{ section.id }} .hw-cut-trio > *:last-child { grid-column: 1 / -1; max-width: 420px; }
+    .hw-{{ section.id }} .hw-style-pair { grid-template-columns: 1fr; }
+    .hw-{{ section.id }} .hw-botox-grid { grid-template-columns: 1fr; }
+    .hw-{{ section.id }} .hw-feat { grid-template-columns: 1fr; }
+    .hw-{{ section.id }} .fc-right { text-align: start; }
+  }
+  @media (max-width: 600px) {
+    .hw-{{ section.id }} .hw-cut-trio { grid-template-columns: 1fr; }
+    .hw-{{ section.id }} .hw-cut-trio > *:last-child { grid-column: auto; max-width: none; }
+  }
+</style>
+
+<!-- ════════ HERO ════════ -->
+<section class="hw-hero">
+  <p class="hw-eyebrow">{% if is_arabic %}{{ section.settings.eyebrow_ar }}{% else %}{{ section.settings.eyebrow_en }}{% endif %}</p>
+  <h1 class="hw-title">
+    {% if is_arabic %}شعركِ،<br><span>في أبهى صورة</span>
+    {% else %}Your Hair,<br><span>Perfected</span>
+    {% endif %}
+  </h1>
+  <p class="hw-desc">{% if is_arabic %}خدمات شعر احترافية · خدمة منزلية{% else %}Professional Hair Services · Home Service{% endif %}</p>
+  <div class="hw-divider"></div>
+</section>
+
+<!-- ════════ CUTS & TRIMS ════════ -->
+<section class="hw-section"><div class="hw-inner">
+  <div class="hw-label" data-hw-reveal>
+    <span class="hw-label-text">{% if is_arabic %}القص والتشذيب{% else %}Cuts & Trims{% endif %}</span>
+    <div class="hw-label-line"></div>
+  </div>
+
+  <div class="hw-cut-trio">
+
+    <!-- Fringe Cut -->
+    <div class="hw-cut-card" data-hw-reveal data-delay="0">
+      <span class="cc-icon">✂️</span>
+      <p class="cc-tag">{% if is_arabic %}قص · الغرة{% else %}Cut · Fringe{% endif %}</p>
+      <h3 class="cc-title">{% if is_arabic %}قص الغرة{% else %}Fringe Cut{% endif %}</h3>
+      <p class="cc-sub">{% if is_arabic %}جددي مظهركِ بغرة مثالية{% else %}Refresh your look with a perfect fringe{% endif %}</p>
+      <p class="cc-desc">{% if is_arabic %}خدمة قص دقيقة مصممة لتشكيل وتجديد غرتك مع الحفاظ على تسريحة شعرك العامة.{% else %}A precise cutting service designed to shape and refresh your bangs while maintaining your overall hairstyle.{% endif %}</p>
+      <div class="cc-foot">
+        <div class="cc-price"><sup>AED </sup>80</div>
+        <div class="cc-dur"><span>◷</span>{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div>
+      </div>
+    </div>
+
+    <!-- Hair Trim -->
+    <div class="hw-cut-card" data-hw-reveal data-delay="80">
+      <span class="cc-icon">✂️</span>
+      <p class="cc-tag">{% if is_arabic %}قص · تشذيب{% else %}Cut · Trim{% endif %}</p>
+      <h3 class="cc-title">{% if is_arabic %}تشذيب الشعر{% else %}Hair Trim{% endif %}</h3>
+      <p class="cc-sub">{% if is_arabic %}أطراف صحية، شعر جميل{% else %}Healthy ends, beautiful hair{% endif %}</p>
+      <p class="cc-desc">{% if is_arabic %}يُزيل الأطراف المتقصفة بلطف ويُعيد تشكيل حواف شعركِ للحفاظ على صحته وشكله العام.{% else %}Gently removes split ends and reshapes the edges of your hair to maintain its health and overall shape.{% endif %}</p>
+      <div class="cc-foot">
+        <div class="cc-price"><sup>AED </sup>126</div>
+        <div class="cc-dur"><span>◷</span>{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div>
+      </div>
+    </div>
+
+    <!-- Haircut — Featured -->
+    <div class="hw-cut-card featured" data-hw-reveal data-delay="160">
+      <span class="hw-cut-bg">02</span>
+      <span class="cc-icon">✂️</span>
+      <p class="cc-tag">{% if is_arabic %}قص · خدمة كاملة{% else %}Cut · Full Service{% endif %}</p>
+      <h3 class="cc-title">{% if is_arabic %}قص الشعر{% else %}Haircut{% endif %}</h3>
+      <p class="cc-sub">{% if is_arabic %}قصة تناسبكِ{% else %}A cut that suits you{% endif %}</p>
+      <p class="cc-desc">{% if is_arabic %}خدمة قص شعر احترافية مصممة وفق شكل وجهكِ ونوع شعركِ وأسلوبكِ الشخصي — لإبراز أفضل ما فيكِ.{% else %}A professional hair-cutting service tailored to your face shape, hair type, and personal style — crafted to bring out the best in your look.{% endif %}</p>
+      <div class="cc-foot">
+        <div class="cc-price"><sup>AED </sup>168</div>
+        <div class="cc-dur"><span>◷</span>{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- ════════ STYLING ════════ -->
+<section class="hw-section"><div class="hw-inner">
+  <div class="hw-label" data-hw-reveal>
+    <span class="hw-label-text">{% if is_arabic %}التصفيف{% else %}Styling{% endif %}</span>
+    <div class="hw-label-line"></div>
+  </div>
+
+  <div class="hw-style-pair">
+
+    <!-- Blow Dry -->
+    <div class="hw-style-card" data-hw-reveal data-delay="0">
+      <p class="sc-tag">{% if is_arabic %}تصفيف · مجفف{% else %}Styling · Blow Dry{% endif %}</p>
+      <h3 class="sc-title">{% if is_arabic %}تجفيف الشعر{% else %}Blow Dry{% endif %}</h3>
+      <p class="sc-sub">{% if is_arabic %}ناعم، مصفف، جاهز{% else %}Smooth, styled, ready{% endif %}</p>
+      <p class="sc-desc">{% if is_arabic %}خدمة تصفيف شعر احترافية تُجفف شعركِ وتُنعمه باستخدام حرارة مضبوطة وتقنيات خبيرة — تتركك مصقولة وجاهزة للانطلاق.{% else %}A professional hair styling service that dries and smooths your hair using controlled heat and expert techniques — leaving you polished and ready to go.{% endif %}</p>
+      <div class="sc-foot">
+        <div><span class="hw-inquire">{% if is_arabic %}السعر عند الطلب{% else %}Price on request{% endif %}</span></div>
+        <div class="sc-dur">{% if is_arabic %}يختلف حسب الطول{% else %}Varies by length{% endif %}</div>
+      </div>
+    </div>
+
+    <!-- Wavy / Curly Add-On -->
+    <div class="hw-style-card sage-bg" data-hw-reveal data-delay="100">
+      <p class="sc-tag sage">{% if is_arabic %}تصفيف · إضافة{% else %}Styling · Add-On{% endif %}</p>
+      <h3 class="sc-title">{% if is_arabic %}إضافة تموج / تجعيد{% else %}Wavy / Curly Add-On{% endif %}</h3>
+      <p class="sc-sub sage">{% if is_arabic %}أضيفي الأمواج، ارفعي مستوى إطلالتك{% else %}Add waves, elevate your style{% endif %}</p>
+      <p class="sc-desc">{% if is_arabic %}تُعزز عملية التجفيف بموجات ناعمة أو تجعيدات محددة لمزيد من الحركة والأسلوب — اللمسة الأخيرة المثالية لأي إطلالة.{% else %}Enhances your blow dry with soft waves or defined curls for added movement and style — the perfect finishing touch to any look.{% endif %}</p>
+      <div class="sc-foot">
+        <div class="sc-price"><sup>AED </sup>105</div>
+        <div class="sc-dur">{% if is_arabic %}40 دقيقة{% else %}40 min{% endif %}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Curly Iron — feature wide -->
+  <div class="hw-feat gold-bg" data-hw-reveal style="margin-top:2px">
+    <div>
+      <p class="fc-tag">{% if is_arabic %}تصفيف · تجعيد{% else %}Styling · Curls{% endif %}</p>
+      <h3 class="fc-title">{% if is_arabic %}مكواة التجعيد{% else %}Curly Iron{% endif %}</h3>
+      <p class="fc-sub">{% if is_arabic %}تجعيدات محددة، أسلوب يدوم{% else %}Defined curls, lasting style{% endif %}</p>
+      <p class="fc-desc">{% if is_arabic %}تُنشئ تجعيدات محددة باستخدام مكواة تجعيد احترافية لإنهاء ناعم وطويل الأمد — سواء أردتِ موجات شاطئية فضفاضة أو تجعيدات جلامورية ضيقة.{% else %}Creates defined curls using a professional curling iron for a smooth, long-lasting finish — whether you want loose beachy waves or tight glamorous curls.{% endif %}</p>
+    </div>
+    <div class="fc-right">
+      <div class="fc-label">{% if is_arabic %}سعر الخدمة{% else %}Service Price{% endif %}</div>
+      <div class="fc-price"><sup>AED </sup>210</div>
+      <div class="fc-dur">◷ {% if is_arabic %}45 دقيقة{% else %}45 min{% endif %}</div>
+    </div>
+  </div>
+
+</div></section>
+
+<!-- ════════ COLOR ════════ -->
+<section class="hw-section"><div class="hw-inner">
+  <div class="hw-label" data-hw-reveal>
+    <span class="hw-label-text">{% if is_arabic %}الصبغة{% else %}Color{% endif %}</span>
+    <div class="hw-label-line"></div>
+  </div>
+
+  <!-- Root Color -->
+  <div class="hw-feat" data-hw-reveal style="margin-bottom:2px">
+    <div>
+      <p class="fc-tag">{% if is_arabic %}صبغة · الجذور{% else %}Color · Roots{% endif %}</p>
+      <h3 class="fc-title">{% if is_arabic %}صبغة الجذور{% else %}Root Color{% endif %}</h3>
+      <p class="fc-sub">{% if is_arabic %}جذور منتعشة، لون مثالي{% else %}Fresh roots, flawless color{% endif %}</p>
+      <p class="fc-desc">{% if is_arabic %}تُغطي الشعر الرمادي وتمزج النمو الجديد بسلاسة مع لون شعركِ الحالي لنتيجة منتعشة ومصقولة.{% else %}Covers grey hair and blends regrowth seamlessly with your existing hair color for a fresh, polished result.{% endif %}</p>
+    </div>
+    <div class="fc-right">
+      <div class="fc-label">{% if is_arabic %}سعر الخدمة{% else %}Service Price{% endif %}</div>
+      <div class="fc-price"><sup>AED </sup>263</div>
+      <div class="fc-dur">◷ {% if is_arabic %}ساعة و30 دقيقة{% else %}1 hr 30 min{% endif %}</div>
+    </div>
+  </div>
+
+  <!-- Full Color -->
+  <div class="hw-feat gold-bg" data-hw-reveal>
+    <div>
+      <p class="fc-tag">{% if is_arabic %}صبغة · كاملة{% else %}Color · Full{% endif %}</p>
+      <h3 class="fc-title">{% if is_arabic %}صبغة كاملة{% else %}Full Color{% endif %}</h3>
+      <p class="fc-sub">{% if is_arabic %}لون غني، تغطية شاملة{% else %}Rich color, complete coverage{% endif %}</p>
+      <p class="fc-desc">{% if is_arabic %}خدمة تلوين شعر كاملة تُطبق لوناً واحداً من الجذور إلى الأطراف لنتيجة متساوية وغنية ومشبعة بالجمال.{% else %}A complete hair coloring service that applies one shade from roots to ends for an even, rich, and beautifully saturated result.{% endif %}</p>
+    </div>
+    <div class="fc-right">
+      <div class="fc-label">{% if is_arabic %}سعر الخدمة{% else %}Service Price{% endif %}</div>
+      <div class="fc-price"><sup>AED </sup>270</div>
+      <div class="fc-dur">◷ {% if is_arabic %}ساعة – ساعتان و30 دقيقة{% else %}1 hr – 2 hr 30 min{% endif %}</div>
+    </div>
+  </div>
+
+</div></section>
+
+<!-- ════════ HAIR REPAIR & TREATMENT ════════ -->
+<section class="hw-section"><div class="hw-inner">
+  <div class="hw-label" data-hw-reveal>
+    <span class="hw-label-text">{% if is_arabic %}إصلاح الشعر والعلاج{% else %}Hair Repair & Treatment{% endif %}</span>
+    <div class="hw-label-line"></div>
+  </div>
+
+  <div class="hw-botox-grid">
+
+    <!-- Cold Botox -->
+    <div class="hw-botox-card cold" data-hw-reveal data-delay="0">
+      <span class="hw-botox-bg">{% if is_arabic %}بارد{% else %}cold{% endif %}</span>
+      <span class="bc-icon">❄️</span>
+      <p class="bc-tag sage">{% if is_arabic %}علاج · بوتوكس بارد{% else %}Treatment · Cold Botox{% endif %}</p>
+      <h3 class="bc-title">{% if is_arabic %}بوتوكس بارد{% else %}Cold Botox{% endif %}</h3>
+      <p class="bc-sub sage">{% if is_arabic %}أعيدي الحياة لشعركِ{% else %}Bring your hair back to life{% endif %}</p>
+      <p class="bc-desc">{% if is_arabic %}علاج شعر عميق مصمم لإصلاح الشعر التالف أو الجاف أو المجعد دون حرارة شديدة — يُعيد النعومة والبريق من خلال مكونات مغذية لطيفة.{% else %}A deep hair treatment designed to repair damaged, dry, or frizzy hair without heavy heat — restoring softness and shine through gentle, nourishing ingredients.{% endif %}</p>
+      <div class="bc-foot">
+        <div class="bc-price"><sup>AED </sup>420</div>
+        <div class="bc-dur"><span class="sage">◷</span>{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div>
+      </div>
+    </div>
+
+    <!-- Botox Short Hair -->
+    <div class="hw-botox-card premium" data-hw-reveal data-delay="100">
+      <span class="hw-botox-bg">✦</span>
+      <span class="bc-icon">✨</span>
+      <p class="bc-tag gold">{% if is_arabic %}علاج · شعر قصير{% else %}Treatment · Short Hair{% endif %}</p>
+      <h3 class="bc-title">{% if is_arabic %}بوتوكس الشعر<br>للشعر القصير{% else %}Botox Treatment<br>Short Hair{% endif %}</h3>
+      <p class="bc-sub gold">{% if is_arabic %}شعر ناعم وصحي المظهر{% else %}Smooth, healthy-looking hair{% endif %}</p>
+      <p class="bc-desc">{% if is_arabic %}علاج عميق لإصلاح الشعر القصير مصمم لاستعادة الرطوبة والقوة والبريق — يتركه أكثر نعومة وصحة وحيوية.{% else %}A deep hair repair treatment designed to restore moisture, strength, and shine to short hair — leaving it visibly smoother, healthier, and revived.{% endif %}</p>
+      <div class="bc-foot">
+        <div><span class="hw-inquire" style="border-color:var(--gold-line);color:var(--gold)">{% if is_arabic %}السعر عند الطلب{% else %}Price on request{% endif %}</span></div>
+        <div class="bc-dur"><span class="gold">◷</span>—</div>
+      </div>
+    </div>
+
+    <!-- Botox Medium Length -->
+    <div class="hw-botox-card premium" data-hw-reveal data-delay="200">
+      <span class="hw-botox-bg">✦</span>
+      <span class="bc-icon">✨</span>
+      <p class="bc-tag gold">{% if is_arabic %}علاج · شعر متوسط{% else %}Treatment · Medium Length{% endif %}</p>
+      <h3 class="bc-title">{% if is_arabic %}بوتوكس الشعر<br>للشعر المتوسط{% else %}Botox Treatment<br>Medium Length{% endif %}</h3>
+      <p class="bc-sub gold">{% if is_arabic %}شعر ناعم وصحي المظهر{% else %}Smooth, healthy-looking hair{% endif %}</p>
+      <p class="bc-desc">{% if is_arabic %}علاج مكثف لإصلاح الشعر متوسط الطول يُعيد القوة والرطوبة والبريق — يُنعم التجعد بشكل واضح ويُحيي حيوية شعركِ الطبيعية.{% else %}An intensive hair repair treatment for medium-length hair that restores strength, moisture, and shine — visibly smoothing frizz and reviving your hair's natural vitality.{% endif %}</p>
+      <div class="bc-foot">
+        <div class="bc-price"><sup>AED </sup>735</div>
+        <div class="bc-dur"><span class="gold">◷</span>{% if is_arabic %}ساعتان و30 دقيقة{% else %}2 hr 30 min{% endif %}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Notice -->
+  <div class="hw-notice" data-hw-reveal>
+    <span class="hw-notice-icon">💡</span>
+    <span>{% if is_arabic %}علاجات بوتوكس الشعر هي خدمات ترطيب عميقة تُصلح ألياف الشعر من الداخل — وليست علاجاً كيميائياً. تدوم النتائج من 2 إلى 4 أشهر وفقاً لنوع الشعر وروتين العناية بعد العلاج.{% else %}Hair Botox treatments are deep conditioning services that restore the hair fiber from within — not a chemical treatment. Results last 2–4 months depending on hair type and aftercare routine.{% endif %}</span>
+  </div>
+
+</div></section>
+
+<!-- ════════ BOTTOM ════════ -->
+<div class="hw-bottom" data-hw-reveal>
+  <div class="hw-bottom-line">
+    <div class="hw-bottom-rule"></div>
+    <span class="hw-bottom-diamond">◆</span>
+    <div class="hw-bottom-rule"></div>
+  </div>
+  <h2>{% if is_arabic %}الشعر الجميل ليس<br>رفاهية — بل حق{% else %}Great hair is not<br><em>a luxury — it's a right</em>{% endif %}</h2>
+  <p>{% if is_arabic %}جميع الخدمات متاحة في منزلكِ في جميع أنحاء الإمارات{% else %}All services available at your home across the UAE{% endif %}</p>
+</div>
+
+</div>
+
+<script>
+  (function() {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const el = e.target, delay = parseInt(el.dataset.delay || 0);
+          setTimeout(() => el.classList.add('visible'), delay);
+          obs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.hw-{{ section.id }} [data-hw-reveal]').forEach(el => obs.observe(el));
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hair Care Women",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🎨 Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#405264"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Gold accent",
+      "default": "#c9a96e"
+    },
+    {
+      "type": "color",
+      "id": "sage_color",
+      "label": "Sage / teal accent",
+      "default": "#8faead"
+    },
+    {
+      "type": "header",
+      "content": "🇬🇧 Hero — English"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_en",
+      "label": "Eyebrow text (EN)",
+      "default": "Belladona Care · Dubai"
+    },
+    {
+      "type": "header",
+      "content": "🇸🇦 Hero — العربية"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_ar",
+      "label": "النص الصغير فوق العنوان (AR)",
+      "default": "بيلادونا كير · دبي"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hair Care Women"
+    }
+  ]
+}
+{% endschema %}

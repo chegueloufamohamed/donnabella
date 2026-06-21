@@ -1,0 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "marketing-agency",
+  "sections": {
+    "header": {
+      "type": "marketing-agency-header",
+      "settings": {}
+    },
+    "policy": {
+      "type": "marketing-agency-policy",
+      "settings": {}
+    },
+    "footer": {
+      "type": "marketing-agency-footer",
+      "settings": {}
+    }
+  },
+  "order": [
+    "header",
+    "policy",
+    "footer"
+  ]
+}

@@ -1,0 +1,211 @@
+{% comment %}
+  Simple Marquee Section
+  NO glassy code - relies on header CSS to apply the effect
+  Just paste this as a new section
+{% endcomment %}
+
+<section class="bd-marquee">
+  <div class="bd-marquee__inner">
+    <div class="bd-marquee__track bd-marquee__track--{{ section.settings.direction }}">
+
+      {% assign items = section.settings.items | strip %}
+      {% if items == blank %}
+        {% assign items = "Refined Beauty Rituals, Expert Hair Transformations, Sculpted Brows and Lash Lifts, Precision Manicure and Pedicure, Signature Relaxing Massage" %}
+      {% endif %}
+
+      {% for r in (1..2) %}
+        <div class="bd-marquee__content">
+          {% assign list = items | split: "," %}
+          {% for it in list %}
+            <span class="bd-marquee__item">{{ it | strip }}</span>
+            {% unless forloop.last %}
+              <span class="bd-marquee__sep">{{ section.settings.separator }}</span>
+            {% endunless %}
+          {% endfor %}
+          <span class="bd-marquee__sep">{{ section.settings.separator }}</span>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .bd-marquee {
+    position: relative;
+    width: 100%;
+    height: {{ section.settings.section_height }}px;
+    overflow: hidden;
+    /* Glassy effect applied by header CSS */
+  }
+
+  .bd-marquee__inner {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    overflow: hidden;
+  }
+
+  .bd-marquee__track {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .bd-marquee__content {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: marquee-scroll {{ section.settings.speed }}s linear infinite;
+  }
+
+  @keyframes marquee-scroll {
+    {% if section.settings.direction == 'rtl' %}
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+    {% else %}
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+    {% endif %}
+  }
+
+  .bd-marquee__item,
+  .bd-marquee__sep {
+    color: {{ section.settings.text_color }};
+    font-size: {{ section.settings.font_size }}px;
+    font-weight: {{ section.settings.font_weight }};
+    letter-spacing: {{ section.settings.letter_spacing }}px;
+  }
+
+  .bd-marquee__sep {
+    margin: 0 14px;
+    opacity: 0.7;
+  }
+
+  @media (hover: hover) {
+    .bd-marquee:hover .bd-marquee__content {
+      animation-duration: {{ section.settings.hover_speed }}s;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .bd-marquee {
+      height: {{ section.settings.section_height_mobile }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Marquee Simple",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "items",
+      "label": "Services (comma-separated)",
+      "default": "Refined Beauty Rituals, Expert Hair Transformations, Sculpted Brows and Lash Lifts"
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separator",
+      "default": "•"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Direction",
+      "default": "rtl",
+      "options": [
+        { "value": "rtl", "label": "Right to Left" },
+        { "value": "ltr", "label": "Left to Right" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Speed",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "default": 16,
+      "unit": "s"
+    },
+    {
+      "type": "range",
+      "id": "hover_speed",
+      "label": "Hover speed",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "default": 40,
+      "unit": "s"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Height",
+      "min": 40,
+      "max": 180,
+      "step": 5,
+      "default": 85,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "section_height_mobile",
+      "label": "Height (mobile)",
+      "min": 40,
+      "max": 160,
+      "step": 5,
+      "default": 70,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 42,
+      "step": 1,
+      "default": 18,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "default": "600",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee Simple"
+    }
+  ]
+}
+{% endschema %}

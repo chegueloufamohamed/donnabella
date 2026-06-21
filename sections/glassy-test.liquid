@@ -1,0 +1,142 @@
+{% comment %}
+  GLASSY TEST - FIXED STRUCTURE
+  Background image in separate layer so backdrop-filter can blur it!
+{% endcomment %}
+
+<style>
+  /* Outer container with background image */
+  .glassy-test-container-{{ section.id }} {
+    position: relative !important;
+    min-height: 300px !important;
+    overflow: hidden !important;
+    
+    {% if section.settings.bg_image %}
+    background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    {% endif %}
+  }
+
+  /* Glassy layer sits ON TOP of background */
+  .glassy-test-{{ section.id }} {
+    position: relative !important;
+    padding: 80px !important;
+    text-align: center !important;
+    min-height: 300px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    {% assign bg = section.settings.bg_color %}
+    {% assign r = bg | remove: '#' | slice: 0, 2 | times: 1 %}
+    {% assign g = bg | remove: '#' | slice: 2, 2 | times: 1 %}
+    {% assign b = bg | remove: '#' | slice: 4, 2 | times: 1 %}
+    {% assign r_dec = r | divided_by: 255.0 | times: 255 | round %}
+    {% assign g_dec = g | divided_by: 255.0 | times: 255 | round %}
+    {% assign b_dec = b | divided_by: 255.0 | times: 255 | round %}
+    background: rgba({{ r_dec }}, {{ g_dec }}, {{ b_dec }}, {{ section.settings.bg_opacity | divided_by: 100.0 }}) !important;
+    
+    backdrop-filter: blur({{ section.settings.blur }}px) !important;
+    -webkit-backdrop-filter: blur({{ section.settings.blur }}px) !important;
+  }
+
+  .glassy-test-content-{{ section.id }} {
+    max-width: 600px !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  .glassy-test-title-{{ section.id }} {
+    font-size: 48px !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .glassy-test-text-{{ section.id }} {
+    font-size: 18px !important;
+    color: #000000 !important;
+    line-height: 1.6 !important;
+  }
+</style>
+
+<section class="glassy-test-container-{{ section.id }}">
+  <div class="glassy-test-{{ section.id }}">
+    <div class="glassy-test-content-{{ section.id }}">
+      <h2 class="glassy-test-title-{{ section.id }}">{{ section.settings.title }}</h2>
+      <p class="glassy-test-text-{{ section.id }}">{{ section.settings.description }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Glassy Test",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Glassy Effect (Header Style)"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "bg_opacity",
+      "label": "Background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "blur",
+      "label": "Blur amount",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Background Image (Optional)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add an image that will be blurred by the glassy effect - just like content under your header!"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Glassy Effect Test"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "This has the same glassy blur as your header!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Glassy Test"
+    }
+  ]
+}
+{% endschema %}

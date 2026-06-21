@@ -1,0 +1,599 @@
+{% comment %}
+  Collections Slider Section
+  Arabic / English bilingual — auto-switches via request.locale
+  Background: solid section bg color + solid frame rectangle around slider
+{% endcomment %}
+
+{% comment %} ============================================================
+  LANGUAGE DETECTION
+================================================================ {% endcomment %}
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+{% if is_arabic %}
+  {% assign active_title       = section.settings.title_ar       | default: section.settings.title %}
+  {% assign active_description = section.settings.description_ar | default: section.settings.description %}
+{% else %}
+  {% assign active_title       = section.settings.title %}
+  {% assign active_description = section.settings.description %}
+{% endif %}
+
+{% comment %} Google Fonts — conditionally load selected fonts {% endcomment %}
+{% assign needs_google_fonts = false %}
+{% assign google_fonts_list = '' %}
+{% if section.settings.title_font == 'Merriweather' or section.settings.card_text_font == 'Merriweather' %}{% assign needs_google_fonts = true %}{% assign google_fonts_list = google_fonts_list | append: 'Merriweather:wght@300;400;700&' %}{% endif %}
+{% if section.settings.title_font == 'Playfair Display' or section.settings.card_text_font == 'Playfair Display' %}{% assign needs_google_fonts = true %}{% assign google_fonts_list = google_fonts_list | append: 'Playfair+Display:wght@400;600;700&' %}{% endif %}
+{% if section.settings.title_font == 'Lato' or section.settings.card_text_font == 'Lato' %}{% assign needs_google_fonts = true %}{% assign google_fonts_list = google_fonts_list | append: 'Lato:wght@300;400;700&' %}{% endif %}
+{% if section.settings.title_font == 'Montserrat' or section.settings.card_text_font == 'Montserrat' %}{% assign needs_google_fonts = true %}{% assign google_fonts_list = google_fonts_list | append: 'Montserrat:wght@300;400;600;700&' %}{% endif %}
+{% if section.settings.title_font == 'Raleway' or section.settings.card_text_font == 'Raleway' %}{% assign needs_google_fonts = true %}{% assign google_fonts_list = google_fonts_list | append: 'Raleway:wght@300;400;600;700&' %}{% endif %}
+{% if section.settings.title_font == 'Nunito' or section.settings.card_text_font == 'Nunito' %}{% assign needs_google_fonts = true %}{% assign google_fonts_list = google_fonts_list | append: 'Nunito:wght@300;400;600;700&' %}{% endif %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{% if needs_google_fonts %}
+  <link href="https://fonts.googleapis.com/css2?family={{ google_fonts_list }}family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+{% else %}
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+{% endif %}
+
+<style>
+  /* ── Section: solid background color ── */
+  .cs-section-{{ section.id }} {
+    background-color: {{ section.settings.background_color }} !important;
+    padding: {{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px !important;
+    width: 100% !important;
+  }
+
+  /* ── Outer container ── */
+  .cs-container-{{ section.id }} {
+    max-width: {{ section.settings.container_width }}px !important;
+    margin: 0 auto !important;
+    padding: 0 30px !important;
+  }
+
+  /* ── Frame: solid color rectangle holding title + slider ── */
+  .cs-frame-{{ section.id }} {
+    background-color: {{ section.settings.frame_color }} !important;
+    border-radius: {{ section.settings.frame_radius }}px !important;
+    padding: {{ section.settings.frame_padding }}px !important;
+  }
+
+  /* ── Header ── */
+  .cs-header-{{ section.id }} {
+    text-align: {{ section.settings.title_alignment }} !important;
+    margin-bottom: {{ section.settings.title_margin }}px !important;
+    {% if is_arabic %}direction: rtl !important;{% endif %}
+  }
+
+  .cs-title-{{ section.id }} {
+    font-size: {{ section.settings.title_size }}px !important;
+    font-weight: {{ section.settings.title_weight }} !important;
+    color: {{ section.settings.title_color }} !important;
+    margin: 0 0 {{ section.settings.description_gap }}px !important;
+    line-height: 1.2 !important;
+    {% if is_arabic %}
+      font-family: 'Cairo', sans-serif !important;
+      letter-spacing: 0 !important;
+    {% else %}
+      font-family: '{{ section.settings.title_font }}', {{ section.settings.title_font_fallback }}, sans-serif !important;
+    {% endif %}
+  }
+
+  .cs-description-{{ section.id }} {
+    font-size: {{ section.settings.description_size }}px !important;
+    font-weight: {{ section.settings.description_weight }} !important;
+    color: {{ section.settings.description_color }} !important;
+    line-height: {{ section.settings.description_line_height | divided_by: 10.0 }} !important;
+    max-width: {{ section.settings.description_max_width }}px !important;
+    margin: 0 auto !important;
+    {% if section.settings.title_alignment == 'left' %}margin-left: 0 !important;{% elsif section.settings.title_alignment == 'right' %}margin-right: 0 !important; margin-left: auto !important;{% endif %}
+    {% if is_arabic %}
+      font-family: 'Tajawal', sans-serif !important;
+      letter-spacing: 0 !important;
+    {% else %}
+      font-family: '{{ section.settings.description_font }}', {{ section.settings.description_font_fallback }}, sans-serif !important;
+    {% endif %}
+  }
+
+  /* ── Slider wrapper (holds arrows + scroll track) ── */
+  .cs-slider-wrapper-{{ section.id }} {
+    position: relative !important;
+    padding: 0 60px !important;
+  }
+
+  .cs-slider-{{ section.id }} {
+    display: flex !important;
+    gap: {{ section.settings.card_gap }}px !important;
+    overflow-x: auto !important;
+    scroll-behavior: smooth !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    cursor: grab !important;
+    user-select: none !important;
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
+    {% if is_arabic %}direction: rtl !important;{% endif %}
+  }
+
+  .cs-slider-{{ section.id }}.active { cursor: grabbing !important; }
+  .cs-slider-{{ section.id }}::-webkit-scrollbar { display: none !important; }
+
+  /* ── Cards ── */
+  .cs-card-{{ section.id }} {
+    flex: 0 0 calc((100% - ({{ section.settings.cards_per_row | minus: 1 }} * {{ section.settings.card_gap }}px)) / {{ section.settings.cards_per_row }}) !important;
+    position: relative !important;
+    border-radius: {{ section.settings.card_radius }}px !important;
+    overflow: hidden !important;
+    height: {{ section.settings.card_height }}px !important;
+    cursor: pointer !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    {% if section.settings.card_shadow %}box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;{% endif %}
+  }
+
+  .cs-card-{{ section.id }}:hover {
+    transform: translateY(-8px) !important;
+    {% if section.settings.card_shadow %}box-shadow: 0 8px 30px rgba(0,0,0,0.25) !important;{% endif %}
+  }
+
+  .cs-card-img-{{ section.id }} {
+    width: 100% !important; height: 100% !important;
+    position: absolute !important; top: 0 !important; left: 0 !important;
+  }
+
+  .cs-card-img-{{ section.id }} img {
+    width: 100% !important; height: 100% !important;
+    object-fit: cover !important; display: block !important;
+    transition: transform 0.5s ease !important;
+    -webkit-user-drag: none !important;
+  }
+
+  .cs-card-{{ section.id }}:hover .cs-card-img-{{ section.id }} img {
+    transform: scale(1.1) !important;
+  }
+
+  .cs-card-overlay-{{ section.id }} {
+    position: absolute !important;
+    bottom: 0 !important; left: 0 !important; right: 0 !important;
+    padding: {{ section.settings.card_text_padding }}px !important;
+    background: linear-gradient(to top, rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }}), transparent) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    {% if is_arabic %}direction: rtl !important; flex-direction: row-reverse !important;{% endif %}
+  }
+
+  .cs-card-text-{{ section.id }} {
+    font-size: {{ section.settings.card_text_size }}px !important;
+    font-weight: {{ section.settings.card_text_weight }} !important;
+    color: {{ section.settings.card_text_color }} !important;
+    line-height: 1.3 !important;
+    {% if is_arabic %}
+      font-family: 'Cairo', sans-serif !important;
+      letter-spacing: 0 !important;
+      text-align: right !important;
+    {% else %}
+      font-family: '{{ section.settings.card_text_font }}', {{ section.settings.card_text_font_fallback }}, sans-serif !important;
+    {% endif %}
+  }
+
+  .cs-card-arrow-{{ section.id }} {
+    width: 40px !important; height: 40px !important;
+    border-radius: 50% !important;
+    background: {{ section.settings.card_arrow_bg }} !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    flex-shrink: 0 !important;
+    transition: transform 0.3s ease !important;
+  }
+
+  .cs-card-{{ section.id }}:hover .cs-card-arrow-{{ section.id }} {
+    transform: translateX({% if is_arabic %}-5px{% else %}5px{% endif %}) !important;
+  }
+
+  .cs-card-arrow-{{ section.id }} svg {
+    width: 20px !important; height: 20px !important;
+    fill: {{ section.settings.card_arrow_color }} !important;
+    {% if is_arabic %}transform: scaleX(-1) !important;{% endif %}
+  }
+
+  /* ── Navigation arrows ── */
+  .cs-nav-{{ section.id }} {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 50px !important; height: 50px !important;
+    border-radius: 50% !important;
+    background: {{ section.settings.nav_arrow_bg }} !important;
+    border: none !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    cursor: pointer !important;
+    z-index: 10 !important;
+    transition: all 0.3s ease !important;
+    {% if section.settings.nav_arrow_shadow %}box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;{% endif %}
+  }
+
+  .cs-nav-{{ section.id }}:hover {
+    background: {{ section.settings.nav_arrow_hover_bg }} !important;
+    transform: translateY(-50%) scale(1.1) !important;
+  }
+
+  {% if is_arabic %}
+  .cs-nav-{{ section.id }}.prev { right: 0 !important; left: auto !important; }
+  .cs-nav-{{ section.id }}.next { left: 0 !important; right: auto !important; }
+  .cs-nav-{{ section.id }}.prev svg { transform: scaleX(-1) !important; }
+  .cs-nav-{{ section.id }}.next svg { transform: scaleX(-1) !important; }
+  {% else %}
+  .cs-nav-{{ section.id }}.prev { left: 0 !important; }
+  .cs-nav-{{ section.id }}.next { right: 0 !important; }
+  {% endif %}
+
+  .cs-nav-{{ section.id }} svg {
+    width: 24px !important; height: 24px !important;
+    fill: {{ section.settings.nav_arrow_color }} !important;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .cs-card-{{ section.id }} { flex: 0 0 calc((100% - {{ section.settings.card_gap }}px) / 2) !important; }
+    .cs-slider-wrapper-{{ section.id }} { padding: 0 50px !important; }
+    .cs-nav-{{ section.id }} { width: 40px !important; height: 40px !important; }
+    .cs-title-{{ section.id }} { font-size: {{ section.settings.title_size | times: 0.8 | round }}px !important; }
+    .cs-description-{{ section.id }} { font-size: {{ section.settings.description_size | times: 0.9 | round }}px !important; }
+    .cs-frame-{{ section.id }} { padding: {{ section.settings.frame_padding | divided_by: 2 | round }}px !important; }
+  }
+
+  @media (max-width: 480px) {
+    .cs-card-{{ section.id }} { flex: 0 0 80% !important; }
+  }
+</style>
+
+<section class="cs-section-{{ section.id }}" dir="{{ text_dir }}">
+  <div class="cs-container-{{ section.id }}">
+
+    {% comment %} ── Frame rectangle ── {% endcomment %}
+    <div class="cs-frame-{{ section.id }}">
+
+      {% comment %} Header: title + description inside the frame {% endcomment %}
+      {% if active_title != blank or active_description != blank %}
+        <div class="cs-header-{{ section.id }}">
+          {% if active_title != blank %}
+            <h2 class="cs-title-{{ section.id }}">{{ active_title }}</h2>
+          {% endif %}
+          {% if active_description != blank %}
+            <p class="cs-description-{{ section.id }}">{{ active_description }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% comment %} Slider + nav arrows {% endcomment %}
+      <div class="cs-slider-wrapper-{{ section.id }}">
+
+        <button class="cs-nav-{{ section.id }} prev" type="button"
+                onclick="window['csSlide{{ section.id }}']('{% if is_arabic %}next{% else %}prev{% endif %}')"
+                aria-label="{% if is_arabic %}السابق{% else %}Previous{% endif %}">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+          </svg>
+        </button>
+
+        <div class="cs-slider-{{ section.id }}" id="csSlider{{ section.id }}">
+          {% for block in section.blocks %}
+            {% if is_arabic %}
+              {% assign card_label = block.settings.text_ar | default: block.settings.text %}
+            {% else %}
+              {% assign card_label = block.settings.text %}
+            {% endif %}
+
+            <a href="{{ block.settings.link }}" class="cs-card-{{ section.id }}" style="text-decoration: none;">
+              {% if block.settings.image != blank %}
+                <div class="cs-card-img-{{ section.id }}">
+                  <img src="{{ block.settings.image | image_url: width: 800 }}"
+                       alt="{{ card_label | escape }}" loading="lazy" draggable="false">
+                </div>
+              {% endif %}
+
+              <div class="cs-card-overlay-{{ section.id }}">
+                <span class="cs-card-text-{{ section.id }}"
+                  style="{% if block.settings.card_font_size != blank %}font-size: {{ block.settings.card_font_size }}px !important;{% endif %}{% if block.settings.card_font_weight != blank %}font-weight: {{ block.settings.card_font_weight }} !important;{% endif %}">
+                  {{ card_label }}
+                </span>
+                <div class="cs-card-arrow-{{ section.id }}">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+                  </svg>
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+
+        <button class="cs-nav-{{ section.id }} next" type="button"
+                onclick="window['csSlide{{ section.id }}']('{% if is_arabic %}prev{% else %}next{% endif %}')"
+                aria-label="{% if is_arabic %}التالي{% else %}Next{% endif %}">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+    {% comment %} ── End frame ── {% endcomment %}
+
+  </div>
+</section>
+
+<script>
+(function() {
+  'use strict';
+  var isRTL = {{ is_arabic | json }};
+
+  function init(sid) {
+    var slider = document.getElementById('csSlider' + sid);
+    if (!slider) return;
+
+    window['csSlide' + sid] = function(direction) {
+      var card = slider.querySelector('.cs-card-' + sid);
+      if (!card) return;
+      var gap = {{ section.settings.card_gap }};
+      var amount = card.getBoundingClientRect().width + gap;
+      var scrollAmount = direction === 'next' ? amount : -amount;
+      if (isRTL) scrollAmount = direction === 'next' ? -amount : amount;
+      slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    };
+
+    /* Drag-to-scroll */
+    var isDragging = false, startX = 0, startScrollLeft = 0, moved = 0;
+    var DRAG_THRESHOLD = 8;
+
+    slider.addEventListener('pointerdown', function(e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      isDragging = true; moved = 0;
+      slider.classList.add('active');
+      startX = e.clientX;
+      startScrollLeft = slider.scrollLeft;
+      try { slider.setPointerCapture(e.pointerId); } catch (_) {}
+    });
+
+    slider.addEventListener('pointermove', function(e) {
+      if (!isDragging) return;
+      var dx = e.clientX - startX;
+      moved = Math.max(moved, Math.abs(dx));
+      slider.scrollLeft = startScrollLeft - dx;
+      if (e.pointerType !== 'mouse') e.preventDefault();
+    }, { passive: false });
+
+    function endDrag(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      slider.classList.remove('active');
+      try { slider.releasePointerCapture(e.pointerId); } catch (_) {}
+    }
+
+    slider.addEventListener('pointerup', endDrag);
+    slider.addEventListener('pointercancel', endDrag);
+    slider.addEventListener('pointerleave', endDrag);
+
+    slider.querySelectorAll('.cs-card-' + sid).forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        if (moved > DRAG_THRESHOLD) { e.preventDefault(); e.stopPropagation(); }
+      });
+    });
+  }
+
+  function ready(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  ready(function() { init('{{ section.id }}'); });
+  document.addEventListener('shopify:section:load', function(e) {
+    if (e && e.detail && e.detail.sectionId === '{{ section.id }}') init('{{ section.id }}');
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Collections Slider",
+  "settings": [
+    { "type": "header", "content": "Colors" },
+    {
+      "type": "color", "id": "background_color", "label": "Background color",
+      "info": "The color behind the frame — full section background.",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color", "id": "frame_color", "label": "Frame color",
+      "info": "The rectangle that holds the title and slider cards.",
+      "default": "#ffffff"
+    },
+    { "type": "range", "id": "frame_radius",  "label": "Frame corner radius", "min": 0, "max": 40, "step": 4, "unit": "px", "default": 16 },
+    { "type": "range", "id": "frame_padding", "label": "Frame padding",        "min": 16, "max": 80, "step": 4, "unit": "px", "default": 40 },
+
+    { "type": "header", "content": "Section Spacing" },
+    { "type": "range", "id": "section_padding_top",    "label": "Top padding",     "min": 0, "max": 150, "step": 10, "unit": "px", "default": 60 },
+    { "type": "range", "id": "section_padding_bottom", "label": "Bottom padding",  "min": 0, "max": 150, "step": 10, "unit": "px", "default": 60 },
+    { "type": "range", "id": "container_width",        "label": "Container width", "min": 1000, "max": 2000, "step": 100, "unit": "px", "default": 1400 },
+
+    { "type": "header", "content": "🇬🇧 Title & Description — English" },
+    { "type": "text",     "id": "title",       "label": "Title (EN)",       "default": "Our Services" },
+    { "type": "textarea", "id": "description", "label": "Description (EN)", "default": "Browse our beauty services, crafted for you at home." },
+
+    { "type": "header", "content": "🇸🇦 العنوان والوصف — العربية" },
+    { "type": "text",     "id": "title_ar",       "label": "العنوان (AR)",  "default": "خدماتنا" },
+    { "type": "textarea", "id": "description_ar", "label": "الوصف (AR)",    "default": "تصفحي خدمات التجميل المنزلية المصممة خصيصاً لكِ." },
+
+    { "type": "header", "content": "Title Style" },
+    {
+      "type": "select", "id": "title_font", "label": "Font (EN)", "default": "Arial",
+      "options": [
+        { "value": "Arial",            "label": "Arial (System)" },
+        { "value": "Helvetica",        "label": "Helvetica (System)" },
+        { "value": "Georgia",          "label": "Georgia (System)" },
+        { "value": "Times New Roman",  "label": "Times New Roman (System)" },
+        { "value": "Merriweather",     "label": "Merriweather (Google)" },
+        { "value": "Playfair Display", "label": "Playfair Display (Google)" },
+        { "value": "Montserrat",       "label": "Montserrat (Google)" },
+        { "value": "Raleway",          "label": "Raleway (Google)" },
+        { "value": "Lato",             "label": "Lato (Google)" },
+        { "value": "Nunito",           "label": "Nunito (Google)" }
+      ]
+    },
+    {
+      "type": "select", "id": "title_font_fallback", "label": "Font fallback", "default": "sans-serif",
+      "options": [
+        { "value": "serif",      "label": "Serif" },
+        { "value": "sans-serif", "label": "Sans-serif" }
+      ]
+    },
+    { "type": "range", "id": "title_size", "label": "Size", "min": 24, "max": 72, "step": 2, "unit": "px", "default": 48 },
+    {
+      "type": "select", "id": "title_weight", "label": "Weight", "default": "600",
+      "options": [
+        { "value": "300", "label": "Light" }, { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" }
+      ]
+    },
+    { "type": "color", "id": "title_color", "label": "Color", "default": "#000000" },
+    {
+      "type": "select", "id": "title_alignment", "label": "Alignment", "default": "center",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right",  "label": "Right" }
+      ]
+    },
+    { "type": "range", "id": "title_margin", "label": "Bottom margin", "min": 20, "max": 100, "step": 10, "unit": "px", "default": 40 },
+
+    { "type": "header", "content": "Description Style" },
+    {
+      "type": "select", "id": "description_font", "label": "Font (EN)", "default": "Arial",
+      "options": [
+        { "value": "Arial",            "label": "Arial (System)" },
+        { "value": "Helvetica",        "label": "Helvetica (System)" },
+        { "value": "Georgia",          "label": "Georgia (System)" },
+        { "value": "Times New Roman",  "label": "Times New Roman (System)" },
+        { "value": "Merriweather",     "label": "Merriweather (Google)" },
+        { "value": "Playfair Display", "label": "Playfair Display (Google)" },
+        { "value": "Montserrat",       "label": "Montserrat (Google)" },
+        { "value": "Raleway",          "label": "Raleway (Google)" },
+        { "value": "Lato",             "label": "Lato (Google)" },
+        { "value": "Nunito",           "label": "Nunito (Google)" }
+      ]
+    },
+    {
+      "type": "select", "id": "description_font_fallback", "label": "Font fallback", "default": "sans-serif",
+      "options": [
+        { "value": "serif",      "label": "Serif" },
+        { "value": "sans-serif", "label": "Sans-serif" }
+      ]
+    },
+    { "type": "range", "id": "description_size",        "label": "Size",           "min": 12, "max": 28,   "step": 1,  "unit": "px", "default": 16 },
+    { "type": "range", "id": "description_max_width",   "label": "Max width",      "min": 400,"max": 1200, "step": 50, "unit": "px", "default": 700 },
+    {
+      "type": "select", "id": "description_weight", "label": "Weight", "default": "400",
+      "options": [
+        { "value": "300", "label": "Light" }, { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Semi Bold" }
+      ]
+    },
+    { "type": "color", "id": "description_color",       "label": "Color",          "default": "#555555" },
+    { "type": "range", "id": "description_line_height", "label": "Line height",    "min": 10, "max": 20, "step": 1, "default": 16 },
+    { "type": "range", "id": "description_gap",         "label": "Gap title→desc", "min": 0,  "max": 40, "step": 4, "unit": "px", "default": 12 },
+
+    { "type": "header", "content": "Card Settings" },
+    { "type": "range", "id": "cards_per_row", "label": "Cards per row",      "min": 2, "max": 5,   "step": 1,   "default": 4 },
+    { "type": "range", "id": "card_gap",      "label": "Gap between cards",  "min": 10,"max": 50,  "step": 5,   "unit": "px", "default": 20 },
+    { "type": "range", "id": "card_height",   "label": "Card height",        "min": 200,"max": 600,"step": 20,  "unit": "px", "default": 400 },
+    { "type": "range", "id": "card_radius",   "label": "Card border radius", "min": 0, "max": 50,  "step": 5,   "unit": "px", "default": 20 },
+    { "type": "checkbox", "id": "card_shadow","label": "Enable card shadow", "default": true },
+
+    { "type": "header", "content": "Card Text & Overlay" },
+    { "type": "range", "id": "card_text_size", "label": "Text size", "min": 14, "max": 32, "step": 2, "unit": "px", "default": 24 },
+    {
+      "type": "select", "id": "card_text_weight", "label": "Text weight", "default": "600",
+      "options": [
+        { "value": "400", "label": "Normal" }, { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    { "type": "color", "id": "card_text_color", "label": "Card text color", "default": "#ffffff" },
+    {
+      "type": "select", "id": "card_text_font", "label": "Card text font (EN)", "default": "Arial",
+      "options": [
+        { "value": "Arial",            "label": "Arial (System)" },
+        { "value": "Helvetica",        "label": "Helvetica (System)" },
+        { "value": "Georgia",          "label": "Georgia (System)" },
+        { "value": "Times New Roman",  "label": "Times New Roman (System)" },
+        { "value": "Merriweather",     "label": "Merriweather (Google)" },
+        { "value": "Playfair Display", "label": "Playfair Display (Google)" },
+        { "value": "Montserrat",       "label": "Montserrat (Google)" },
+        { "value": "Raleway",          "label": "Raleway (Google)" },
+        { "value": "Lato",             "label": "Lato (Google)" },
+        { "value": "Nunito",           "label": "Nunito (Google)" }
+      ]
+    },
+    {
+      "type": "select", "id": "card_text_font_fallback", "label": "Card text font fallback", "default": "sans-serif",
+      "options": [
+        { "value": "serif",      "label": "Serif" },
+        { "value": "sans-serif", "label": "Sans-serif" }
+      ]
+    },
+    { "type": "range", "id": "card_text_padding", "label": "Overlay padding",  "min": 10, "max": 50, "step": 5, "unit": "px", "default": 20 },
+    { "type": "range", "id": "overlay_opacity",   "label": "Overlay darkness", "min": 0,  "max": 100,"step": 5, "unit": "%",  "default": 75 },
+
+    { "type": "header", "content": "Card Arrow" },
+    { "type": "color", "id": "card_arrow_bg",    "label": "Arrow background", "default": "#ffffff" },
+    { "type": "color", "id": "card_arrow_color", "label": "Arrow icon color", "default": "#000000" },
+
+    { "type": "header", "content": "Navigation Arrows" },
+    { "type": "color",    "id": "nav_arrow_bg",       "label": "Arrow background",       "default": "#ffffff" },
+    { "type": "color",    "id": "nav_arrow_hover_bg", "label": "Arrow hover background", "default": "#f0f0f0" },
+    { "type": "color",    "id": "nav_arrow_color",    "label": "Arrow icon color",       "default": "#000000" },
+    { "type": "checkbox", "id": "nav_arrow_shadow",   "label": "Enable arrow shadow",    "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection Card",
+      "settings": [
+        { "type": "image_picker", "id": "image",   "label": "Card image" },
+        { "type": "header",  "content": "🇬🇧 Label — English" },
+        { "type": "text",    "id": "text",    "label": "Card label (EN)", "default": "Massage" },
+        { "type": "header",  "content": "🇸🇦 التسمية — العربية" },
+        { "type": "text",    "id": "text_ar", "label": "تسمية البطاقة (AR)", "default": "مساج" },
+        { "type": "header",  "content": "🔗 Link" },
+        { "type": "url",     "id": "link",    "label": "Card link" },
+        { "type": "header",  "content": "Text Override (this card only)" },
+        { "type": "range",   "id": "card_font_size",   "label": "Font size",   "min": 12, "max": 48, "step": 2, "unit": "px", "default": 24 },
+        {
+          "type": "select",  "id": "card_font_weight", "label": "Font weight", "default": "600",
+          "options": [
+            { "value": "300", "label": "Light" }, { "value": "400", "label": "Normal" },
+            { "value": "600", "label": "Semi Bold" }, { "value": "700", "label": "Bold" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections Slider",
+      "blocks": [
+        { "type": "collection", "settings": { "text": "Massage",  "text_ar": "مساج" } },
+        { "type": "collection", "settings": { "text": "Facial",   "text_ar": "فيشل" } },
+        { "type": "collection", "settings": { "text": "Haircare", "text_ar": "عناية بالشعر" } },
+        { "type": "collection", "settings": { "text": "Nails",    "text_ar": "أظافر" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

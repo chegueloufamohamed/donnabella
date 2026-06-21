@@ -1,0 +1,162 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "marketing_agency_footer_gHwH8n": {
+      "type": "marketing-agency-footer",
+      "disabled": true,
+      "name": "Marketing Agency Footer",
+      "settings": {
+        "logo_image": "shopify://shop_images/header_logo_Donna_Bella.webp",
+        "logo_height": 48,
+        "logo_link": "/",
+        "tagline": "The UAE's beauty salon marketing specialists. Growing salons, spas, and wellness brands across Dubai and the Emirates.",
+        "tagline_ar": "المتخصصون في تسويق صالونات التجميل في الإمارات. نُنمّي الصالونات والسبا وعلامات العافية في دبي والإمارات.",
+        "license_no": "1612331",
+        "reg_no": "2832505",
+        "address": "Office 1102, Barsha 1 · Dubai, UAE",
+        "address_ar": "مكتب 1102، برشا 1 · دبي، الإمارات",
+        "instagram_url": "",
+        "tiktok_url": "",
+        "facebook_url": "",
+        "whatsapp_number": "971509933488",
+        "col1_title": "Services",
+        "col1_title_ar": "الخدمات",
+        "col1_link1_label": "Social Media",
+        "col1_link1_label_ar": "السوشيال ميديا",
+        "col1_link1_url": "",
+        "col1_link2_label": "Paid Advertising",
+        "col1_link2_label_ar": "الإعلانات المدفوعة",
+        "col1_link2_url": "",
+        "col1_link3_label": "Brand Identity",
+        "col1_link3_label_ar": "الهوية البصرية",
+        "col1_link3_url": "",
+        "col1_link4_label": "Website & SEO",
+        "col1_link4_label_ar": "الموقع وتحسين البحث",
+        "col1_link4_url": "",
+        "col1_link5_label": "Reputation",
+        "col1_link5_label_ar": "إدارة السمعة",
+        "col1_link5_url": "",
+        "col1_link6_label": "CRM & Loyalty",
+        "col1_link6_label_ar": "CRM والولاء",
+        "col1_link6_url": "",
+        "col1_link7_label": "Influencer & PR",
+        "col1_link7_label_ar": "المؤثرون والعلاقات العامة",
+        "col1_link7_url": "",
+        "col2_title": "Company",
+        "col2_title_ar": "الشركة",
+        "col2_link1_label": "About Us",
+        "col2_link1_label_ar": "من نحن",
+        "col2_link1_url": "",
+        "col2_link2_label": "Case Studies",
+        "col2_link2_label_ar": "دراسات الحالة",
+        "col2_link2_url": "",
+        "col2_link3_label": "How We Work",
+        "col2_link3_label_ar": "كيف نعمل",
+        "col2_link3_url": "",
+        "col2_link4_label": "Privacy Policy",
+        "col2_link4_label_ar": "سياسة الخصوصية",
+        "col2_link4_url": "",
+        "col2_link5_label": "Terms of Service",
+        "col2_link5_label_ar": "شروط الخدمة",
+        "col2_link5_url": "",
+        "col2_link6_label": "",
+        "col2_link6_label_ar": "",
+        "col2_link6_url": "",
+        "col2_link7_label": "",
+        "col2_link7_label_ar": "",
+        "col2_link7_url": "",
+        "col3_title": "Contact",
+        "col3_title_ar": "تواصل معنا",
+        "contact_phone": "+971 50 993 3488",
+        "contact_email": "dafer1111@hotmail.com",
+        "contact_address": "Office 1102, Barsha 1, Dubai, UAE",
+        "contact_address_ar": "مكتب 1102، برشا 1، دبي، الإمارات",
+        "contact_hours": "Mon – Sat: 9am – 7pm",
+        "contact_hours_ar": "الإثنين – السبت: 9 ص – 7 م",
+        "copyright": "© 2026 Donna Bella Marketing Management L.L.C · All rights reserved",
+        "copyright_ar": "© 2026 شركة دونا بيلا لإدارة التسويق · جميع الحقوق محفوظة",
+        "privacy_url": "",
+        "terms_url": "",
+        "cookie_url": ""
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "brand_riG6Lz": {
+          "type": "brand",
+          "settings": {
+            "image": "shopify://shop_images/Donna_Bella_Care.webp",
+            "logo_width": 220,
+            "text": "<p>Belladona delivers professional home beauty services across Dubai, combining convenience with high-end care in the comfort of your home.</p>",
+            "text_size": 14,
+            "facebook_url": "https://www.donnabella.ae/",
+            "instagram_url": "https://www.donnabella.ae/",
+            "tiktok_url": "https://www.donnabella.ae/",
+            "whatsapp_url": "",
+            "snapchat_url": "https://www.donnabella.ae/"
+          }
+        },
+        "menu_7hXpmy": {
+          "type": "menu",
+          "settings": {
+            "menu": "main-menu",
+            "heading_size": 14,
+            "link_size": 15
+          }
+        },
+        "newsletter_YYcRHr": {
+          "type": "newsletter",
+          "settings": {
+            "title": "Subscribe",
+            "heading_size": 18,
+            "text": "",
+            "text_size": 14
+          }
+        }
+      },
+      "block_order": [
+        "brand_riG6Lz",
+        "menu_7hXpmy",
+        "newsletter_YYcRHr"
+      ],
+      "settings": {
+        "max_width": 1400,
+        "column_min_width": 150,
+        "column_max_width": 300,
+        "padding_vertical": 30,
+        "padding_horizontal": 20,
+        "top_radius": 0,
+        "top_radius_mobile": 0,
+        "background_color": "#405264",
+        "footer_font_family": "Merriweather",
+        "footer_font_size": 15,
+        "footer_heading_size": 16,
+        "heading_font_weight": "600",
+        "text_transform": "uppercase",
+        "letter_spacing": 1,
+        "text_color": "#ffffff",
+        "link_color": "#ffffff",
+        "hover_color": "#ffd700",
+        "input_radius": 10,
+        "button_radius": 25,
+        "copyright_text": "",
+        "show_payment_icons": true
+      }
+    }
+  },
+  "order": [
+    "marketing_agency_footer_gHwH8n",
+    "footer"
+  ]
+}

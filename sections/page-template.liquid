@@ -1,0 +1,25 @@
+{% comment %}
+  Modified Page Template - Hides on Service Pages
+  Replace your sections/page-template.liquid with this code
+{% endcomment %}
+
+{% if page.handle == 'massage' or page.handle == 'facial' or page.handle == 'nails' or page.handle == 'waxing' or page.handle == 'haircare' or page.handle == 'eyebrows' or page.handle == 'eyelashes' %}
+  {%- comment -%}
+    This is a service page with custom sections.
+    Skip the default page template.
+  {%- endcomment -%}
+{% else %}
+  {%- comment -%}
+    Regular page - show default template
+  {%- endcomment -%}
+  <section class="section">
+    <div class="container content page">
+      <div class="one-whole column">
+        <h1>{{ page.title }}</h1>
+        <div class="feature-divider"></div>
+      </div>
+
+      {% render 'page-multi-column', content: page.content %}
+    </div>
+  </section>
+{% endif %}

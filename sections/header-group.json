@@ -1,0 +1,445 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "mega_menu_1": {
+      "type": "mega-menu-1",
+      "blocks": {
+        "column_0": {
+          "type": "column",
+          "settings": {
+            "richtext_top": "<p>Add description, images, menus and links to your mega menu</p>",
+            "image_caption_top": "",
+            "image_link_top": "",
+            "menu_1": "",
+            "menu_1_link": "",
+            "menu_2": "",
+            "menu_2_link": "",
+            "menu_3": "",
+            "menu_3_link": "",
+            "menu_4": "",
+            "menu_4_link": "",
+            "image_caption_bottom": "",
+            "image_link_bottom": "",
+            "richtext_bottom": ""
+          }
+        },
+        "column_1": {
+          "type": "column",
+          "settings": {
+            "richtext_top": "<p>A column with no settings can be used as a spacer</p>",
+            "image_caption_top": "",
+            "image_link_top": "",
+            "menu_1": "",
+            "menu_1_link": "",
+            "menu_2": "",
+            "menu_2_link": "",
+            "menu_3": "",
+            "menu_3_link": "",
+            "menu_4": "",
+            "menu_4_link": "",
+            "image_caption_bottom": "",
+            "image_link_bottom": "",
+            "richtext_bottom": ""
+          }
+        },
+        "column_2": {
+          "type": "column",
+          "settings": {
+            "richtext_top": "",
+            "image_caption_top": "",
+            "image_link_top": "",
+            "menu_1": "",
+            "menu_1_link": "",
+            "menu_2": "",
+            "menu_2_link": "",
+            "menu_3": "",
+            "menu_3_link": "",
+            "menu_4": "",
+            "menu_4_link": "",
+            "image_caption_bottom": "",
+            "image_link_bottom": "",
+            "richtext_bottom": ""
+          }
+        },
+        "column_3": {
+          "type": "column",
+          "settings": {
+            "richtext_top": "<p>Link to your collections, sales and even external links</p>",
+            "image_caption_top": "",
+            "image_link_top": "",
+            "menu_1": "",
+            "menu_1_link": "",
+            "menu_2": "",
+            "menu_2_link": "",
+            "menu_3": "",
+            "menu_3_link": "",
+            "menu_4": "",
+            "menu_4_link": "",
+            "image_caption_bottom": "",
+            "image_link_bottom": "",
+            "richtext_bottom": ""
+          }
+        },
+        "column_4": {
+          "type": "column",
+          "settings": {
+            "richtext_top": "<p>Add up to five columns</p>",
+            "image_caption_top": "",
+            "image_link_top": "",
+            "menu_1": "",
+            "menu_1_link": "",
+            "menu_2": "",
+            "menu_2_link": "",
+            "menu_3": "",
+            "menu_3_link": "",
+            "menu_4": "",
+            "menu_4_link": "",
+            "image_caption_bottom": "",
+            "image_link_bottom": "",
+            "richtext_bottom": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_0",
+        "column_1",
+        "column_2",
+        "column_3",
+        "column_4"
+      ],
+      "disabled": true,
+      "settings": {
+        "parent": ""
+      }
+    },
+    "header_dPRcVE": {
+      "type": "header",
+      "blocks": {
+        "mega_parent_jFWGzB": {
+          "type": "mega_parent",
+          "settings": {
+            "nav_title": "Home",
+            "nav_title_ar": "الرئيسية",
+            "link": "https://belladona.ae/"
+          }
+        },
+        "mega_parent_mhJFKM": {
+          "type": "mega_parent",
+          "settings": {
+            "nav_title": "Men",
+            "nav_title_ar": "رجال",
+            "link": ""
+          }
+        },
+        "mega_child_gwEX8Y": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Manicure",
+            "title_ar": "العناية بالأظافر",
+            "image": "shopify://shop_images/professional-manicurist-filing-man-nails-with-emer-2026-01-05-06-16-06-utc.jpg",
+            "link": "shopify://pages/nails-men"
+          }
+        },
+        "mega_child_A9brWY": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Pedicure",
+            "title_ar": "أظافر القدم",
+            "image": "shopify://shop_images/image-gen_25.png",
+            "link": "shopify://pages/pedicure-men"
+          }
+        },
+        "mega_child_g3Mbt9": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Massage",
+            "title_ar": "مساج",
+            "image": "shopify://shop_images/resized_smaller_image.jpg",
+            "link": "shopify://pages/massage-men"
+          }
+        },
+        "mega_child_pHV7Aa": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Haircare",
+            "title_ar": "العناية بالشعر",
+            "image": "shopify://shop_images/resized_smaller_image_2.jpg",
+            "link": "shopify://pages/haircare-men"
+          }
+        },
+        "mega_child_QwjaGG": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Eyebrows",
+            "title_ar": "الحواجب",
+            "image": "shopify://shop_images/contour-stick-marking-skin-near-man-eye-in-beauty-2026-01-08-06-46-31-utc.jpg",
+            "link": "shopify://pages/eyebrows-men"
+          }
+        },
+        "mega_child_PfyEBa": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Facial",
+            "title_ar": "العناية بالوجه",
+            "image": "shopify://shop_images/cosmetician-cleaning-face-close-up-2026-01-05-00-39-35-utc.jpg",
+            "link": "shopify://pages/facial-men"
+          }
+        },
+        "mega_child_7dmJnp": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Waxing",
+            "title_ar": "إزالة الشعر",
+            "image": "shopify://shop_images/serene-guy-getting-wax-hair-removal-from-chest-in-2026-01-08-06-17-39-utc.jpg",
+            "link": "shopify://pages/waxing-men"
+          }
+        },
+        "mega_parent_tq4bxn": {
+          "type": "mega_parent",
+          "settings": {
+            "nav_title": "Women",
+            "nav_title_ar": "نساء",
+            "link": ""
+          }
+        },
+        "mega_child_bybh9L": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Manicure",
+            "title_ar": "أظافر",
+            "image": "shopify://shop_images/Nails.webp",
+            "link": "shopify://pages/nails"
+          }
+        },
+        "mega_child_F34Tjr": {
+          "type": "mega_child",
+          "disabled": true,
+          "settings": {
+            "title": "Eyebrows",
+            "title_ar": "مساج",
+            "image": "shopify://shop_images/Eyebrows.webp",
+            "link": "shopify://pages/eyebrows-1"
+          }
+        },
+        "mega_child_acfBjU": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Eyelashes & Eyebrows",
+            "title_ar": "الرموش و الحواجب",
+            "image": "shopify://shop_images/Eyelashes.webp",
+            "link": "shopify://pages/lashes"
+          }
+        },
+        "mega_child_jkXChr": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Hairecare",
+            "title_ar": "العناية بالشعر",
+            "image": "shopify://shop_images/Haircare.webp",
+            "link": "shopify://pages/haircare"
+          }
+        },
+        "mega_child_NibaJC": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Massage",
+            "title_ar": "مساج",
+            "image": "shopify://shop_images/Massage.webp",
+            "link": "shopify://pages/massage"
+          }
+        },
+        "mega_child_NHrhK8": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Waxing & Threading",
+            "title_ar": "إزالة الشعر",
+            "image": "shopify://shop_images/the-specialist-depilates-the-hair-with-wax-on-the-2026-01-08-01-14-16-utc.jpg",
+            "link": "shopify://pages/waxing"
+          }
+        },
+        "mega_child_DjkbCg": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Skincare",
+            "title_ar": "الرعاية بالبشرة",
+            "image": "shopify://shop_images/facial.webp",
+            "link": "shopify://pages/facial"
+          }
+        },
+        "mega_child_dNqydC": {
+          "type": "mega_child",
+          "settings": {
+            "title": "Pedicure",
+            "title_ar": "العناية بالأقدام",
+            "image": "shopify://shop_images/closeup-shot-of-a-woman-s-hands-pedicuring-her-cli-2026-01-07-23-15-17-utc.jpg",
+            "link": "shopify://pages/pedicure"
+          }
+        },
+        "mega_parent_6cHLck": {
+          "type": "mega_parent",
+          "settings": {
+            "nav_title": "Massage",
+            "nav_title_ar": "مساج",
+            "link": "https://belladona.ae/pages/massage"
+          }
+        },
+        "mega_parent_MwNqVj": {
+          "type": "mega_parent",
+          "settings": {
+            "nav_title": "Our Story",
+            "nav_title_ar": "قصتنا",
+            "link": "https://belladona.ae/pages/about-us"
+          }
+        },
+        "mega_parent_P7nne4": {
+          "type": "mega_parent",
+          "settings": {
+            "nav_title": "Contact Us",
+            "nav_title_ar": "إتصل بنا",
+            "link": "https://belladona.ae/pages/contact"
+          }
+        }
+      },
+      "block_order": [
+        "mega_parent_jFWGzB",
+        "mega_parent_mhJFKM",
+        "mega_child_gwEX8Y",
+        "mega_child_A9brWY",
+        "mega_child_g3Mbt9",
+        "mega_child_pHV7Aa",
+        "mega_child_QwjaGG",
+        "mega_child_PfyEBa",
+        "mega_child_7dmJnp",
+        "mega_parent_tq4bxn",
+        "mega_child_bybh9L",
+        "mega_child_F34Tjr",
+        "mega_child_acfBjU",
+        "mega_child_jkXChr",
+        "mega_child_NibaJC",
+        "mega_child_NHrhK8",
+        "mega_child_DjkbCg",
+        "mega_child_dNqydC",
+        "mega_parent_6cHLck",
+        "mega_parent_MwNqVj",
+        "mega_parent_P7nne4"
+      ],
+      "name": "Custom Header Belladona",
+      "settings": {
+        "max_width": 1400,
+        "padding_vertical": 20,
+        "padding_horizontal": 30,
+        "background_color": "#ffffff",
+        "background_opacity": 15,
+        "enable_backdrop_blur": true,
+        "backdrop_blur_amount": 10,
+        "text_color": "#ffffff",
+        "hover_color": "#ffffff",
+        "hover_text_color": "#ffffff",
+        "bottom_radius": 20,
+        "bottom_radius_mobile": 15,
+        "enable_shadow": true,
+        "shadow_opacity": 15,
+        "enable_glow": true,
+        "glow_color": "#ffffff",
+        "glow_opacity": 70,
+        "glow_speed": 3,
+        "enable_sparkle": true,
+        "sparkle_speed": 8,
+        "switcher_active_bg": "#ffffff",
+        "switcher_active_text": "#1b1f23",
+        "switcher_inactive_text": "#ffffff",
+        "switcher_border_color": "#cccccc",
+        "switcher_radius": 20,
+        "switcher_font_size": 13,
+        "switcher_font_weight": "600",
+        "logo": "shopify://shop_images/header_logo_Donna_Bella.webp",
+        "logo_text": "Belladona",
+        "logo_width": 150,
+        "logo_width_mobile": 120,
+        "logo_text_size": 28,
+        "logo_font_weight": "700",
+        "logo_hover_scale": 105,
+        "menu_font_family": "Merriweather",
+        "font_size": 16,
+        "mobile_font_size": 18,
+        "menu_font_weight": "400",
+        "menu_spacing": 30,
+        "menu_item_padding": 10,
+        "mobile_menu_item_padding": 20,
+        "text_transform": "none",
+        "letter_spacing": 0,
+        "hover_effect": "underline",
+        "menu_hover_radius": 10,
+        "ar_menu_font_family": "Cairo",
+        "ar_font_size": 19,
+        "ar_menu_font_weight": "700",
+        "ar_text_color": "#ffffff",
+        "ar_hover_color": "#ffffff",
+        "ar_logo_text_size": 28,
+        "ar_logo_font_weight": "700",
+        "ar_mega_card_font_size": 15,
+        "ar_mega_card_font_weight": "600",
+        "ar_mega_card_text_color": "#ffffff",
+        "ar_button_font_family": "Cairo",
+        "ar_button_font_size": 16,
+        "ar_button_font_weight": "600",
+        "ar_button_text_color": "#ffffff",
+        "mega_menu_padding": 30,
+        "show_mega_menu_heading": true,
+        "mega_menu_heading_size": 12,
+        "mega_menu_columns": "7",
+        "mega_menu_gap": 10,
+        "mega_card_aspect_ratio": "3 / 4",
+        "mega_card_radius": 12,
+        "mega_card_overlay_strength": 50,
+        "mega_card_text_color": "#ffffff",
+        "mega_card_font_size": 15,
+        "mega_card_font_weight": "600",
+        "mega_card_label_padding": 16,
+        "button_text": "Book Now",
+        "button_text_ar": "احجز الآن",
+        "button_link": "#book-now",
+        "button_background": "#ffffff",
+        "button_opacity": 15,
+        "button_backdrop_blur": false,
+        "button_blur_amount": 10,
+        "button_text_color": "#ffffff",
+        "button_hover_background": "#ffffff",
+        "button_hover_opacity": 0,
+        "button_hover_text_color": "#ffffff",
+        "button_padding_vertical": 10,
+        "button_padding_horizontal": 30,
+        "button_radius": 25,
+        "button_font_size": 16,
+        "button_font_family": "Montserrat",
+        "button_font_weight": "600",
+        "button_text_transform": "uppercase",
+        "button_letter_spacing": 1,
+        "button_border_width": 0,
+        "button_border_color": "#ffffff",
+        "button_shadow": true,
+        "hide_button_mobile": false,
+        "mobile_menu_background_color": "#ffffff",
+        "mobile_menu_opacity": 95,
+        "mobile_menu_blur": true,
+        "mobile_blur_amount": 10,
+        "mobile_menu_shadow": true,
+        "mobile_menu_width": 80
+      }
+    }
+  },
+  "order": [
+    "mega_menu_1",
+    "header_dPRcVE"
+  ]
+}

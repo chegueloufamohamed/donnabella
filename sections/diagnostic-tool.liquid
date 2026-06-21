@@ -1,0 +1,195 @@
+{% comment %}
+  DIAGNOSTIC TOOL - Finds the section causing errors
+  This will tell you EXACTLY which section has the bad setting
+{% endcomment %}
+
+<style>
+  .diagnostic-tool-{{ section.id }} {
+    background: #1a1a1a;
+    color: #00ff00;
+    padding: 40px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    position: relative;
+    z-index: 999999;
+  }
+
+  .diagnostic-title {
+    color: #ff0000;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #00ff00;
+    padding-bottom: 10px;
+  }
+
+  .diagnostic-section {
+    background: #2a2a2a;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 4px solid #00ff00;
+  }
+
+  .diagnostic-warning {
+    background: #ff0000;
+    color: #ffffff;
+    padding: 15px;
+    margin: 15px 0;
+    font-weight: bold;
+  }
+
+  .diagnostic-info {
+    color: #00ffff;
+    margin: 10px 0;
+  }
+
+  .diagnostic-code {
+    background: #000000;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #00ff00;
+    overflow-x: auto;
+  }
+</style>
+
+<div class="diagnostic-tool-{{ section.id }}">
+  <div class="diagnostic-title">🔍 SHOPIFY SECTION DIAGNOSTIC TOOL</div>
+  
+  <div class="diagnostic-section">
+    <p class="diagnostic-info">► Current Page: {{ page.title | default: "Home" }}</p>
+    <p class="diagnostic-info">► Template: {{ template.name }}</p>
+    <p class="diagnostic-info">► Diagnostic Section ID: {{ section.id }}</p>
+  </div>
+
+  <div class="diagnostic-section">
+    <div class="diagnostic-warning">
+      ⚠️ PROBLEM: You're getting "section_height must be a step in the range" error
+    </div>
+    
+    <p style="color: #ffffff; margin: 15px 0;">
+      This error is coming from ANOTHER section on this page, not the one you just added!
+    </p>
+    
+    <p style="color: #ffff00; margin: 15px 0;">
+      → When you add ANY section, Shopify re-validates ALL sections
+      <br>
+      → The error appears, but it's from a DIFFERENT section
+      <br>
+      → We need to find which section has the bad "section_height" setting
+    </p>
+  </div>
+
+  <div class="diagnostic-section">
+    <p class="diagnostic-info">📋 ALL SECTIONS ON THIS PAGE:</p>
+    <div class="diagnostic-code">
+      {% for section in sections %}
+        <p>Section {{ forloop.index }}: {{ section.type }} (ID: {{ section.id }})</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="diagnostic-section">
+    <p class="diagnostic-info">🔎 INSTRUCTIONS TO FIND THE PROBLEM:</p>
+    
+    <ol style="color: #ffffff; margin-left: 20px;">
+      <li style="margin: 10px 0;">Go to your theme customizer</li>
+      <li style="margin: 10px 0;">Look at the LEFT sidebar showing all sections</li>
+      <li style="margin: 10px 0;">Click on EACH section one by one</li>
+      <li style="margin: 10px 0;">Look for a setting called "section_height" or "Section height"</li>
+      <li style="margin: 10px 0;">When you find it, check if the number has a RED warning</li>
+      <li style="margin: 10px 0;">That's the problematic section!</li>
+    </ol>
+  </div>
+
+  <div class="diagnostic-section">
+    <p class="diagnostic-info">🎯 LIKELY SUSPECTS:</p>
+    
+    <div class="diagnostic-code">
+      <p style="color: #ff6b6b;">Check these sections first:</p>
+      <p>→ Collections Slider (your old one)</p>
+      <p>→ Any custom sections you've added</p>
+      <p>→ Hero sections</p>
+      <p>→ Banner sections</p>
+      <p>→ Image sections</p>
+    </div>
+  </div>
+
+  <div class="diagnostic-section">
+    <p class="diagnostic-info">💡 QUICK FIX METHODS:</p>
+    
+    <div style="color: #ffffff; margin: 15px 0;">
+      <p style="margin: 10px 0;"><strong style="color: #00ff00;">Method 1: Find & Remove</strong></p>
+      <p style="margin-left: 20px;">1. Find the section with "section_height" setting</p>
+      <p style="margin-left: 20px;">2. Remove that section from page</p>
+      <p style="margin-left: 20px;">3. Save</p>
+      <p style="margin-left: 20px;">4. Try adding new sections again</p>
+      
+      <p style="margin: 20px 0 10px 0;"><strong style="color: #00ff00;">Method 2: Fix the Setting</strong></p>
+      <p style="margin-left: 20px;">1. Find the section with "section_height"</p>
+      <p style="margin-left: 20px;">2. Look at the min/max/step values</p>
+      <p style="margin-left: 20px;">3. Adjust the number to a valid value</p>
+      <p style="margin-left: 20px;">4. Save</p>
+      
+      <p style="margin: 20px 0 10px 0;"><strong style="color: #00ff00;">Method 3: Remove All Custom Sections</strong></p>
+      <p style="margin-left: 20px;">1. Remove ALL custom sections temporarily</p>
+      <p style="margin-left: 20px;">2. Add them back one by one</p>
+      <p style="margin-left: 20px;">3. When error appears, that's the culprit!</p>
+    </div>
+  </div>
+
+  <div class="diagnostic-warning">
+    🚨 IMPORTANT: The glassy test section I gave you is NOT the problem!
+    <br>
+    It doesn't have ANY "section_height" setting. The error is from something else!
+  </div>
+
+  <div class="diagnostic-section">
+    <p class="diagnostic-info">📸 NEXT STEPS:</p>
+    
+    <p style="color: #ffffff; margin: 15px 0;">
+      1. Take a screenshot of your customizer showing ALL sections in the left sidebar
+      <br>
+      2. Click through each section and note which ones have a "section_height" setting
+      <br>
+      3. Send me the list of sections that have this setting
+      <br>
+      4. I'll tell you exactly how to fix it
+    </p>
+  </div>
+
+  <div class="diagnostic-code">
+    <p style="color: #ff0000;">ERROR MESSAGE YOU'RE SEEING:</p>
+    <p style="color: #ffff00;">"Setting 'section_height' must be a step in the range"</p>
+    <br>
+    <p style="color: #00ff00;">WHAT THIS MEANS:</p>
+    <p style="color: #ffffff;">
+      → There's a range slider with min/max/step values
+      <br>
+      → The default value doesn't match the step pattern
+      <br>
+      → Example: min=200, max=600, step=20, default=250
+      <br>
+      → 250 is invalid because: 200 + (20 × ?) ≠ 250
+      <br>
+      → Valid values: 200, 220, 240, 260, 280... (multiples of 20)
+    </p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Diagnostic Tool",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "This diagnostic tool helps find which section is causing the 'section_height' error. Just add it to your page and read the information displayed."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Diagnostic Tool"
+    }
+  ]
+}
+{% endschema %}

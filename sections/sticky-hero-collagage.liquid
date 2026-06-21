@@ -1,0 +1,710 @@
+{% comment %}
+  Section: Sticky Hero Collage - SIMPLIFIED
+  - Sticky background image
+  - 4 floating photos
+  - Text content
+  - Blur, opacity, and color overlay controls
+  - No video functionality
+{% endcomment %}
+
+<section id="shc-{{ section.id }}" class="shc">
+  <div class="shc__scroll">
+    <div class="shc__sticky" style="height: {{ section.settings.sticky_height_vh }}vh;">
+      
+      <!-- Background Media Layer -->
+      <div class="shc__media" aria-hidden="true">
+        {% if section.settings.bg_image != blank %}
+          {{ section.settings.bg_image
+            | image_url: width: 2400
+            | image_tag:
+              class: 'shc__bg',
+              loading: 'eager',
+              sizes: '100vw',
+              alt: section.settings.bg_image.alt | escape
+          }}
+        {% else %}
+          <div class="shc__bg shc__bg--placeholder"></div>
+        {% endif %}
+
+        <!-- Color Overlay -->
+        <div class="shc__colorOverlay"></div>
+      </div>
+
+      <!-- Content Layer (Photos + Text) -->
+      <div class="shc__content">
+        <div class="shc__center">
+          {% if section.settings.heading != blank %}
+            <h2 class="shc__heading">{{ section.settings.heading }}</h2>
+          {% endif %}
+
+          {% if section.settings.subheading != blank %}
+            <p class="shc__subheading">{{ section.settings.subheading }}</p>
+          {% endif %}
+
+          <div class="shc__buttons">
+            {% if section.settings.book_label != blank and section.settings.book_link != blank %}
+              <a class="shc__btn shc__btn--primary" href="{{ section.settings.book_link }}">
+                {{ section.settings.book_label }}
+              </a>
+            {% endif %}
+
+            {% if section.settings.services_label != blank and section.settings.services_link != blank %}
+              <a class="shc__btn shc__btn--ghost" href="{{ section.settings.services_link }}">
+                {{ section.settings.services_label }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- 4 Floating Photos -->
+        {% if section.settings.float_image_1 != blank %}
+          <div class="shc__float shc__float--leftTop">
+            {{ section.settings.float_image_1
+              | image_url: width: 1400
+              | image_tag:
+                class: 'shc__float-img',
+                loading: 'lazy',
+                sizes: '(min-width: 1200px) 360px, 70vw',
+                alt: section.settings.float_image_1.alt | escape
+            }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.float_image_2 != blank %}
+          <div class="shc__float shc__float--leftBottom">
+            {{ section.settings.float_image_2
+              | image_url: width: 1400
+              | image_tag:
+                class: 'shc__float-img',
+                loading: 'lazy',
+                sizes: '(min-width: 1200px) 340px, 66vw',
+                alt: section.settings.float_image_2.alt | escape
+            }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.float_image_3 != blank %}
+          <div class="shc__float shc__float--rightTop">
+            {{ section.settings.float_image_3
+              | image_url: width: 1400
+              | image_tag:
+                class: 'shc__float-img',
+                loading: 'lazy',
+                sizes: '(min-width: 1200px) 340px, 66vw',
+                alt: section.settings.float_image_3.alt | escape
+            }}
+          </div>
+        {% endif %}
+
+        {% if section.settings.float_image_4 != blank %}
+          <div class="shc__float shc__float--rightBottom">
+            {{ section.settings.float_image_4
+              | image_url: width: 1400
+              | image_tag:
+                class: 'shc__float-img',
+                loading: 'lazy',
+                sizes: '(min-width: 1200px) 380px, 72vw',
+                alt: section.settings.float_image_4.alt | escape
+            }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <style>
+    #shc-{{ section.id }}{
+      --shc-radius: {{ section.settings.radius }}px;
+      --shc-progress: 0;
+      --shc-lift: {{ section.settings.parallax_lift }}px;
+      --shc-text-max: {{ section.settings.text_max_width }}px;
+      --shc-btn-radius: {{ section.settings.button_radius }}px;
+      --shc-side-pad: {{ section.settings.photo_side_padding }}px;
+      --shc-vert-pad: {{ section.settings.photo_vertical_padding }}px;
+      --shc-photo-gap: {{ section.settings.photo_gap }}px;
+      --shc-top-offset: {{ section.settings.collage_top_offset }}px;
+      --shc-photo-scale: {{ section.settings.photo_scale | times: 0.01 }};
+      --shc-scroll-speed: {{ section.settings.scroll_speed | times: 0.01 }};
+      --shc-shadow-y: {{ section.settings.photo_shadow_y }}px;
+      --shc-shadow-blur: {{ section.settings.photo_shadow_blur }}px;
+      --shc-shadow-spread: {{ section.settings.photo_shadow_spread }}px;
+      --shc-shadow-alpha: {{ section.settings.photo_shadow_opacity | times: 0.01 }};
+      --shc-shadow-alpha-2: {{ section.settings.photo_shadow_opacity_2 | times: 0.01 }};
+      
+      /* New overlay settings */
+      --shc-bg-blur: {{ section.settings.bg_blur }}px;
+      --shc-overlay-opacity: {{ section.settings.overlay_opacity | times: 0.01 }};
+      
+      /* Header offset */
+      --shc-header-height: {{ section.settings.header_height }}px;
+    }
+
+    #shc-{{ section.id }} .shc__scroll{
+      position: relative;
+      height: {{ section.settings.section_height_vh }}vh;
+      min-height: 100vh;
+    }
+
+    #shc-{{ section.id }} .shc__sticky{
+      position: sticky;
+      top: var(--shc-header-height);
+      width: 100%;
+      overflow: hidden;
+      contain: paint;
+      isolation: isolate;
+    }
+
+    /* Background Media Container */
+    #shc-{{ section.id }} .shc__media{
+      position: absolute;
+      inset: 0;
+      border-radius: var(--shc-radius);
+      overflow: hidden;
+      background: {{ section.settings.bg_fallback_color }};
+    }
+
+    /* Background Image with Blur */
+    #shc-{{ section.id }} .shc__bg{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(var(--shc-bg-blur));
+      transform: scale(1.1);
+      {% if section.settings.bg_blur > 0 %}
+      transform: scale(1.1);
+      {% else %}
+      transform: scale(1);
+      {% endif %}
+    }
+
+    #shc-{{ section.id }} .shc__bg--placeholder{
+      background: linear-gradient(120deg, #efefef, #dddddd);
+    }
+
+    /* Color Overlay */
+    #shc-{{ section.id }} .shc__colorOverlay{
+      position: absolute;
+      inset: 0;
+      background: {{ section.settings.overlay_color }};
+      opacity: var(--shc-overlay-opacity);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Content Layer - Above Background */
+    #shc-{{ section.id }} .shc__content{
+      position: relative;
+      height: 100%;
+      width: 100%;
+      padding: clamp(18px, 2.2vw, 34px);
+      display: grid;
+      place-items: center;
+      z-index: 10;
+    }
+
+    #shc-{{ section.id }} .shc__center{
+      text-align: center;
+      max-width: var(--shc-text-max);
+      color: {{ section.settings.text_color }};
+      z-index: 12;
+      padding: 10px 12px;
+    }
+
+    #shc-{{ section.id }} .shc__heading{
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4.2vw, 58px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      font-weight: 500;
+    }
+
+    #shc-{{ section.id }} .shc__subheading{
+      margin: 0 0 18px;
+      font-size: clamp(14px, 1.2vw, 18px);
+      line-height: 1.4;
+      opacity: 0.92;
+    }
+
+    #shc-{{ section.id }} .shc__buttons{
+      display: inline-flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    #shc-{{ section.id }} .shc__btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      font-size: 14px;
+      line-height: 1;
+      border-radius: var(--shc-btn-radius);
+      text-decoration: none;
+      transition: transform .18s ease, opacity .18s ease, background .18s ease, border-color .18s ease;
+      white-space: nowrap;
+    }
+
+    #shc-{{ section.id }} .shc__btn--primary{
+      background: {{ section.settings.button_primary_bg }};
+      color: {{ section.settings.button_primary_text }};
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    #shc-{{ section.id }} .shc__btn--ghost{
+      background: rgba(255,255,255,0.85);
+      color: #111;
+      border: 1px solid rgba(0,0,0,0.10);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    #shc-{{ section.id }} .shc__btn:hover{
+      transform: translateY(-1px);
+    }
+
+    /* Floating Photos */
+    #shc-{{ section.id }} .shc__float{
+      position: absolute;
+      z-index: 11;
+      border-radius: var(--shc-radius);
+      overflow: hidden;
+      box-shadow:
+        0 var(--shc-shadow-y) var(--shc-shadow-blur) var(--shc-shadow-spread) rgba(0,0,0,var(--shc-shadow-alpha)),
+        0 22px 60px -26px rgba(0,0,0,var(--shc-shadow-alpha-2));
+      outline: 1px solid rgba(255,255,255,0.18);
+      outline-offset: -1px;
+      will-change: transform;
+      transform-origin: center;
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+
+    @media (hover:hover){
+      #shc-{{ section.id }} .shc__float:hover{
+        box-shadow:
+          0 calc(var(--shc-shadow-y) + 2px) calc(var(--shc-shadow-blur) + 10px) var(--shc-shadow-spread) rgba(0,0,0,calc(var(--shc-shadow-alpha) + 0.04)),
+          0 30px 80px -30px rgba(0,0,0,calc(var(--shc-shadow-alpha-2) + 0.05));
+      }
+
+      #shc-{{ section.id }} .shc__float--leftTop:hover,
+      #shc-{{ section.id }} .shc__float--rightTop:hover{
+        transform:
+          translateY(calc(var(--shc-progress) * var(--shc-lift) * -0.65 * var(--shc-scroll-speed)))
+          scale(calc(var(--shc-photo-scale) + 0.02));
+      }
+
+      #shc-{{ section.id }} .shc__float--leftBottom:hover,
+      #shc-{{ section.id }} .shc__float--rightBottom:hover{
+        transform:
+          translateY(calc(var(--shc-progress) * var(--shc-lift) * -0.65 * var(--shc-scroll-speed)))
+          translateY(calc(var(--shc-photo-gap) * -1))
+          scale(calc(var(--shc-photo-scale) + 0.02));
+      }
+    }
+
+    #shc-{{ section.id }} .shc__float-img{
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: var(--shc-radius);
+    }
+
+    /* Photo Positions */
+    #shc-{{ section.id }} .shc__float--leftTop{
+      top: calc(var(--shc-vert-pad) + var(--shc-top-offset));
+      left: var(--shc-side-pad);
+      width: clamp(190px, 20vw, 330px);
+      aspect-ratio: 4 / 5;
+      transform:
+        translateY(calc(var(--shc-progress) * var(--shc-lift) * -0.65 * var(--shc-scroll-speed)))
+        scale(var(--shc-photo-scale));
+    }
+
+    #shc-{{ section.id }} .shc__float--leftBottom{
+      bottom: calc(var(--shc-vert-pad) - var(--shc-top-offset));
+      left: var(--shc-side-pad);
+      width: clamp(175px, 18vw, 300px);
+      aspect-ratio: 4 / 5;
+      transform:
+        translateY(calc(var(--shc-progress) * var(--shc-lift) * -0.65 * var(--shc-scroll-speed)))
+        translateY(calc(var(--shc-photo-gap) * -1))
+        scale(var(--shc-photo-scale));
+    }
+
+    #shc-{{ section.id }} .shc__float--rightTop{
+      top: calc(var(--shc-vert-pad) + 12px + var(--shc-top-offset));
+      right: var(--shc-side-pad);
+      width: clamp(175px, 18vw, 300px);
+      aspect-ratio: 4 / 5;
+      transform:
+        translateY(calc(var(--shc-progress) * var(--shc-lift) * -0.65 * var(--shc-scroll-speed)))
+        scale(var(--shc-photo-scale));
+    }
+
+    #shc-{{ section.id }} .shc__float--rightBottom{
+      bottom: calc(var(--shc-vert-pad) - var(--shc-top-offset));
+      right: var(--shc-side-pad);
+      width: clamp(200px, 21vw, 360px);
+      aspect-ratio: 4 / 5;
+      transform:
+        translateY(calc(var(--shc-progress) * var(--shc-lift) * -0.65 * var(--shc-scroll-speed)))
+        translateY(calc(var(--shc-photo-gap) * -1))
+        scale(var(--shc-photo-scale));
+    }
+
+    @media (max-width: 749px){
+      #shc-{{ section.id }}{
+        --shc-side-pad: 16px;
+        --shc-vert-pad: 18px;
+        --shc-photo-gap: 14px;
+      }
+
+      #shc-{{ section.id }} .shc__float{
+        outline: 1px solid rgba(255,255,255,0.14);
+      }
+
+      #shc-{{ section.id }} .shc__float--leftTop,
+      #shc-{{ section.id }} .shc__float--rightTop{
+        width: min(70vw, 320px);
+      }
+
+      #shc-{{ section.id }} .shc__float--leftBottom,
+      #shc-{{ section.id }} .shc__float--rightBottom{
+        width: min(62vw, 320px);
+      }
+    }
+  </style>
+
+  <script>
+    (function(){
+      var root = document.getElementById('shc-{{ section.id }}');
+      if (!root) return;
+
+      var scrollWrap = root.querySelector('.shc__scroll');
+      var ticking = false;
+      var lastProgress = -1;
+
+      function clamp(n, min, max){ 
+        return Math.max(min, Math.min(max, n)); 
+      }
+
+      function getProgress(){
+        if (!scrollWrap) return 0;
+        var rect = scrollWrap.getBoundingClientRect();
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        var sectionTop = rect.top + scrollTop;
+        var sectionHeight = rect.height;
+        var start = sectionTop;
+        var end = sectionTop + sectionHeight - vh;
+        if (end <= start) return 0;
+        var p = (scrollTop - start) / (end - start);
+        return clamp(p, 0, 1);
+      }
+
+      function update(){
+        ticking = false;
+        if (!scrollWrap) return;
+
+        var p = getProgress();
+        if (Math.abs(p - lastProgress) < 0.001) return;
+        lastProgress = p;
+
+        root.style.setProperty('--shc-progress', p.toFixed(4));
+      }
+
+      function onScroll(){
+        if (!ticking){
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', onScroll);
+      } else {
+        onScroll();
+      }
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Sticky Hero Collage",
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "range",
+      "id": "header_height",
+      "label": "Header height (offset)",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 80,
+      "unit": "px",
+      "info": "Distance from top of page where section should stop. Match your header height."
+    },
+
+    { "type": "header", "content": "Background Image" },
+    { 
+      "type": "image_picker", 
+      "id": "bg_image", 
+      "label": "Background image",
+      "info": "This image stays sticky while photos scroll"
+    },
+    {
+      "type": "range",
+      "id": "bg_blur",
+      "label": "Background blur",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 0,
+      "unit": "px",
+      "info": "Blur the background image"
+    },
+    { 
+      "type": "color", 
+      "id": "bg_fallback_color", 
+      "label": "Fallback background color", 
+      "default": "#e9e9e9",
+      "info": "Shows if no image uploaded"
+    },
+
+    { "type": "header", "content": "Color Overlay" },
+    { 
+      "type": "color", 
+      "id": "overlay_color", 
+      "label": "Overlay color", 
+      "default": "#000000",
+      "info": "Color tint over background"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "default": 18,
+      "unit": "%",
+      "info": "Darkness of color overlay"
+    },
+
+    { "type": "header", "content": "Text Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Beauty that's more than skin deep" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Luxury home beauty services across the UAE." },
+
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "book_label", "label": "Primary button", "default": "Book now" },
+    { "type": "url", "id": "book_link", "label": "Primary button link" },
+    { "type": "text", "id": "services_label", "label": "Secondary button", "default": "Check services" },
+    { "type": "url", "id": "services_link", "label": "Secondary button link" },
+
+    { "type": "header", "content": "Floating Images" },
+    { "type": "image_picker", "id": "float_image_1", "label": "Photo 1 (top-left)" },
+    { "type": "image_picker", "id": "float_image_2", "label": "Photo 2 (bottom-left)" },
+    { "type": "image_picker", "id": "float_image_3", "label": "Photo 3 (top-right)" },
+    { "type": "image_picker", "id": "float_image_4", "label": "Photo 4 (bottom-right)" },
+
+    { "type": "header", "content": "Scroll & Animation" },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Scroll speed",
+      "min": 30,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "info": "How fast elements move when scrolling"
+    },
+    {
+      "type": "range",
+      "id": "section_height_vh",
+      "label": "Scroll length",
+      "min": 120,
+      "max": 300,
+      "step": 10,
+      "default": 200,
+      "unit": "vh",
+      "info": "Total scrollable area"
+    },
+    {
+      "type": "range",
+      "id": "sticky_height_vh",
+      "label": "Stage height",
+      "min": 70,
+      "max": 110,
+      "step": 1,
+      "default": 100,
+      "unit": "vh"
+    },
+    {
+      "type": "range",
+      "id": "parallax_lift",
+      "label": "Parallax movement",
+      "min": 120,
+      "max": 520,
+      "step": 10,
+      "default": 320,
+      "unit": "px",
+      "info": "How much elements lift upward"
+    },
+
+    { "type": "header", "content": "Photo Spacing" },
+    {
+      "type": "range",
+      "id": "photo_side_padding",
+      "label": "Horizontal spacing",
+      "min": 10,
+      "max": 140,
+      "step": 2,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "photo_vertical_padding",
+      "label": "Vertical spacing",
+      "min": 10,
+      "max": 140,
+      "step": 2,
+      "default": 60,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "photo_gap",
+      "label": "Top/bottom gap",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 26,
+      "unit": "px"
+    },
+
+    { "type": "header", "content": "Photo Styling" },
+    {
+      "type": "range",
+      "id": "collage_top_offset",
+      "label": "Photos vertical position",
+      "min": -120,
+      "max": 160,
+      "step": 4,
+      "default": 0,
+      "unit": "px",
+      "info": "Move photos up or down"
+    },
+    {
+      "type": "range",
+      "id": "photo_scale",
+      "label": "Photo size",
+      "min": 70,
+      "max": 140,
+      "step": 2,
+      "default": 100,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "photo_shadow_opacity",
+      "label": "Shadow opacity",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 18,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "photo_shadow_opacity_2",
+      "label": "Shadow depth",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 12,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "photo_shadow_y",
+      "label": "Shadow Y offset",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "photo_shadow_blur",
+      "label": "Shadow blur",
+      "min": 10,
+      "max": 90,
+      "step": 2,
+      "default": 44,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "photo_shadow_spread",
+      "label": "Shadow spread",
+      "min": -10,
+      "max": 10,
+      "step": 1,
+      "default": -8,
+      "unit": "px"
+    },
+
+    { "type": "header", "content": "Styling" },
+    {
+      "type": "range",
+      "id": "radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 34,
+      "step": 1,
+      "default": 22,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "text_max_width",
+      "label": "Text max width",
+      "min": 320,
+      "max": 900,
+      "step": 10,
+      "default": 720,
+      "unit": "px"
+    },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#ffffff" },
+    { "type": "color", "id": "button_primary_bg", "label": "Primary button background", "default": "#ffffff" },
+    { "type": "color", "id": "button_primary_text", "label": "Primary button text", "default": "#111111" },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    { 
+      "name": "Sticky Hero Collage"
+    }
+  ]
+}
+{% endschema %}

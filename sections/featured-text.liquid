@@ -1,0 +1,721 @@
+<script
+  type="application/json"
+  data-section-type="featured-text"
+  data-section-id="{{ section.id }}"
+>
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Merriweather:wght@300;400;700;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lato:wght@300;400;700;900&family=Raleway:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=EB+Garamond:wght@400;500;600;700;800&family=Cinzel:wght@400;500;600;700;800;900&family=Crimson+Text:wght@400;600;700&family=Roboto:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&family=Nunito:wght@300;400;600;700;800;900&family=Work+Sans:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&family=Almarai:wght@300;400;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap');
+</style>
+
+{% comment %} ============================================================
+  ARABIC / ENGLISH LANGUAGE DETECTION
+  Detects current locale and assigns content + direction accordingly.
+  Arabic locale ISO codes: ar, ar-SA, ar-AE, ar-EG, etc.
+================================================================ {% endcomment %}
+
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% comment %} Assign active content based on language {% endcomment %}
+{% if is_arabic %}
+  {% assign active_title   = section.settings.title_ar   | default: section.settings.title %}
+  {% assign active_content = section.settings.content_ar | default: section.settings.content %}
+  {% assign active_button_label = section.settings.button_label_ar | default: section.settings.button_label %}
+  {% assign text_dir = 'rtl' %}
+  {% assign active_title_font   = section.settings.title_font_family_ar %}
+  {% assign active_content_font = section.settings.content_font_family_ar %}
+  {% assign active_button_font  = section.settings.button_font_family_ar %}
+{% else %}
+  {% assign active_title   = section.settings.title %}
+  {% assign active_content = section.settings.content %}
+  {% assign active_button_label = section.settings.button_label %}
+  {% assign text_dir = 'ltr' %}
+  {% assign active_title_font   = section.settings.title_font_family %}
+  {% assign active_content_font = section.settings.content_font_family %}
+  {% assign active_button_font  = section.settings.button_font_family %}
+{% endif %}
+
+{% style %}
+  {% render 'section-space' %}
+
+  /* Title Font Styling */
+  #shopify-section-{{ section.id }} .rich-text__heading {
+    font-family: '{{ active_title_font }}', serif !important;
+    font-size: {{ section.settings.title_font_size }}px !important;
+    font-weight: {{ section.settings.title_font_weight }} !important;
+    letter-spacing: {{ section.settings.title_letter_spacing }}px !important;
+    line-height: {{ section.settings.title_line_height }} !important;
+    color: {{ section.settings.title_color }} !important;
+    text-transform: {{ section.settings.title_text_transform }} !important;
+  }
+
+  /* Content Text Styling */
+  #shopify-section-{{ section.id }} .rich-text__text {
+    font-family: '{{ active_content_font }}', sans-serif !important;
+    font-size: {{ section.settings.content_font_size }}px !important;
+    font-weight: {{ section.settings.content_font_weight }} !important;
+    line-height: {{ section.settings.content_line_height }} !important;
+    color: {{ section.settings.content_color }} !important;
+  }
+
+  #shopify-section-{{ section.id }} .rich-text__text p {
+    font-family: '{{ active_content_font }}', sans-serif !important;
+    font-size: {{ section.settings.content_font_size }}px !important;
+    font-weight: {{ section.settings.content_font_weight }} !important;
+    line-height: {{ section.settings.content_line_height }} !important;
+    color: {{ section.settings.content_color }} !important;
+  }
+
+  /* Button Font Styling */
+  #shopify-section-{{ section.id }} .global-button {
+    font-family: '{{ active_button_font }}', sans-serif !important;
+    font-size: {{ section.settings.button_font_size }}px !important;
+    font-weight: {{ section.settings.button_font_weight }} !important;
+    letter-spacing: {{ section.settings.button_letter_spacing }}px !important;
+    text-transform: {{ section.settings.button_text_transform }} !important;
+    background-color: {{ section.settings.button_bg_color }} !important;
+    color: {{ section.settings.button_text_color }} !important;
+    border-radius: {{ section.settings.button_border_radius }}px !important;
+    padding: {{ section.settings.button_padding_vertical }}px {{ section.settings.button_padding_horizontal }}px !important;
+  }
+
+  #shopify-section-{{ section.id }} .global-button:hover {
+    background-color: {{ section.settings.button_hover_bg_color }} !important;
+    color: {{ section.settings.button_hover_text_color }} !important;
+  }
+
+  /* RTL Layout */
+  {% if is_arabic %}
+  #shopify-section-{{ section.id }} .rich-text__content {
+    direction: rtl !important;
+    text-align: right !important;
+  }
+  #shopify-section-{{ section.id }} .rich-text__heading,
+  #shopify-section-{{ section.id }} .rich-text__text,
+  #shopify-section-{{ section.id }} .rich-text__text p {
+    direction: rtl !important;
+    /* Arabic fonts don't benefit from letter-spacing — reset it */
+    letter-spacing: 0 !important;
+  }
+  {% endif %}
+
+  /* Mobile Font Sizes */
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .rich-text__heading {
+      font-size: {{ section.settings.title_font_size_mobile }}px !important;
+    }
+    
+    #shopify-section-{{ section.id }} .rich-text__text,
+    #shopify-section-{{ section.id }} .rich-text__text p {
+      font-size: {{ section.settings.content_font_size_mobile }}px !important;
+    }
+
+    #shopify-section-{{ section.id }} .global-button {
+      font-size: {{ section.settings.button_font_size_mobile }}px !important;
+    }
+  }
+
+  {%
+    render 'css-loop',
+    css: section.settings.custom_css,
+    id: section.id,
+  %}
+{% endstyle %}
+
+<section class="section {{ section.settings.css_class }}" dir="{{ text_dir }}">
+  <div class="container">
+    <div class="one-whole column">
+      <div class="rich-text__content {{ section.settings.text_alignment }}">
+        {% if section.settings.image %}
+          {% if section.settings.mobile_image %}
+            <div class="is-hidden-mobile-only">
+          {% endif %}
+          {%
+            render 'image-element',
+            image: section.settings.image,
+            alt: section.settings.image.alt,
+            stretch_width: true,
+            focal_point: section.settings.image.presentation.focal_point,
+          %}
+          {% if section.settings.mobile_image %}
+            </div>
+            <div class="is-hidden-desktop-only">
+              {%
+                render 'image-element',
+                image: section.settings.mobile_image,
+                alt: section.settings.mobile_image.alt,
+                stretch_width: true,
+                focal_point: section.settings.mobile_image.presentation.focal_point,
+              %}
+            </div>
+          {% endif %}
+        {% endif %}
+
+        {% if active_title != blank %}
+          <h2 class="rich-text__heading title">
+            {{ active_title | escape }}
+          </h2>
+          <div class="feature-divider"></div>
+        {% endif %}
+
+        <div class="rich-text__text {{ section.settings.text_size }}">
+          {% if active_content != blank %}
+            {{ active_content }}
+          {% endif %}
+
+          {% if active_button_label != blank %}
+            <a class="global-button" href="{{ section.settings.button_link }}">
+              {{ active_button_label }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich text and image",
+  "class": "shopify-section--rich-text-and-image",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner image",
+      "info": "1800 x 800px recommended"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile banner image",
+      "info": "Display a different image on mobile screens. This only appears when the desktop image is set."
+    },
+
+    {
+      "type": "header",
+      "content": "🇬🇧 Content — English"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading (EN)",
+      "default": "Talk about your brand"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Text (EN)",
+      "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label (EN)"
+    },
+
+    {
+      "type": "header",
+      "content": "🇸🇦 المحتوى — العربية"
+    },
+    {
+      "type": "text",
+      "id": "title_ar",
+      "label": "العنوان (AR)",
+      "default": "تحدث عن علامتك التجارية"
+    },
+    {
+      "type": "richtext",
+      "id": "content_ar",
+      "label": "النص (AR)",
+      "default": "<p>استخدم هذا النص لمشاركة معلومات حول علامتك التجارية مع عملائك.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label_ar",
+      "label": "نص الزر (AR)"
+    },
+
+    {
+      "type": "header",
+      "content": "🔗 Button Link (Shared)"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "text_size",
+      "label": "Text size",
+      "default": "featured_text",
+      "options": [
+        {
+          "value": "regular_text",
+          "label": "Regular"
+        },
+        {
+          "value": "featured_text",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "align_left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "✍️ Title Font — English"
+    },
+    {
+      "type": "select",
+      "id": "title_font_family",
+      "label": "Title font (EN)",
+      "default": "Playfair Display",
+      "options": [
+        { "value": "Merriweather", "label": "Merriweather" },
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Cormorant Garamond", "label": "Cormorant Garamond" },
+        { "value": "EB Garamond", "label": "EB Garamond" },
+        { "value": "Crimson Text", "label": "Crimson Text" },
+        { "value": "Cinzel", "label": "Cinzel" },
+        { "value": "Montserrat", "label": "Montserrat" },
+        { "value": "Raleway", "label": "Raleway" },
+        { "value": "Oswald", "label": "Oswald" },
+        { "value": "Poppins", "label": "Poppins" },
+        { "value": "Inter", "label": "Inter" },
+        { "value": "Work Sans", "label": "Work Sans" },
+        { "value": "Roboto", "label": "Roboto" },
+        { "value": "Open Sans", "label": "Open Sans" },
+        { "value": "Lato", "label": "Lato" },
+        { "value": "Nunito", "label": "Nunito" }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "✍️ خط العنوان — العربية"
+    },
+    {
+      "type": "select",
+      "id": "title_font_family_ar",
+      "label": "خط العنوان (AR)",
+      "default": "Cairo",
+      "options": [
+        { "value": "Cairo", "label": "Cairo" },
+        { "value": "Tajawal", "label": "Tajawal" },
+        { "value": "Almarai", "label": "Almarai" },
+        { "value": "Noto Kufi Arabic", "label": "Noto Kufi Arabic" }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "✍️ Title Size & Style (Shared)"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title size (Desktop)",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "label": "Title size (Mobile)",
+      "min": 18,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Title font weight",
+      "default": "700",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Title letter spacing (EN only)",
+      "min": -2,
+      "max": 10,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "label": "Title line height",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "default": 1.2
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform",
+      "label": "Title text transform",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "UPPERCASE" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+
+    {
+      "type": "header",
+      "content": "✍️ Content Font — English"
+    },
+    {
+      "type": "select",
+      "id": "content_font_family",
+      "label": "Content font (EN)",
+      "default": "Montserrat",
+      "options": [
+        { "value": "Merriweather", "label": "Merriweather" },
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Cormorant Garamond", "label": "Cormorant Garamond" },
+        { "value": "EB Garamond", "label": "EB Garamond" },
+        { "value": "Crimson Text", "label": "Crimson Text" },
+        { "value": "Cinzel", "label": "Cinzel" },
+        { "value": "Montserrat", "label": "Montserrat" },
+        { "value": "Raleway", "label": "Raleway" },
+        { "value": "Oswald", "label": "Oswald" },
+        { "value": "Poppins", "label": "Poppins" },
+        { "value": "Inter", "label": "Inter" },
+        { "value": "Work Sans", "label": "Work Sans" },
+        { "value": "Roboto", "label": "Roboto" },
+        { "value": "Open Sans", "label": "Open Sans" },
+        { "value": "Lato", "label": "Lato" },
+        { "value": "Nunito", "label": "Nunito" }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "✍️ خط المحتوى — العربية"
+    },
+    {
+      "type": "select",
+      "id": "content_font_family_ar",
+      "label": "خط المحتوى (AR)",
+      "default": "Tajawal",
+      "options": [
+        { "value": "Cairo", "label": "Cairo" },
+        { "value": "Tajawal", "label": "Tajawal" },
+        { "value": "Almarai", "label": "Almarai" },
+        { "value": "Noto Kufi Arabic", "label": "Noto Kufi Arabic" }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "✍️ Content Size & Style (Shared)"
+    },
+    {
+      "type": "range",
+      "id": "content_font_size",
+      "label": "Content size (Desktop)",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "content_font_size_mobile",
+      "label": "Content size (Mobile)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "content_font_weight",
+      "label": "Content font weight",
+      "default": "400",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "content_line_height",
+      "label": "Content line height",
+      "min": 1.2,
+      "max": 2.5,
+      "step": 0.1,
+      "default": 1.6
+    },
+    {
+      "type": "color",
+      "id": "content_color",
+      "label": "Content color",
+      "default": "#000000"
+    },
+
+    {
+      "type": "header",
+      "content": "✍️ Button Font — English"
+    },
+    {
+      "type": "select",
+      "id": "button_font_family",
+      "label": "Button font (EN)",
+      "default": "Montserrat",
+      "options": [
+        { "value": "Merriweather", "label": "Merriweather" },
+        { "value": "Playfair Display", "label": "Playfair Display" },
+        { "value": "Cormorant Garamond", "label": "Cormorant Garamond" },
+        { "value": "EB Garamond", "label": "EB Garamond" },
+        { "value": "Crimson Text", "label": "Crimson Text" },
+        { "value": "Cinzel", "label": "Cinzel" },
+        { "value": "Montserrat", "label": "Montserrat" },
+        { "value": "Raleway", "label": "Raleway" },
+        { "value": "Oswald", "label": "Oswald" },
+        { "value": "Poppins", "label": "Poppins" },
+        { "value": "Inter", "label": "Inter" },
+        { "value": "Work Sans", "label": "Work Sans" },
+        { "value": "Roboto", "label": "Roboto" },
+        { "value": "Open Sans", "label": "Open Sans" },
+        { "value": "Lato", "label": "Lato" },
+        { "value": "Nunito", "label": "Nunito" }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "✍️ خط الزر — العربية"
+    },
+    {
+      "type": "select",
+      "id": "button_font_family_ar",
+      "label": "خط الزر (AR)",
+      "default": "Cairo",
+      "options": [
+        { "value": "Cairo", "label": "Cairo" },
+        { "value": "Tajawal", "label": "Tajawal" },
+        { "value": "Almarai", "label": "Almarai" },
+        { "value": "Noto Kufi Arabic", "label": "Noto Kufi Arabic" }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "✍️ Button Size & Style (Shared)"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Button size (Desktop)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "label": "Button size (Mobile)",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "button_font_weight",
+      "label": "Button font weight",
+      "default": "600",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "button_letter_spacing",
+      "label": "Button letter spacing (EN only)",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 0.5
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Button text transform",
+      "default": "uppercase",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "UPPERCASE" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Button hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "label": "Button vertical padding",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "label": "Button horizontal padding",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Top spacing",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom spacing",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Advanced"
+    },
+    {
+      "type": "paragraph",
+      "content": "[Learn more](https://help.outofthesandbox.com/hc/en-us/articles/360022329373)"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS Class"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text and image",
+      "category": "Text"
+    }
+  ],
+  "enabled_on": {
+    "templates": [ "*" ]
+  }
+}
+{% endschema %}

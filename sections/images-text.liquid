@@ -1,0 +1,378 @@
+{% comment %}
+  Image & Text Two Column Section
+  Arabic / English bilingual — auto-switches via request.locale
+{% endcomment %}
+
+{% comment %} ============================================================
+  ARABIC / ENGLISH LANGUAGE DETECTION
+================================================================ {% endcomment %}
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+{% comment %} Assign active content based on language {% endcomment %}
+{% if is_arabic %}
+  {% assign active_title       = section.settings.title_ar       | default: section.settings.title %}
+  {% assign active_description = section.settings.description_ar | default: section.settings.description %}
+  {% assign active_button_text = section.settings.button_text_ar | default: section.settings.button_text %}
+{% else %}
+  {% assign active_title       = section.settings.title %}
+  {% assign active_description = section.settings.description %}
+  {% assign active_button_text = section.settings.button_text %}
+{% endif %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Merriweather:wght@300;400;700;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lato:wght@300;400;700;900&family=Raleway:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=EB+Garamond:wght@400;500;600;700;800&family=Cinzel:wght@400;500;600;700;800;900&family=Crimson+Text:wght@400;600;700&family=Roboto:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&family=Nunito:wght@300;400;600;700;800;900&family=Work+Sans:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap');
+
+  #shopify-section-{{ section.id }} .image-text-section-wrapper {
+    padding: {{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px;
+    background-color: {{ section.settings.section_background_color }};
+  }
+
+  #shopify-section-{{ section.id }} .image-text-container {
+    max-width: {{ section.settings.container_max_width }}px;
+    margin: 0 auto;
+    padding: {{ section.settings.container_padding }}px;
+    background-color: {{ section.settings.container_background_color }};
+    border-radius: {{ section.settings.container_border_radius }}px;
+    display: flex;
+    align-items: center;
+    gap: {{ section.settings.column_gap }}px;
+    {% if is_arabic %}
+      {% comment %} In Arabic we mirror the layout logic — reverse_layout flips it back {% endcomment %}
+      {% if section.settings.reverse_layout %}
+        flex-direction: row;
+      {% else %}
+        flex-direction: row-reverse;
+      {% endif %}
+    {% else %}
+      {% if section.settings.reverse_layout %}
+        flex-direction: row-reverse;
+      {% else %}
+        flex-direction: row;
+      {% endif %}
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .image-text-content {
+    flex: 1;
+    padding: {{ section.settings.content_padding }}px;
+    {% if is_arabic %}
+    direction: rtl;
+    text-align: right;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .image-text-title {
+    {% if is_arabic %}
+    font-family: 'Cairo', sans-serif;
+    letter-spacing: 0;
+    text-transform: none;
+    {% else %}
+    font-family: '{{ section.settings.title_font_family }}', serif;
+    text-transform: {{ section.settings.title_text_transform }};
+    letter-spacing: {{ section.settings.title_letter_spacing }}px;
+    {% endif %}
+    font-size: {{ section.settings.title_font_size }}px;
+    line-height: 1.2;
+    margin-bottom: {{ section.settings.title_margin_bottom }}px;
+    color: {{ section.settings.title_color }};
+    font-weight: {{ section.settings.title_font_weight }};
+  }
+
+  #shopify-section-{{ section.id }} .image-text-description {
+    {% if is_arabic %}
+    font-family: 'Tajawal', sans-serif;
+    letter-spacing: 0;
+    {% else %}
+    font-family: '{{ section.settings.description_font_family }}', sans-serif;
+    {% endif %}
+    font-size: {{ section.settings.description_font_size }}px;
+    font-weight: {{ section.settings.description_font_weight }};
+    line-height: {{ section.settings.description_line_height }};
+    color: {{ section.settings.description_color }};
+    margin-bottom: {{ section.settings.description_margin_bottom }}px;
+  }
+
+  #shopify-section-{{ section.id }} .image-text-description p {
+    margin-bottom: 15px;
+  }
+  #shopify-section-{{ section.id }} .image-text-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  #shopify-section-{{ section.id }} .image-text-button {
+    display: inline-block;
+    padding: {{ section.settings.button_padding_vertical }}px {{ section.settings.button_padding_horizontal }}px;
+    background-color: {{ section.settings.button_background_color }};
+    color: {{ section.settings.button_text_color }};
+    border: {{ section.settings.button_border_width }}px solid {{ section.settings.button_border_color }};
+    border-radius: {{ section.settings.button_border_radius }}px;
+    font-size: {{ section.settings.button_font_size }}px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    cursor: pointer;
+    {% if is_arabic %}
+    font-family: 'Cairo', sans-serif;
+    letter-spacing: 0;
+    text-transform: none;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .image-text-button:hover {
+    background-color: {{ section.settings.button_hover_background_color }};
+    color: {{ section.settings.button_hover_text_color }};
+    border-color: {{ section.settings.button_hover_border_color }};
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  #shopify-section-{{ section.id }} .image-text-images {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: {{ section.settings.image_gap }}px;
+  }
+
+  #shopify-section-{{ section.id }} .image-text-image-wrapper {
+    flex: 1;
+    width: 100%;
+    border-radius: {{ section.settings.image_border_radius }}px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .image-text-image-wrapper::before {
+    content: '';
+    display: block;
+    padding-top: {{ section.settings.image_aspect_ratio }}%;
+  }
+
+  #shopify-section-{{ section.id }} .image-text-image-wrapper img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .image-text-container {
+      flex-direction: column !important;
+      gap: 30px;
+    }
+    #shopify-section-{{ section.id }} .image-text-content {
+      padding: 20px;
+    }
+    #shopify-section-{{ section.id }} .image-text-title {
+      font-size: {{ section.settings.title_font_size | times: 0.7 }}px;
+    }
+    #shopify-section-{{ section.id }} .image-text-description {
+      font-size: {{ section.settings.description_font_size | times: 0.9 }}px;
+    }
+    #shopify-section-{{ section.id }} .image-text-images {
+      width: 100%;
+      flex-direction: column;
+    }
+  }
+</style>
+
+<div class="image-text-section-wrapper" dir="{{ text_dir }}">
+  <div class="image-text-container">
+
+    <div class="image-text-content">
+      {% if active_title != blank %}
+        <h2 class="image-text-title">{{ active_title }}</h2>
+      {% endif %}
+
+      {% if active_description != blank %}
+        <div class="image-text-description">
+          {{ active_description }}
+        </div>
+      {% endif %}
+
+      {% if active_button_text != blank and section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" class="image-text-button">
+          {{ active_button_text }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="image-text-images">
+      <div class="image-text-image-wrapper">
+        {% if section.settings.image_1 %}
+          <img
+            src="{{ section.settings.image_1 | img_url: '800x800' }}"
+            alt="{{ section.settings.image_1.alt | default: active_title }}"
+            loading="lazy">
+        {% else %}
+          <img
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23f0f0f0' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' fill='%23999' font-family='Arial' font-size='18' text-anchor='middle' dominant-baseline='middle'%3EImage 1%3C/text%3E%3C/svg%3E"
+            alt="Placeholder Image 1">
+        {% endif %}
+      </div>
+
+      <div class="image-text-image-wrapper">
+        {% if section.settings.image_2 %}
+          <img
+            src="{{ section.settings.image_2 | img_url: '800x800' }}"
+            alt="{{ section.settings.image_2.alt | default: active_title }}"
+            loading="lazy">
+        {% else %}
+          <img
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23f0f0f0' width='600' height='400'/%3E%3Ctext x='50%25' y='50%25' fill='%23999' font-family='Arial' font-size='18' text-anchor='middle' dominant-baseline='middle'%3EImage 2%3C/text%3E%3C/svg%3E"
+            alt="Placeholder Image 2">
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image & Text Two Column",
+  "settings": [
+    { "type": "header", "content": "Layout Settings" },
+    {
+      "type": "checkbox", "id": "reverse_layout",
+      "label": "Reverse layout (Images on left, Text on right)",
+      "default": false,
+      "info": "In Arabic mode this is automatically mirrored, so the toggle still works intuitively."
+    },
+    { "type": "range", "id": "container_max_width", "label": "Container max width", "min": 900, "max": 1600, "step": 50, "default": 1400, "unit": "px" },
+    { "type": "range", "id": "column_gap",          "label": "Gap between columns", "min": 20,  "max": 100,  "step": 5,  "default": 60,   "unit": "px" },
+
+    { "type": "header", "content": "Background & Spacing" },
+    { "type": "color", "id": "section_background_color",   "label": "Section background",   "default": "#000000" },
+    { "type": "color", "id": "container_background_color", "label": "Container background", "default": "#ffffff" },
+    { "type": "range", "id": "container_border_radius", "label": "Container border radius", "min": 0, "max": 50,  "step": 2, "default": 0,  "unit": "px" },
+    { "type": "range", "id": "container_padding",       "label": "Container padding",       "min": 20,"max": 100, "step": 5, "default": 60, "unit": "px" },
+    { "type": "range", "id": "section_padding_top",     "label": "Section padding top",     "min": 0, "max": 150, "step": 5, "default": 80, "unit": "px" },
+    { "type": "range", "id": "section_padding_bottom",  "label": "Section padding bottom",  "min": 0, "max": 150, "step": 5, "default": 80, "unit": "px" },
+    { "type": "range", "id": "content_padding",         "label": "Content padding",         "min": 0, "max": 80,  "step": 5, "default": 40, "unit": "px" },
+
+    { "type": "header", "content": "🇬🇧 Text Content — English" },
+    { "type": "text",     "id": "title",       "label": "Heading (EN)",     "default": "THE IDEAL SHAPE OF THE EYEBROWS IS YOUR OWN" },
+    { "type": "richtext", "id": "description", "label": "Description (EN)", "default": "<p>SAYEAH BEAUTY eyebrow pencil is designed to emphasize and set this beauty.</p><p>The correct design of the eyebrows affects the neatness of the makeup and the overall expression of the face.</p>" },
+    { "type": "text",     "id": "button_text", "label": "Button text (EN)", "default": "Shop Eyebrow Pencils" },
+
+    { "type": "header", "content": "🇸🇦 المحتوى — العربية" },
+    { "type": "text",     "id": "title_ar",       "label": "العنوان (AR)",  "default": "الشكل المثالي للحواجب هو شكلكِ الخاص" },
+    { "type": "richtext", "id": "description_ar", "label": "الوصف (AR)",    "default": "<p>قلم الحواجب من ساياه بيوتي مصمم لإبراز هذا الجمال وتثبيته.</p><p>التصميم الصحيح للحواجب يؤثر على أناقة المكياج والتعبير العام للوجه.</p>" },
+    { "type": "text",     "id": "button_text_ar", "label": "نص الزر (AR)",  "default": "تسوقي أقلام الحواجب" },
+
+    { "type": "header", "content": "Title Font" },
+    {
+      "type": "select", "id": "title_font_family", "label": "Title font (EN)", "default": "Merriweather",
+      "options": [
+        { "value": "Merriweather",       "label": "Merriweather" },
+        { "value": "Playfair Display",   "label": "Playfair Display" },
+        { "value": "Cormorant Garamond", "label": "Cormorant Garamond" },
+        { "value": "EB Garamond",        "label": "EB Garamond" },
+        { "value": "Crimson Text",       "label": "Crimson Text" },
+        { "value": "Cinzel",             "label": "Cinzel" },
+        { "value": "Montserrat",         "label": "Montserrat" },
+        { "value": "Raleway",            "label": "Raleway" },
+        { "value": "Oswald",             "label": "Oswald" },
+        { "value": "Poppins",            "label": "Poppins" },
+        { "value": "Inter",              "label": "Inter" },
+        { "value": "Work Sans",          "label": "Work Sans" },
+        { "value": "Roboto",             "label": "Roboto" },
+        { "value": "Open Sans",          "label": "Open Sans" },
+        { "value": "Lato",               "label": "Lato" },
+        { "value": "Nunito",             "label": "Nunito" }
+      ]
+    },
+    { "type": "range",  "id": "title_font_size",     "label": "Title font size",     "min": 24, "max": 72, "step": 2,   "default": 42, "unit": "px" },
+    {
+      "type": "select", "id": "title_font_weight", "label": "Title font weight", "default": "400",
+      "options": [
+        { "value": "300", "label": "Light" }, { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }, { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ]
+    },
+    { "type": "color",  "id": "title_color",         "label": "Title color",         "default": "#000000" },
+    {
+      "type": "select", "id": "title_text_transform", "label": "Title text transform (EN only)", "default": "uppercase",
+      "options": [
+        { "value": "none",       "label": "None" }, { "value": "uppercase",  "label": "Uppercase" },
+        { "value": "lowercase",  "label": "Lowercase" }, { "value": "capitalize", "label": "Capitalize" }
+      ]
+    },
+    { "type": "range",  "id": "title_letter_spacing", "label": "Title letter spacing (EN only)", "min": -2, "max": 5, "step": 0.5, "default": 0, "unit": "px" },
+    { "type": "range",  "id": "title_margin_bottom",  "label": "Title margin bottom",  "min": 15, "max": 60, "step": 5, "default": 30, "unit": "px" },
+
+    { "type": "header", "content": "Description Font" },
+    {
+      "type": "select", "id": "description_font_family", "label": "Description font (EN)", "default": "Merriweather",
+      "options": [
+        { "value": "Merriweather",       "label": "Merriweather" },
+        { "value": "Playfair Display",   "label": "Playfair Display" },
+        { "value": "Cormorant Garamond", "label": "Cormorant Garamond" },
+        { "value": "EB Garamond",        "label": "EB Garamond" },
+        { "value": "Crimson Text",       "label": "Crimson Text" },
+        { "value": "Cinzel",             "label": "Cinzel" },
+        { "value": "Montserrat",         "label": "Montserrat" },
+        { "value": "Raleway",            "label": "Raleway" },
+        { "value": "Oswald",             "label": "Oswald" },
+        { "value": "Poppins",            "label": "Poppins" },
+        { "value": "Inter",              "label": "Inter" },
+        { "value": "Work Sans",          "label": "Work Sans" },
+        { "value": "Roboto",             "label": "Roboto" },
+        { "value": "Open Sans",          "label": "Open Sans" },
+        { "value": "Lato",               "label": "Lato" },
+        { "value": "Nunito",             "label": "Nunito" }
+      ]
+    },
+    { "type": "range",  "id": "description_font_size",    "label": "Description font size",    "min": 14, "max": 24, "step": 1,   "default": 16, "unit": "px" },
+    {
+      "type": "select", "id": "description_font_weight", "label": "Description font weight", "default": "400",
+      "options": [
+        { "value": "300", "label": "Light" }, { "value": "400", "label": "Normal" },
+        { "value": "700", "label": "Bold" }, { "value": "900", "label": "Black" }
+      ]
+    },
+    { "type": "range",  "id": "description_line_height",   "label": "Description line height",   "min": 1, "max": 2, "step": 0.1, "default": 2 },
+    { "type": "color",  "id": "description_color",         "label": "Description color",         "default": "#666666" },
+    { "type": "range",  "id": "description_margin_bottom", "label": "Description margin bottom", "min": 20,"max": 60,"step": 5,   "default": 35, "unit": "px" },
+
+    { "type": "header", "content": "Button Style" },
+    { "type": "url",   "id": "button_link",               "label": "Button link" },
+    { "type": "range", "id": "button_font_size",          "label": "Button font size",           "min": 12,"max": 20,"step": 1, "default": 15, "unit": "px" },
+    { "type": "range", "id": "button_padding_vertical",   "label": "Button padding (vertical)",  "min": 8, "max": 25,"step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "button_padding_horizontal", "label": "Button padding (horizontal)","min": 20,"max": 60,"step": 2, "default": 40, "unit": "px" },
+    { "type": "color", "id": "button_background_color",   "label": "Button background",          "default": "#ffffff" },
+    { "type": "color", "id": "button_text_color",         "label": "Button text color",          "default": "#000000" },
+    { "type": "color", "id": "button_border_color",       "label": "Button border color",        "default": "#000000" },
+    { "type": "range", "id": "button_border_width",       "label": "Button border width",        "min": 0, "max": 5, "step": 1, "default": 1, "unit": "px" },
+    { "type": "range", "id": "button_border_radius",      "label": "Button border radius",       "min": 0, "max": 50,"step": 2, "default": 30, "unit": "px" },
+
+    { "type": "header", "content": "Button Hover State" },
+    { "type": "color", "id": "button_hover_background_color", "label": "Hover background", "default": "#000000" },
+    { "type": "color", "id": "button_hover_text_color",       "label": "Hover text color", "default": "#ffffff" },
+    { "type": "color", "id": "button_hover_border_color",     "label": "Hover border",     "default": "#000000" },
+
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "image_1", "label": "Image 1" },
+    { "type": "image_picker", "id": "image_2", "label": "Image 2" },
+    { "type": "range", "id": "image_gap",          "label": "Gap between images",      "min": 10, "max": 50,  "step": 2, "default": 20,  "unit": "px" },
+    { "type": "range", "id": "image_border_radius","label": "Image border radius",     "min": 0,  "max": 50,  "step": 2, "default": 20,  "unit": "px" },
+    { "type": "range", "id": "image_aspect_ratio", "label": "Image aspect ratio (%)",  "min": 60, "max": 180, "step": 5, "default": 140, "unit": "%",
+      "info": "100% = square, 75% = landscape, 140% = tall portrait" }
+  ],
+  "presets": [
+    { "name": "Image & Text Two Column" }
+  ]
+}
+{% endschema %}

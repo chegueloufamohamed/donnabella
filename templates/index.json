@@ -1,0 +1,1234 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_NLVBKf": {
+      "type": "slideshow",
+      "blocks": {
+        "image_hizJfp": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/197331.jpg",
+            "pretext": "",
+            "title": "",
+            "subtitle": "",
+            "button1": "",
+            "button1_link": "",
+            "button1_style": "global-button--banner",
+            "button2": "",
+            "button2_link": "",
+            "button2_style": "global-button--banner",
+            "text_position": "center",
+            "text_align": "center",
+            "caption_content_background": "original"
+          }
+        },
+        "image_4HtbCW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/massage-men-resized-1200w.jpg",
+            "pretext": "",
+            "title": "",
+            "subtitle": "",
+            "button1": "",
+            "button1_link": "",
+            "button1_style": "global-button--banner",
+            "button2": "",
+            "button2_link": "",
+            "button2_style": "global-button--banner",
+            "text_position": "center",
+            "text_align": "center",
+            "caption_content_background": "original"
+          }
+        }
+      },
+      "block_order": [
+        "image_hizJfp",
+        "image_4HtbCW"
+      ],
+      "disabled": true,
+      "name": "Slideshow",
+      "settings": {
+        "wide_display": true,
+        "slideshow_text_animation": "fadeInDown",
+        "slideshow_animation": "fade",
+        "slideshow_speed": 6,
+        "activate_adaptiveHeight": false,
+        "mobile_text_below_image": true,
+        "mobile_text_color": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "css_class": "",
+        "custom_css": ""
+      }
+    },
+    "video_7kn6Qf": {
+      "type": "video",
+      "disabled": true,
+      "name": "Video",
+      "settings": {
+        "wide_display": true,
+        "aspect_ratio": "16:9",
+        "autoplay": true,
+        "autoloop": true,
+        "mute_video": false,
+        "show_controls": false,
+        "video_dark_overlay": false,
+        "iframe_video": "",
+        "html5_video": "https://cdn.shopify.com/videos/c/o/v/e75033b6e9f346db9c3eb151020df536.mp4",
+        "display_text_over_video": false,
+        "preheading": "",
+        "heading": "",
+        "subheading": "",
+        "button1_label": "Play Video",
+        "button1_link": "",
+        "button1_style": "global-button--banner",
+        "button2_label": "",
+        "button2_link": "",
+        "button2_style": "global-button--banner",
+        "text_position": "center",
+        "text_align": "center",
+        "caption_content_background": "original",
+        "mobile_image": "shopify://shop_images/Happy_Facial.png",
+        "mobile_iframe_video": "",
+        "mobile_html5_video": "",
+        "mobile_text_below_image": true,
+        "mobile_text_color": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "css_class": "",
+        "custom_css": ""
+      }
+    },
+    "glassy_test_fXYnqM": {
+      "type": "glassy-test",
+      "disabled": true,
+      "name": "Glassy Test Box",
+      "settings": {
+        "bg_color": "#c6b3b3",
+        "bg_opacity": 15,
+        "blur": 20,
+        "bg_image": "shopify://shop_images/faq-bg-photo.webp",
+        "title": "Glassy Effect Test",
+        "description": "This has the same glassy blur as your header!"
+      }
+    },
+    "custom_liquid_46bQwQ": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "<!-- ============================================================\n     DONNABELLA - WOMEN & MEN HOME SERVICES SECTIONS\n     Custom Liquid Code - Paste into Shopify Custom Liquid block\n     ============================================================ -->\n\n<style>\n/* --- GLOBAL SECTION STYLES --- */\n.db-services-wrapper {\n  width: 100vw;\n  position: relative;\n  left: 50%;\n  right: 50%;\n  margin-left: -50vw;\n  margin-right: -50vw;\n  overflow: hidden;\n}\n\n/* --- WOMEN SECTION --- */\n.db-women-section {\n  position: relative;\n  min-height: 100vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 100px 40px;\n  background:\n    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(255,182,193,0.22) 0%, transparent 60%),\n    radial-gradient(ellipse 60% 80% at 80% 30%, rgba(221,160,221,0.18) 0%, transparent 55%),\n    radial-gradient(ellipse 50% 50% at 50% 90%, rgba(255,240,245,0.15) 0%, transparent 50%),\n    linear-gradient(135deg, #1a0a1e 0%, #2d1b35 30%, #1e0f2a 60%, #120818 100%);\n  overflow: hidden;\n}\n\n.db-women-section::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background:\n    radial-gradient(circle 600px at 15% 50%, rgba(255,255,255,0.04) 0%, transparent 70%),\n    radial-gradient(circle 400px at 85% 20%, rgba(255,255,255,0.05) 0%, transparent 60%);\n  pointer-events: none;\n}\n\n/* Floating glow orbs - Women */\n.db-women-section .db-orb {\n  position: absolute;\n  border-radius: 50%;\n  filter: blur(80px);\n  pointer-events: none;\n  animation: db-float 8s ease-in-out infinite;\n}\n.db-women-section .db-orb-1 {\n  width: 500px;\n  height: 500px;\n  background: radial-gradient(circle, rgba(255,182,193,0.25) 0%, transparent 70%);\n  top: -100px;\n  left: -100px;\n  animation-delay: 0s;\n}\n.db-women-section .db-orb-2 {\n  width: 400px;\n  height: 400px;\n  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);\n  bottom: -80px;\n  right: 10%;\n  animation-delay: 3s;\n}\n.db-women-section .db-orb-3 {\n  width: 300px;\n  height: 300px;\n  background: radial-gradient(circle, rgba(221,160,221,0.2) 0%, transparent 70%);\n  top: 40%;\n  right: -50px;\n  animation-delay: 5s;\n}\n\n/* --- MEN SECTION --- */\n.db-men-section {\n  position: relative;\n  min-height: 100vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 100px 40px;\n  background:\n    radial-gradient(ellipse 80% 60% at 80% 50%, rgba(100,149,237,0.18) 0%, transparent 60%),\n    radial-gradient(ellipse 60% 80% at 20% 30%, rgba(70,130,180,0.15) 0%, transparent 55%),\n    radial-gradient(ellipse 50% 50% at 50% 90%, rgba(200,220,255,0.1) 0%, transparent 50%),\n    linear-gradient(135deg, #080e1a 0%, #0f1e30 30%, #0a1525 60%, #060d18 100%);\n  overflow: hidden;\n}\n\n.db-men-section::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background:\n    radial-gradient(circle 600px at 85% 50%, rgba(255,255,255,0.04) 0%, transparent 70%),\n    radial-gradient(circle 400px at 15% 20%, rgba(255,255,255,0.04) 0%, transparent 60%);\n  pointer-events: none;\n}\n\n/* Floating glow orbs - Men */\n.db-men-section .db-orb {\n  position: absolute;\n  border-radius: 50%;\n  filter: blur(80px);\n  pointer-events: none;\n  animation: db-float 8s ease-in-out infinite;\n}\n.db-men-section .db-orb-1 {\n  width: 500px;\n  height: 500px;\n  background: radial-gradient(circle, rgba(100,149,237,0.2) 0%, transparent 70%);\n  top: -100px;\n  right: -100px;\n  animation-delay: 0s;\n}\n.db-men-section .db-orb-2 {\n  width: 400px;\n  height: 400px;\n  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);\n  bottom: -80px;\n  left: 10%;\n  animation-delay: 3s;\n}\n.db-men-section .db-orb-3 {\n  width: 300px;\n  height: 300px;\n  background: radial-gradient(circle, rgba(135,206,250,0.18) 0%, transparent 70%);\n  top: 40%;\n  left: -50px;\n  animation-delay: 5s;\n}\n\n/* --- FLOAT ANIMATION --- */\n@keyframes db-float {\n  0%, 100% { transform: translateY(0px) scale(1); }\n  50% { transform: translateY(-30px) scale(1.05); }\n}\n\n/* --- SECTION INNER CONTAINER --- */\n.db-section-inner {\n  position: relative;\n  z-index: 2;\n  width: 100%;\n  max-width: 1300px;\n  margin: 0 auto;\n}\n\n/* --- SECTION HEADER --- */\n.db-section-header {\n  text-align: center;\n  margin-bottom: 70px;\n}\n\n.db-section-eyebrow {\n  display: inline-block;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 11px;\n  font-weight: 600;\n  letter-spacing: 5px;\n  text-transform: uppercase;\n  padding: 8px 24px;\n  border-radius: 50px;\n  margin-bottom: 24px;\n  backdrop-filter: blur(20px);\n  -webkit-backdrop-filter: blur(20px);\n}\n\n.db-women-section .db-section-eyebrow {\n  background: rgba(255,255,255,0.12);\n  border: 1px solid rgba(255,182,193,0.4);\n  color: rgba(255,200,210,0.95);\n  box-shadow: 0 0 20px rgba(255,182,193,0.2), inset 0 1px 0 rgba(255,255,255,0.15);\n}\n\n.db-men-section .db-section-eyebrow {\n  background: rgba(255,255,255,0.08);\n  border: 1px solid rgba(100,149,237,0.4);\n  color: rgba(180,210,255,0.95);\n  box-shadow: 0 0 20px rgba(100,149,237,0.2), inset 0 1px 0 rgba(255,255,255,0.12);\n}\n\n.db-section-title {\n  font-family: 'Cormorant Garamond', serif;\n  font-size: clamp(42px, 6vw, 80px);\n  font-weight: 300;\n  line-height: 1.1;\n  color: #ffffff;\n  margin-bottom: 20px;\n  text-shadow: 0 0 60px rgba(255,255,255,0.15), 0 2px 4px rgba(0,0,0,0.3);\n}\n\n.db-section-title em {\n  font-style: italic;\n  font-weight: 400;\n}\n\n.db-women-section .db-section-title em { color: rgba(255,200,215,0.95); }\n.db-men-section .db-section-title em { color: rgba(180,210,255,0.95); }\n\n.db-section-subtitle {\n  font-family: 'Montserrat', sans-serif;\n  font-size: 15px;\n  font-weight: 300;\n  letter-spacing: 1px;\n  color: rgba(255,255,255,0.55);\n  max-width: 520px;\n  margin: 0 auto;\n  line-height: 1.8;\n}\n\n/* --- TITLE DIVIDER --- */\n.db-title-divider {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  margin: 20px 0;\n}\n.db-title-divider span {\n  display: block;\n  height: 1px;\n  width: 60px;\n  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);\n}\n.db-title-divider i {\n  display: block;\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: rgba(255,255,255,0.5);\n  box-shadow: 0 0 10px rgba(255,255,255,0.6);\n}\n\n/* --- SERVICE CARDS GRID --- */\n.db-services-grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 20px;\n  margin-bottom: 50px;\n}\n\n@media (max-width: 900px) {\n  .db-services-grid { grid-template-columns: repeat(2, 1fr); }\n}\n@media (max-width: 560px) {\n  .db-services-grid { grid-template-columns: 1fr; }\n  .db-women-section, .db-men-section { padding: 80px 20px; }\n}\n\n/* --- SERVICE CARD --- */\n.db-service-card {\n  position: relative;\n  border-radius: 24px;\n  padding: 36px 28px 32px;\n  cursor: pointer;\n  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;\n  overflow: hidden;\n  backdrop-filter: blur(30px);\n  -webkit-backdrop-filter: blur(30px);\n}\n\n.db-women-section .db-service-card {\n  background: rgba(255,255,255,0.09);\n  border: 1px solid rgba(255,255,255,0.18);\n  box-shadow:\n    0 8px 32px rgba(0,0,0,0.25),\n    0 0 0 1px rgba(255,255,255,0.05),\n    inset 0 1px 0 rgba(255,255,255,0.2),\n    inset 0 -1px 0 rgba(255,255,255,0.05);\n}\n\n.db-men-section .db-service-card {\n  background: rgba(255,255,255,0.07);\n  border: 1px solid rgba(255,255,255,0.14);\n  box-shadow:\n    0 8px 32px rgba(0,0,0,0.3),\n    0 0 0 1px rgba(255,255,255,0.04),\n    inset 0 1px 0 rgba(255,255,255,0.15),\n    inset 0 -1px 0 rgba(255,255,255,0.04);\n}\n\n.db-women-section .db-service-card:hover {\n  transform: translateY(-8px) scale(1.02);\n  background: rgba(255,255,255,0.14);\n  border-color: rgba(255,200,215,0.4);\n  box-shadow:\n    0 20px 60px rgba(0,0,0,0.3),\n    0 0 40px rgba(255,182,193,0.15),\n    inset 0 1px 0 rgba(255,255,255,0.3);\n}\n\n.db-men-section .db-service-card:hover {\n  transform: translateY(-8px) scale(1.02);\n  background: rgba(255,255,255,0.11);\n  border-color: rgba(100,149,237,0.4);\n  box-shadow:\n    0 20px 60px rgba(0,0,0,0.35),\n    0 0 40px rgba(100,149,237,0.15),\n    inset 0 1px 0 rgba(255,255,255,0.25);\n}\n\n.db-service-card::before {\n  content: '';\n  position: absolute;\n  top: 0; left: 0; right: 0;\n  height: 1px;\n  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);\n  opacity: 0.6;\n}\n\n.db-service-card::after {\n  content: '';\n  position: absolute;\n  inset: 0;\n  border-radius: 24px;\n  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.06) 0%, transparent 60%);\n  pointer-events: none;\n}\n\n/* --- CARD ICON --- */\n.db-card-icon {\n  width: 60px;\n  height: 60px;\n  border-radius: 18px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-bottom: 22px;\n  position: relative;\n  backdrop-filter: blur(20px);\n  -webkit-backdrop-filter: blur(20px);\n  transition: transform 0.3s ease;\n}\n\n.db-card-icon svg {\n  width: 28px;\n  height: 28px;\n  stroke: rgba(255,255,255,0.92);\n  fill: none;\n  stroke-width: 1.6;\n  stroke-linecap: round;\n  stroke-linejoin: round;\n}\n\n.db-service-card:hover .db-card-icon {\n  transform: scale(1.08);\n}\n\n.db-women-section .db-card-icon {\n  background: rgba(255,255,255,0.12);\n  border: 1px solid rgba(255,200,215,0.3);\n  box-shadow: 0 4px 20px rgba(255,182,193,0.2), inset 0 1px 0 rgba(255,255,255,0.25);\n}\n\n.db-men-section .db-card-icon {\n  background: rgba(255,255,255,0.09);\n  border: 1px solid rgba(100,149,237,0.3);\n  box-shadow: 0 4px 20px rgba(100,149,237,0.2), inset 0 1px 0 rgba(255,255,255,0.2);\n}\n\n/* --- CARD TEXT --- */\n.db-card-title {\n  font-family: 'Cormorant Garamond', serif;\n  font-size: 22px;\n  font-weight: 500;\n  color: #ffffff;\n  margin-bottom: 10px;\n  letter-spacing: 0.5px;\n  text-shadow: 0 0 20px rgba(255,255,255,0.2);\n}\n\n.db-card-desc {\n  font-family: 'Montserrat', sans-serif;\n  font-size: 12.5px;\n  font-weight: 300;\n  color: rgba(255,255,255,0.5);\n  line-height: 1.75;\n  letter-spacing: 0.3px;\n}\n\n/* --- CARD ARROW --- */\n.db-card-arrow {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  margin-top: 20px;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 11px;\n  font-weight: 600;\n  letter-spacing: 2px;\n  text-transform: uppercase;\n  text-decoration: none;\n  transition: gap 0.3s ease, opacity 0.3s ease;\n  opacity: 0.7;\n}\n\n.db-service-card:hover .db-card-arrow {\n  gap: 14px;\n  opacity: 1;\n}\n\n.db-women-section .db-card-arrow { color: rgba(255,200,215,0.9); }\n.db-men-section .db-card-arrow { color: rgba(180,210,255,0.9); }\n\n.db-card-arrow svg {\n  width: 14px;\n  height: 14px;\n  transition: transform 0.3s ease;\n}\n.db-service-card:hover .db-card-arrow svg {\n  transform: translateX(4px);\n}\n\n/* --- FEATURED CARD --- */\n.db-card-featured {\n  grid-column: span 2;\n  display: flex;\n  align-items: center;\n  gap: 36px;\n  padding: 40px 44px;\n}\n\n@media (max-width: 900px) {\n  .db-card-featured { grid-column: span 2; flex-direction: column; gap: 24px; }\n}\n@media (max-width: 560px) {\n  .db-card-featured { grid-column: span 1; flex-direction: column; }\n}\n\n.db-card-featured .db-card-icon {\n  width: 80px;\n  height: 80px;\n  border-radius: 22px;\n  flex-shrink: 0;\n}\n\n.db-card-featured .db-card-icon svg {\n  width: 36px;\n  height: 36px;\n  stroke-width: 1.5;\n}\n\n.db-card-featured .db-card-title {\n  font-size: 28px;\n}\n\n.db-card-featured .db-card-desc {\n  font-size: 13.5px;\n}\n\n/* --- SECTION CTA --- */\n.db-section-cta {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 20px;\n  flex-wrap: wrap;\n}\n\n.db-btn-primary {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  padding: 16px 40px;\n  border-radius: 50px;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 2.5px;\n  text-transform: uppercase;\n  text-decoration: none;\n  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);\n  position: relative;\n  overflow: hidden;\n}\n\n.db-btn-primary::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  border-radius: 50px;\n  background: rgba(255,255,255,0.1);\n  opacity: 0;\n  transition: opacity 0.3s ease;\n}\n\n.db-btn-primary:hover::before { opacity: 1; }\n\n.db-women-section .db-btn-primary {\n  background: rgba(255,255,255,0.15);\n  border: 1px solid rgba(255,200,215,0.5);\n  color: #ffffff;\n  box-shadow: 0 8px 30px rgba(255,182,193,0.2), inset 0 1px 0 rgba(255,255,255,0.25);\n  backdrop-filter: blur(20px);\n  -webkit-backdrop-filter: blur(20px);\n}\n\n.db-women-section .db-btn-primary:hover {\n  background: rgba(255,255,255,0.22);\n  border-color: rgba(255,200,215,0.8);\n  box-shadow: 0 12px 40px rgba(255,182,193,0.3), inset 0 1px 0 rgba(255,255,255,0.35);\n  transform: translateY(-2px);\n}\n\n.db-men-section .db-btn-primary {\n  background: rgba(255,255,255,0.1);\n  border: 1px solid rgba(100,149,237,0.5);\n  color: #ffffff;\n  box-shadow: 0 8px 30px rgba(100,149,237,0.2), inset 0 1px 0 rgba(255,255,255,0.2);\n  backdrop-filter: blur(20px);\n  -webkit-backdrop-filter: blur(20px);\n}\n\n.db-men-section .db-btn-primary:hover {\n  background: rgba(255,255,255,0.16);\n  border-color: rgba(100,149,237,0.8);\n  box-shadow: 0 12px 40px rgba(100,149,237,0.3), inset 0 1px 0 rgba(255,255,255,0.3);\n  transform: translateY(-2px);\n}\n\n.db-btn-secondary {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 16px 32px;\n  border-radius: 50px;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 12px;\n  font-weight: 500;\n  letter-spacing: 2px;\n  text-transform: uppercase;\n  text-decoration: none;\n  background: transparent;\n  border: 1px solid rgba(255,255,255,0.2);\n  color: rgba(255,255,255,0.6);\n  transition: all 0.3s ease;\n}\n\n.db-btn-secondary:hover {\n  border-color: rgba(255,255,255,0.4);\n  color: rgba(255,255,255,0.9);\n  background: rgba(255,255,255,0.05);\n}\n\n/* --- DECORATIVE LINES --- */\n.db-deco-line {\n  position: absolute;\n  pointer-events: none;\n  opacity: 0.06;\n}\n\n.db-women-section .db-deco-line-1 {\n  top: 10%;\n  right: 5%;\n  width: 300px;\n  height: 300px;\n  border: 1px solid rgba(255,182,193,1);\n  border-radius: 50%;\n  animation: db-spin 30s linear infinite;\n}\n\n.db-women-section .db-deco-line-2 {\n  bottom: 10%;\n  left: 3%;\n  width: 200px;\n  height: 200px;\n  border: 1px solid rgba(255,255,255,1);\n  border-radius: 50%;\n  animation: db-spin 20s linear infinite reverse;\n}\n\n.db-men-section .db-deco-line-1 {\n  top: 10%;\n  left: 5%;\n  width: 300px;\n  height: 300px;\n  border: 1px solid rgba(100,149,237,1);\n  border-radius: 50%;\n  animation: db-spin 30s linear infinite;\n}\n\n.db-men-section .db-deco-line-2 {\n  bottom: 10%;\n  right: 3%;\n  width: 200px;\n  height: 200px;\n  border: 1px solid rgba(255,255,255,1);\n  border-radius: 50%;\n  animation: db-spin 20s linear infinite reverse;\n}\n\n@keyframes db-spin {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n/* --- STATS ROW --- */\n.db-stats-row {\n  display: flex;\n  justify-content: center;\n  gap: 60px;\n  margin-bottom: 60px;\n  flex-wrap: wrap;\n}\n\n.db-stat-item {\n  text-align: center;\n}\n\n.db-stat-number {\n  font-family: 'Cormorant Garamond', serif;\n  font-size: 42px;\n  font-weight: 300;\n  color: #ffffff;\n  line-height: 1;\n  margin-bottom: 6px;\n  text-shadow: 0 0 30px rgba(255,255,255,0.2);\n}\n\n.db-stat-label {\n  font-family: 'Montserrat', sans-serif;\n  font-size: 10px;\n  font-weight: 500;\n  letter-spacing: 3px;\n  text-transform: uppercase;\n  color: rgba(255,255,255,0.4);\n}\n\n.db-stat-divider {\n  width: 1px;\n  height: 50px;\n  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.2), transparent);\n  align-self: center;\n}\n\n@media (max-width: 560px) {\n  .db-stat-divider { display: none; }\n  .db-stats-row { gap: 30px; }\n}\n</style>\n\n<div class=\"db-services-wrapper\">\n\n<section class=\"db-women-section\">\n  <div class=\"db-orb db-orb-1\"></div>\n  <div class=\"db-orb db-orb-2\"></div>\n  <div class=\"db-orb db-orb-3\"></div>\n  <div class=\"db-deco-line db-deco-line-1\"></div>\n  <div class=\"db-deco-line db-deco-line-2\"></div>\n\n  <div class=\"db-section-inner\">\n    <div class=\"db-section-header\">\n      <span class=\"db-section-eyebrow\">For Her &nbsp;·&nbsp; At-Home Luxury</span>\n      <h2 class=\"db-section-title\">Luxury Beauty,<br><em>Designed for Her</em></h2>\n      <div class=\"db-title-divider\">\n        <span></span><i></i><span></span>\n      </div>\n      <p class=\"db-section-subtitle\">Indulge in personalized beauty rituals delivered to your door. Every service crafted to make you feel radiant, confident, and beautifully you.</p>\n    </div>\n\n    <div class=\"db-stats-row\">\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">250+</div>\n        <div class=\"db-stat-label\">Expert Therapists</div>\n      </div>\n      <div class=\"db-stat-divider\"></div>\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">5K+</div>\n        <div class=\"db-stat-label\">Happy Clients</div>\n      </div>\n      <div class=\"db-stat-divider\"></div>\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">10+</div>\n        <div class=\"db-stat-label\">Services Offered</div>\n      </div>\n    </div>\n\n    <div class=\"db-services-grid\">\n\n      <div class=\"db-service-card db-card-featured\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M12 19c3.5-2.2 5.5-5.1 5.5-8a3.5 3.5 0 0 0-6-2.4A3.5 3.5 0 0 0 5.5 11c0 2.9 2 5.8 6.5 8z\"></path>\n            <path d=\"M12 6.5v-2\"></path>\n          </svg>\n        </div>\n        <div>\n          <div class=\"db-card-title\">Relaxing Massage</div>\n          <div class=\"db-card-desc\">Melt away stress with our signature full-body massage, performed by certified therapists in the comfort of your own home. Choose from Swedish, deep tissue, or aromatherapy.</div>\n          <a class=\"db-card-arrow\" href=\"/pages/women\">\n            Book Now\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n          </a>\n        </div>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M7 5c0-1.1.9-2 2-2h6\"></path>\n            <path d=\"M9 3v5\"></path>\n            <path d=\"M12 3v6\"></path>\n            <path d=\"M15 3v5\"></path>\n            <path d=\"M7 10c0 5 2.5 9 5 9s5-4 5-9\"></path>\n            <path d=\"M7 10h10\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Manicure</div>\n        <div class=\"db-card-desc\">Flawless nails with gel, classic, or nail art finishes. Cuticle care, shaping, and a luxurious hand massage included.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/women\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M8 18c-1.6 0-2.8-1.2-2.8-2.8 0-1.5 1-2.5 2.1-3.6.9-.9 1.7-1.8 1.7-3.1 0-.9.8-1.7 1.7-1.7 1 0 1.8.8 1.8 1.7 0 1.3.8 2.2 1.7 3.1 1.1 1.1 2.1 2.1 2.1 3.6A2.8 2.8 0 0 1 14 18\"></path>\n            <path d=\"M8 18h6\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Pedicure</div>\n        <div class=\"db-card-desc\">Treat your feet to a spa-grade pedicure. Exfoliation, callus removal, nail shaping, and a soothing foot soak.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/women\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M7 7l10 10\"></path>\n            <path d=\"M14 5l5 5\"></path>\n            <path d=\"M5 14l5 5\"></path>\n            <path d=\"M8 6l2 2\"></path>\n            <path d=\"M14 14l4 4\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Hair Care</div>\n        <div class=\"db-card-desc\">Professional blow-dry, styling, deep conditioning, and treatments for every hair type. Salon results at home.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/women\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M8 6h8\"></path>\n            <path d=\"M10 6v4\"></path>\n            <path d=\"M14 6v4\"></path>\n            <path d=\"M7 10h10\"></path>\n            <path d=\"M9 10c0 5 1.5 8 3 8s3-3 3-8\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Waxing</div>\n        <div class=\"db-card-desc\">Smooth, long-lasting results with premium wax formulas. Full body, bikini, and facial waxing by trained specialists.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/women\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M8 9c0-2.2 1.8-4 4-4s4 1.8 4 4\"></path>\n            <path d=\"M7 11c0 5 2 8 5 8s5-3 5-8\"></path>\n            <path d=\"M9 14h6\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Facial & Skin Care</div>\n        <div class=\"db-card-desc\">Radiant skin starts here. Deep cleansing facials, brightening treatments, and hydration therapies tailored to your skin type.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/women\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n    </div>\n\n    <div class=\"db-section-cta\">\n      <a class=\"db-btn-primary\" href=\"/pages/women\">\n        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z\"></path></svg>\n        Explore All Women Services\n      </a>\n      <a class=\"db-btn-secondary\" href=\"/pages/contact?booking=women\">Book a Consultation</a>\n    </div>\n\n  </div>\n</section>\n\n<section class=\"db-men-section\">\n  <div class=\"db-orb db-orb-1\"></div>\n  <div class=\"db-orb db-orb-2\"></div>\n  <div class=\"db-orb db-orb-3\"></div>\n  <div class=\"db-deco-line db-deco-line-1\"></div>\n  <div class=\"db-deco-line db-deco-line-2\"></div>\n\n  <div class=\"db-section-inner\">\n    <div class=\"db-section-header\">\n      <span class=\"db-section-eyebrow\">For Him &nbsp;·&nbsp; Premium Grooming</span>\n      <h2 class=\"db-section-title\">Refined Grooming,<br><em>Crafted for Him</em></h2>\n      <div class=\"db-title-divider\">\n        <span></span><i></i><span></span>\n      </div>\n      <p class=\"db-section-subtitle\">Upgrade your grooming routine with professional home services. Experience comfort, style, and confidence - without leaving your home.</p>\n    </div>\n\n    <div class=\"db-stats-row\">\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">100%</div>\n        <div class=\"db-stat-label\">At-Home Service</div>\n      </div>\n      <div class=\"db-stat-divider\"></div>\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">60+</div>\n        <div class=\"db-stat-label\">Min Sessions</div>\n      </div>\n      <div class=\"db-stat-divider\"></div>\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">★ 4.9</div>\n        <div class=\"db-stat-label\">Client Rating</div>\n      </div>\n    </div>\n\n    <div class=\"db-services-grid\">\n\n      <div class=\"db-service-card db-card-featured\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M7 7l10 10\"></path>\n            <path d=\"M14 5l5 5\"></path>\n            <path d=\"M5 14l5 5\"></path>\n            <path d=\"M8 6l2 2\"></path>\n            <path d=\"M14 14l4 4\"></path>\n          </svg>\n        </div>\n        <div>\n          <div class=\"db-card-title\">Precision Hair Care</div>\n          <div class=\"db-card-desc\">From sharp cuts to expert styling and scalp treatments - our professional barbers and stylists bring the full salon experience directly to your home. Look sharp, feel sharp.</div>\n          <a class=\"db-card-arrow\" href=\"/pages/men\">\n            Book Now\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n          </a>\n        </div>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M7 14c2.5 0 3.2-2 5-2s2.5 2 5 2\"></path>\n            <path d=\"M8 11c1.2 0 2-.8 2-2\"></path>\n            <path d=\"M16 11c-1.2 0-2-.8-2-2\"></path>\n            <path d=\"M6 16c1.5 2 3.5 3 6 3s4.5-1 6-3\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Sports Massage</div>\n        <div class=\"db-card-desc\">Deep tissue and sports massage to relieve muscle tension, improve recovery, and restore peak performance.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/men\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M6 18l8-8\"></path>\n            <path d=\"M12 6l6 6\"></path>\n            <path d=\"M14 4l6 6\"></path>\n            <path d=\"M4 20l4-4\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Waxing & Grooming</div>\n        <div class=\"db-card-desc\">Clean, precise waxing for chest, back, and facial areas. Professional results with premium, skin-safe wax.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/men\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M7 6c0-1 .8-2 1.8-2H15\"></path>\n            <path d=\"M9 4v5\"></path>\n            <path d=\"M12 4v6\"></path>\n            <path d=\"M15 4v5\"></path>\n            <path d=\"M7 10c0 5 2.5 8 5 8s5-3 5-8\"></path>\n            <path d=\"M7 10h10\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Manicure & Pedicure</div>\n        <div class=\"db-card-desc\">Clean, shaped, and polished nails with a relaxing hand and foot treatment. Grooming at its finest.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/men\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M10 5h4\"></path>\n            <path d=\"M9 5h6v3l-1 2v8a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-8L9 8V5z\"></path>\n            <path d=\"M10 12h4\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Men's Facial</div>\n        <div class=\"db-card-desc\">Deep pore cleansing, exfoliation, and hydration treatments designed specifically for men's skin. Clear, healthy skin awaits.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/men\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n    </div>\n\n    <div class=\"db-section-cta\">\n      <a class=\"db-btn-primary\" href=\"/pages/men\">\n        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z\"></path></svg>\n        Explore All Men Services\n      </a>\n      <a class=\"db-btn-secondary\" href=\"/pages/contact?booking=men\">Book a Consultation</a>\n    </div>\n\n  </div>\n</section>\n\n</div>",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "css_class": "",
+        "custom_css": ""
+      }
+    },
+    "collections_slider_HExRLN": {
+      "type": "collections-slider",
+      "blocks": {
+        "collection_gwyiUY": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify://shop_images/Nails.webp",
+            "text": "Discover Move",
+            "text_ar": "إكتشف المزيد",
+            "link": "",
+            "card_font_size": 24,
+            "card_font_weight": "600"
+          }
+        },
+        "collection_iFxMEe": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify://shop_images/Eyebrows.webp",
+            "text": "Discover More",
+            "text_ar": "إكتشف المزيد",
+            "link": "",
+            "card_font_size": 24,
+            "card_font_weight": "600"
+          }
+        },
+        "collection_tJ4Cc3": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify://shop_images/facial.webp",
+            "text": "Discover More",
+            "text_ar": "إكتشف المزيد",
+            "link": "",
+            "card_font_size": 24,
+            "card_font_weight": "600"
+          }
+        },
+        "collection_Twz3Cf": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify://shop_images/image-gen_26.png",
+            "text": "Discover More",
+            "text_ar": "إكتشف المزيد",
+            "link": "",
+            "card_font_size": 24,
+            "card_font_weight": "600"
+          }
+        },
+        "collection_Et6FV6": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify://shop_images/Happy_Facial.png",
+            "text": "Discover More",
+            "text_ar": "إكتشف المزيد",
+            "link": "",
+            "card_font_size": 24,
+            "card_font_weight": "600"
+          }
+        },
+        "collection_D8kTFt": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify://shop_images/Happy_Haircare.png",
+            "text": "Discover More",
+            "text_ar": "إكتشف المزيد",
+            "link": "",
+            "card_font_size": 24,
+            "card_font_weight": "600"
+          }
+        },
+        "collection_Y6bwkF": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify://shop_images/Geraldine.jpg",
+            "text": "Discover More",
+            "text_ar": "إكتشف المزيد",
+            "link": "",
+            "card_font_size": 24,
+            "card_font_weight": "600"
+          }
+        },
+        "collection_n3mnM7": {
+          "type": "collection",
+          "settings": {
+            "image": "shopify://shop_images/Happy_Massage.png",
+            "text": "Discover More",
+            "text_ar": "إكتشف المزيد",
+            "link": "",
+            "card_font_size": 24,
+            "card_font_weight": "600"
+          }
+        }
+      },
+      "block_order": [
+        "collection_gwyiUY",
+        "collection_iFxMEe",
+        "collection_tJ4Cc3",
+        "collection_Twz3Cf",
+        "collection_Et6FV6",
+        "collection_D8kTFt",
+        "collection_Y6bwkF",
+        "collection_n3mnM7"
+      ],
+      "name": "Collections Slider",
+      "settings": {
+        "background_color": "#405264",
+        "frame_color": "#ffffff",
+        "frame_radius": 16,
+        "frame_padding": 40,
+        "section_padding_top": 80,
+        "section_padding_bottom": 80,
+        "container_width": 1400,
+        "title": "Everyday Essentials",
+        "description": "Browse our curated collections, handpicked just for you.",
+        "title_ar": "المجموعات المميزة",
+        "description_ar": "تصفحي مجموعاتنا المختارة بعناية خصيصاً لكِ.",
+        "title_font": "Merriweather",
+        "title_font_fallback": "sans-serif",
+        "title_size": 56,
+        "title_weight": "700",
+        "title_color": "#000000",
+        "title_alignment": "center",
+        "title_margin": 50,
+        "description_font": "Merriweather",
+        "description_font_fallback": "sans-serif",
+        "description_size": 16,
+        "description_max_width": 750,
+        "description_weight": "600",
+        "description_color": "#555555",
+        "description_line_height": 16,
+        "description_gap": 12,
+        "cards_per_row": 4,
+        "card_gap": 20,
+        "card_height": 400,
+        "card_radius": 20,
+        "card_shadow": true,
+        "card_text_size": 24,
+        "card_text_weight": "600",
+        "card_text_color": "#ffffff",
+        "card_text_font": "Arial",
+        "card_text_font_fallback": "sans-serif",
+        "card_text_padding": 25,
+        "overlay_opacity": 70,
+        "card_arrow_bg": "#ffffff",
+        "card_arrow_color": "#000000",
+        "nav_arrow_bg": "#ffffff",
+        "nav_arrow_hover_bg": "#f0f0f0",
+        "nav_arrow_color": "#000000",
+        "nav_arrow_shadow": true
+      }
+    },
+    "sticky_hero_collagage_keGHmd": {
+      "type": "sticky-hero-collagage",
+      "disabled": true,
+      "name": "Sticky Hero Collage",
+      "settings": {
+        "header_height": 80,
+        "bg_image": "shopify://shop_images/faq-bg-photo.webp",
+        "bg_blur": 23,
+        "bg_fallback_color": "#cccccc",
+        "overlay_color": "#ffffff",
+        "overlay_opacity": 24,
+        "heading": "Beauty that’s more than skin deep",
+        "subheading": "Luxury home beauty services across the UAE.",
+        "book_label": "Book now",
+        "book_link": "#book-now-section",
+        "services_label": "Check services",
+        "services_link": "#book-now-section",
+        "float_image_1": "shopify://shop_images/Eyelashes.webp",
+        "float_image_2": "shopify://shop_images/Nails.webp",
+        "float_image_3": "shopify://shop_images/Eyebrows.webp",
+        "float_image_4": "shopify://shop_images/Haircare.webp",
+        "scroll_speed": 150,
+        "section_height_vh": 300,
+        "sticky_height_vh": 100,
+        "parallax_lift": 520,
+        "photo_side_padding": 140,
+        "photo_vertical_padding": 10,
+        "photo_gap": 0,
+        "collage_top_offset": 52,
+        "photo_scale": 94,
+        "photo_shadow_opacity": 40,
+        "photo_shadow_opacity_2": 12,
+        "photo_shadow_y": 30,
+        "photo_shadow_blur": 64,
+        "photo_shadow_spread": 2,
+        "radius": 22,
+        "text_max_width": 670,
+        "text_color": "#ffffff",
+        "button_primary_bg": "#ffffff",
+        "button_primary_text": "#ffffff",
+        "button_radius": 14
+      }
+    },
+    "befor_after_cards_dTTfLD": {
+      "type": "befor-after-cards",
+      "blocks": {
+        "card_EHkaqT": {
+          "type": "card",
+          "settings": {
+            "position": "left",
+            "kicker": "Get Your Skin Clean",
+            "title": "",
+            "cta": "View More",
+            "kicker_ar": "بشرة",
+            "title_ar": "كريم منظف مضيء",
+            "cta_ar": "عرض المنتج",
+            "image": "shopify://shop_images/cosmetician-cleaning-face-close-up-2026-01-05-00-39-35-utc.jpg",
+            "link": ""
+          }
+        },
+        "card_KrAwAD": {
+          "type": "card",
+          "settings": {
+            "position": "right",
+            "kicker": "Get Your Skin Shiny",
+            "title": "",
+            "cta": "View More",
+            "kicker_ar": "بشرة",
+            "title_ar": "كريم منظف مضيء",
+            "cta_ar": "عرض المنتج",
+            "image": "shopify://shop_images/facial.webp",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_EHkaqT",
+        "card_KrAwAD"
+      ],
+      "name": "Before/After Slider",
+      "settings": {
+        "before_image": "shopify://shop_images/Before.png",
+        "after_image": "shopify://shop_images/After.png",
+        "label_before": "Before",
+        "label_after": "After",
+        "label_before_ar": "قبل",
+        "label_after_ar": "بعد",
+        "label_color": "#0b1b3a",
+        "initial_percent": 50,
+        "height_desktop": 550,
+        "height_mobile": 420,
+        "fit_mode": "cover",
+        "image_bg": "#ffffff",
+        "inner_pad": 18,
+        "image_focus": 25,
+        "radius": 28,
+        "section_bg": "#405264",
+        "frame_bg": "#ffffff",
+        "frame_border_size": 18,
+        "max_width": 1000,
+        "pad_top": 24,
+        "pad_bottom": 24,
+        "below_content": "",
+        "below_content_ar": ""
+      }
+    },
+    "images_text_RBadb3": {
+      "type": "images-text",
+      "name": "Image & Text Two Column",
+      "settings": {
+        "reverse_layout": false,
+        "container_max_width": 1400,
+        "column_gap": 60,
+        "section_background_color": "#405264",
+        "container_background_color": "#d9d9d9",
+        "container_border_radius": 28,
+        "container_padding": 60,
+        "section_padding_top": 80,
+        "section_padding_bottom": 80,
+        "content_padding": 40,
+        "title": "THE IDEAL SHAPE OF THE EYEBROWS IS YOUR OWN",
+        "description": "<p>SAYEAH BEAUTY eyebrow pencil is designed to emphasize and set this beauty.</p><p>The correct design of the eyebrows affects the neatness of the makeup and the overall expression of the face.</p>",
+        "button_text": "Shop Eyebrow Pencils",
+        "title_ar": "الشكل المثالي للحواجب هو شكلكِ الخاص",
+        "description_ar": "<p>قلم الحواجب من ساياه بيوتي مصمم لإبراز هذا الجمال وتثبيته.</p><p>التصميم الصحيح للحواجب يؤثر على أناقة المكياج والتعبير العام للوجه.</p>",
+        "button_text_ar": "تسوقي أقلام الحواجب",
+        "title_font_family": "Merriweather",
+        "title_font_size": 42,
+        "title_font_weight": "700",
+        "title_color": "#000000",
+        "title_text_transform": "uppercase",
+        "title_letter_spacing": 0,
+        "title_margin_bottom": 30,
+        "description_font_family": "Merriweather",
+        "description_font_size": 16,
+        "description_font_weight": "700",
+        "description_line_height": 1.7,
+        "description_color": "#666666",
+        "description_margin_bottom": 35,
+        "button_link": "",
+        "button_font_size": 15,
+        "button_padding_vertical": 14,
+        "button_padding_horizontal": 40,
+        "button_background_color": "#ffffff",
+        "button_text_color": "#000000",
+        "button_border_color": "#000000",
+        "button_border_width": 1,
+        "button_border_radius": 30,
+        "button_hover_background_color": "#000000",
+        "button_hover_text_color": "#ffffff",
+        "button_hover_border_color": "#000000",
+        "image_1": "shopify://shop_images/image-gen.jpg",
+        "image_2": "shopify://shop_images/Background121211.png",
+        "image_gap": 20,
+        "image_border_radius": 20,
+        "image_aspect_ratio": 180
+      }
+    },
+    "animated_services_zzc6kg": {
+      "type": "animated-services",
+      "blocks": {
+        "text_item_Y6h97z": {
+          "type": "text_item",
+          "settings": {
+            "text": "Cleansers",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "text_item_KyKUqB": {
+          "type": "text_item",
+          "settings": {
+            "text": "Moisturizers",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "image_item_Xx4NJE": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify://shop_images/Eyebrows.webp",
+            "text": "",
+            "text_ar": ""
+          }
+        },
+        "text_item_tdN4RH": {
+          "type": "text_item",
+          "settings": {
+            "text": "Sun Protection",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "text_item_QABnWM": {
+          "type": "text_item",
+          "settings": {
+            "text": "Makeup",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "image_item_aRNXFK": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify://shop_images/Haircare.webp",
+            "text": "",
+            "text_ar": ""
+          }
+        },
+        "text_item_gb6HdV": {
+          "type": "text_item",
+          "settings": {
+            "text": "Bath & Body",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "text_item_C6i9bX": {
+          "type": "text_item",
+          "settings": {
+            "text": "Toners",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "text_item_eaKhpQ": {
+          "type": "text_item",
+          "settings": {
+            "text": "Kits & Combos",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "image_item_Dw4xCM": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify://shop_images/Massage.webp",
+            "text": "",
+            "text_ar": ""
+          }
+        },
+        "text_item_pTtffn": {
+          "type": "text_item",
+          "settings": {
+            "text": "Face Oils",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "text_item_VT6kHC": {
+          "type": "text_item",
+          "settings": {
+            "text": "Eye Care",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "text_item_JRpq7w": {
+          "type": "text_item",
+          "settings": {
+            "text": "Lip Care",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "text_item_h7zbak": {
+          "type": "text_item",
+          "settings": {
+            "text": "Masks",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        },
+        "text_item_QmBybR": {
+          "type": "text_item",
+          "settings": {
+            "text": "Gifts Set",
+            "text_ar": "الفئة",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_item_Y6h97z",
+        "text_item_KyKUqB",
+        "image_item_Xx4NJE",
+        "text_item_tdN4RH",
+        "text_item_QABnWM",
+        "image_item_aRNXFK",
+        "text_item_gb6HdV",
+        "text_item_C6i9bX",
+        "text_item_eaKhpQ",
+        "image_item_Dw4xCM",
+        "text_item_pTtffn",
+        "text_item_VT6kHC",
+        "text_item_JRpq7w",
+        "text_item_h7zbak",
+        "text_item_QmBybR"
+      ],
+      "name": "Animated Services",
+      "settings": {
+        "show_title": true,
+        "title_regular": "Special",
+        "title_italic": "Launch Offer",
+        "title_regular_ar": "عرض",
+        "title_italic_ar": "الإطلاق الخاص",
+        "title_font_family": "Merriweather",
+        "title_size": 48,
+        "title_font_weight": "800",
+        "title_letter_spacing": 0,
+        "title_color": "#000000",
+        "outer_background_color": "#405264",
+        "frame_background_color": "#d9d9d9",
+        "frame_border_radius": 20,
+        "frame_max_width": 1200,
+        "frame_padding": 60,
+        "section_padding_top": 50,
+        "section_padding_bottom": 50,
+        "item_gap": 20,
+        "text_item_font_family": "Montserrat",
+        "text_item_font_size": 18,
+        "text_item_font_weight": "500",
+        "text_item_letter_spacing": 0,
+        "text_item_background": "#ffffff",
+        "text_item_color": "#000000",
+        "text_item_padding_vertical": 16,
+        "text_item_padding_horizontal": 32,
+        "text_item_hover_background": "#000000",
+        "text_item_hover_color": "#ffffff",
+        "hover_transition_speed": 400,
+        "image_item_width": 160,
+        "image_item_height": 80,
+        "item_border_radius": 50,
+        "animation_delay": 100
+      }
+    },
+    "dynamic_collection_grid_CgXrkj": {
+      "type": "dynamic-collection-grid",
+      "blocks": {
+        "collection_card_ERdJPH": {
+          "type": "collection_card",
+          "settings": {
+            "image_a": "shopify://shop_images/image-gen_28.png",
+            "label_a": "Face Care",
+            "label_a_ar": "",
+            "link_a": "shopify://pages/facial",
+            "image_b": "shopify://shop_images/take-a-closer-look-at-how-i-keep-my-skin-flawless-2026-01-09-11-01-15-utc.jpg",
+            "label_b": "Face Care",
+            "label_b_ar": "",
+            "link_b": "shopify://pages/facial-men"
+          }
+        },
+        "collection_card_AJxTPj": {
+          "type": "collection_card",
+          "settings": {
+            "image_a": "shopify://shop_images/Haircare.webp",
+            "label_a": "Hair Care",
+            "label_a_ar": "",
+            "link_a": "shopify://pages/haircare",
+            "image_b": "shopify://shop_images/resized_smaller_image_2.jpg",
+            "label_b": "Hair Care",
+            "label_b_ar": "",
+            "link_b": "shopify://pages/haircare-men"
+          }
+        },
+        "collection_card_LqRYRK": {
+          "type": "collection_card",
+          "settings": {
+            "image_a": "shopify://shop_images/woman-receiving-massage-back.jpg",
+            "label_a": "Massage",
+            "label_a_ar": "",
+            "link_a": "shopify://pages/massage",
+            "image_b": "shopify://shop_images/massage-men-resized-1200w.jpg",
+            "label_b": "Massage",
+            "label_b_ar": "",
+            "link_b": "shopify://pages/massage-men"
+          }
+        },
+        "collection_card_HeqNkK": {
+          "type": "collection_card",
+          "settings": {
+            "image_a": "shopify://shop_images/the-specialist-depilates-the-hair-with-wax-on-the-2026-01-08-01-14-16-utc.jpg",
+            "label_a": "Waxing",
+            "label_a_ar": "",
+            "link_a": "shopify://pages/waxing",
+            "image_b": "shopify://shop_images/serene-guy-getting-wax-hair-removal-from-chest-in-2026-01-08-06-17-39-utc.jpg",
+            "label_b": "Waxing",
+            "label_b_ar": "",
+            "link_b": "shopify://pages/waxing-men"
+          }
+        },
+        "collection_card_38AgRJ": {
+          "type": "collection_card",
+          "settings": {
+            "image_a": "shopify://shop_images/Nails.webp",
+            "label_a": "Manicure",
+            "label_a_ar": "",
+            "link_a": "shopify://pages/nails",
+            "image_b": "shopify://shop_images/professional-manicurist-filing-man-nails-with-emer-2026-01-05-06-16-06-utc.jpg",
+            "label_b": "Manicure",
+            "label_b_ar": "",
+            "link_b": "shopify://pages/nails-men"
+          }
+        }
+      },
+      "block_order": [
+        "collection_card_ERdJPH",
+        "collection_card_AJxTPj",
+        "collection_card_LqRYRK",
+        "collection_card_HeqNkK",
+        "collection_card_38AgRJ"
+      ],
+      "name": "Dynamic Collection Grid",
+      "settings": {
+        "heading_a": "Luxury Beauty, Designed for Her",
+        "description_a": "Indulge in personalized at-home beauty experiences with Donnabella. From radiant facials and flawless nails to expert hair care and relaxing massages, enjoy everything you need to feel confident, refreshed, and beautifully you.",
+        "heading_a_ar": "جمال فاخر مصمم لكِ",
+        "description_a_ar": "استمتعي بتجربة جمالية منزلية مصممة خصيصًا لكِ مع دونابيلا. من العناية بالبشرة المشرقة والأظافر الأنيقة إلى خدمات الشعر الاحترافية وجلسات الاسترخاء، كل ما تحتاجينه لتشعري بالثقة والجمال.",
+        "heading_b": "Refined Grooming, Crafted for Him",
+        "description_b": "Upgrade your grooming routine with Donnabella’s professional home services. From precision hair care and skin treatments to relaxing massages, experience comfort, style, and confidence, without leaving your home.",
+        "heading_b_ar": "عناية راقية مصممة له",
+        "description_b_ar": "ارتقِ بروتين العناية الشخصية مع خدمات دونابيلا المنزلية الاحترافية. من العناية الدقيقة بالشعر والبشرة إلى جلسات الاسترخاء، استمتع بالأناقة والراحة والثقة — دون الحاجة لمغادرة منزلك.",
+        "heading_font": "merriweather_n7",
+        "heading_size": 48,
+        "heading_color": "#ffffff",
+        "description_size": 16,
+        "description_color": "#ffffff",
+        "header_gap": 40,
+        "row1_height": 330,
+        "row2_height": 260,
+        "mobile_row1_height": 190,
+        "mobile_row2_height": 160,
+        "grid_gap": 10,
+        "border_radius": 18,
+        "max_width": 1400,
+        "rotation_speed": 2,
+        "fade_duration": 900,
+        "label_bg_color": "#ffffff",
+        "label_text_color": "#1b1f23",
+        "label_hover_bg_color": "#4d4d4d",
+        "label_hover_text_color": "#ffffff",
+        "label_font_size": 13,
+        "label_border_radius": 6,
+        "section_bg": "#405365",
+        "section_padding": 64
+      }
+    },
+    "client_gallery_JP4NU7": {
+      "type": "client-gallery",
+      "blocks": {
+        "image_JRNXny": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image-gen_28.png",
+            "alt": "Happy Client",
+            "alt_ar": "عميلة سعيدة"
+          }
+        },
+        "image_QwWAHF": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image-gen.jpg",
+            "alt": "Happy Client",
+            "alt_ar": "عميلة سعيدة"
+          }
+        },
+        "image_GNRHWJ": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/image-gen_26.png",
+            "alt": "Happy Client",
+            "alt_ar": "عميلة سعيدة"
+          }
+        },
+        "image_8x89FR": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Happy_Massage.png",
+            "alt": "Happy Client",
+            "alt_ar": "عميلة سعيدة"
+          }
+        },
+        "image_ng6xJL": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Happy_Haircare.png",
+            "alt": "Happy Client",
+            "alt_ar": "عميلة سعيدة"
+          }
+        },
+        "image_87GHDY": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Happy_Facial.png",
+            "alt": "Happy Client",
+            "alt_ar": "عميلة سعيدة"
+          }
+        }
+      },
+      "block_order": [
+        "image_JRNXny",
+        "image_QwWAHF",
+        "image_GNRHWJ",
+        "image_8x89FR",
+        "image_ng6xJL",
+        "image_87GHDY"
+      ],
+      "name": "Client Glow Gallery",
+      "settings": {
+        "heading": "Trusted by Hundreds of Happy Clients",
+        "description": "<p>Real results. Real transformations. Discover why our clients continue to choose us and confidently recommend our work.</p>",
+        "heading_ar": "عملاؤنا يحبوننا",
+        "description_ar": "<p>آراء حقيقية ونتائج ملموسة. إليكِ بعض اللحظات التي شاركها عملاؤنا معنا.</p>",
+        "heading_font": "Merriweather",
+        "heading_font_fallback": "sans-serif",
+        "heading_size": 28,
+        "heading_weight": "700",
+        "heading_color": "#ffffff",
+        "heading_max_width": 900,
+        "desc_font": "Merriweather",
+        "desc_font_fallback": "sans-serif",
+        "desc_size": 16,
+        "desc_weight": "600",
+        "desc_color": "#ffffff",
+        "desc_max_width": 600,
+        "bg_color": "#405264",
+        "height_desktop": 400,
+        "height_mobile": 150,
+        "speed": 30,
+        "hover_speed": 60,
+        "radius": 16,
+        "gap": 20,
+        "grayscale": false,
+        "zoom": true
+      }
+    },
+    "scrolling_services_nrifiz": {
+      "type": "scrolling-services",
+      "blocks": {
+        "service_6PpVUb": {
+          "type": "service",
+          "settings": {
+            "image": "shopify://shop_images/Happy_Massage.png",
+            "title": "Massage Therapy",
+            "description": "Indulge in a therapeutic massage experience designed to melt away tension and restore balance. Our skilled therapists customize each session to address your specific needs, promoting deep relaxation and renewed vitality.",
+            "button_link": ""
+          }
+        },
+        "service_PBVixp": {
+          "type": "service",
+          "settings": {
+            "image": "shopify://shop_images/Happy_Haircare.png",
+            "title": "Hair Care",
+            "description": "Transform your tresses with our comprehensive hair care services. From precision cuts to luxurious treatments, our expert stylists bring out your hair's natural beauty while ensuring optimal health and shine.",
+            "button_link": ""
+          }
+        },
+        "service_J4gLmc": {
+          "type": "service",
+          "settings": {
+            "title": "Nail Services",
+            "description": "Treat yourself to pristine manicures and pedicures in a serene atmosphere. Our meticulous nail artists combine artistry with care, delivering impeccable results that elevate your everyday elegance.",
+            "button_link": ""
+          }
+        },
+        "service_Qcakne": {
+          "type": "service",
+          "settings": {
+            "title": "Facial Treatments",
+            "description": "Discover radiant, glowing skin with our signature facial treatments. Whether you choose our comprehensive facial or express option, each treatment is tailored to rejuvenate, nourish, and reveal your natural luminosity.",
+            "button_link": ""
+          }
+        },
+        "service_mrMagf": {
+          "type": "service",
+          "settings": {
+            "title": "Waxing Services",
+            "description": "Experience smooth, flawless skin with our professional waxing services. Using gentle techniques and premium products, we ensure comfort and lasting results for silky-smooth perfection.",
+            "button_link": ""
+          }
+        },
+        "service_ehVkWh": {
+          "type": "service",
+          "settings": {
+            "title": "Eyebrow & Lashes",
+            "description": "Frame your eyes beautifully with our eyebrow shaping and lash enhancement services. From precise brow sculpting to lash lifts and tints, we enhance your natural features for captivating, effortless beauty.",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "service_6PpVUb",
+        "service_PBVixp",
+        "service_J4gLmc",
+        "service_Qcakne",
+        "service_mrMagf",
+        "service_ehVkWh"
+      ],
+      "disabled": true,
+      "name": "Scrolling Services",
+      "settings": {
+        "show_button": true,
+        "button_text": "Book Now"
+      }
+    },
+    "images_text_3x674t": {
+      "type": "images-text",
+      "name": "Image & Text Two Column",
+      "settings": {
+        "reverse_layout": false,
+        "container_max_width": 1400,
+        "column_gap": 60,
+        "section_background_color": "#405264",
+        "container_background_color": "#d9d9d9",
+        "container_border_radius": 0,
+        "container_padding": 60,
+        "section_padding_top": 80,
+        "section_padding_bottom": 80,
+        "content_padding": 40,
+        "title": "THE IDEAL SHAPE OF THE EYEBROWS IS YOUR OWN",
+        "description": "<p>SAYEAH BEAUTY eyebrow pencil is designed to emphasize and set this beauty.</p><p>The correct design of the eyebrows affects the neatness of the makeup and the overall expression of the face.</p>",
+        "button_text": "Shop Eyebrow Pencils",
+        "title_ar": "الشكل المثالي للحواجب هو شكلكِ الخاص",
+        "description_ar": "<p>قلم الحواجب من ساياه بيوتي مصمم لإبراز هذا الجمال وتثبيته.</p><p>التصميم الصحيح للحواجب يؤثر على أناقة المكياج والتعبير العام للوجه.</p>",
+        "button_text_ar": "تسوقي أقلام الحواجب",
+        "title_font_family": "Merriweather",
+        "title_font_size": 42,
+        "title_font_weight": "700",
+        "title_color": "#000000",
+        "title_text_transform": "uppercase",
+        "title_letter_spacing": 0,
+        "title_margin_bottom": 30,
+        "description_font_family": "Merriweather",
+        "description_font_size": 16,
+        "description_font_weight": "700",
+        "description_line_height": 1.7,
+        "description_color": "#0a0a0a",
+        "description_margin_bottom": 35,
+        "button_link": "",
+        "button_font_size": 15,
+        "button_padding_vertical": 14,
+        "button_padding_horizontal": 40,
+        "button_background_color": "#ffffff",
+        "button_text_color": "#000000",
+        "button_border_color": "#000000",
+        "button_border_width": 1,
+        "button_border_radius": 30,
+        "button_hover_background_color": "#000000",
+        "button_hover_text_color": "#ffffff",
+        "button_hover_border_color": "#000000",
+        "image_1": "shopify://shop_images/image-gen_26.png",
+        "image_2": "shopify://shop_images/Happy_Facial.png",
+        "image_gap": 20,
+        "image_border_radius": 20,
+        "image_aspect_ratio": 160
+      }
+    },
+    "book_now_x9a6bR": {
+      "type": "book-now",
+      "name": "Book Now - Premium",
+      "settings": {
+        "heading": "Book Your Appointment",
+        "subheading": "Experience luxury beauty services in the comfort of your home. Our expert professionals are ready to serve you.",
+        "button_text": "Book Your Appointment",
+        "heading_ar": "احجزي موعدك",
+        "subheading_ar": "استمتعي بخدمات التجميل الفاخرة في راحة منزلك.",
+        "button_text_ar": "احجزي موعدك الآن",
+        "label_name_ar": "الاسم الكامل",
+        "label_phone_ar": "رقم الهاتف",
+        "label_email_ar": "البريد الإلكتروني",
+        "label_date_ar": "التاريخ المفضل",
+        "label_message_ar": "طلبات خاصة",
+        "label_optional_ar": "(اختياري)",
+        "placeholder_name_ar": "أدخل اسمك",
+        "placeholder_phone_ar": "+971 XX XXX XXXX",
+        "placeholder_email_ar": "بريدك@example.com",
+        "placeholder_message_ar": "أخبرينا عن أي متطلبات خاصة...",
+        "trust_1_ar": "تأكيد فوري",
+        "trust_2_ar": "حجز آمن",
+        "trust_3_ar": "خدمة احترافية",
+        "heading_font_family": "Merriweather",
+        "heading_font_family_ar": "Cairo",
+        "heading_size": 40,
+        "heading_weight": "700",
+        "heading_letter_spacing": 0,
+        "heading_color": "#ffffff",
+        "subheading_font_family": "Merriweather",
+        "subheading_font_family_ar": "Tajawal",
+        "subheading_size": 15,
+        "subheading_weight": "600",
+        "subheading_letter_spacing": 0,
+        "subheading_color": "#ffffff",
+        "body_font_family": "Merriweather",
+        "body_font_family_ar": "Tajawal",
+        "label_font_family": "Montserrat",
+        "label_font_family_ar": "Cairo",
+        "input_font_size": 13,
+        "label_font_size": 11,
+        "label_font_weight": "700",
+        "button_font_size": 14,
+        "button_font_weight": "600",
+        "photo": "shopify://shop_images/Background121211.png",
+        "photo_alt": "Booking photo",
+        "photo_col_width": 40,
+        "photo_min_height": 420,
+        "photo_max_height": 780,
+        "photo_radius": 22,
+        "photo_fit": "cover",
+        "photo_position": "center center",
+        "photo_scale": 100,
+        "photo_overlay_color": "#000000",
+        "photo_overlay_opacity": 0,
+        "photo_shadow": false,
+        "photo_shadow_opacity": 30,
+        "photo_shadow_x": 0,
+        "photo_shadow_y": 20,
+        "photo_shadow_blur": 40,
+        "container_width": 1200,
+        "column_gap": 40,
+        "header_form_gap": 20,
+        "form_padding": 28,
+        "section_min_height": 600,
+        "section_padding_v": 40,
+        "background_color": "#405264",
+        "bg_opacity_pct": 100,
+        "blob_1_color": "#405264",
+        "blob_2_color": "#405264",
+        "blob_3_color": "#405264",
+        "blob_opacity": 30,
+        "frame_color": "#dadada",
+        "frame_opacity_pct": 70,
+        "frame_radius": 24,
+        "enable_glow": true,
+        "glow_color": "#ffffff",
+        "glow_opacity": 70,
+        "glow_speed": 3,
+        "label_color": "#1f2937",
+        "input_bg_color": "#ffffff",
+        "input_opacity_pct": 60,
+        "input_focus_opacity_pct": 85,
+        "input_text_color": "#1f2937",
+        "placeholder_color": "#1f2937",
+        "button_bg_color": "#333333",
+        "button_hover_color": "#333333",
+        "button_text_color": "#ffffff",
+        "show_trust_badges": true,
+        "trust_text_color": "#1f2937",
+        "trust_border_color": "#ffffff",
+        "anchor_id": "book-now",
+        "form_action": ""
+      }
+    },
+    "faq_glassy_section_rfjURH": {
+      "type": "faq-glassy-section",
+      "blocks": {
+        "faq_AnPXym": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship overseas?",
+            "answer": "<p>Yes, we ship all over the world. Shipping costs will apply, and will be added at checkout. We run discounts and promotions all year, so stay tuned for exclusive deals.</p>",
+            "question_ar": "كيف أحجز خدمة تجميل منزلية؟",
+            "answer_ar": "<p>اختاري خدمتكِ، حددي الموعد المناسب، وستصل المختصة إلى باب منزلكِ.</p>"
+          }
+        },
+        "faq_ReicwV": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need to setup an account to place an order?",
+            "answer": "<p>No, you can checkout as a guest. However, creating an account allows you to track your order and makes future purchases faster.</p>",
+            "question_ar": "كيف أحجز خدمة تجميل منزلية؟",
+            "answer_ar": "<p>اختاري خدمتكِ، حددي الموعد المناسب، وستصل المختصة إلى باب منزلكِ.</p>"
+          }
+        },
+        "faq_ea8Gpk": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer gift wrapping?",
+            "answer": "<p>Yes, we offer beautiful gift wrapping for a small additional fee. You can select this option at checkout.</p>",
+            "question_ar": "كيف أحجز خدمة تجميل منزلية؟",
+            "answer_ar": "<p>اختاري خدمتكِ، حددي الموعد المناسب، وستصل المختصة إلى باب منزلكِ.</p>"
+          }
+        },
+        "faq_jMBhWh": {
+          "type": "faq",
+          "settings": {
+            "question": "How long will it take to get my orders?",
+            "answer": "<p>It depends on where you are. Orders processed in the UAE will take 2-3 business days to arrive. Overseas deliveries can take anywhere from 7-16 days.</p>",
+            "question_ar": "كيف أحجز خدمة تجميل منزلية؟",
+            "answer_ar": "<p>اختاري خدمتكِ، حددي الموعد المناسب، وستصل المختصة إلى باب منزلكِ.</p>"
+          }
+        },
+        "faq_nyChK7": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We accept returns within 30 days of delivery. Items must be unused and in original packaging. Please contact our support team to initiate a return.</p>",
+            "question_ar": "كيف أحجز خدمة تجميل منزلية؟",
+            "answer_ar": "<p>اختاري خدمتكِ، حددي الموعد المناسب، وستصل المختصة إلى باب منزلكِ.</p>"
+          }
+        },
+        "faq_3DiBUD": {
+          "type": "faq",
+          "settings": {
+            "question": "Any question?",
+            "answer": "<p>If you have any other questions, please contact our customer support team. We're here to help!</p>",
+            "question_ar": "كيف أحجز خدمة تجميل منزلية؟",
+            "answer_ar": "<p>اختاري خدمتكِ، حددي الموعد المناسب، وستصل المختصة إلى باب منزلكِ.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_AnPXym",
+        "faq_ReicwV",
+        "faq_ea8Gpk",
+        "faq_jMBhWh",
+        "faq_nyChK7",
+        "faq_3DiBUD"
+      ],
+      "name": "FAQ - Glassy",
+      "settings": {
+        "heading": "Have a question? We are here to help.",
+        "subtitle": "Check out the most common questions our customers asked. Still have questions? Contact our customer support.",
+        "heading_ar": "هل لديكِ سؤال عن خدماتنا؟",
+        "subtitle_ar": "كل ما تحتاجين معرفته عن خدمات التجميل المنزلية — مساج، عناية بالشعر، فيشل، مانيكير، باديكير والمزيد. هل لا تزال لديكِ أسئلة؟ فريقنا هنا للمساعدة.",
+        "background_color": "#405264",
+        "bg_opacity": 1,
+        "background_opacity": 1,
+        "background_blur": 30,
+        "frame_background": "#474747",
+        "frame_opacity": 0.2,
+        "frame_blur": 30,
+        "enable_glow": true,
+        "glow_color": "#ffffff",
+        "glow_opacity": 70,
+        "glow_speed": 3,
+        "show_support_team": true,
+        "support_title": "Our customer support is available:",
+        "support_hours": "Monday to Friday: 8am - 8:30pm",
+        "response_time": "Average answer time: 24h",
+        "support_title_ar": "فريقنا متاح:",
+        "support_hours_ar": "السبت إلى الخميس: ٩ص – ١٠م",
+        "response_time_ar": "متوسط وقت الرد: أقل من ساعة",
+        "text_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "team_VxHJcU": {
+      "type": "team",
+      "blocks": {
+        "team_member_nxUDMY": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/Background121211.png",
+            "position": "left",
+            "name": "JAKOB",
+            "name_ar": "JAKOB"
+          }
+        },
+        "team_member_zQEyCH": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/Edith.jpg",
+            "position": "middle",
+            "name": "REBECCA",
+            "name_ar": "REBECCA"
+          }
+        },
+        "team_member_pj8icM": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/Emma.jpg",
+            "position": "middle",
+            "name": "EDITH",
+            "name_ar": "EDITH"
+          }
+        },
+        "team_member_abdTiH": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/Geraldine.jpg",
+            "position": "middle",
+            "name": "EMMA",
+            "name_ar": "EMMA"
+          }
+        },
+        "team_member_TBwUEp": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/Elaha-in-salon.jpg",
+            "position": "right",
+            "name": "GERALDINE",
+            "name_ar": "GERALDINE"
+          }
+        },
+        "team_member_pFqJhN": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/Rebecca.jpg",
+            "position": "middle",
+            "name": "ELAHA",
+            "name_ar": "ELAHA"
+          }
+        }
+      },
+      "block_order": [
+        "team_member_nxUDMY",
+        "team_member_zQEyCH",
+        "team_member_pj8icM",
+        "team_member_abdTiH",
+        "team_member_TBwUEp",
+        "team_member_pFqJhN"
+      ],
+      "name": "Team Grid",
+      "settings": {
+        "section_title": "OUR TEAM",
+        "section_subtitle": "Over 250 award-winning hair and beauty experts",
+        "section_title_ar": "فريقنا",
+        "section_subtitle_ar": "متخصصاتنا المعتمدات يجلبن خدمات صالون احترافية مباشرة إلى باب منزلكِ.",
+        "background_color": "#405264",
+        "title_font": "Merriweather",
+        "title_size": 40,
+        "title_weight": "700",
+        "title_transform": "uppercase",
+        "title_color": "#ffffff",
+        "subtitle_font": "Playfair Display",
+        "subtitle_size": 18,
+        "subtitle_weight": "400",
+        "subtitle_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "slideshow_NLVBKf",
+    "video_7kn6Qf",
+    "glassy_test_fXYnqM",
+    "custom_liquid_46bQwQ",
+    "collections_slider_HExRLN",
+    "sticky_hero_collagage_keGHmd",
+    "befor_after_cards_dTTfLD",
+    "images_text_RBadb3",
+    "animated_services_zzc6kg",
+    "dynamic_collection_grid_CgXrkj",
+    "client_gallery_JP4NU7",
+    "scrolling_services_nrifiz",
+    "images_text_3x674t",
+    "book_now_x9a6bR",
+    "faq_glassy_section_rfjURH",
+    "team_VxHJcU"
+  ]
+}

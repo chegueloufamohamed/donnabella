@@ -1,0 +1,47 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page-no-title-template",
+      "disabled": true,
+      "settings": {}
+    },
+    "custom_liquid_miRkdf": {
+      "type": "custom-liquid",
+      "name": "Custom liquid",
+      "settings": {
+        "custom_liquid": "{% comment %} Donna Bella — Our Story Coming Soon | Custom Liquid {% endcomment %}\n\n{% assign is_arabic = false %}\n{% if request.locale.iso_code contains 'ar' %}\n  {% assign is_arabic = true %}\n{% endif %}\n\n<style>\n  .db-soon-bleed {\n    width:            100vw;\n    position:         relative;\n    left:             50%;\n    right:            50%;\n    margin-left:      -50vw;\n    margin-right:     -50vw;\n  }\n\n  .db-soon {\n    background:      #405264;\n    min-height:      520px;\n    display:         flex;\n    align-items:     center;\n    justify-content: center;\n    padding:         80px 24px;\n    text-align:      center;\n    position:        relative;\n    overflow:        hidden;\n  }\n\n  /* subtle radial glow */\n  .db-soon::before {\n    content:   '';\n    position:  absolute;\n    inset:     0;\n    background: radial-gradient(ellipse at 50% 40%, rgba(201,169,110,0.12) 0%, transparent 70%);\n    pointer-events: none;\n  }\n\n  .db-soon__inner {\n    position:   relative;\n    z-index:    1;\n    max-width:  560px;\n    margin:     0 auto;\n  }\n\n  /* decorative line ornament */\n  .db-soon__ornament {\n    display:         flex;\n    align-items:     center;\n    justify-content: center;\n    gap:             14px;\n    margin-bottom:   36px;\n  }\n\n  .db-soon__ornament-line {\n    width:      60px;\n    height:     1px;\n    background: linear-gradient(to right, transparent, #C9A96E);\n  }\n\n  .db-soon__ornament-line:last-child {\n    background: linear-gradient(to left, transparent, #C9A96E);\n  }\n\n  .db-soon__ornament-diamond {\n    width:       8px;\n    height:      8px;\n    background:  #C9A96E;\n    transform:   rotate(45deg);\n    flex-shrink: 0;\n  }\n\n  /* label */\n  .db-soon__label {\n    font-family:    'Cormorant Garamond', Georgia, serif;\n    font-size:      11px;\n    font-weight:    600;\n    letter-spacing: 0.22em;\n    text-transform: uppercase;\n    color:          #8FAEAD;\n    margin-bottom:  20px;\n    display:        block;\n  }\n\n  /* headline */\n  .db-soon__title {\n    font-family:  'Cormorant Garamond', Georgia, serif;\n    font-size:    48px;\n    font-weight:  400;\n    line-height:  1.2;\n    color:        #FAF7F2;\n    margin:       0 0 20px;\n    letter-spacing: -0.01em;\n  }\n\n  /* sub text */\n  .db-soon__text {\n    font-family:  'Lora', Georgia, serif;\n    font-size:    16px;\n    font-weight:  300;\n    font-style:   italic;\n    line-height:  1.75;\n    color:        rgba(250,247,242,0.6);\n    margin:       0 0 44px;\n  }\n\n  /* progress dots */\n  .db-soon__dots {\n    display:         flex;\n    align-items:     center;\n    justify-content: center;\n    gap:             10px;\n  }\n\n  .db-soon__dot {\n    width:         8px;\n    height:        8px;\n    border-radius: 50%;\n    background:    #C9A96E;\n    animation:     db-pulse 1.6s ease-in-out infinite;\n  }\n\n  .db-soon__dot:nth-child(2) { animation-delay: 0.3s; background: #8FAEAD; }\n  .db-soon__dot:nth-child(3) { animation-delay: 0.6s; }\n\n  @keyframes db-pulse {\n    0%, 100% { opacity: 0.3; transform: scale(0.85); }\n    50%       { opacity: 1;   transform: scale(1.1);  }\n  }\n\n  /* Arabic overrides */\n  .db-soon[dir=\"rtl\"] .db-soon__label,\n  .db-soon[dir=\"rtl\"] .db-soon__title,\n  .db-soon[dir=\"rtl\"] .db-soon__text {\n    font-family:    'Cairo', 'Tajawal', sans-serif;\n    letter-spacing: 0;\n    text-transform: none;\n    font-style:     normal;\n  }\n\n  .db-soon[dir=\"rtl\"] .db-soon__label { font-size: 13px; }\n  .db-soon[dir=\"rtl\"] .db-soon__title { font-size: 38px; font-weight: 600; }\n  .db-soon[dir=\"rtl\"] .db-soon__text  { font-size: 15px; }\n\n  /* Mobile */\n  @media (max-width: 767px) {\n    .db-soon           { min-height: 380px; padding: 64px 20px; }\n    .db-soon__title    { font-size: 34px; }\n    .db-soon[dir=\"rtl\"] .db-soon__title { font-size: 28px; }\n    .db-soon__text     { font-size: 15px; }\n  }\n</style>\n\n<link href=\"https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@1,300;1,400&family=Cairo:wght@300;400;600&display=swap\" rel=\"stylesheet\">\n\n<div class=\"db-soon-bleed\">\n<div class=\"db-soon\" dir=\"{% if is_arabic %}rtl{% else %}ltr{% endif %}\">\n  <div class=\"db-soon__inner\">\n\n    <div class=\"db-soon__ornament\">\n      <span class=\"db-soon__ornament-line\"></span>\n      <span class=\"db-soon__ornament-diamond\"></span>\n      <span class=\"db-soon__ornament-line\"></span>\n    </div>\n\n    <span class=\"db-soon__label\">\n      {% if is_arabic %}قصتنا{% else %}Our Story{% endif %}\n    </span>\n\n    <h2 class=\"db-soon__title\">\n      {% if is_arabic %}\n        نحن نُعدّ قصتنا لكم\n      {% else %}\n        Something beautiful<br>is on its way\n      {% endif %}\n    </h2>\n\n    <p class=\"db-soon__text\">\n      {% if is_arabic %}\n        نعمل على إعداد قصتنا بكل عناية واهتمام.<br>عودوا إلينا قريباً.\n      {% else %}\n        We are crafting our story with care.<br>Check back with us soon.\n      {% endif %}\n    </p>\n\n    <div class=\"db-soon__dots\">\n      <span class=\"db-soon__dot\"></span>\n      <span class=\"db-soon__dot\"></span>\n      <span class=\"db-soon__dot\"></span>\n    </div>\n\n  </div>\n</div>\n</div>",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "css_class": "",
+        "custom_css": ""
+      }
+    },
+    "16321619775ca16df5": {
+      "type": "image-text",
+      "settings": {
+        "wide_display": false,
+        "featured_links_per_row": "1",
+        "frontpage_text_align": "left",
+        "frontpage_image_position": "row",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "css_class": "",
+        "custom_css": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "custom_liquid_miRkdf",
+    "16321619775ca16df5"
+  ]
+}
