@@ -150,6 +150,22 @@
     margin-bottom: 24px;
     max-height: 350px;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-line) transparent;
+  }
+  .nls-checkout-{{ section.id }} .summary-items::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .nls-checkout-{{ section.id }} .summary-items::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .nls-checkout-{{ section.id }} .summary-items::-webkit-scrollbar-thumb {
+    background: var(--gold-line);
+    border-radius: 4px;
+  }
+  .nls-checkout-{{ section.id }} .summary-items::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
   }
 
   .nls-checkout-{{ section.id }} .summary-item {

@@ -98,7 +98,32 @@
   .nls-{{ section.id }} .nls-add.is-added { background: var(--gold); color: #2f3d4d; border-color: var(--gold); }
 
   /* ── SUMMARY ── */
-  .nls-{{ section.id }} .nls-cart { position: relative; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-b); }
+  .nls-{{ section.id }} .nls-cart,
+  .nls-{{ section.id }} .nls-cart-panel {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-line) transparent;
+  }
+  .nls-{{ section.id }} .nls-cart {
+    position: relative; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-b);
+  }
+  .nls-{{ section.id }} .nls-cart::-webkit-scrollbar,
+  .nls-{{ section.id }} .nls-cart-panel::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .nls-{{ section.id }} .nls-cart::-webkit-scrollbar-track,
+  .nls-{{ section.id }} .nls-cart-panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .nls-{{ section.id }} .nls-cart::-webkit-scrollbar-thumb,
+  .nls-{{ section.id }} .nls-cart-panel::-webkit-scrollbar-thumb {
+    background: var(--gold-line);
+    border-radius: 4px;
+  }
+  .nls-{{ section.id }} .nls-cart::-webkit-scrollbar-thumb:hover,
+  .nls-{{ section.id }} .nls-cart-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+  }
   .nls-{{ section.id }} .nls-cart::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
   .nls-{{ section.id }} .nls-cart-bar { display: none; }
   .nls-{{ section.id }} .nls-cart-panel { padding: 26px 24px 24px; }
