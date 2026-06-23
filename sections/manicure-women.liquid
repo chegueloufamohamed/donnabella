@@ -1,280 +1,138 @@
 {% comment %}
-  Nail Treatment & Extensions — Belladona Care
-  Bilingual section: auto-detects EN/AR via request.locale
-  Save as: sections/nails.liquid
-  Add to page via: Customize → Page → Add section → Nails
+  Women's Care — Belladona Care · Add-to-selection + FIXED sticky summary
+  Pedi/Mani · Hair · Hair Treatment · Blow Dry · Skin Care · Waxing · Nails · Massage
+  >>> Set WHATSAPP_NUMBER in the script · tune cart position with --nls-top <
 {% endcomment %}
 
 {% assign current_locale = request.locale.iso_code %}
 {% assign is_arabic = false %}
-{% if current_locale contains 'ar' %}
-  {% assign is_arabic = true %}
-{% endif %}
-
+{% if current_locale contains 'ar' %}{% assign is_arabic = true %}{% endif %}
 {% assign dir = 'ltr' %}
-{% if is_arabic %}
-  {% assign dir = 'rtl' %}
-{% endif %}
+{% if is_arabic %}{% assign dir = 'rtl' %}{% endif %}
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <div class="nls-{{ section.id }}" dir="{{ dir }}">
 <style>
-  .nls-{{ section.id }} .nls-icon {
-  font-size: 0 !important;
-  line-height: 0 !important;
-  margin-bottom: 0 !important;
-  display: none !important;
-}
   .nls-{{ section.id }} {
-    --bg: {{ section.settings.bg_color }};
-    --bg-dark: #2f3d4d; --bg-deeper: #354656;
-    --gold: {{ section.settings.gold_color }};
-    --gold-line: rgba(201,169,110,0.35);
-    --blush: {{ section.settings.blush_color }};
-    --blush-dim: rgba(201,160,160,0.1); --blush-line: rgba(201,160,160,0.3);
+    --bg: #405264; --bg-dark: #2f3d4d; --bg-deeper: #354656;
+    --gold: #c9a96e; --gold-line: rgba(201,169,110,0.35);
+    --blush: #c9a0a0; --blush-line: rgba(201,160,160,0.3);
     --white: #ffffff; --white-60: rgba(255,255,255,0.6);
     --glass: rgba(255,255,255,0.06); --glass-b: rgba(255,255,255,0.11);
     --serif: 'Cormorant Garamond', Georgia, serif;
-    --sans: 'Jost', sans-serif;
-    --arabic: 'Cairo', sans-serif;
+    --sans: 'Jost', sans-serif; --arabic: 'Cairo', sans-serif;
     --font-main: {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
     --font-display: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %};
-    background-color: var(--bg);
-    color: var(--white);
-    font-family: var(--font-main);
-    font-weight: 300;
-    overflow-x: hidden;
+    --nls-top: 150px; /* ← cart vertical position; increase to push down */
+    background-color: var(--bg); color: var(--white);
+    font-family: var(--font-main); font-weight: 300;
   }
 
   @keyframes nls-fadeUp-{{ section.id }} { to { opacity: 1; transform: translateY(0); } }
   @keyframes nls-ring-{{ section.id }} {
     0%,100% { opacity: 0.35; transform: translate(-50%,-50%) scale(1); }
-    50%      { opacity: 0.8;  transform: translate(-50%,-50%) scale(1.05); }
+    50% { opacity: 0.8; transform: translate(-50%,-50%) scale(1.05); }
   }
 
   /* ── HERO ── */
-  .nls-{{ section.id }} .nls-hero {
-    position: relative; min-height: 54vh;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 80px 30px 50px; overflow: hidden;
-  }
-  .nls-{{ section.id }} .nls-hero::before {
-    content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(201,160,160,0.09) 0%, transparent 70%);
-    top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none;
-  }
-  .nls-{{ section.id }} .nls-hero::after {
-    content: ''; position: absolute; width: 360px; height: 360px; border-radius: 50%;
-    border: 1px solid var(--blush-line); top: 50%; left: 50%;
-    transform: translate(-50%,-50%); pointer-events: none;
-    animation: nls-ring-{{ section.id }} 4s ease-in-out infinite;
-  }
-  .nls-{{ section.id }} .nls-eyebrow {
-    font-size: 11px; font-weight: 500;
-    letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %};
-    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
-    color: var(--blush); margin-bottom: 20px; position: relative; z-index: 1;
-    opacity: 0; transform: translateY(16px);
-    animation: nls-fadeUp-{{ section.id }} 0.8s ease 0.2s forwards;
-  }
-  .nls-{{ section.id }} .nls-title {
-    font-family: var(--font-display);
-    font-size: clamp(48px, 9vw, 94px);
-    font-weight: {% if is_arabic %}400{% else %}300{% endif %};
-    font-style: {% if is_arabic %}normal{% else %}italic{% endif %};
-    line-height: {% if is_arabic %}1.2{% else %}0.95{% endif %};
-    color: var(--white); position: relative; z-index: 1;
-    opacity: 0; transform: translateY(20px);
-    animation: nls-fadeUp-{{ section.id }} 0.9s ease 0.4s forwards;
-  }
+  .nls-{{ section.id }} .nls-hero { position: relative; min-height: 54vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 30px 50px; overflow: hidden; }
+  .nls-{{ section.id }} .nls-hero::before { content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(201,160,160,0.10) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+  .nls-{{ section.id }} .nls-hero::after { content: ''; position: absolute; width: 360px; height: 360px; border-radius: 50%; border: 1px solid var(--blush-line); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; animation: nls-ring-{{ section.id }} 4s ease-in-out infinite; }
+  .nls-{{ section.id }} .nls-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--blush); margin-bottom: 20px; position: relative; z-index: 1; opacity: 0; transform: translateY(16px); animation: nls-fadeUp-{{ section.id }} 0.8s ease 0.2s forwards; }
+  .nls-{{ section.id }} .nls-title { font-family: var(--font-display); font-size: clamp(48px, 9vw, 94px); font-weight: {% if is_arabic %}400{% else %}300{% endif %}; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; line-height: {% if is_arabic %}1.2{% else %}0.95{% endif %}; color: var(--white); position: relative; z-index: 1; opacity: 0; transform: translateY(20px); animation: nls-fadeUp-{{ section.id }} 0.9s ease 0.4s forwards; }
   .nls-{{ section.id }} .nls-title span { color: var(--gold); font-style: normal; font-weight: 500; }
-  .nls-{{ section.id }} .nls-desc {
-    margin-top: 26px; font-size: 13px;
-    letter-spacing: {% if is_arabic %}0.05em{% else %}0.14em{% endif %};
-    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
-    color: var(--white-60); position: relative; z-index: 1;
-    opacity: 0; transform: translateY(16px);
-    animation: nls-fadeUp-{{ section.id }} 0.9s ease 0.6s forwards;
-  }
-  .nls-{{ section.id }} .nls-divider {
-    margin-top: 40px; width: 1px; height: 60px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    opacity: 0; animation: nls-fadeUp-{{ section.id }} 0.9s ease 0.8s forwards;
-  }
+  .nls-{{ section.id }} .nls-desc { margin-top: 26px; font-size: 13px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.14em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-60); position: relative; z-index: 1; opacity: 0; transform: translateY(16px); animation: nls-fadeUp-{{ section.id }} 0.9s ease 0.6s forwards; }
+  .nls-{{ section.id }} .nls-divider { margin-top: 40px; width: 1px; height: 60px; background: linear-gradient(to bottom, var(--gold), transparent); opacity: 0; animation: nls-fadeUp-{{ section.id }} 0.9s ease 0.8s forwards; }
 
-  /* ── LAYOUT ── */
+  /* ── SHELL ── */
+  .nls-{{ section.id }} .nls-shell { max-width: 1320px; margin: 0 auto; padding: 0 30px; display: grid; grid-template-columns: minmax(0,1fr) 330px; gap: 60px; align-items: start; }
+  .nls-{{ section.id }} .nls-main { min-width: 0; }
   .nls-{{ section.id }} .nls-section { position: relative; z-index: 1; padding: 52px 0 62px; }
   .nls-{{ section.id }} .nls-section + .nls-section { padding-top: 0; }
-  .nls-{{ section.id }} .nls-inner { max-width: 1160px; margin: 0 auto; padding: 0 30px; }
 
-  /* ── SECTION LABEL ── */
-  .nls-{{ section.id }} .nls-label {
-    display: flex; align-items: center; gap: 18px; margin-bottom: 42px;
-    opacity: 0;
-    transform: translateX({% if is_arabic %}20px{% else %}-20px{% endif %});
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
+  /* ── LABEL ── */
+  .nls-{{ section.id }} .nls-label { display: flex; align-items: center; gap: 18px; margin-bottom: 36px; opacity: 0; transform: translateX({% if is_arabic %}20px{% else %}-20px{% endif %}); transition: opacity 0.7s ease, transform 0.7s ease; }
   .nls-{{ section.id }} .nls-label.visible { opacity: 1; transform: translateX(0); }
-  .nls-{{ section.id }} .nls-label-line {
-    flex: 1; height: 1px;
-    background: linear-gradient(to {% if is_arabic %}left{% else %}right{% endif %}, var(--gold-line), transparent);
-  }
-  .nls-{{ section.id }} .nls-label-text {
-    font-size: 10px; font-weight: 500;
-    letter-spacing: {% if is_arabic %}0.05em{% else %}0.45em{% endif %};
-    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
-    color: var(--gold); white-space: nowrap;
-  }
+  .nls-{{ section.id }} .nls-label-line { flex: 1; height: 1px; background: linear-gradient(to {% if is_arabic %}left{% else %}right{% endif %}, var(--gold-line), transparent); }
+  .nls-{{ section.id }} .nls-label-text { font-size: 10px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.45em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); white-space: nowrap; }
 
-  /* ── HERO TRIO ── */
-  .nls-{{ section.id }} .nls-trio { display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 2px; margin-bottom: 2px; }
-  .nls-{{ section.id }} .nls-classic {
-    background: var(--glass); border: 1px solid var(--glass-b);
-    padding: 34px 28px; cursor: default; display: flex; flex-direction: column;
-    opacity: 0; transform: translateY(22px);
-    transition: opacity 0.65s ease, transform 0.65s ease, background 0.3s, border-color 0.3s;
-  }
-  .nls-{{ section.id }} .nls-classic.visible { opacity: 1; transform: translateY(0); }
-  .nls-{{ section.id }} .nls-classic:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
+  /* ── SHOWCASE CARD ── */
+  .nls-{{ section.id }} .nls-show { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; background: var(--glass); border: 1px solid var(--glass-b); overflow: hidden; margin-bottom: 2px; opacity: 0; transform: translateY(24px); transition: opacity .75s ease, transform .75s ease, border-color .35s; }
+  .nls-{{ section.id }} .nls-show.visible { opacity: 1; transform: translateY(0); }
+  .nls-{{ section.id }} .nls-show:hover { border-color: var(--gold-line); }
+  .nls-{{ section.id }} .nls-show::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); z-index: 4; }
+  .nls-{{ section.id }} .nls-show-media { position: relative; min-height: 380px; overflow: hidden; }
+  .nls-{{ section.id }} .nls-show-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: transform .8s ease; }
+  .nls-{{ section.id }} .nls-show:hover .nls-show-media img { transform: scale(1.05); }
+  .nls-{{ section.id }} .nls-show-media::before { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(47,61,77,0.12), rgba(47,61,77,0.32)); pointer-events: none; }
+  .nls-{{ section.id }} .nls-show-media::after { content: ''; position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, rgba(64,82,100,0) 55%, rgba(64,82,100,0.55) 100%); pointer-events: none; }
+  .nls-{{ section.id }} .nls-show.rev .nls-show-media { order: 2; }
+  .nls-{{ section.id }} .nls-show.rev .nls-show-body { order: 1; }
+  .nls-{{ section.id }} .nls-show.rev .nls-show-media::after { background: linear-gradient(270deg, rgba(64,82,100,0) 55%, rgba(64,82,100,0.55) 100%); }
+  .nls-{{ section.id }} .nls-show-body { padding: 40px 44px; display: flex; flex-direction: column; justify-content: center; }
+  .nls-{{ section.id }} .nls-stag { font-size: 9px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); margin-bottom: 10px; }
+  .nls-{{ section.id }} .nls-stitle { font-family: var(--font-display); font-size: 30px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); line-height: 1.15; margin-bottom: 6px; }
+  .nls-{{ section.id }} .nls-ssub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 13px; color: var(--gold); margin-bottom: 14px; opacity: 0.9; }
+  .nls-{{ section.id }} .nls-sdesc { font-size: 12.5px; line-height: 1.75; color: var(--white-60); margin-bottom: 18px; }
 
-  .nls-{{ section.id }} .nls-combo {
-    position: relative;
-    background: linear-gradient(135deg, rgba(201,169,110,0.13) 0%, rgba(201,169,110,0.03) 100%);
-    border: 1px solid var(--gold-line); padding: 38px 38px 34px;
-    cursor: default; display: flex; flex-direction: column; overflow: hidden;
-    opacity: 0; transform: translateY(22px);
-    transition: opacity 0.65s ease, transform 0.65s ease, background 0.4s;
-  }
-  .nls-{{ section.id }} .nls-combo.visible { opacity: 1; transform: translateY(0); }
-  .nls-{{ section.id }} .nls-combo:hover { background: linear-gradient(135deg, rgba(201,169,110,0.2) 0%, rgba(201,169,110,0.06) 100%); }
-  .nls-{{ section.id }} .nls-combo::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
-  .nls-{{ section.id }} .nls-combo-bg {
-    position: absolute; bottom: 10px;
-    {% if is_arabic %}left{% else %}right{% endif %}: 20px;
-    font-family: var(--serif); font-size: 100px; font-weight: 300;
-    color: rgba(201,169,110,0.07); line-height: 1; user-select: none;
-  }
+  /* ── OPTION ROWS ── */
+  .nls-{{ section.id }} .nls-opts { border-top: 1px solid var(--glass-b); margin-top: 4px; }
+  .nls-{{ section.id }} .nls-opt { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .nls-{{ section.id }} .nls-opt:last-child { border-bottom: none; }
+  .nls-{{ section.id }} .nls-opt-name { font-family: var(--font-display); font-size: 19px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); }
+  .nls-{{ section.id }} .nls-opt-name small { display: block; font-family: var(--font-main); font-size: 10px; letter-spacing: 0.04em; color: var(--gold); margin-top: 3px; opacity: 0.85; }
+  .nls-{{ section.id }} .nls-opt-end { display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+  .nls-{{ section.id }} .nls-opt-price { font-family: var(--serif); font-size: 24px; font-weight: 300; color: var(--white); }
+  .nls-{{ section.id }} .nls-opt-price sup { font-size: 10px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .nls-{{ section.id }} .nls-opt-price .from { font-family: var(--sans); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 1px; }
+  .nls-{{ section.id }} .nls-show-dur { margin-top: 16px; font-size: 10px; letter-spacing: 0.06em; color: var(--white-60); }
+  .nls-{{ section.id }} .nls-show-dur span { color: var(--gold); }
 
-  /* ── CARD PARTS ── */
-  .nls-{{ section.id }} .nls-icon { font-size: 20px; margin-bottom: 14px; display: block; }
-  .nls-{{ section.id }} .nls-ctag {
-    font-size: 9px; font-weight: 500;
-    letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %};
-    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
-    color: var(--gold); margin-bottom: 10px;
-  }
-  .nls-{{ section.id }} .nls-ctag.blush { color: var(--blush); }
-  .nls-{{ section.id }} .nls-ctitle {
-    font-family: var(--font-display); font-size: 22px;
-    font-weight: {% if is_arabic %}500{% else %}400{% endif %};
-    color: var(--white); margin-bottom: 4px; line-height: 1.3;
-  }
-  .nls-{{ section.id }} .nls-combo .nls-ctitle { font-size: 30px; }
-  .nls-{{ section.id }} .nls-csub {
-    font-family: var(--font-display);
-    font-style: {% if is_arabic %}normal{% else %}italic{% endif %};
-    font-size: 12px; color: var(--gold); margin-bottom: 10px; opacity: 0.9;
-  }
-  .nls-{{ section.id }} .nls-cdesc { font-size: 11.5px; line-height: 1.72; color: var(--white-60); margin-bottom: 20px; flex: 1; }
-  .nls-{{ section.id }} .nls-cfoot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--glass-b); padding-top: 14px; margin-top: auto; }
-  .nls-{{ section.id }} .nls-cprice { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--white); }
-  .nls-{{ section.id }} .nls-cprice sup { font-size: 11px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
-  .nls-{{ section.id }} .nls-combo .nls-cprice { font-size: 42px; }
-  .nls-{{ section.id }} .nls-cdur { font-size: 10px; color: var(--white-60); letter-spacing: 0.06em; text-align: {% if is_arabic %}start{% else %}right{% endif %}; line-height: 1.5; }
-  .nls-{{ section.id }} .nls-cdur span { display: block; color: var(--gold); font-size: 13px; margin-bottom: 2px; }
+  /* single price footer */
+  .nls-{{ section.id }} .nls-sfoot { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; border-top: 1px solid var(--glass-b); padding-top: 16px; margin-top: 8px; }
+  .nls-{{ section.id }} .nls-sfoot-left { display: flex; flex-direction: column; gap: 6px; }
+  .nls-{{ section.id }} .nls-sprice { font-family: var(--serif); font-size: 38px; font-weight: 300; color: var(--white); line-height: 1; }
+  .nls-{{ section.id }} .nls-sprice sup { font-size: 13px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .nls-{{ section.id }} .nls-sprice .from { font-family: var(--sans); font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 2px; }
 
-  /* ── GRIDS ── */
-  .nls-{{ section.id }} .nls-3grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-  .nls-{{ section.id }} .nls-2grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  /* ── ADD BUTTON ── */
+  .nls-{{ section.id }} .nls-add { border: 1px solid var(--gold-line); background: transparent; color: var(--gold); font-family: var(--font-main); font-size: 10px; letter-spacing: {% if is_arabic %}0.03em{% else %}0.18em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} padding: 10px 18px; cursor: pointer; transition: .25s; white-space: nowrap; }
+  .nls-{{ section.id }} .nls-add:hover { background: rgba(201,169,110,0.12); border-color: var(--gold); }
+  .nls-{{ section.id }} .nls-add.is-added { background: var(--gold); color: #2f3d4d; border-color: var(--gold); }
 
-  /* ── TILE ── */
-  .nls-{{ section.id }} .nls-tile {
-    background: var(--glass); border: 1px solid var(--glass-b);
-    padding: 30px 26px 26px; cursor: default; display: flex; flex-direction: column;
-    opacity: 0; transform: translateY(20px);
-    transition: opacity 0.65s ease, transform 0.65s ease, background 0.3s, border-color 0.3s;
-  }
-  .nls-{{ section.id }} .nls-tile.visible { opacity: 1; transform: translateY(0); }
-  .nls-{{ section.id }} .nls-tile:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
-  .nls-{{ section.id }} .nls-tile.blush-bg { background: linear-gradient(135deg, var(--blush-dim) 0%, rgba(201,160,160,0.02) 100%); border-color: var(--blush-line); }
-  .nls-{{ section.id }} .nls-tile.blush-bg:hover { background: linear-gradient(135deg, rgba(201,160,160,0.16) 0%, rgba(201,160,160,0.04) 100%); }
-  .nls-{{ section.id }} .nls-tile.gold-bg { background: linear-gradient(135deg, rgba(201,169,110,0.12) 0%, rgba(201,169,110,0.03) 100%); border-color: var(--gold-line); position: relative; }
-  .nls-{{ section.id }} .nls-tile.gold-bg::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
-  .nls-{{ section.id }} .nls-ttag {
-    font-size: 9px; font-weight: 500;
-    letter-spacing: {% if is_arabic %}0.05em{% else %}0.4em{% endif %};
-    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
-    color: var(--gold); margin-bottom: 8px;
-  }
-  .nls-{{ section.id }} .nls-ttag.blush { color: var(--blush); }
-  .nls-{{ section.id }} .nls-ttitle { font-family: var(--font-display); font-size: 20px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 4px; line-height: 1.3; }
-  .nls-{{ section.id }} .nls-tsub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 11px; color: var(--gold); margin-bottom: 10px; opacity: 0.85; }
-  .nls-{{ section.id }} .nls-tsub.blush { color: var(--blush); }
-  .nls-{{ section.id }} .nls-tdesc { font-size: 11.5px; line-height: 1.7; color: var(--white-60); margin-bottom: 18px; flex: 1; }
-  .nls-{{ section.id }} .nls-tfoot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--glass-b); padding-top: 12px; margin-top: auto; }
-  .nls-{{ section.id }} .nls-tprice { font-family: var(--serif); font-size: 26px; font-weight: 300; color: var(--white); }
-  .nls-{{ section.id }} .nls-tprice sup { font-size: 11px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
-  .nls-{{ section.id }} .nls-tdur { font-size: 10px; color: var(--white-60); letter-spacing: 0.06em; }
+  /* ── EXTRA CHECKBOX (curls) ── */
+  .nls-{{ section.id }} .nls-extra { display: flex; align-items: center; gap: 10px; padding: 14px 0 2px; font-size: 12px; color: var(--white-60); cursor: pointer; }
+  .nls-{{ section.id }} .nls-extra input { accent-color: var(--gold); width: 15px; height: 15px; cursor: pointer; }
+  .nls-{{ section.id }} .nls-extra b { color: var(--gold); font-weight: 500; }
 
-  /* ── FEATURE CARD ── */
-  .nls-{{ section.id }} .nls-feat {
-    position: relative; background: var(--glass); border: 1px solid var(--glass-b);
-    padding: 40px 44px; display: grid; grid-template-columns: 1fr auto;
-    gap: 40px; align-items: center; overflow: hidden; margin-bottom: 2px;
-    cursor: default; opacity: 0; transform: translateY(24px);
-    transition: opacity 0.75s ease, transform 0.75s ease, background 0.35s, border-color 0.35s;
-  }
-  .nls-{{ section.id }} .nls-feat.visible { opacity: 1; transform: translateY(0); }
-  .nls-{{ section.id }} .nls-feat:hover { background: rgba(255,255,255,0.09); border-color: var(--gold-line); }
-  .nls-{{ section.id }} .nls-feat.gold-bg { background: linear-gradient(135deg, rgba(201,169,110,0.12) 0%, rgba(201,169,110,0.03) 100%); border-color: var(--gold-line); }
-  .nls-{{ section.id }} .nls-feat.gold-bg::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
-  .nls-{{ section.id }} .nls-ftag { font-size: 9px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); margin-bottom: 10px; }
-  .nls-{{ section.id }} .nls-ftitle { font-family: var(--font-display); font-size: 30px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); line-height: 1.15; margin-bottom: 6px; }
-  .nls-{{ section.id }} .nls-fsub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 13px; color: var(--gold); margin-bottom: 12px; opacity: 0.9; }
-  .nls-{{ section.id }} .nls-fdesc { font-size: 12.5px; line-height: 1.75; color: var(--white-60); max-width: 460px; }
-  .nls-{{ section.id }} .nls-fright { text-align: {% if is_arabic %}start{% else %}right{% endif %}; flex-shrink: 0; }
-  .nls-{{ section.id }} .nls-flabel { font-size: 9px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.35em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); margin-bottom: 5px; }
-  .nls-{{ section.id }} .nls-fprice { font-family: var(--serif); font-size: 44px; font-weight: 300; color: var(--white); line-height: 1; }
-  .nls-{{ section.id }} .nls-fprice sup { font-size: 15px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
-  .nls-{{ section.id }} .nls-fdur { font-size: 10px; color: var(--white-60); margin-top: 8px; letter-spacing: 0.06em; }
+  /* ── QTY STEPPER (nail art) ── */
+  .nls-{{ section.id }} .nls-qty { display: flex; align-items: center; border: 1px solid var(--gold-line); }
+  .nls-{{ section.id }} .nls-qty button { width: 30px; height: 30px; background: transparent; border: none; color: var(--gold); font-size: 16px; cursor: pointer; line-height: 1; }
+  .nls-{{ section.id }} .nls-qty button:hover { background: rgba(201,169,110,0.12); }
+  .nls-{{ section.id }} .nls-qty span { min-width: 30px; text-align: center; font-family: var(--serif); font-size: 16px; color: var(--white); }
 
-  /* ── PRICE TABLE ── */
-  .nls-{{ section.id }} .nls-table { border: 1px solid var(--glass-b); overflow: hidden; opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .nls-{{ section.id }} .nls-table.visible { opacity: 1; transform: translateY(0); }
-  .nls-{{ section.id }} .nls-thead { background: rgba(201,169,110,0.1); border-bottom: 1px solid var(--gold-line); padding: 14px 28px; display: grid; grid-template-columns: 1fr auto auto; gap: 24px; font-size: 9px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.4em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); }
-  .nls-{{ section.id }} .nls-thead span:last-child { text-align: {% if is_arabic %}start{% else %}right{% endif %}; }
-  .nls-{{ section.id }} .nls-trow { display: grid; grid-template-columns: 1fr auto auto; gap: 24px; padding: 16px 28px; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: center; transition: background 0.25s; cursor: default; }
-  .nls-{{ section.id }} .nls-trow:last-child { border-bottom: none; }
-  .nls-{{ section.id }} .nls-trow:hover { background: rgba(255,255,255,0.05); }
-  .nls-{{ section.id }} .nls-trow.gel  { border-{% if is_arabic %}right{% else %}left{% endif %}: 2px solid var(--blush); }
-  .nls-{{ section.id }} .nls-trow.french { border-{% if is_arabic %}right{% else %}left{% endif %}: 2px solid rgba(201,169,110,0.6); }
-  .nls-{{ section.id }} .nls-tname { font-family: var(--font-display); font-size: 17px; font-weight: 400; color: var(--white); line-height: 1.3; }
-  .nls-{{ section.id }} .nls-tname small { display: block; font-family: var(--font-main); font-size: 10px; color: var(--white-60); margin-top: 2px; }
-  .nls-{{ section.id }} .nls-tname small.blush { color: var(--blush); }
-  .nls-{{ section.id }} .nls-tname small.gold  { color: var(--gold); }
-  .nls-{{ section.id }} .nls-rowdur { font-size: 10px; color: var(--white-60); white-space: nowrap; letter-spacing: 0.06em; text-align: {% if is_arabic %}start{% else %}right{% endif %}; }
-  .nls-{{ section.id }} .nls-rowprice { font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--white); text-align: {% if is_arabic %}start{% else %}right{% endif %}; white-space: nowrap; min-width: 72px; }
-  .nls-{{ section.id }} .nls-rowprice sup { font-size: 10px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
-  .nls-{{ section.id }} .nls-legend { display: flex; align-items: center; gap: 20px; margin-top: 13px; padding-{% if is_arabic %}right{% else %}left{% endif %}: 4px; flex-wrap: wrap; }
-  .nls-{{ section.id }} .nls-legend-item { display: flex; align-items: center; gap: 8px; }
-  .nls-{{ section.id }} .nls-legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-  .nls-{{ section.id }} .nls-legend-text { font-size: 10px; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); }
-
-  /* ── CHAPTER BANNER ── */
-  .nls-{{ section.id }} .nls-chapter {
-    position: relative; z-index: 1;
-    background: linear-gradient(to right, var(--bg-dark), var(--bg-deeper), var(--bg-dark));
-    border-top: 1px solid var(--glass-b); border-bottom: 1px solid var(--glass-b);
-    padding: 60px 30px; text-align: center; overflow: hidden; margin-top: 60px;
-    opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .nls-{{ section.id }} .nls-chapter.visible { opacity: 1; transform: translateY(0); }
-  .nls-{{ section.id }} .nls-chapter::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(201,160,160,0.06) 0%, transparent 70%); }
-  .nls-{{ section.id }} .nls-chapter-eye { font-size: 10px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.5em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--blush); margin-bottom: 16px; position: relative; }
-  .nls-{{ section.id }} .nls-chapter-title { font-family: var(--font-display); font-size: clamp(36px, 6vw, 62px); font-weight: {% if is_arabic %}400{% else %}300{% endif %}; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; color: var(--white); line-height: 1.1; position: relative; }
-  .nls-{{ section.id }} .nls-chapter-title span { color: var(--gold); font-style: normal; }
-  .nls-{{ section.id }} .nls-chapter-sub { margin-top: 14px; font-size: 12px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.18em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-60); position: relative; }
+  /* ── SUMMARY ── */
+  .nls-{{ section.id }} .nls-cart { position: relative; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-b); }
+  .nls-{{ section.id }} .nls-cart::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
+  .nls-{{ section.id }} .nls-cart-bar { display: none; }
+  .nls-{{ section.id }} .nls-cart-panel { padding: 26px 24px 24px; }
+  .nls-{{ section.id }} .nls-cart-tag { font-size: 9px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.4em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); margin-bottom: 8px; }
+  .nls-{{ section.id }} .nls-cart-head { font-family: var(--font-display); font-size: 22px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 14px; }
+  .nls-{{ section.id }} .nls-cart-empty { color: var(--white-60); font-size: 12px; padding: 12px 0 16px; }
+  .nls-{{ section.id }} .nls-citem { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .nls-{{ section.id }} .nls-citem-name { font-size: 12.5px; color: var(--white); line-height: 1.35; }
+  .nls-{{ section.id }} .nls-citem-end { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+  .nls-{{ section.id }} .nls-citem-price { font-family: var(--serif); font-size: 17px; color: var(--white-60); }
+  .nls-{{ section.id }} .nls-citem-x { background: none; border: none; color: var(--gold); font-size: 18px; line-height: 1; cursor: pointer; padding: 0 2px; opacity: .65; }
+  .nls-{{ section.id }} .nls-citem-x:hover { opacity: 1; }
+  .nls-{{ section.id }} .nls-cart-total { display: flex; align-items: baseline; justify-content: space-between; border-top: 1px solid var(--gold-line); padding-top: 16px; margin-top: 12px; }
+  .nls-{{ section.id }} .nls-cart-total .label { font-size: 11px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.25em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); }
+  .nls-{{ section.id }} .nls-cart-total .val { font-family: var(--serif); font-size: 30px; font-weight: 300; color: var(--white); }
+  .nls-{{ section.id }} .nls-cart-note { font-size: 9.5px; color: var(--white-60); margin-top: 6px; letter-spacing: 0.04em; }
+  .nls-{{ section.id }} .nls-cart-btn { display: block; width: 100%; margin-top: 18px; padding: 15px; border: none; background: var(--gold); color: #2f3d4d; font-family: var(--font-main); font-size: 11px; font-weight: 600; letter-spacing: {% if is_arabic %}0.03em{% else %}0.2em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} cursor: pointer; transition: opacity .25s; }
+  .nls-{{ section.id }} .nls-cart-btn:hover { opacity: .88; }
+  .nls-{{ section.id }} .nls-cart-btn.is-disabled { opacity: .35; pointer-events: none; }
 
   /* ── BOTTOM ── */
   .nls-{{ section.id }} .nls-bottom { text-align: center; padding: 80px 30px 100px; position: relative; z-index: 1; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
@@ -285,296 +143,480 @@
   .nls-{{ section.id }} .nls-bottom h2 { font-family: var(--font-display); font-size: clamp(28px, 5vw, 52px); font-weight: 300; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; color: var(--white); line-height: 1.3; margin-bottom: 16px; }
   .nls-{{ section.id }} .nls-bottom p { font-size: 12px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.2em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-60); }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 960px) {
-    .nls-{{ section.id }} .nls-trio { grid-template-columns: 1fr 1fr; }
-    .nls-{{ section.id }} .nls-trio > *:last-child { grid-column: 1 / -1; }
-    .nls-{{ section.id }} .nls-3grid { grid-template-columns: 1fr 1fr; }
-    .nls-{{ section.id }} .nls-feat { grid-template-columns: 1fr; }
-    .nls-{{ section.id }} .nls-fright { text-align: start; }
-    .nls-{{ section.id }} .nls-thead, .nls-{{ section.id }} .nls-trow { grid-template-columns: 1fr auto; }
-    .nls-{{ section.id }} .nls-thead > *:nth-child(2), .nls-{{ section.id }} .nls-trow > *:nth-child(2) { display: none; }
+  /* ── DESKTOP FIXED CART ── */
+  @media (min-width: 901px) {
+    .nls-{{ section.id }} .nls-cart {
+      position: fixed; top: var(--nls-top);
+      {% if is_arabic %}left{% else %}right{% endif %}: max(30px, (100vw - 1320px) / 2 + 30px);
+      width: 330px; box-sizing: border-box;
+      max-height: calc(100vh - var(--nls-top) - 30px); overflow-y: auto;
+      opacity: 0; visibility: hidden; transform: translateY(10px);
+      transition: opacity .45s ease, transform .45s ease, visibility .45s; z-index: 40;
+    }
+    .nls-{{ section.id }}.cart-pinned .nls-cart { opacity: 1; visibility: visible; transform: none; }
   }
-  @media (max-width: 600px) {
-    .nls-{{ section.id }} .nls-3grid,
-    .nls-{{ section.id }} .nls-2grid,
-    .nls-{{ section.id }} .nls-trio { grid-template-columns: 1fr; }
-    .nls-{{ section.id }} .nls-trio > *:last-child { grid-column: auto; }
+
+  /* ── MOBILE BAR ── */
+  @media (max-width: 900px) {
+    .nls-{{ section.id }} .nls-shell { grid-template-columns: 1fr; gap: 0; }
+    .nls-{{ section.id }} .nls-aside { position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 60; display: none; }
+    .nls-{{ section.id }}.has-items .nls-aside { display: block; }
+    .nls-{{ section.id }} .nls-cart { background: #354656; box-shadow: 0 -12px 30px rgba(0,0,0,0.35); }
+    .nls-{{ section.id }} .nls-cart-bar { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px 20px; background: transparent; border: none; cursor: pointer; }
+    .nls-{{ section.id }} .nls-bar-count { min-width: 22px; height: 22px; border-radius: 50%; background: var(--gold); color: #2f3d4d; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .nls-{{ section.id }} .nls-bar-label { font-size: 11px; letter-spacing: {% if is_arabic %}0.03em{% else %}0.15em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-60); flex: 1; text-align: start; }
+    .nls-{{ section.id }} .nls-bar-total { font-family: var(--serif); font-size: 20px; color: var(--white); }
+    .nls-{{ section.id }} .nls-bar-chev { color: var(--gold); font-size: 12px; transition: transform .3s; }
+    .nls-{{ section.id }} .nls-cart.is-open .nls-bar-chev { transform: rotate(180deg); }
+    .nls-{{ section.id }} .nls-cart-panel { display: none; max-height: 60vh; overflow: auto; }
+    .nls-{{ section.id }} .nls-cart.is-open .nls-cart-panel { display: block; }
+    .nls-{{ section.id }} .nls-bottom { padding-bottom: 130px; }
+  }
+  @media (max-width: 760px) {
+    .nls-{{ section.id }} .nls-show { grid-template-columns: 1fr; }
+    .nls-{{ section.id }} .nls-show.rev .nls-show-media,
+    .nls-{{ section.id }} .nls-show.rev .nls-show-body { order: 0; }
+    .nls-{{ section.id }} .nls-show-media { min-height: 240px; }
+    .nls-{{ section.id }} .nls-show-body { padding: 30px 26px; }
+    .nls-{{ section.id }} .nls-show-media::after,
+    .nls-{{ section.id }} .nls-show.rev .nls-show-media::after { background: linear-gradient(to bottom, rgba(64,82,100,0) 60%, rgba(64,82,100,0.55) 100%); }
   }
 </style>
 
 <!-- ════════ HERO ════════ -->
 <section class="nls-hero">
-  <p class="nls-eyebrow">{% if is_arabic %}{{ section.settings.eyebrow_ar }}{% else %}{{ section.settings.eyebrow_en }}{% endif %}</p>
-  <h1 class="nls-title">
-    {% if is_arabic %}{{ section.settings.title_ar }}{% else %}Polish &<br><span>Perfection</span>{% endif %}
-  </h1>
-  <p class="nls-desc">{% if is_arabic %}علاج الأظافر والإضافات · خدمة منزلية{% else %}Nail Treatment & Extensions · Home Service{% endif %}</p>
+  <p class="nls-eyebrow">{% if is_arabic %}لها · رفاهية في المنزل{% else %}For Her · At-Home Luxury{% endif %}</p>
+  <h1 class="nls-title">{% if is_arabic %}الجمال <span>والعناية</span>{% else %}Beauty &amp;<br><span>Care</span>{% endif %}</h1>
+  <p class="nls-desc">{% if is_arabic %}أظافر · شعر · بشرة · مساج · خدمة منزلية{% else %}Nails · Hair · Skin · Massage · Home Service{% endif %}</p>
   <div class="nls-divider"></div>
 </section>
 
-<!-- ════════ CLASSIC CARE ════════ -->
-<section class="nls-section"><div class="nls-inner">
-  <div class="nls-label" data-nls-reveal>
-    <span class="nls-label-text">{% if is_arabic %}العناية الكلاسيكية{% else %}Classic Care{% endif %}</span>
-    <div class="nls-label-line"></div>
-  </div>
-  <div class="nls-trio">
-    <div class="nls-classic" data-nls-reveal data-delay="0">
-      <span class="nls-icon">💅</span>
-      <p class="nls-ctag">{% if is_arabic %}أظافر · اليدين{% else %}Nail · Hands{% endif %}</p>
-      <h3 class="nls-ctitle">{% if is_arabic %}مانيكير كلاسيك{% else %}Classic Manicure{% endif %}</h3>
-      <p class="nls-csub">{% if is_arabic %}عناية بسيطة لأيدٍ جميلة{% else %}Simple care for beautiful hands{% endif %}</p>
-      <p class="nls-cdesc">{% if is_arabic %}ينظف ويعتني بأظافرك وجلد أظافرك، تاركاً يديكِ أنيقتين ومنتعشتين.{% else %}Cleans and cares for your nails and cuticles, leaving your hands neat and fresh.{% endif %}</p>
-      <div class="nls-cfoot"><div class="nls-cprice"><sup>AED </sup>94</div><div class="nls-cdur"><span>◷</span>{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div></div>
+<div id="nlsTrigger-{{ section.id }}" aria-hidden="true" style="width:1px;height:1px;"></div>
+
+<div class="nls-shell">
+<div class="nls-main">
+
+  <!-- ════════ PEDI / MANI ════════ -->
+  <section class="nls-section">
+    <div class="nls-label" data-nls-reveal>
+      <span class="nls-label-text">{% if is_arabic %}مانيكير وباديكير{% else %}Mani & Pedi{% endif %}</span>
+      <div class="nls-label-line"></div>
     </div>
-    <div class="nls-classic" data-nls-reveal data-delay="80">
-      <span class="nls-icon">🦶</span>
-      <p class="nls-ctag">{% if is_arabic %}أظافر · القدمين{% else %}Nail · Feet{% endif %}</p>
-      <h3 class="nls-ctitle">{% if is_arabic %}باديكير كلاسيك{% else %}Classic Pedicure{% endif %}</h3>
-      <p class="nls-csub">{% if is_arabic %}انتعاش من الكعب حتى أطراف الأصابع{% else %}Feel fresh from heel to toe{% endif %}</p>
-      <p class="nls-cdesc">{% if is_arabic %}ينظف ويعتني بقدميكِ وأظافرها، تاركاً إياهما ناعمتين وأنيقتين ومنتعشتين.{% else %}Cleans and cares for your feet and nails, leaving them smooth, neat, and refreshed.{% endif %}</p>
-      <div class="nls-cfoot"><div class="nls-cprice"><sup>AED </sup>100</div><div class="nls-cdur"><span>◷</span>{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div></div>
+    <div class="nls-show" data-nls-reveal>
+      <div class="nls-show-media">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/Nails.webp?v=1770735870" alt="Manicure & pedicure">
+      </div>
+      <div class="nls-show-body">
+        <p class="nls-stag">{% if is_arabic %}اليدين والقدمين{% else %}Hands & Feet{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}مانيكير وباديكير{% else %}Manicure & Pedicure{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}عناية تترك يديكِ وقدميكِ مثاليتين{% else %}Care that leaves you perfectly polished{% endif %}</p>
+        <div class="nls-opts">
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}مانيكير{% else %}Manicure{% endif %}<small>{% if is_arabic %}عناية باليدين والأظافر{% else %}Hand & nail care{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>100</div>
+              <button type="button" class="nls-add" data-svc-id="w-mani" data-svc-price="100" data-svc-name="{% if is_arabic %}مانيكير{% else %}Manicure{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}باديكير{% else %}Pedicure{% endif %}<small>{% if is_arabic %}عناية بالقدمين والأظافر{% else %}Foot & nail care{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>90</div>
+              <button type="button" class="nls-add" data-svc-id="w-pedi" data-svc-price="90" data-svc-name="{% if is_arabic %}باديكير{% else %}Pedicure{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="nls-combo" data-nls-reveal data-delay="160">
-      <span class="nls-combo-bg">✦</span>
-      <p class="nls-ctag">{% if is_arabic %}جيليش · مانيكير وباديكير{% else %}Gelish · Mani & Pedi{% endif %}</p>
-      <h3 class="nls-ctitle">{% if is_arabic %}جيليش مانيكير وباديكير{% else %}Gelish Mani-Pedi{% endif %}</h3>
-      <p class="nls-csub">{% if is_arabic %}لمعان يدوم{% else %}Gloss that stays{% endif %}</p>
-      <p class="nls-cdesc">{% if is_arabic %}يعتني بيديكِ وقدميكِ مع تطبيق طلاء جل طويل الأمد لإنهاء لامع ومقاوم للتقشير يُبقيكِ مصقولة لأسابيع.{% else %}Cares for your hands and feet while applying long-lasting gel polish for a glossy, chip-resistant finish that keeps you looking polished for weeks.{% endif %}</p>
-      <div class="nls-cfoot"><div class="nls-cprice"><sup>AED </sup>284</div><div class="nls-cdur"><span>◷</span>{% if is_arabic %}ساعتان{% else %}2 hrs{% endif %}</div></div>
+  </section>
+
+  <!-- ════════ NAILS ════════ -->
+  <section class="nls-section">
+    <div class="nls-label" data-nls-reveal>
+      <span class="nls-label-text">{% if is_arabic %}الأظافر{% else %}Nails{% endif %}</span>
+      <div class="nls-label-line"></div>
+    </div>
+    <div class="nls-show rev" data-nls-reveal>
+      <div class="nls-show-media">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/manicure.webp?v=1782207445" alt="Nail extensions & art">
+      </div>
+      <div class="nls-show-body">
+        <p class="nls-stag">{% if is_arabic %}إضافات · فن الأظافر{% else %}Extensions · Nail Art{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}الأظافر{% else %}Nails{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}طول، لمعان، وفن يدوم{% else %}Length, shine, and art that lasts{% endif %}</p>
+        <div class="nls-opts">
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}أكريليك{% else %}Acrylic{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>315</div>
+              <button type="button" class="nls-add" data-svc-id="w-acrylic" data-svc-price="315" data-svc-name="{% if is_arabic %}أظافر أكريليك{% else %}Acrylic Nails{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}جل{% else %}Gel{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>295</div>
+              <button type="button" class="nls-add" data-svc-id="w-gel" data-svc-price="295" data-svc-name="{% if is_arabic %}أظافر جل{% else %}Gel Nails{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}بولي جل{% else %}Polygel{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>250</div>
+              <button type="button" class="nls-add" data-svc-id="w-polygel" data-svc-price="250" data-svc-name="{% if is_arabic %}بولي جل{% else %}Polygel{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}مانيكير وباديكير جل{% else %}Mani-Pedi Gel{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>250</div>
+              <button type="button" class="nls-add" data-svc-id="w-manipedigel" data-svc-price="250" data-svc-name="{% if is_arabic %}مانيكير وباديكير جل{% else %}Mani-Pedi Gel{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}قص وتشكيل{% else %}Cutting & Shaping{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>35</div>
+              <button type="button" class="nls-add" data-svc-id="w-cutshape" data-svc-price="35" data-svc-name="{% if is_arabic %}قص وتشكيل{% else %}Cutting & Shaping{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}فن الأظافر{% else %}Nail Art{% endif %}<small>{% if is_arabic %}من 10 د.إ لكل ظفر{% else %}From AED 10 per nail{% endif %}</small></div>
+            <div class="nls-opt-end">
+              <div class="nls-qty" data-art-qty><button type="button" data-art-dec>−</button><span data-art-count>0</span><button type="button" data-art-inc>+</button></div>
+              <button type="button" class="nls-add" data-svc-id="w-nailart" data-svc-unit="10" data-svc-qtysource="art" data-svc-name="{% if is_arabic %}فن الأظافر{% else %}Nail Art{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ HAIR ════════ -->
+  <section class="nls-section">
+    <div class="nls-label" data-nls-reveal>
+      <span class="nls-label-text">{% if is_arabic %}الشعر{% else %}Hair{% endif %}</span>
+      <div class="nls-label-line"></div>
+    </div>
+    <div class="nls-show" data-nls-reveal>
+      <div class="nls-show-media">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/Elaha-in-salon.jpg?v=1770830479" alt="Hair styling">
+      </div>
+      <div class="nls-show-body">
+        <p class="nls-stag">{% if is_arabic %}قص · تصفيف{% else %}Cut · Style{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}قص الشعر{% else %}Hair Cut{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}قصّة مصممة لإطلالتكِ{% else %}A cut shaped to your look{% endif %}</p>
+        <div class="nls-opts">
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}قص شعر{% else %}Hair Collar{% endif %}<small>{% if is_arabic %}قص وتصفيف احترافي{% else %}Professional cut & styling{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><span class="from">{% if is_arabic %}يبدأ من{% else %}From{% endif %}</span><sup>AED </sup>150</div>
+              <button type="button" class="nls-add" data-svc-id="w-haircollar" data-svc-price="150" data-svc-from="1" data-svc-name="{% if is_arabic %}قص شعر{% else %}Hair Collar{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ HAIR TREATMENT ════════ -->
+  <section class="nls-section">
+    <div class="nls-label" data-nls-reveal>
+      <span class="nls-label-text">{% if is_arabic %}علاج الشعر{% else %}Hair Treatment{% endif %}</span>
+      <div class="nls-label-line"></div>
+    </div>
+    <div class="nls-show rev" data-nls-reveal>
+      <div class="nls-show-media">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/Emma.jpg?v=1770830432" alt="Hair treatment & blow dry">
+      </div>
+      <div class="nls-show-body">
+        <p class="nls-stag">{% if is_arabic %}علاج · تصفيف{% else %}Treatment · Styling{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}علاج وتصفيف الشعر{% else %}Treatment & Blow Dry{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}نعومة، لمعان، وحركة{% else %}Smoothness, shine, and movement{% endif %}</p>
+        <div class="nls-opts">
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}فرد الشعر{% else %}Straightening{% endif %}<small>{% if is_arabic %}علاج فرد للشعر{% else %}Smoothing treatment{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><span class="from">{% if is_arabic %}يبدأ من{% else %}From{% endif %}</span><sup>AED </sup>600</div>
+              <button type="button" class="nls-add" data-svc-id="w-straighten" data-svc-price="600" data-svc-from="1" data-svc-name="{% if is_arabic %}فرد الشعر{% else %}Straightening{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}سيشوار · شعر قصير{% else %}Blow Dry · Short{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>100</div>
+              <button type="button" class="nls-add nls-blow" data-svc-id="w-blow-s" data-svc-price="100" data-svc-name="{% if is_arabic %}سيشوار شعر قصير{% else %}Blow Dry (Short){% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}سيشوار · شعر متوسط{% else %}Blow Dry · Medium{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>150</div>
+              <button type="button" class="nls-add nls-blow" data-svc-id="w-blow-m" data-svc-price="150" data-svc-name="{% if is_arabic %}سيشوار شعر متوسط{% else %}Blow Dry (Medium){% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}سيشوار · شعر طويل{% else %}Blow Dry · Long{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>180</div>
+              <button type="button" class="nls-add nls-blow" data-svc-id="w-blow-l" data-svc-price="180" data-svc-name="{% if is_arabic %}سيشوار شعر طويل{% else %}Blow Dry (Long){% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div>
+          </div>
+        </div>
+        <label class="nls-extra"><input type="checkbox" data-blow-extra> {% if is_arabic %}إضافة تجعيد أو موجات شاطئية <b>(+50 د.إ)</b>{% else %}Add curls / beach waves <b>(+AED 50)</b>{% endif %}</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SKIN CARE ════════ -->
+  <section class="nls-section">
+    <div class="nls-label" data-nls-reveal>
+      <span class="nls-label-text">{% if is_arabic %}العناية بالشعر والبشرة{% else %}Skin Care{% endif %}</span>
+      <div class="nls-label-line"></div>
+    </div>
+    <div class="nls-show" data-nls-reveal>
+      <div class="nls-show-media">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/oil_skin_care.jpg?v=1782208551" alt="Hot oil treatment">
+      </div>
+      <div class="nls-show-body">
+        <p class="nls-stag">{% if is_arabic %}ترطيب · تغذية{% else %}Nourish · Hydrate{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}حمام زيت ساخن{% else %}Hot Oil{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}تغذية عميقة ولمعان صحي{% else %}Deep nourishment, healthy shine{% endif %}</p>
+        <p class="nls-sdesc">{% if is_arabic %}علاج بالزيت الساخن يغذّي ويرطّب، تاركاً الشعر ناعماً ولامعاً وصحياً.{% else %}A warm oil treatment that nourishes and hydrates, leaving hair soft, glossy, and healthy.{% endif %}</p>
+        <div class="nls-sfoot">
+          <div class="nls-sfoot-left"><div class="nls-sprice"><sup>AED </sup>150</div></div>
+          <button type="button" class="nls-add" data-svc-id="w-hotoil" data-svc-price="150" data-svc-name="{% if is_arabic %}حمام زيت ساخن{% else %}Hot Oil{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ WAXING ════════ -->
+  <section class="nls-section">
+    <div class="nls-label" data-nls-reveal>
+      <span class="nls-label-text">{% if is_arabic %}إزالة الشعر بالشمع{% else %}Waxing{% endif %}</span>
+      <div class="nls-label-line"></div>
+    </div>
+    <div class="nls-show rev" data-nls-reveal>
+      <div class="nls-show-media">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/the-specialist-depilates-the-hair-with-wax-on-the-2026-01-08-01-14-16-utc.jpg?v=1771336328" alt="Waxing">
+      </div>
+      <div class="nls-show-body">
+        <p class="nls-stag">{% if is_arabic %}نعومة تدوم{% else %}Smooth & lasting{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}إزالة الشعر بالشمع{% else %}Waxing{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}بشرة ناعمة بلمسة لطيفة{% else %}Gentle, beautifully smooth skin{% endif %}</p>
+        <div class="nls-opts">
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}ذراع كامل{% else %}Full Arm{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>85</div>
+              <button type="button" class="nls-add" data-svc-id="w-wax-fullarm" data-svc-price="85" data-svc-name="{% if is_arabic %}شمع ذراع كامل{% else %}Wax · Full Arm{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}نصف ذراع{% else %}Half Arm{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>60</div>
+              <button type="button" class="nls-add" data-svc-id="w-wax-halfarm" data-svc-price="60" data-svc-name="{% if is_arabic %}شمع نصف ذراع{% else %}Wax · Half Arm{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}تحت الإبط{% else %}Under Arm{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>45</div>
+              <button type="button" class="nls-add" data-svc-id="w-wax-underarm" data-svc-price="45" data-svc-name="{% if is_arabic %}شمع تحت الإبط{% else %}Wax · Under Arm{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}خط البكيني{% else %}Bikini Line{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>50</div>
+              <button type="button" class="nls-add" data-svc-id="w-wax-bikini" data-svc-price="50" data-svc-name="{% if is_arabic %}شمع خط البكيني{% else %}Wax · Bikini Line{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}برازيلي{% else %}Brazilian{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>75</div>
+              <button type="button" class="nls-add" data-svc-id="w-wax-brazilian" data-svc-price="75" data-svc-name="{% if is_arabic %}شمع برازيلي{% else %}Wax · Brazilian{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}الجسم كامل{% else %}Full Body{% endif %}</div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>400</div>
+              <button type="button" class="nls-add" data-svc-id="w-wax-fullbody" data-svc-price="400" data-svc-name="{% if is_arabic %}شمع الجسم كامل{% else %}Wax · Full Body{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ MASSAGE ════════ -->
+  <section class="nls-section">
+    <div class="nls-label" data-nls-reveal>
+      <span class="nls-label-text">{% if is_arabic %}المساج{% else %}Massage{% endif %}</span>
+      <div class="nls-label-line"></div>
+    </div>
+    <div class="nls-show" data-nls-reveal>
+      <div class="nls-show-media">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/Massage.webp?v=1770735870" alt="Massage">
+      </div>
+      <div class="nls-show-body">
+        <p class="nls-stag">{% if is_arabic %}الجسم · مساج{% else %}Body · Massage{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}مساج{% else %}Massage{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}استرخاء، توازن، تجديد{% else %}Relax, rebalance, renew{% endif %}</p>
+        <div class="nls-opts">
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}أروماثيرابي{% else %}Aromatherapy{% endif %}<small>{% if is_arabic %}زيوت عطرية لاسترخاء تام{% else %}Essential oils, total relaxation{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>300</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-aroma" data-svc-price="300" data-svc-name="{% if is_arabic %}مساج أروماثيرابي{% else %}Aromatherapy Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}أنسجة عميقة{% else %}Deep Tissue{% endif %}<small>{% if is_arabic %}ضغط قوي لراحة العضلات{% else %}Firm pressure, deep relief{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>350</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-deep" data-svc-price="350" data-svc-name="{% if is_arabic %}مساج أنسجة عميقة{% else %}Deep Tissue Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}ماديرو للتنحيف{% else %}Madero Slimming{% endif %}<small>{% if is_arabic %}مساج بالأدوات الخشبية للتنحيف{% else %}Wood-tool sculpting massage{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>350</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-madero" data-svc-price="350" data-svc-name="{% if is_arabic %}مساج ماديرو للتنحيف{% else %}Madero Slimming Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}تصريف لمفاوي{% else %}Lymphatic{% endif %}<small>{% if is_arabic %}مساج لتنشيط الدورة اللمفاوية{% else %}Lymphatic drainage massage{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>375</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-lymph" data-svc-price="375" data-svc-name="{% if is_arabic %}مساج تصريف لمفاوي{% else %}Lymphatic Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+        </div>
+        <div class="nls-show-dur">◷ <span>{% if is_arabic %}60 دقيقة{% else %}60 minutes{% endif %}</span></div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /nls-main -->
+
+<aside class="nls-aside">
+  <div class="nls-cart" id="nlsCart-{{ section.id }}">
+    <button type="button" class="nls-cart-bar" id="nlsBar-{{ section.id }}">
+      <span class="nls-bar-count" id="nlsCount-{{ section.id }}">0</span>
+      <span class="nls-bar-label">{% if is_arabic %}عرض الطلب{% else %}View selection{% endif %}</span>
+      <span class="nls-bar-total" id="nlsBarTotal-{{ section.id }}">{% if is_arabic %}د.إ 0{% else %}AED 0{% endif %}</span>
+      <span class="nls-bar-chev">▴</span>
+    </button>
+    <div class="nls-cart-panel">
+      <div class="nls-cart-tag">{% if is_arabic %}حجزكِ{% else %}Your Booking{% endif %}</div>
+      <div class="nls-cart-head">{% if is_arabic %}الخدمات المختارة{% else %}Your Selection{% endif %}</div>
+      <div class="nls-cart-empty" id="nlsEmpty-{{ section.id }}">{% if is_arabic %}لم تختاري أي خدمة بعد{% else %}No services selected yet{% endif %}</div>
+      <div class="nls-cart-items" id="nlsItems-{{ section.id }}" style="display:none;"></div>
+      <div class="nls-cart-total"><span class="label">{% if is_arabic %}الإجمالي{% else %}Total{% endif %}</span><span class="val" id="nlsTotal-{{ section.id }}">{% if is_arabic %}د.إ 0{% else %}AED 0{% endif %}</span></div>
+      <div class="nls-cart-note" id="nlsNote-{{ section.id }}" style="display:none;">{% if is_arabic %}* بعض الأسعار تبدأ من، ويُؤكَّد السعر النهائي عند الحجز{% else %}* Some prices start "from"; final price confirmed on booking{% endif %}</div>
+      <button type="button" class="nls-cart-btn is-disabled" id="nlsBook-{{ section.id }}">{% if is_arabic %}احجزي عبر واتساب{% else %}Book via WhatsApp{% endif %}</button>
     </div>
   </div>
-</div></section>
+</aside>
 
-<!-- ════════ GELISH ════════ -->
-<section class="nls-section"><div class="nls-inner">
-  <div class="nls-label" data-nls-reveal><span class="nls-label-text">{% if is_arabic %}جيليش{% else %}Gelish{% endif %}</span><div class="nls-label-line"></div></div>
-  <div class="nls-2grid">
-    <div class="nls-tile blush-bg" data-nls-reveal data-delay="0">
-      <span class="nls-icon">💅</span>
-      <p class="nls-ttag blush">{% if is_arabic %}جيليش · اليدين{% else %}Gelish · Hands{% endif %}</p>
-      <h3 class="nls-ttitle">{% if is_arabic %}مانيكير جيليش{% else %}Gelish Manicure{% endif %}</h3>
-      <p class="nls-tsub blush">{% if is_arabic %}لمعان مصمم للبقاء{% else %}Gloss made to stay{% endif %}</p>
-      <p class="nls-tdesc">{% if is_arabic %}يعتني بأظافرك ويطبق طلاء جل طويل الأمد لإنهاء ناعم ولامع يبقى جميلاً لأسابيع.{% else %}Cares for your nails and applies long-lasting gel polish for a smooth, shiny finish that stays beautiful for weeks.{% endif %}</p>
-      <div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>137</div><div class="nls-tdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div></div>
-    </div>
-    <div class="nls-tile blush-bg" data-nls-reveal data-delay="100">
-      <span class="nls-icon">🦶</span>
-      <p class="nls-ttag blush">{% if is_arabic %}جيليش · القدمين{% else %}Gelish · Feet{% endif %}</p>
-      <h3 class="nls-ttitle">{% if is_arabic %}باديكير جيليش{% else %}Gelish Pedicure{% endif %}</h3>
-      <p class="nls-tsub blush">{% if is_arabic %}لمعان طويل الأمد مقاوم للتقشير{% else %}Long-lasting, chip-resistant shine{% endif %}</p>
-      <p class="nls-tdesc">{% if is_arabic %}يجدد قدميكِ ويُنهيهما بلون جل مقاوم للتقشير مُعالَج تحت ضوء LED لمعان وثبات ممتدَين.{% else %}Refreshes your feet and finishes with a chip-resistant gel color cured under LED light for extended shine and wear.{% endif %}</p>
-      <div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>158</div><div class="nls-tdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div></div>
-    </div>
-  </div>
-</div></section>
-
-<!-- ════════ FRENCH STYLE ════════ -->
-<section class="nls-section"><div class="nls-inner">
-  <div class="nls-label" data-nls-reveal><span class="nls-label-text">{% if is_arabic %}الطراز الفرنسي{% else %}French Style{% endif %}</span><div class="nls-label-line"></div></div>
-  <div class="nls-feat gold-bg" data-nls-reveal style="margin-bottom:2px">
-    <div>
-      <p class="nls-ftag">{% if is_arabic %}جل فرنسي · مانيكير وباديكير{% else %}Gel French · Mani & Pedi{% endif %}</p>
-      <h3 class="nls-ftitle">{% if is_arabic %}جل فرنسي مانيكير وباديكير{% else %}Gel French Mani-Pedi{% endif %}</h3>
-      <p class="nls-fsub">{% if is_arabic %}الكلاسيكيات لا تخرج عن الموضة{% else %}Classics never go out of style{% endif %}</p>
-      <p class="nls-fdesc">{% if is_arabic %}مانيكير وباديكير فرنسي خالد مع طلاء جل طويل الأمد لإنهاء نظيف ولامع ومثالي.{% else %}A timeless French manicure and pedicure with long-lasting gel polish for a clean, glossy, and perfectly polished finish.{% endif %}</p>
-    </div>
-    <div class="nls-fright">
-      <div class="nls-flabel">{% if is_arabic %}سعر الباقة{% else %}Package Price{% endif %}</div>
-      <div class="nls-fprice"><sup>AED </sup>294</div>
-      <div class="nls-fdur">◷ {% if is_arabic %}ساعتان{% else %}2 hrs{% endif %}</div>
-    </div>
-  </div>
-  <div class="nls-feat" data-nls-reveal style="margin-bottom:2px">
-    <div>
-      <p class="nls-ftag">{% if is_arabic %}فرنسي · مانيكير وباديكير{% else %}French · Mani & Pedi{% endif %}</p>
-      <h3 class="nls-ftitle">{% if is_arabic %}مانيكير وباديكير فرنسي{% else %}French Mani-Pedi{% endif %}</h3>
-      <p class="nls-fsub">{% if is_arabic %}أطراف خالدة، إنهاء لا تشوبه شائبة{% else %}Timeless tips, flawless finish{% endif %}</p>
-      <p class="nls-fdesc">{% if is_arabic %}مانيكير وباديكير خالد بأطراف بيضاء نظيفة وقاعدة طبيعية ناعمة. أنيق ومصقول ودائماً في الموضة.{% else %}A timeless manicure and pedicure featuring clean white tips and a soft natural base. Elegant, polished, and always in style.{% endif %}</p>
-    </div>
-    <div class="nls-fright">
-      <div class="nls-flabel">{% if is_arabic %}سعر الباقة{% else %}Package Price{% endif %}</div>
-      <div class="nls-fprice"><sup>AED </sup>210</div>
-      <div class="nls-fdur">◷ {% if is_arabic %}ساعتان{% else %}2 hrs{% endif %}</div>
-    </div>
-  </div>
-  <div class="nls-3grid">
-    <div class="nls-tile" data-nls-reveal data-delay="0"><p class="nls-ttag">{% if is_arabic %}جل فرنسي · اليدين{% else %}Gel French · Hands{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}مانيكير جل فرنسي{% else %}Gel French Manicure{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}خالد، مصقول، أيقوني{% else %}Timeless, polished, iconic{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}مانيكير فرنسي كلاسيكي مُرقَّى بجل طويل الأمد لإنهاء نظيف ولامع ومحدد بشكل مثالي.{% else %}Classic French manicure elevated with long-lasting gel for a clean, glossy, and perfectly defined finish.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>153</div><div class="nls-tdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div></div></div>
-    <div class="nls-tile" data-nls-reveal data-delay="80"><p class="nls-ttag">{% if is_arabic %}جل فرنسي · القدمين{% else %}Gel French · Feet{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}باديكير جل فرنسي{% else %}Gel French Pedicure{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}أطراف بيضاء نظيفة، جمال خالد{% else %}Clean white tips, timeless beauty{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}باديكير فرنسي راقٍ مُنتهٍ بطلاء جل طويل الأمد لمظهر نظيف ولامع ومشكَّل بشكل مثالي.{% else %}A refined French pedicure finished with long-lasting gel polish for a clean, glossy, and perfectly shaped look.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>162</div><div class="nls-tdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div></div></div>
-    <div class="nls-tile" data-nls-reveal data-delay="160"><p class="nls-ttag">{% if is_arabic %}جل فرنسي · طلاء{% else %}Gel French · Polish{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}طلاء جل فرنسي{% else %}Gel French Polish{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}أطراف نظيفة. لمعان دائم{% else %}Clean tips. Lasting gloss{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}قاعدة وردية ناعمة مع أطراف بيضاء نظيفة باستخدام جل طويل الأمد لإنهاء ناعم ولامع يبقى طازجاً لأسابيع.{% else %}Soft pink base with clean white tips using long-lasting gel for a smooth, glossy finish that stays fresh for weeks.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>95</div><div class="nls-tdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div></div></div>
-    <div class="nls-tile" data-nls-reveal data-delay="0"><p class="nls-ttag">{% if is_arabic %}فرنسي · اليدين{% else %}French · Hands{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}مانيكير فرنسي{% else %}French Manicure{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}خطوط نظيفة، سحر كلاسيكي{% else %}Clean lines, classic charm{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}مانيكير كلاسيكي بأطراف بيضاء نظيفة وقاعدة طبيعية ناعمة. بسيط وراقٍ ودائماً في الموضة.{% else %}Classic manicure with clean white tips and a soft natural base. Simple, refined, and always in style.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>105</div><div class="nls-tdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div></div></div>
-    <div class="nls-tile" data-nls-reveal data-delay="80"><p class="nls-ttag">{% if is_arabic %}فرنسي · القدمين{% else %}French · Feet{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}باديكير فرنسي{% else %}French Pedicure{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}وردي ناعم، أبيض مثالي{% else %}Soft pink, perfect white{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}يُشكِّل ويعتني بقدميكِ، مُنتهٍ بقاعدة وردية ناعمة وأطراف بيضاء نظيفة لمظهر كلاسيكي مصقول.{% else %}Shapes and cares for your feet, finishing with a soft pink base and clean white tips for a classic, polished look.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>116</div><div class="nls-tdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div></div></div>
-    <div class="nls-tile" data-nls-reveal data-delay="160"><p class="nls-ttag">{% if is_arabic %}فرنسي · طلاء{% else %}French · Polish{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}طلاء فرنسي{% else %}French Polish{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}المظهر الكلاسيكي الذي لا يتلاشى{% else %}The classic look that never fades{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}قاعدة وردية أو بيج مقرونة بأطراف بيضاء نظيفة لإنهاء أنيق وطبيعي.{% else %}Soft pink or nude base paired with clean white tips for a neat, natural finish.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>53</div><div class="nls-tdur">{% if is_arabic %}40 دقيقة{% else %}40 min{% endif %}</div></div></div>
-  </div>
-</div></section>
-
-<!-- ════════ POLISH & ESSENTIALS ════════ -->
-<section class="nls-section"><div class="nls-inner">
-  <div class="nls-label" data-nls-reveal><span class="nls-label-text">{% if is_arabic %}الطلاء والأساسيات{% else %}Polish & Essentials{% endif %}</span><div class="nls-label-line"></div></div>
-  <div class="nls-table" data-nls-reveal>
-    <div class="nls-thead"><span>{% if is_arabic %}الخدمة{% else %}Service{% endif %}</span><span>{% if is_arabic %}المدة{% else %}Duration{% endif %}</span><span>{% if is_arabic %}السعر{% else %}Price{% endif %}</span></div>
-    <div class="nls-trow gel"><div class="nls-tname">{% if is_arabic %}طلاء جل{% else %}Gel Polish{% endif %}<small class="blush">{% if is_arabic %}جل · لمعان يدوم — مُعالَج تحت ضوء LED/UV{% else %}Gel · Shine that lasts — cured under LED/UV{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>74</div></div>
-    <div class="nls-trow"><div class="nls-tname">{% if is_arabic %}طلاء كلاسيكي{% else %}Classic Polish{% endif %}<small>{% if is_arabic %}لمعان كلاسيكي، أناقة يومية{% else %}Classic shine, everyday style{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>48</div></div>
-    <div class="nls-trow"><div class="nls-tname">{% if is_arabic %}قص وبرد{% else %}Cut and File{% endif %}<small>{% if is_arabic %}شكل نظيف، إنهاء أنيق{% else %}Clean shape, neat finish{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>53</div></div>
-    <div class="nls-trow"><div class="nls-tname">{% if is_arabic %}مانيكير وباديكير للرجال{% else %}Gent Mani-Pedi{% endif %}<small>{% if is_arabic %}أيدٍ نظيفة، انطباع واثق — عناية احترافية للرجال{% else %}Clean hands, confident impression — professional nail care for men{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>200</div></div>
-  </div>
-  <div class="nls-legend"><div class="nls-legend-item"><div class="nls-legend-dot" style="background:var(--blush)"></div><span class="nls-legend-text">{% if is_arabic %}الحد الوردي يشير إلى إنهاء الجل{% else %}Blush border indicates gel finish{% endif %}</span></div></div>
-</div></section>
-
-<!-- ════════ CHAPTER BANNER ════════ -->
-<div class="nls-chapter" data-nls-reveal>
-  <p class="nls-chapter-eye">{% if is_arabic %}استوديو أظافر بيلادونا{% else %}Belladona Nail Studio{% endif %}</p>
-  <h2 class="nls-chapter-title">{% if is_arabic %}إضافات <span>الأظافر</span>{% else %}Nail <span>Extensions</span>{% endif %}</h2>
-  <p class="nls-chapter-sub">{% if is_arabic %}أكريليك · جل · بولي جل · تغطية · إعادة تعبئة{% else %}Acrylic · Gel · Poly Gel · Overlays · Refills{% endif %}</p>
-</div>
-
-<!-- ════════ GEL EXTENSIONS ════════ -->
-<section class="nls-section"><div class="nls-inner">
-  <div class="nls-label" data-nls-reveal><span class="nls-label-text">{% if is_arabic %}إضافات الجل{% else %}Gel Extensions{% endif %}</span><div class="nls-label-line"></div></div>
-  <div class="nls-3grid">
-    <div class="nls-tile blush-bg" data-nls-reveal data-delay="0"><p class="nls-ttag blush">{% if is_arabic %}إضافة جل · فرنسي{% else %}Gel Extension · French{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}إضافة جل فرنسي{% else %}Gel Extension French{% endif %}</h3><p class="nls-tsub blush">{% if is_arabic %}أظافر أطول، طراز فرنسي كلاسيكي{% else %}Longer nails, classic French{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}تُضيف طولاً لأظافرك باستخدام جل البناء، مُنتهية بطرف فرنسي كلاسيكي.{% else %}Adds length to your nails using builder gel, finished with a classic French tip.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>315</div><div class="nls-tdur">{% if is_arabic %}ساعتان و30 دقيقة{% else %}2 hr 30 min{% endif %}</div></div></div>
-    <div class="nls-tile blush-bg" data-nls-reveal data-delay="80"><p class="nls-ttag blush">{% if is_arabic %}إضافة جل · طبيعي{% else %}Gel Extension · Natural{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}إضافة جل طبيعي{% else %}Gel Extension Natural{% endif %}</h3><p class="nls-tsub blush">{% if is_arabic %}أظافر أطول، لمسة أكثر نعومة{% else %}Longer nails, softer touch{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}إضافات جل خفيفة الوزن بإنهاء ناعم ومرن وطبيعي. طول أنيق وراحة ومظهر لامع طويل الأمد.{% else %}Lightweight gel extensions with a soft, flexible, and natural finish. Elegant length, comfort, and a glossy, long-lasting look.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>294</div><div class="nls-tdur">{% if is_arabic %}ساعتان{% else %}2 hr{% endif %}</div></div></div>
-    <div class="nls-tile blush-bg" data-nls-reveal data-delay="160"><p class="nls-ttag blush">{% if is_arabic %}إضافة جل · أومبري{% else %}Gel Extension · Ombré{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}إضافة جل أومبري{% else %}Gel Extension Ombré{% endif %}</h3><p class="nls-tsub blush">{% if is_arabic %}جمال متدرج، ثبات طويل الأمد{% else %}Gradient beauty, lasting wear{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}إضافات جل مُنتهية بتأثير أومبري ناعم ومتدرج لمظهر حالم وثلاثي الأبعاد.{% else %}Gel extensions finished with a soft, blended ombré effect for a dreamy, dimensional look.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>365</div><div class="nls-tdur">{% if is_arabic %}ساعتان{% else %}2 hr{% endif %}</div></div></div>
-  </div>
-</div></section>
-
-<!-- ════════ GEL OVERLAYS ════════ -->
-<section class="nls-section"><div class="nls-inner">
-  <div class="nls-label" data-nls-reveal><span class="nls-label-text">{% if is_arabic %}تغطية الجل{% else %}Gel Overlays{% endif %}</span><div class="nls-label-line"></div></div>
-  <div class="nls-2grid">
-    <div class="nls-tile" data-nls-reveal data-delay="0"><p class="nls-ttag">{% if is_arabic %}تغطية جل · طبيعية{% else %}Gel Overlay · Natural{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}تغطية جل طبيعية{% else %}Gel Overlay Natural{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}ابقِ الأمر بسيطاً، ابقِ الأمر قوياً{% else %}Keep it simple, keep it strong{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}تُضيف طبقة رقيقة من جل التقوية فوق أظافرك الطبيعية دون إضافة طول.{% else %}Adds a thin layer of strengthening gel over your natural nails without adding length.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>242</div><div class="nls-tdur">{% if is_arabic %}ساعة و30 دقيقة{% else %}1 hr 30 min{% endif %}</div></div></div>
-    <div class="nls-tile" data-nls-reveal data-delay="100"><p class="nls-ttag">{% if is_arabic %}تغطية جل · فرنسية{% else %}Gel Overlay · French{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}تغطية جل فرنسية{% else %}Gel French Overlay{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}أطراف كلاسيكية بقوة الجل{% else %}Classic tips with gel strength{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}تُضيف طبقة من جل التقوية فوق أظافرك الطبيعية، مُنتهية بطرف فرنسي كلاسيكي.{% else %}Adds a layer of strengthening gel over your natural nails, finished with a classic French tip.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>260</div><div class="nls-tdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div></div></div>
-  </div>
-</div></section>
-
-<!-- ════════ GEL REFILLS ════════ -->
-<section class="nls-section"><div class="nls-inner">
-  <div class="nls-label" data-nls-reveal><span class="nls-label-text">{% if is_arabic %}إعادة تعبئة الجل{% else %}Gel Refills{% endif %}</span><div class="nls-label-line"></div></div>
-  <div class="nls-table" data-nls-reveal>
-    <div class="nls-thead"><span>{% if is_arabic %}الخدمة{% else %}Service{% endif %}</span><span>{% if is_arabic %}المدة{% else %}Duration{% endif %}</span><span>{% if is_arabic %}السعر{% else %}Price{% endif %}</span></div>
-    <div class="nls-trow gel"><div class="nls-tname">{% if is_arabic %}إعادة تعبئة جل طبيعي{% else %}Gel Refill Natural{% endif %}<small class="blush">{% if is_arabic %}جل · جدِّدي بريقك الطبيعي{% else %}Gel · Refresh your natural shine{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}ساعتان{% else %}2 hr{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>210</div></div>
-    <div class="nls-trow french"><div class="nls-tname">{% if is_arabic %}إعادة تعبئة جل فرنسي{% else %}Gel Refill French{% endif %}<small class="gold">{% if is_arabic %}فرنسي · استعادة الأطراف النظيفة{% else %}French · Clean tips restored{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}ساعتان{% else %}2 hr{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>263</div></div>
-    <div class="nls-trow gel"><div class="nls-tname">{% if is_arabic %}إعادة تعبئة جل أومبري{% else %}Gel Refill Ombré{% endif %}<small class="blush">{% if is_arabic %}جل · جدِّدي بريق الأومبري{% else %}Gel · Refresh your ombré shine{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}ساعة و30 دقيقة{% else %}1 hr 30 min{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>315</div></div>
-  </div>
-</div></section>
-
-<!-- ════════ ACRYLIC EXTENSIONS ════════ -->
-<section class="nls-section"><div class="nls-inner">
-  <div class="nls-label" data-nls-reveal><span class="nls-label-text">{% if is_arabic %}إضافات الأكريليك{% else %}Acrylic Extensions{% endif %}</span><div class="nls-label-line"></div></div>
-  <div class="nls-3grid">
-    <div class="nls-tile gold-bg" data-nls-reveal data-delay="0"><p class="nls-ttag">{% if is_arabic %}إضافة أكريليك · فرنسي{% else %}Acrylic Extension · French{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}إضافة أكريليك فرنسي{% else %}Acrylic Extension French{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}أظافر أطول، طراز فرنسي كلاسيكي{% else %}Longer nails, classic French{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}تُضيف طولاً باستخدام الأكريليك، مُنتهية بأطراف فرنسية بيضاء كلاسيكية.{% else %}Adds length using acrylic, finished with classic white French tips.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>315</div><div class="nls-tdur">{% if is_arabic %}ساعتان و30 دقيقة{% else %}2 hr 30 min{% endif %}</div></div></div>
-    <div class="nls-tile gold-bg" data-nls-reveal data-delay="80"><p class="nls-ttag">{% if is_arabic %}إضافة أكريليك · طبيعي{% else %}Acrylic Extension · Natural{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}إضافة أكريليك طبيعي{% else %}Acrylic Extension Natural{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}أطول بشكل طبيعي، أنيقة بدون جهد{% else %}Naturally longer, effortlessly elegant{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}إضافات أكريليك متينة مصممة لتبدو ناعمة ونظيفة وطبيعية بدون جهد.{% else %}Durable acrylic extensions designed to look soft, clean, and effortlessly natural.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>294</div><div class="nls-tdur">{% if is_arabic %}ساعتان{% else %}2 hr{% endif %}</div></div></div>
-    <div class="nls-tile" data-nls-reveal data-delay="160"><p class="nls-ttag">{% if is_arabic %}تغطية أكريليك · طبيعية{% else %}Acrylic Overlay · Natural{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}تغطية أكريليك طبيعية{% else %}Acrylic Overlay Natural{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}مظهر طبيعي، قوة إضافية{% else %}Natural look, extra strength{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}تُضيف طبقة أكريليك رقيقة فوق أظافرك الطبيعية للقوة والمتانة دون إضافة طول.{% else %}Adds a thin acrylic layer over your natural nails for strength and durability without adding length.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>242</div><div class="nls-tdur">{% if is_arabic %}ساعة و30 دقيقة{% else %}1 hr 30 min{% endif %}</div></div></div>
-    <div class="nls-tile" data-nls-reveal data-delay="0"><p class="nls-ttag">{% if is_arabic %}تغطية أكريليك · فرنسية{% else %}Acrylic Overlay · French{% endif %}</p><h3 class="nls-ttitle">{% if is_arabic %}تغطية أكريليك فرنسية{% else %}Acrylic Overlay French{% endif %}</h3><p class="nls-tsub">{% if is_arabic %}أظافر قوية، طراز كلاسيكي{% else %}Strong nails, classic style{% endif %}</p><p class="nls-tdesc">{% if is_arabic %}تُقوِّي أظافرك الطبيعية بطبقة رقيقة من الأكريليك، مُنتهية بطراز فرنسي كلاسيكي.{% else %}Strengthens your natural nails with a thin layer of acrylic, finished with a classic French style.{% endif %}</p><div class="nls-tfoot"><div class="nls-tprice"><sup>AED </sup>263</div><div class="nls-tdur">{% if is_arabic %}ساعتان{% else %}2 hr{% endif %}</div></div></div>
-  </div>
-</div></section>
-
-<!-- ════════ ACRYLIC REFILLS ════════ -->
-<section class="nls-section"><div class="nls-inner">
-  <div class="nls-label" data-nls-reveal><span class="nls-label-text">{% if is_arabic %}إعادة تعبئة الأكريليك{% else %}Acrylic Refills{% endif %}</span><div class="nls-label-line"></div></div>
-  <div class="nls-table" data-nls-reveal>
-    <div class="nls-thead"><span>{% if is_arabic %}الخدمة{% else %}Service{% endif %}</span><span>{% if is_arabic %}المدة{% else %}Duration{% endif %}</span><span>{% if is_arabic %}السعر{% else %}Price{% endif %}</span></div>
-    <div class="nls-trow"><div class="nls-tname">{% if is_arabic %}إعادة تعبئة أكريليك طبيعي{% else %}Acrylic Refill Natural{% endif %}<small>{% if is_arabic %}يملأ المنطقة المنمية ويستعيد السطح الناعم{% else %}Fills grown-out area, restores smooth surface{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>210</div></div>
-    <div class="nls-trow french"><div class="nls-tname">{% if is_arabic %}إعادة تعبئة أكريليك فرنسي{% else %}Acrylic Refill French{% endif %}<small class="gold">{% if is_arabic %}فرنسي · جدِّدي أطرافك الفرنسية{% else %}French · Refresh your French tips{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}ساعتان{% else %}2 hr{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>263</div></div>
-    <div class="nls-trow"><div class="nls-tname">{% if is_arabic %}إعادة تعبئة أكريليك أومبري{% else %}Acrylic Refill Ombré{% endif %}<small>{% if is_arabic %}يستعيد مزيج الأومبري الناعم{% else %}Restores the soft ombré blend{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}ساعتان{% else %}2 hr{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>315</div></div>
-  </div>
-</div></section>
-
-<!-- ════════ POLY GEL & MAINTENANCE ════════ -->
-<section class="nls-section"><div class="nls-inner">
-  <div class="nls-label" data-nls-reveal><span class="nls-label-text">{% if is_arabic %}بولي جل والصيانة{% else %}Poly Gel & Maintenance{% endif %}</span><div class="nls-label-line"></div></div>
-  <div class="nls-table" data-nls-reveal>
-    <div class="nls-thead"><span>{% if is_arabic %}الخدمة{% else %}Service{% endif %}</span><span>{% if is_arabic %}المدة{% else %}Duration{% endif %}</span><span>{% if is_arabic %}السعر{% else %}Price{% endif %}</span></div>
-    <div class="nls-trow"><div class="nls-tname">{% if is_arabic %}بولي جل طبيعي{% else %}Poly Gel Natural{% endif %}<small>{% if is_arabic %}نظام جل خفيف الوزن ومرن وطبيعي المظهر{% else %}Lightweight, flexible, and natural-looking gel system{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}ساعتان{% else %}2 hr{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>294</div></div>
-    <div class="nls-trow"><div class="nls-tname">{% if is_arabic %}تلميع وبرد{% else %}Buff and File{% endif %}<small>{% if is_arabic %}عناية بسيطة، مظهر مصقول{% else %}Simple care, polished look{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>100</div></div>
-    <div class="nls-trow"><div class="nls-tname">{% if is_arabic %}إزالة الجل الصلب{% else %}Hard Gel Removal{% endif %}<small>{% if is_arabic %}إزالة آمنة دون إتلاف الظفر الطبيعي{% else %}Safe removal — no damage to the natural nail{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>53</div></div>
-    <div class="nls-trow"><div class="nls-tname">{% if is_arabic %}إزالة بولي جل{% else %}Poly Gel Removal{% endif %}<small>{% if is_arabic %}إزالة آمنة ونظيفة{% else %}Safe and clean removal{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>53</div></div>
-    <div class="nls-trow"><div class="nls-tname">{% if is_arabic %}إصلاح الجل{% else %}Gel Repair{% endif %}<small>{% if is_arabic %}إصلاح صغير، مظهر مثالي{% else %}Small repair, flawless look{% endif %}</small></div><div class="nls-rowdur">{% if is_arabic %}20 دقيقة{% else %}20 min{% endif %}</div><div class="nls-rowprice"><sup>AED </sup>37</div></div>
-  </div>
-</div></section>
+</div><!-- /nls-shell -->
 
 <!-- ════════ BOTTOM ════════ -->
 <div class="nls-bottom" data-nls-reveal>
   <div class="nls-bottom-line"><div class="nls-bottom-rule"></div><span class="nls-bottom-diamond">◆</span><div class="nls-bottom-rule"></div></div>
-  <h2>{% if is_arabic %}أظافر جميلة،<br>بشكل جميل{% else %}Beautiful nails,<br><em>beautifully done</em>{% endif %}</h2>
+  <h2>{% if is_arabic %}جمالكِ،<br>بإتقان{% else %}Beautiful you,<br><em>beautifully done</em>{% endif %}</h2>
   <p>{% if is_arabic %}جميع الخدمات متاحة في منزلكِ في جميع أنحاء الإمارات{% else %}All services available at your home across the UAE{% endif %}</p>
 </div>
 
 </div>
 
 <script>
-  (function() {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const el = e.target, delay = parseInt(el.dataset.delay || 0);
-          setTimeout(() => el.classList.add('visible'), delay);
-          obs.unobserve(el);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.nls-{{ section.id }} [data-nls-reveal]').forEach(el => obs.observe(el));
-  })();
-</script>
+(function(){
+  var root = document.querySelector('.nls-{{ section.id }}');
+  if(!root) return;
 
-{% schema %}
-{
-  "name": "Nails Page",
-  "settings": [
-    {
-      "type": "header",
-      "content": "🎨 Colors"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background color",
-      "default": "#405264"
-    },
-    {
-      "type": "color",
-      "id": "gold_color",
-      "label": "Gold accent color",
-      "default": "#c9a96e"
-    },
-    {
-      "type": "color",
-      "id": "blush_color",
-      "label": "Blush accent color",
-      "default": "#c9a0a0"
-    },
-    {
-      "type": "header",
-      "content": "🇬🇧 Hero — English"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow_en",
-      "label": "Eyebrow text (EN)",
-      "default": "Belladona Care · Dubai"
-    },
-    {
-      "type": "header",
-      "content": "🇸🇦 Hero — العربية"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow_ar",
-      "label": "النص الصغير فوق العنوان (AR)",
-      "default": "بيلادونا كير · دبي"
-    },
-    {
-      "type": "text",
-      "id": "title_ar",
-      "label": "العنوان الرئيسي (AR)",
-      "default": "البريق والإتقان"
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var el=e.target, delay=parseInt(el.dataset.delay||0);
+        setTimeout(function(){ el.classList.add('visible'); }, delay);
+        obs.unobserve(el);
+      }
+    });
+  }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+  root.querySelectorAll('[data-nls-reveal]').forEach(function(el){ obs.observe(el); });
+
+  /* fixed cart reveal */
+  var trigger = root.querySelector('#nlsTrigger-{{ section.id }}');
+  function syncPin(){
+    if(window.innerWidth <= 900){ root.classList.remove('cart-pinned'); return; }
+    var t  = trigger ? trigger.getBoundingClientRect().top : 9999;
+    var rb = root.getBoundingClientRect().bottom;
+    root.classList.toggle('cart-pinned', (t <= 150) && (rb > 280));
+  }
+  window.addEventListener('scroll', syncPin, { passive:true });
+  window.addEventListener('resize', syncPin);
+  syncPin();
+
+  /* ===== Selection summary ===== */
+  var IS_AR = {{ is_arabic | json }};
+  var WHATSAPP_NUMBER = "9715XXXXXXXX"; /* ←←← REPLACE with your number, intl format, no + */
+  var CUR = IS_AR ? 'د.إ' : 'AED';
+  var L = IS_AR
+    ? { add:'أضف', added:'✓ مضافة', intro:'مرحباً! أود حجز الخدمات التالية:', total:'الإجمالي', from:'يبدأ من' }
+    : { add:'Add', added:'✓ Added', intro:"Hi! I'd like to book:", total:'Total', from:'from' };
+
+  var cart = [];
+  var addBtns  = root.querySelectorAll('.nls-add');
+  var itemsEl  = root.querySelector('#nlsItems-{{ section.id }}');
+  var emptyEl  = root.querySelector('#nlsEmpty-{{ section.id }}');
+  var totalEl  = root.querySelector('#nlsTotal-{{ section.id }}');
+  var barTotEl = root.querySelector('#nlsBarTotal-{{ section.id }}');
+  var countEl  = root.querySelector('#nlsCount-{{ section.id }}');
+  var bookEl   = root.querySelector('#nlsBook-{{ section.id }}');
+  var noteEl   = root.querySelector('#nlsNote-{{ section.id }}');
+  var cartEl   = root.querySelector('#nlsCart-{{ section.id }}');
+  var barEl    = root.querySelector('#nlsBar-{{ section.id }}');
+
+  /* nail-art stepper */
+  var artCount = 0;
+  var artBox = root.querySelector('[data-art-qty]');
+  var artSpan = root.querySelector('[data-art-count]');
+  if(artBox){
+    artBox.querySelector('[data-art-inc]').addEventListener('click', function(){ artCount++; artSpan.textContent = artCount; syncArtBtn(); });
+    artBox.querySelector('[data-art-dec]').addEventListener('click', function(){ if(artCount>0){ artCount--; artSpan.textContent = artCount; syncArtBtn(); } });
+  }
+  function syncArtBtn(){
+    var b = root.querySelector('[data-svc-id="w-nailart"]');
+    var i = cart.find(function(x){ return x.id==='w-nailart'; });
+    if(i){ i.qty = artCount; i.price = artCount * 10; if(artCount===0){ cart = cart.filter(function(x){return x.id!=='w-nailart';}); } render(); }
+  }
+
+  /* blow-dry +50 curls extra */
+  var blowExtra = root.querySelector('[data-blow-extra]');
+  if(blowExtra){ blowExtra.addEventListener('change', applyBlowExtra); }
+  function blowInCart(){ return cart.some(function(x){ return x.id.indexOf('w-blow-')===0; }); }
+  function applyBlowExtra(){
+    var want = blowExtra && blowExtra.checked && blowInCart();
+    var has = cart.some(function(x){ return x.id==='w-curls'; });
+    if(want && !has){ cart.push({ id:'w-curls', name:(IS_AR?'تجعيد / موجات':'Curls / Beach Waves'), price:50 }); }
+    else if(!want && has){ cart = cart.filter(function(x){ return x.id!=='w-curls'; }); }
+    render();
+  }
+
+  function fmt(n){ return CUR + ' ' + n; }
+
+  function render(){
+    addBtns.forEach(function(b){
+      var on = cart.some(function(i){ return i.id === b.dataset.svcId; });
+      b.classList.toggle('is-added', on);
+      b.textContent = on ? L.added : L.add;
+    });
+    itemsEl.innerHTML = '';
+    var hasFrom = false;
+    cart.forEach(function(i){
+      if(i.from) hasFrom = true;
+      var label = i.name + (i.qty ? ' ×' + i.qty : '') + (i.from ? ' ('+L.from+')' : '');
+      var row = document.createElement('div');
+      row.className = 'nls-citem';
+      row.innerHTML =
+        '<span class="nls-citem-name"></span>' +
+        '<span class="nls-citem-end"><span class="nls-citem-price">' + fmt(i.price) + '</span>' +
+        '<button type="button" class="nls-citem-x" data-rm="' + i.id + '">×</button></span>';
+      row.querySelector('.nls-citem-name').textContent = label;
+      itemsEl.appendChild(row);
+    });
+    var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
+    totalEl.textContent = fmt(total);
+    if(barTotEl) barTotEl.textContent = fmt(total);
+    if(countEl)  countEl.textContent = cart.length;
+    emptyEl.style.display = cart.length ? 'none' : 'block';
+    itemsEl.style.display = cart.length ? 'block' : 'none';
+    if(noteEl) noteEl.style.display = hasFrom ? 'block' : 'none';
+    root.classList.toggle('has-items', cart.length > 0);
+    bookEl.classList.toggle('is-disabled', cart.length === 0);
+  }
+
+  addBtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var id = b.dataset.svcId;
+      var idx = cart.findIndex(function(i){ return i.id === id; });
+      if(idx > -1){ cart.splice(idx, 1); }
+      else {
+        if(b.dataset.svcQtysource === 'art'){
+          if(artCount === 0){ return; }
+          cart.push({ id:id, name:b.dataset.svcName, qty:artCount, price:artCount * parseInt(b.dataset.svcUnit,10) });
+        } else {
+          cart.push({ id:id, name:b.dataset.svcName, price:parseInt(b.dataset.svcPrice,10), from:(b.dataset.svcFrom==='1') });
+        }
+      }
+      applyBlowExtra();
+      render();
+    });
+  });
+
+  itemsEl.addEventListener('click', function(e){
+    var rm = e.target.getAttribute('data-rm');
+    if(rm){
+      cart = cart.filter(function(i){ return i.id !== rm; });
+      if(rm.indexOf('w-blow-')===0){ applyBlowExtra(); }
+      render();
     }
-  ],
-  "presets": [
-    {
-      "name": "Manicure Women"
-    }
-  ]
-}
-{% endschema %}
+  });
+
+  if(barEl){ barEl.addEventListener('click', function(){ cartEl.classList.toggle('is-open'); }); }
+
+  bookEl.addEventListener('click', function(){
+    if(!cart.length) return;
+    var lines = cart.map(function(i){
+      return '• ' + i.name + (i.qty ? ' ×'+i.qty : '') + (i.from ? ' ('+L.from+')' : '') + ' — ' + fmt(i.price);
+    });
+    var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
+    var msg = L.intro + '\n' + lines.join('\n') + '\n' + L.total + ': ' + fmt(total);
+    window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+  });
+
+  render();
+})();
+</script>

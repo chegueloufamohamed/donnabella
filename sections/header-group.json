@@ -138,70 +138,7 @@
           "settings": {
             "nav_title": "Men",
             "nav_title_ar": "رجال",
-            "link": ""
-          }
-        },
-        "mega_child_gwEX8Y": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Manicure",
-            "title_ar": "العناية بالأظافر",
-            "image": "shopify://shop_images/professional-manicurist-filing-man-nails-with-emer-2026-01-05-06-16-06-utc.jpg",
-            "link": "shopify://pages/nails-men"
-          }
-        },
-        "mega_child_A9brWY": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Pedicure",
-            "title_ar": "أظافر القدم",
-            "image": "shopify://shop_images/image-gen_25.png",
-            "link": "shopify://pages/pedicure-men"
-          }
-        },
-        "mega_child_g3Mbt9": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Massage",
-            "title_ar": "مساج",
-            "image": "shopify://shop_images/resized_smaller_image.jpg",
-            "link": "shopify://pages/massage-men"
-          }
-        },
-        "mega_child_pHV7Aa": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Haircare",
-            "title_ar": "العناية بالشعر",
-            "image": "shopify://shop_images/resized_smaller_image_2.jpg",
-            "link": "shopify://pages/haircare-men"
-          }
-        },
-        "mega_child_QwjaGG": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Eyebrows",
-            "title_ar": "الحواجب",
-            "image": "shopify://shop_images/contour-stick-marking-skin-near-man-eye-in-beauty-2026-01-08-06-46-31-utc.jpg",
-            "link": "shopify://pages/eyebrows-men"
-          }
-        },
-        "mega_child_PfyEBa": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Facial",
-            "title_ar": "العناية بالوجه",
-            "image": "shopify://shop_images/cosmetician-cleaning-face-close-up-2026-01-05-00-39-35-utc.jpg",
-            "link": "shopify://pages/facial-men"
-          }
-        },
-        "mega_child_7dmJnp": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Waxing",
-            "title_ar": "إزالة الشعر",
-            "image": "shopify://shop_images/serene-guy-getting-wax-hair-removal-from-chest-in-2026-01-08-06-17-39-utc.jpg",
-            "link": "shopify://pages/waxing-men"
+            "link": "shopify://pages/men"
           }
         },
         "mega_parent_tq4bxn": {
@@ -209,87 +146,14 @@
           "settings": {
             "nav_title": "Women",
             "nav_title_ar": "نساء",
-            "link": ""
-          }
-        },
-        "mega_child_bybh9L": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Manicure",
-            "title_ar": "أظافر",
-            "image": "shopify://shop_images/Nails.webp",
-            "link": "shopify://pages/nails"
-          }
-        },
-        "mega_child_F34Tjr": {
-          "type": "mega_child",
-          "disabled": true,
-          "settings": {
-            "title": "Eyebrows",
-            "title_ar": "مساج",
-            "image": "shopify://shop_images/Eyebrows.webp",
-            "link": "shopify://pages/eyebrows-1"
-          }
-        },
-        "mega_child_acfBjU": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Eyelashes & Eyebrows",
-            "title_ar": "الرموش و الحواجب",
-            "image": "shopify://shop_images/Eyelashes.webp",
-            "link": "shopify://pages/lashes"
-          }
-        },
-        "mega_child_jkXChr": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Hairecare",
-            "title_ar": "العناية بالشعر",
-            "image": "shopify://shop_images/Haircare.webp",
-            "link": "shopify://pages/haircare"
-          }
-        },
-        "mega_child_NibaJC": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Massage",
-            "title_ar": "مساج",
-            "image": "shopify://shop_images/Massage.webp",
-            "link": "shopify://pages/massage"
-          }
-        },
-        "mega_child_NHrhK8": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Waxing & Threading",
-            "title_ar": "إزالة الشعر",
-            "image": "shopify://shop_images/the-specialist-depilates-the-hair-with-wax-on-the-2026-01-08-01-14-16-utc.jpg",
-            "link": "shopify://pages/waxing"
-          }
-        },
-        "mega_child_DjkbCg": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Skincare",
-            "title_ar": "الرعاية بالبشرة",
-            "image": "shopify://shop_images/facial.webp",
-            "link": "shopify://pages/facial"
-          }
-        },
-        "mega_child_dNqydC": {
-          "type": "mega_child",
-          "settings": {
-            "title": "Pedicure",
-            "title_ar": "العناية بالأقدام",
-            "image": "shopify://shop_images/closeup-shot-of-a-woman-s-hands-pedicuring-her-cli-2026-01-07-23-15-17-utc.jpg",
-            "link": "shopify://pages/pedicure"
+            "link": "shopify://pages/women"
           }
         },
         "mega_parent_6cHLck": {
           "type": "mega_parent",
           "settings": {
-            "nav_title": "Massage",
-            "nav_title_ar": "مساج",
+            "nav_title": "Couples",
+            "nav_title_ar": "أزواج",
             "link": "https://belladona.ae/pages/massage"
           }
         },
@@ -313,22 +177,7 @@
       "block_order": [
         "mega_parent_jFWGzB",
         "mega_parent_mhJFKM",
-        "mega_child_gwEX8Y",
-        "mega_child_A9brWY",
-        "mega_child_g3Mbt9",
-        "mega_child_pHV7Aa",
-        "mega_child_QwjaGG",
-        "mega_child_PfyEBa",
-        "mega_child_7dmJnp",
         "mega_parent_tq4bxn",
-        "mega_child_bybh9L",
-        "mega_child_F34Tjr",
-        "mega_child_acfBjU",
-        "mega_child_jkXChr",
-        "mega_child_NibaJC",
-        "mega_child_NHrhK8",
-        "mega_child_DjkbCg",
-        "mega_child_dNqydC",
         "mega_parent_6cHLck",
         "mega_parent_MwNqVj",
         "mega_parent_P7nne4"

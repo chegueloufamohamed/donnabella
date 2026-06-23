@@ -122,13 +122,275 @@
     },
     "custom_liquid_46bQwQ": {
       "type": "custom-liquid",
+      "disabled": true,
       "name": "Custom liquid",
+      "settings": {}
+    },
+    "for_her_bQyTH9": {
+      "type": "for-her",
+      "blocks": {
+        "service_card_jhkrMr": {
+          "type": "service_card",
+          "settings": {
+            "icon": "heart",
+            "featured": true,
+            "title": "Relaxing Massage",
+            "desc": "Melt away stress with our signature full-body massage, performed by certified therapists in the comfort of your own home. Choose from Swedish, deep tissue, or aromatherapy.",
+            "arrow_text": "Book Now",
+            "link": ""
+          }
+        },
+        "service_card_aMkyVx": {
+          "type": "service_card",
+          "settings": {
+            "icon": "manicure",
+            "featured": false,
+            "title": "Manicure",
+            "desc": "Flawless nails with gel, classic, or nail art finishes. Cuticle care, shaping, and a luxurious hand massage included.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        },
+        "service_card_aQdQcd": {
+          "type": "service_card",
+          "settings": {
+            "icon": "pedicure",
+            "featured": false,
+            "title": "Pedicure",
+            "desc": "Treat your feet to a spa-grade pedicure. Exfoliation, callus removal, nail shaping, and a soothing foot soak.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        },
+        "service_card_gNwxG3": {
+          "type": "service_card",
+          "settings": {
+            "icon": "hair",
+            "featured": false,
+            "title": "Hair Care",
+            "desc": "Professional blow-dry, styling, deep conditioning, and treatments for every hair type. Salon results at home.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        },
+        "service_card_m6FjCp": {
+          "type": "service_card",
+          "settings": {
+            "icon": "waxing",
+            "featured": false,
+            "title": "Waxing",
+            "desc": "Smooth, long-lasting results with premium wax formulas. Full body, bikini, and facial waxing by trained specialists.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        },
+        "service_card_tbBDbh": {
+          "type": "service_card",
+          "settings": {
+            "icon": "facial",
+            "featured": false,
+            "title": "Facial & Skin Care",
+            "desc": "Radiant skin starts here. Deep cleansing facials, brightening treatments, and hydration therapies tailored to your skin type.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "service_card_jhkrMr",
+        "service_card_aMkyVx",
+        "service_card_aQdQcd",
+        "service_card_gNwxG3",
+        "service_card_m6FjCp",
+        "service_card_tbBDbh"
+      ],
+      "name": "Donna Bella · For Her",
       "settings": {
-        "custom_liquid": "<!-- ============================================================\n     DONNABELLA - WOMEN & MEN HOME SERVICES SECTIONS\n     Custom Liquid Code - Paste into Shopify Custom Liquid block\n     ============================================================ -->\n\n<style>\n/* --- GLOBAL SECTION STYLES --- */\n.db-services-wrapper {\n  width: 100vw;\n  position: relative;\n  left: 50%;\n  right: 50%;\n  margin-left: -50vw;\n  margin-right: -50vw;\n  overflow: hidden;\n}\n\n/* --- WOMEN SECTION --- */\n.db-women-section {\n  position: relative;\n  min-height: 100vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 100px 40px;\n  background:\n    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(255,182,193,0.22) 0%, transparent 60%),\n    radial-gradient(ellipse 60% 80% at 80% 30%, rgba(221,160,221,0.18) 0%, transparent 55%),\n    radial-gradient(ellipse 50% 50% at 50% 90%, rgba(255,240,245,0.15) 0%, transparent 50%),\n    linear-gradient(135deg, #1a0a1e 0%, #2d1b35 30%, #1e0f2a 60%, #120818 100%);\n  overflow: hidden;\n}\n\n.db-women-section::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background:\n    radial-gradient(circle 600px at 15% 50%, rgba(255,255,255,0.04) 0%, transparent 70%),\n    radial-gradient(circle 400px at 85% 20%, rgba(255,255,255,0.05) 0%, transparent 60%);\n  pointer-events: none;\n}\n\n/* Floating glow orbs - Women */\n.db-women-section .db-orb {\n  position: absolute;\n  border-radius: 50%;\n  filter: blur(80px);\n  pointer-events: none;\n  animation: db-float 8s ease-in-out infinite;\n}\n.db-women-section .db-orb-1 {\n  width: 500px;\n  height: 500px;\n  background: radial-gradient(circle, rgba(255,182,193,0.25) 0%, transparent 70%);\n  top: -100px;\n  left: -100px;\n  animation-delay: 0s;\n}\n.db-women-section .db-orb-2 {\n  width: 400px;\n  height: 400px;\n  background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);\n  bottom: -80px;\n  right: 10%;\n  animation-delay: 3s;\n}\n.db-women-section .db-orb-3 {\n  width: 300px;\n  height: 300px;\n  background: radial-gradient(circle, rgba(221,160,221,0.2) 0%, transparent 70%);\n  top: 40%;\n  right: -50px;\n  animation-delay: 5s;\n}\n\n/* --- MEN SECTION --- */\n.db-men-section {\n  position: relative;\n  min-height: 100vh;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 100px 40px;\n  background:\n    radial-gradient(ellipse 80% 60% at 80% 50%, rgba(100,149,237,0.18) 0%, transparent 60%),\n    radial-gradient(ellipse 60% 80% at 20% 30%, rgba(70,130,180,0.15) 0%, transparent 55%),\n    radial-gradient(ellipse 50% 50% at 50% 90%, rgba(200,220,255,0.1) 0%, transparent 50%),\n    linear-gradient(135deg, #080e1a 0%, #0f1e30 30%, #0a1525 60%, #060d18 100%);\n  overflow: hidden;\n}\n\n.db-men-section::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background:\n    radial-gradient(circle 600px at 85% 50%, rgba(255,255,255,0.04) 0%, transparent 70%),\n    radial-gradient(circle 400px at 15% 20%, rgba(255,255,255,0.04) 0%, transparent 60%);\n  pointer-events: none;\n}\n\n/* Floating glow orbs - Men */\n.db-men-section .db-orb {\n  position: absolute;\n  border-radius: 50%;\n  filter: blur(80px);\n  pointer-events: none;\n  animation: db-float 8s ease-in-out infinite;\n}\n.db-men-section .db-orb-1 {\n  width: 500px;\n  height: 500px;\n  background: radial-gradient(circle, rgba(100,149,237,0.2) 0%, transparent 70%);\n  top: -100px;\n  right: -100px;\n  animation-delay: 0s;\n}\n.db-men-section .db-orb-2 {\n  width: 400px;\n  height: 400px;\n  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);\n  bottom: -80px;\n  left: 10%;\n  animation-delay: 3s;\n}\n.db-men-section .db-orb-3 {\n  width: 300px;\n  height: 300px;\n  background: radial-gradient(circle, rgba(135,206,250,0.18) 0%, transparent 70%);\n  top: 40%;\n  left: -50px;\n  animation-delay: 5s;\n}\n\n/* --- FLOAT ANIMATION --- */\n@keyframes db-float {\n  0%, 100% { transform: translateY(0px) scale(1); }\n  50% { transform: translateY(-30px) scale(1.05); }\n}\n\n/* --- SECTION INNER CONTAINER --- */\n.db-section-inner {\n  position: relative;\n  z-index: 2;\n  width: 100%;\n  max-width: 1300px;\n  margin: 0 auto;\n}\n\n/* --- SECTION HEADER --- */\n.db-section-header {\n  text-align: center;\n  margin-bottom: 70px;\n}\n\n.db-section-eyebrow {\n  display: inline-block;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 11px;\n  font-weight: 600;\n  letter-spacing: 5px;\n  text-transform: uppercase;\n  padding: 8px 24px;\n  border-radius: 50px;\n  margin-bottom: 24px;\n  backdrop-filter: blur(20px);\n  -webkit-backdrop-filter: blur(20px);\n}\n\n.db-women-section .db-section-eyebrow {\n  background: rgba(255,255,255,0.12);\n  border: 1px solid rgba(255,182,193,0.4);\n  color: rgba(255,200,210,0.95);\n  box-shadow: 0 0 20px rgba(255,182,193,0.2), inset 0 1px 0 rgba(255,255,255,0.15);\n}\n\n.db-men-section .db-section-eyebrow {\n  background: rgba(255,255,255,0.08);\n  border: 1px solid rgba(100,149,237,0.4);\n  color: rgba(180,210,255,0.95);\n  box-shadow: 0 0 20px rgba(100,149,237,0.2), inset 0 1px 0 rgba(255,255,255,0.12);\n}\n\n.db-section-title {\n  font-family: 'Cormorant Garamond', serif;\n  font-size: clamp(42px, 6vw, 80px);\n  font-weight: 300;\n  line-height: 1.1;\n  color: #ffffff;\n  margin-bottom: 20px;\n  text-shadow: 0 0 60px rgba(255,255,255,0.15), 0 2px 4px rgba(0,0,0,0.3);\n}\n\n.db-section-title em {\n  font-style: italic;\n  font-weight: 400;\n}\n\n.db-women-section .db-section-title em { color: rgba(255,200,215,0.95); }\n.db-men-section .db-section-title em { color: rgba(180,210,255,0.95); }\n\n.db-section-subtitle {\n  font-family: 'Montserrat', sans-serif;\n  font-size: 15px;\n  font-weight: 300;\n  letter-spacing: 1px;\n  color: rgba(255,255,255,0.55);\n  max-width: 520px;\n  margin: 0 auto;\n  line-height: 1.8;\n}\n\n/* --- TITLE DIVIDER --- */\n.db-title-divider {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 16px;\n  margin: 20px 0;\n}\n.db-title-divider span {\n  display: block;\n  height: 1px;\n  width: 60px;\n  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);\n}\n.db-title-divider i {\n  display: block;\n  width: 6px;\n  height: 6px;\n  border-radius: 50%;\n  background: rgba(255,255,255,0.5);\n  box-shadow: 0 0 10px rgba(255,255,255,0.6);\n}\n\n/* --- SERVICE CARDS GRID --- */\n.db-services-grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 20px;\n  margin-bottom: 50px;\n}\n\n@media (max-width: 900px) {\n  .db-services-grid { grid-template-columns: repeat(2, 1fr); }\n}\n@media (max-width: 560px) {\n  .db-services-grid { grid-template-columns: 1fr; }\n  .db-women-section, .db-men-section { padding: 80px 20px; }\n}\n\n/* --- SERVICE CARD --- */\n.db-service-card {\n  position: relative;\n  border-radius: 24px;\n  padding: 36px 28px 32px;\n  cursor: pointer;\n  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;\n  overflow: hidden;\n  backdrop-filter: blur(30px);\n  -webkit-backdrop-filter: blur(30px);\n}\n\n.db-women-section .db-service-card {\n  background: rgba(255,255,255,0.09);\n  border: 1px solid rgba(255,255,255,0.18);\n  box-shadow:\n    0 8px 32px rgba(0,0,0,0.25),\n    0 0 0 1px rgba(255,255,255,0.05),\n    inset 0 1px 0 rgba(255,255,255,0.2),\n    inset 0 -1px 0 rgba(255,255,255,0.05);\n}\n\n.db-men-section .db-service-card {\n  background: rgba(255,255,255,0.07);\n  border: 1px solid rgba(255,255,255,0.14);\n  box-shadow:\n    0 8px 32px rgba(0,0,0,0.3),\n    0 0 0 1px rgba(255,255,255,0.04),\n    inset 0 1px 0 rgba(255,255,255,0.15),\n    inset 0 -1px 0 rgba(255,255,255,0.04);\n}\n\n.db-women-section .db-service-card:hover {\n  transform: translateY(-8px) scale(1.02);\n  background: rgba(255,255,255,0.14);\n  border-color: rgba(255,200,215,0.4);\n  box-shadow:\n    0 20px 60px rgba(0,0,0,0.3),\n    0 0 40px rgba(255,182,193,0.15),\n    inset 0 1px 0 rgba(255,255,255,0.3);\n}\n\n.db-men-section .db-service-card:hover {\n  transform: translateY(-8px) scale(1.02);\n  background: rgba(255,255,255,0.11);\n  border-color: rgba(100,149,237,0.4);\n  box-shadow:\n    0 20px 60px rgba(0,0,0,0.35),\n    0 0 40px rgba(100,149,237,0.15),\n    inset 0 1px 0 rgba(255,255,255,0.25);\n}\n\n.db-service-card::before {\n  content: '';\n  position: absolute;\n  top: 0; left: 0; right: 0;\n  height: 1px;\n  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);\n  opacity: 0.6;\n}\n\n.db-service-card::after {\n  content: '';\n  position: absolute;\n  inset: 0;\n  border-radius: 24px;\n  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.06) 0%, transparent 60%);\n  pointer-events: none;\n}\n\n/* --- CARD ICON --- */\n.db-card-icon {\n  width: 60px;\n  height: 60px;\n  border-radius: 18px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  margin-bottom: 22px;\n  position: relative;\n  backdrop-filter: blur(20px);\n  -webkit-backdrop-filter: blur(20px);\n  transition: transform 0.3s ease;\n}\n\n.db-card-icon svg {\n  width: 28px;\n  height: 28px;\n  stroke: rgba(255,255,255,0.92);\n  fill: none;\n  stroke-width: 1.6;\n  stroke-linecap: round;\n  stroke-linejoin: round;\n}\n\n.db-service-card:hover .db-card-icon {\n  transform: scale(1.08);\n}\n\n.db-women-section .db-card-icon {\n  background: rgba(255,255,255,0.12);\n  border: 1px solid rgba(255,200,215,0.3);\n  box-shadow: 0 4px 20px rgba(255,182,193,0.2), inset 0 1px 0 rgba(255,255,255,0.25);\n}\n\n.db-men-section .db-card-icon {\n  background: rgba(255,255,255,0.09);\n  border: 1px solid rgba(100,149,237,0.3);\n  box-shadow: 0 4px 20px rgba(100,149,237,0.2), inset 0 1px 0 rgba(255,255,255,0.2);\n}\n\n/* --- CARD TEXT --- */\n.db-card-title {\n  font-family: 'Cormorant Garamond', serif;\n  font-size: 22px;\n  font-weight: 500;\n  color: #ffffff;\n  margin-bottom: 10px;\n  letter-spacing: 0.5px;\n  text-shadow: 0 0 20px rgba(255,255,255,0.2);\n}\n\n.db-card-desc {\n  font-family: 'Montserrat', sans-serif;\n  font-size: 12.5px;\n  font-weight: 300;\n  color: rgba(255,255,255,0.5);\n  line-height: 1.75;\n  letter-spacing: 0.3px;\n}\n\n/* --- CARD ARROW --- */\n.db-card-arrow {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  margin-top: 20px;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 11px;\n  font-weight: 600;\n  letter-spacing: 2px;\n  text-transform: uppercase;\n  text-decoration: none;\n  transition: gap 0.3s ease, opacity 0.3s ease;\n  opacity: 0.7;\n}\n\n.db-service-card:hover .db-card-arrow {\n  gap: 14px;\n  opacity: 1;\n}\n\n.db-women-section .db-card-arrow { color: rgba(255,200,215,0.9); }\n.db-men-section .db-card-arrow { color: rgba(180,210,255,0.9); }\n\n.db-card-arrow svg {\n  width: 14px;\n  height: 14px;\n  transition: transform 0.3s ease;\n}\n.db-service-card:hover .db-card-arrow svg {\n  transform: translateX(4px);\n}\n\n/* --- FEATURED CARD --- */\n.db-card-featured {\n  grid-column: span 2;\n  display: flex;\n  align-items: center;\n  gap: 36px;\n  padding: 40px 44px;\n}\n\n@media (max-width: 900px) {\n  .db-card-featured { grid-column: span 2; flex-direction: column; gap: 24px; }\n}\n@media (max-width: 560px) {\n  .db-card-featured { grid-column: span 1; flex-direction: column; }\n}\n\n.db-card-featured .db-card-icon {\n  width: 80px;\n  height: 80px;\n  border-radius: 22px;\n  flex-shrink: 0;\n}\n\n.db-card-featured .db-card-icon svg {\n  width: 36px;\n  height: 36px;\n  stroke-width: 1.5;\n}\n\n.db-card-featured .db-card-title {\n  font-size: 28px;\n}\n\n.db-card-featured .db-card-desc {\n  font-size: 13.5px;\n}\n\n/* --- SECTION CTA --- */\n.db-section-cta {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 20px;\n  flex-wrap: wrap;\n}\n\n.db-btn-primary {\n  display: inline-flex;\n  align-items: center;\n  gap: 10px;\n  padding: 16px 40px;\n  border-radius: 50px;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 12px;\n  font-weight: 600;\n  letter-spacing: 2.5px;\n  text-transform: uppercase;\n  text-decoration: none;\n  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);\n  position: relative;\n  overflow: hidden;\n}\n\n.db-btn-primary::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  border-radius: 50px;\n  background: rgba(255,255,255,0.1);\n  opacity: 0;\n  transition: opacity 0.3s ease;\n}\n\n.db-btn-primary:hover::before { opacity: 1; }\n\n.db-women-section .db-btn-primary {\n  background: rgba(255,255,255,0.15);\n  border: 1px solid rgba(255,200,215,0.5);\n  color: #ffffff;\n  box-shadow: 0 8px 30px rgba(255,182,193,0.2), inset 0 1px 0 rgba(255,255,255,0.25);\n  backdrop-filter: blur(20px);\n  -webkit-backdrop-filter: blur(20px);\n}\n\n.db-women-section .db-btn-primary:hover {\n  background: rgba(255,255,255,0.22);\n  border-color: rgba(255,200,215,0.8);\n  box-shadow: 0 12px 40px rgba(255,182,193,0.3), inset 0 1px 0 rgba(255,255,255,0.35);\n  transform: translateY(-2px);\n}\n\n.db-men-section .db-btn-primary {\n  background: rgba(255,255,255,0.1);\n  border: 1px solid rgba(100,149,237,0.5);\n  color: #ffffff;\n  box-shadow: 0 8px 30px rgba(100,149,237,0.2), inset 0 1px 0 rgba(255,255,255,0.2);\n  backdrop-filter: blur(20px);\n  -webkit-backdrop-filter: blur(20px);\n}\n\n.db-men-section .db-btn-primary:hover {\n  background: rgba(255,255,255,0.16);\n  border-color: rgba(100,149,237,0.8);\n  box-shadow: 0 12px 40px rgba(100,149,237,0.3), inset 0 1px 0 rgba(255,255,255,0.3);\n  transform: translateY(-2px);\n}\n\n.db-btn-secondary {\n  display: inline-flex;\n  align-items: center;\n  gap: 8px;\n  padding: 16px 32px;\n  border-radius: 50px;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 12px;\n  font-weight: 500;\n  letter-spacing: 2px;\n  text-transform: uppercase;\n  text-decoration: none;\n  background: transparent;\n  border: 1px solid rgba(255,255,255,0.2);\n  color: rgba(255,255,255,0.6);\n  transition: all 0.3s ease;\n}\n\n.db-btn-secondary:hover {\n  border-color: rgba(255,255,255,0.4);\n  color: rgba(255,255,255,0.9);\n  background: rgba(255,255,255,0.05);\n}\n\n/* --- DECORATIVE LINES --- */\n.db-deco-line {\n  position: absolute;\n  pointer-events: none;\n  opacity: 0.06;\n}\n\n.db-women-section .db-deco-line-1 {\n  top: 10%;\n  right: 5%;\n  width: 300px;\n  height: 300px;\n  border: 1px solid rgba(255,182,193,1);\n  border-radius: 50%;\n  animation: db-spin 30s linear infinite;\n}\n\n.db-women-section .db-deco-line-2 {\n  bottom: 10%;\n  left: 3%;\n  width: 200px;\n  height: 200px;\n  border: 1px solid rgba(255,255,255,1);\n  border-radius: 50%;\n  animation: db-spin 20s linear infinite reverse;\n}\n\n.db-men-section .db-deco-line-1 {\n  top: 10%;\n  left: 5%;\n  width: 300px;\n  height: 300px;\n  border: 1px solid rgba(100,149,237,1);\n  border-radius: 50%;\n  animation: db-spin 30s linear infinite;\n}\n\n.db-men-section .db-deco-line-2 {\n  bottom: 10%;\n  right: 3%;\n  width: 200px;\n  height: 200px;\n  border: 1px solid rgba(255,255,255,1);\n  border-radius: 50%;\n  animation: db-spin 20s linear infinite reverse;\n}\n\n@keyframes db-spin {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n/* --- STATS ROW --- */\n.db-stats-row {\n  display: flex;\n  justify-content: center;\n  gap: 60px;\n  margin-bottom: 60px;\n  flex-wrap: wrap;\n}\n\n.db-stat-item {\n  text-align: center;\n}\n\n.db-stat-number {\n  font-family: 'Cormorant Garamond', serif;\n  font-size: 42px;\n  font-weight: 300;\n  color: #ffffff;\n  line-height: 1;\n  margin-bottom: 6px;\n  text-shadow: 0 0 30px rgba(255,255,255,0.2);\n}\n\n.db-stat-label {\n  font-family: 'Montserrat', sans-serif;\n  font-size: 10px;\n  font-weight: 500;\n  letter-spacing: 3px;\n  text-transform: uppercase;\n  color: rgba(255,255,255,0.4);\n}\n\n.db-stat-divider {\n  width: 1px;\n  height: 50px;\n  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.2), transparent);\n  align-self: center;\n}\n\n@media (max-width: 560px) {\n  .db-stat-divider { display: none; }\n  .db-stats-row { gap: 30px; }\n}\n</style>\n\n<div class=\"db-services-wrapper\">\n\n<section class=\"db-women-section\">\n  <div class=\"db-orb db-orb-1\"></div>\n  <div class=\"db-orb db-orb-2\"></div>\n  <div class=\"db-orb db-orb-3\"></div>\n  <div class=\"db-deco-line db-deco-line-1\"></div>\n  <div class=\"db-deco-line db-deco-line-2\"></div>\n\n  <div class=\"db-section-inner\">\n    <div class=\"db-section-header\">\n      <span class=\"db-section-eyebrow\">For Her &nbsp;·&nbsp; At-Home Luxury</span>\n      <h2 class=\"db-section-title\">Luxury Beauty,<br><em>Designed for Her</em></h2>\n      <div class=\"db-title-divider\">\n        <span></span><i></i><span></span>\n      </div>\n      <p class=\"db-section-subtitle\">Indulge in personalized beauty rituals delivered to your door. Every service crafted to make you feel radiant, confident, and beautifully you.</p>\n    </div>\n\n    <div class=\"db-stats-row\">\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">250+</div>\n        <div class=\"db-stat-label\">Expert Therapists</div>\n      </div>\n      <div class=\"db-stat-divider\"></div>\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">5K+</div>\n        <div class=\"db-stat-label\">Happy Clients</div>\n      </div>\n      <div class=\"db-stat-divider\"></div>\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">10+</div>\n        <div class=\"db-stat-label\">Services Offered</div>\n      </div>\n    </div>\n\n    <div class=\"db-services-grid\">\n\n      <div class=\"db-service-card db-card-featured\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M12 19c3.5-2.2 5.5-5.1 5.5-8a3.5 3.5 0 0 0-6-2.4A3.5 3.5 0 0 0 5.5 11c0 2.9 2 5.8 6.5 8z\"></path>\n            <path d=\"M12 6.5v-2\"></path>\n          </svg>\n        </div>\n        <div>\n          <div class=\"db-card-title\">Relaxing Massage</div>\n          <div class=\"db-card-desc\">Melt away stress with our signature full-body massage, performed by certified therapists in the comfort of your own home. Choose from Swedish, deep tissue, or aromatherapy.</div>\n          <a class=\"db-card-arrow\" href=\"/pages/women\">\n            Book Now\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n          </a>\n        </div>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M7 5c0-1.1.9-2 2-2h6\"></path>\n            <path d=\"M9 3v5\"></path>\n            <path d=\"M12 3v6\"></path>\n            <path d=\"M15 3v5\"></path>\n            <path d=\"M7 10c0 5 2.5 9 5 9s5-4 5-9\"></path>\n            <path d=\"M7 10h10\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Manicure</div>\n        <div class=\"db-card-desc\">Flawless nails with gel, classic, or nail art finishes. Cuticle care, shaping, and a luxurious hand massage included.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/women\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M8 18c-1.6 0-2.8-1.2-2.8-2.8 0-1.5 1-2.5 2.1-3.6.9-.9 1.7-1.8 1.7-3.1 0-.9.8-1.7 1.7-1.7 1 0 1.8.8 1.8 1.7 0 1.3.8 2.2 1.7 3.1 1.1 1.1 2.1 2.1 2.1 3.6A2.8 2.8 0 0 1 14 18\"></path>\n            <path d=\"M8 18h6\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Pedicure</div>\n        <div class=\"db-card-desc\">Treat your feet to a spa-grade pedicure. Exfoliation, callus removal, nail shaping, and a soothing foot soak.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/women\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M7 7l10 10\"></path>\n            <path d=\"M14 5l5 5\"></path>\n            <path d=\"M5 14l5 5\"></path>\n            <path d=\"M8 6l2 2\"></path>\n            <path d=\"M14 14l4 4\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Hair Care</div>\n        <div class=\"db-card-desc\">Professional blow-dry, styling, deep conditioning, and treatments for every hair type. Salon results at home.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/women\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M8 6h8\"></path>\n            <path d=\"M10 6v4\"></path>\n            <path d=\"M14 6v4\"></path>\n            <path d=\"M7 10h10\"></path>\n            <path d=\"M9 10c0 5 1.5 8 3 8s3-3 3-8\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Waxing</div>\n        <div class=\"db-card-desc\">Smooth, long-lasting results with premium wax formulas. Full body, bikini, and facial waxing by trained specialists.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/women\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M8 9c0-2.2 1.8-4 4-4s4 1.8 4 4\"></path>\n            <path d=\"M7 11c0 5 2 8 5 8s5-3 5-8\"></path>\n            <path d=\"M9 14h6\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Facial & Skin Care</div>\n        <div class=\"db-card-desc\">Radiant skin starts here. Deep cleansing facials, brightening treatments, and hydration therapies tailored to your skin type.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/women\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n    </div>\n\n    <div class=\"db-section-cta\">\n      <a class=\"db-btn-primary\" href=\"/pages/women\">\n        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z\"></path></svg>\n        Explore All Women Services\n      </a>\n      <a class=\"db-btn-secondary\" href=\"/pages/contact?booking=women\">Book a Consultation</a>\n    </div>\n\n  </div>\n</section>\n\n<section class=\"db-men-section\">\n  <div class=\"db-orb db-orb-1\"></div>\n  <div class=\"db-orb db-orb-2\"></div>\n  <div class=\"db-orb db-orb-3\"></div>\n  <div class=\"db-deco-line db-deco-line-1\"></div>\n  <div class=\"db-deco-line db-deco-line-2\"></div>\n\n  <div class=\"db-section-inner\">\n    <div class=\"db-section-header\">\n      <span class=\"db-section-eyebrow\">For Him &nbsp;·&nbsp; Premium Grooming</span>\n      <h2 class=\"db-section-title\">Refined Grooming,<br><em>Crafted for Him</em></h2>\n      <div class=\"db-title-divider\">\n        <span></span><i></i><span></span>\n      </div>\n      <p class=\"db-section-subtitle\">Upgrade your grooming routine with professional home services. Experience comfort, style, and confidence - without leaving your home.</p>\n    </div>\n\n    <div class=\"db-stats-row\">\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">100%</div>\n        <div class=\"db-stat-label\">At-Home Service</div>\n      </div>\n      <div class=\"db-stat-divider\"></div>\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">60+</div>\n        <div class=\"db-stat-label\">Min Sessions</div>\n      </div>\n      <div class=\"db-stat-divider\"></div>\n      <div class=\"db-stat-item\">\n        <div class=\"db-stat-number\">★ 4.9</div>\n        <div class=\"db-stat-label\">Client Rating</div>\n      </div>\n    </div>\n\n    <div class=\"db-services-grid\">\n\n      <div class=\"db-service-card db-card-featured\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M7 7l10 10\"></path>\n            <path d=\"M14 5l5 5\"></path>\n            <path d=\"M5 14l5 5\"></path>\n            <path d=\"M8 6l2 2\"></path>\n            <path d=\"M14 14l4 4\"></path>\n          </svg>\n        </div>\n        <div>\n          <div class=\"db-card-title\">Precision Hair Care</div>\n          <div class=\"db-card-desc\">From sharp cuts to expert styling and scalp treatments - our professional barbers and stylists bring the full salon experience directly to your home. Look sharp, feel sharp.</div>\n          <a class=\"db-card-arrow\" href=\"/pages/men\">\n            Book Now\n            <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n          </a>\n        </div>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M7 14c2.5 0 3.2-2 5-2s2.5 2 5 2\"></path>\n            <path d=\"M8 11c1.2 0 2-.8 2-2\"></path>\n            <path d=\"M16 11c-1.2 0-2-.8-2-2\"></path>\n            <path d=\"M6 16c1.5 2 3.5 3 6 3s4.5-1 6-3\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Sports Massage</div>\n        <div class=\"db-card-desc\">Deep tissue and sports massage to relieve muscle tension, improve recovery, and restore peak performance.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/men\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M6 18l8-8\"></path>\n            <path d=\"M12 6l6 6\"></path>\n            <path d=\"M14 4l6 6\"></path>\n            <path d=\"M4 20l4-4\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Waxing & Grooming</div>\n        <div class=\"db-card-desc\">Clean, precise waxing for chest, back, and facial areas. Professional results with premium, skin-safe wax.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/men\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M7 6c0-1 .8-2 1.8-2H15\"></path>\n            <path d=\"M9 4v5\"></path>\n            <path d=\"M12 4v6\"></path>\n            <path d=\"M15 4v5\"></path>\n            <path d=\"M7 10c0 5 2.5 8 5 8s5-3 5-8\"></path>\n            <path d=\"M7 10h10\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Manicure & Pedicure</div>\n        <div class=\"db-card-desc\">Clean, shaped, and polished nails with a relaxing hand and foot treatment. Grooming at its finest.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/men\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n      <div class=\"db-service-card\">\n        <div class=\"db-card-icon\">\n          <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">\n            <path d=\"M10 5h4\"></path>\n            <path d=\"M9 5h6v3l-1 2v8a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-8L9 8V5z\"></path>\n            <path d=\"M10 12h4\"></path>\n          </svg>\n        </div>\n        <div class=\"db-card-title\">Men's Facial</div>\n        <div class=\"db-card-desc\">Deep pore cleansing, exfoliation, and hydration treatments designed specifically for men's skin. Clear, healthy skin awaits.</div>\n        <a class=\"db-card-arrow\" href=\"/pages/men\">\n          Explore\n          <svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"></path></svg>\n        </a>\n      </div>\n\n    </div>\n\n    <div class=\"db-section-cta\">\n      <a class=\"db-btn-primary\" href=\"/pages/men\">\n        <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z\"></path></svg>\n        Explore All Men Services\n      </a>\n      <a class=\"db-btn-secondary\" href=\"/pages/contact?booking=men\">Book a Consultation</a>\n    </div>\n\n  </div>\n</section>\n\n</div>",
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "css_class": "",
-        "custom_css": ""
+        "eyebrow": "For Her · At-Home Luxury",
+        "title": "Luxury Beauty,",
+        "title_em": "Designed for Her",
+        "subtitle": "Indulge in personalized beauty rituals delivered to your door. Every service crafted to make you feel radiant, confident, and beautifully you.",
+        "show_stats": true,
+        "stat1_num": "250+",
+        "stat1_label": "Expert Therapists",
+        "stat2_num": "5K+",
+        "stat2_label": "Happy Clients",
+        "stat3_num": "10+",
+        "stat3_label": "Services Offered",
+        "btn1_text": "Explore All Women Services",
+        "btn1_link": "shopify://pages/women",
+        "btn2_text": "Book a Consultation",
+        "btn2_link": ""
+      }
+    },
+    "for_him_Nbb7Wa": {
+      "type": "for-him",
+      "blocks": {
+        "service_card_rXkRD8": {
+          "type": "service_card",
+          "settings": {
+            "icon": "hair",
+            "featured": true,
+            "title": "Precision Hair Care",
+            "desc": "From sharp cuts to expert styling and scalp treatments - our professional barbers and stylists bring the full salon experience directly to your home. Look sharp, feel sharp.",
+            "arrow_text": "Book Now",
+            "link": ""
+          }
+        },
+        "service_card_grcwwN": {
+          "type": "service_card",
+          "settings": {
+            "icon": "sports",
+            "featured": false,
+            "title": "Sports Massage",
+            "desc": "Deep tissue and sports massage to relieve muscle tension, improve recovery, and restore peak performance.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        },
+        "service_card_KH8jTz": {
+          "type": "service_card",
+          "settings": {
+            "icon": "waxing",
+            "featured": false,
+            "title": "Waxing & Grooming",
+            "desc": "Clean, precise waxing for chest, back, and facial areas. Professional results with premium, skin-safe wax.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        },
+        "service_card_9HRw9j": {
+          "type": "service_card",
+          "settings": {
+            "icon": "manipedi",
+            "featured": false,
+            "title": "Manicure & Pedicure",
+            "desc": "Clean, shaped, and polished nails with a relaxing hand and foot treatment. Grooming at its finest.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        },
+        "service_card_tD3dtt": {
+          "type": "service_card",
+          "settings": {
+            "icon": "facial_men",
+            "featured": false,
+            "title": "Men's Facial",
+            "desc": "Deep pore cleansing, exfoliation, and hydration treatments designed specifically for men's skin. Clear, healthy skin awaits.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "service_card_rXkRD8",
+        "service_card_grcwwN",
+        "service_card_KH8jTz",
+        "service_card_9HRw9j",
+        "service_card_tD3dtt"
+      ],
+      "name": "Donna Bella · For Him",
+      "settings": {
+        "eyebrow": "For Him · Premium Grooming",
+        "title": "Refined Grooming,",
+        "title_em": "Crafted for Him",
+        "subtitle": "Upgrade your grooming routine with professional home services. Experience comfort, style, and confidence - without leaving your home.",
+        "show_stats": true,
+        "stat1_num": "100%",
+        "stat1_label": "At-Home Service",
+        "stat2_num": "60+",
+        "stat2_label": "Min Sessions",
+        "stat3_num": "★ 4.9",
+        "stat3_label": "Client Rating",
+        "btn1_text": "Explore All Men Services",
+        "btn1_link": "shopify://pages/men",
+        "btn2_text": "Book a Consultation",
+        "btn2_link": ""
+      }
+    },
+    "for_couples_V394AA": {
+      "type": "for-couples",
+      "blocks": {
+        "service_card_Khpq4V": {
+          "type": "service_card",
+          "settings": {
+            "icon": "heart",
+            "featured": true,
+            "title": "Couples Massage",
+            "desc": "Unwind side by side with a relaxing full-body massage for two, performed by certified therapists in the comfort of your home. The perfect way to relax and reconnect together.",
+            "arrow_text": "Book Now",
+            "link": ""
+          }
+        },
+        "service_card_fHN4L7": {
+          "type": "service_card",
+          "settings": {
+            "icon": "manipedi",
+            "featured": false,
+            "title": "Couples Mani-Pedi",
+            "desc": "Pamper your hands and feet together. Shaping, cuticle care, and polish for two, in one shared session.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        },
+        "service_card_feRpEb": {
+          "type": "service_card",
+          "settings": {
+            "icon": "hair",
+            "featured": false,
+            "title": "Couples Hair",
+            "desc": "Wash, style, and blow-dry for two. Look your best together for any occasion, at home.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        },
+        "service_card_mwznyV": {
+          "type": "service_card",
+          "settings": {
+            "icon": "facial",
+            "featured": false,
+            "title": "Couples Skin Care",
+            "desc": "Glow together with deep-cleansing facials and hydration treatments tailored to each of your skin types.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        },
+        "service_card_T3VWbn": {
+          "type": "service_card",
+          "settings": {
+            "icon": "waxing",
+            "featured": false,
+            "title": "Couples Waxing",
+            "desc": "Smooth, long-lasting waxing for two with premium, skin-safe formulas, handled discreetly and professionally.",
+            "arrow_text": "Explore",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "service_card_Khpq4V",
+        "service_card_fHN4L7",
+        "service_card_feRpEb",
+        "service_card_mwznyV",
+        "service_card_T3VWbn"
+      ],
+      "name": "Donna Bella · For Two",
+      "settings": {
+        "eyebrow": "For Two · At-Home Luxury",
+        "title": "Together &",
+        "title_em": "Pampered",
+        "subtitle": "Share the experience. Side-by-side beauty and grooming rituals delivered to your home — the perfect way to relax and reconnect together.",
+        "show_stats": true,
+        "stat1_num": "2",
+        "stat1_label": "Therapists Together",
+        "stat2_num": "100%",
+        "stat2_label": "At-Home Service",
+        "stat3_num": "★ 4.9",
+        "stat3_label": "Client Rating",
+        "btn1_text": "Explore Couples Packages",
+        "btn1_link": "shopify://pages/couples",
+        "btn2_text": "Book a Consultation",
+        "btn2_link": ""
       }
     },
     "collections_slider_HExRLN": {
@@ -652,7 +914,7 @@
             "image_a": "shopify://shop_images/woman-receiving-massage-back.jpg",
             "label_a": "Massage",
             "label_a_ar": "",
-            "link_a": "shopify://pages/massage",
+            "link_a": "shopify://pages/couples",
             "image_b": "shopify://shop_images/massage-men-resized-1200w.jpg",
             "label_b": "Massage",
             "label_b_ar": "",
@@ -678,11 +940,11 @@
             "image_a": "shopify://shop_images/Nails.webp",
             "label_a": "Manicure",
             "label_a_ar": "",
-            "link_a": "shopify://pages/nails",
+            "link_a": "shopify://pages/women",
             "image_b": "shopify://shop_images/professional-manicurist-filing-man-nails-with-emer-2026-01-05-06-16-06-utc.jpg",
             "label_b": "Manicure",
             "label_b_ar": "",
-            "link_b": "shopify://pages/nails-men"
+            "link_b": "shopify://pages/men"
           }
         }
       },
@@ -1218,6 +1480,9 @@
     "video_7kn6Qf",
     "glassy_test_fXYnqM",
     "custom_liquid_46bQwQ",
+    "for_her_bQyTH9",
+    "for_him_Nbb7Wa",
+    "for_couples_V394AA",
     "collections_slider_HExRLN",
     "sticky_hero_collagage_keGHmd",
     "befor_after_cards_dTTfLD",

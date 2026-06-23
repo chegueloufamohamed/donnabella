@@ -1,0 +1,252 @@
+{% comment %} ============================================================
+  DONNA BELLA — FOR HIM  (standalone section, editable in theme editor)
+  Section file name suggestion: db-for-him.liquid
+============================================================ {% endcomment %}
+
+<style>
+#shopify-section-{{ section.id }} .db-services-wrapper {
+  width: 100vw; position: relative; left: 50%; right: 50%;
+  margin-left: -50vw; margin-right: -50vw; overflow: hidden;
+}
+#shopify-section-{{ section.id }} .db-men-section {
+  position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 100px 40px;
+  background:
+    radial-gradient(ellipse 80% 60% at 80% 50%, rgba(100,149,237,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 20% 30%, rgba(70,130,180,0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 50% 90%, rgba(200,220,255,0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #080e1a 0%, #0f1e30 30%, #0a1525 60%, #060d18 100%);
+  overflow: hidden;
+}
+#shopify-section-{{ section.id }} .db-men-section::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle 600px at 85% 50%, rgba(255,255,255,0.04) 0%, transparent 70%),
+    radial-gradient(circle 400px at 15% 20%, rgba(255,255,255,0.04) 0%, transparent 60%);
+}
+#shopify-section-{{ section.id }} .db-orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; animation: db-float-{{ section.id }} 8s ease-in-out infinite; }
+#shopify-section-{{ section.id }} .db-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(100,149,237,0.2) 0%, transparent 70%); top: -100px; right: -100px; }
+#shopify-section-{{ section.id }} .db-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); bottom: -80px; left: 10%; animation-delay: 3s; }
+#shopify-section-{{ section.id }} .db-orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(135,206,250,0.18) 0%, transparent 70%); top: 40%; left: -50px; animation-delay: 5s; }
+
+@keyframes db-float-{{ section.id }} { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-30px) scale(1.05); } }
+@keyframes db-spin-{{ section.id }} { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+#shopify-section-{{ section.id }} .db-section-inner { position: relative; z-index: 2; width: 100%; max-width: 1300px; margin: 0 auto; }
+#shopify-section-{{ section.id }} .db-section-header { text-align: center; margin-bottom: 70px; }
+#shopify-section-{{ section.id }} .db-section-eyebrow {
+  display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: 5px; text-transform: uppercase; padding: 8px 24px; border-radius: 50px; margin-bottom: 24px;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(100,149,237,0.4); color: rgba(180,210,255,0.95);
+  box-shadow: 0 0 20px rgba(100,149,237,0.2), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+#shopify-section-{{ section.id }} .db-section-title {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 6vw, 80px); font-weight: 300;
+  line-height: 1.1; color: #fff; margin-bottom: 20px;
+  text-shadow: 0 0 60px rgba(255,255,255,0.15), 0 2px 4px rgba(0,0,0,0.3);
+}
+#shopify-section-{{ section.id }} .db-section-title em { font-style: italic; font-weight: 400; color: rgba(180,210,255,0.95); }
+#shopify-section-{{ section.id }} .db-section-subtitle {
+  font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 1px;
+  color: rgba(255,255,255,0.55); max-width: 520px; margin: 0 auto; line-height: 1.8;
+}
+#shopify-section-{{ section.id }} .db-title-divider { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 20px 0; }
+#shopify-section-{{ section.id }} .db-title-divider span { display: block; height: 1px; width: 60px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); }
+#shopify-section-{{ section.id }} .db-title-divider i { display: block; width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.5); box-shadow: 0 0 10px rgba(255,255,255,0.6); }
+
+#shopify-section-{{ section.id }} .db-stats-row { display: flex; justify-content: center; gap: 60px; margin-bottom: 60px; flex-wrap: wrap; }
+#shopify-section-{{ section.id }} .db-stat-item { text-align: center; }
+#shopify-section-{{ section.id }} .db-stat-number { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: #fff; line-height: 1; margin-bottom: 6px; text-shadow: 0 0 30px rgba(255,255,255,0.2); }
+#shopify-section-{{ section.id }} .db-stat-label { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+#shopify-section-{{ section.id }} .db-stat-divider { width: 1px; height: 50px; background: linear-gradient(180deg, transparent, rgba(255,255,255,0.2), transparent); align-self: center; }
+
+#shopify-section-{{ section.id }} .db-services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 50px; }
+#shopify-section-{{ section.id }} .db-service-card {
+  position: relative; border-radius: 24px; padding: 36px 28px 32px; overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s ease;
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(255,255,255,0.04);
+}
+#shopify-section-{{ section.id }} .db-service-card:hover {
+  transform: translateY(-8px) scale(1.02); background: rgba(255,255,255,0.11); border-color: rgba(100,149,237,0.4);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 40px rgba(100,149,237,0.15), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+#shopify-section-{{ section.id }} .db-service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%); opacity: 0.6; }
+#shopify-section-{{ section.id }} .db-service-card::after { content: ''; position: absolute; inset: 0; border-radius: 24px; background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.06) 0%, transparent 60%); pointer-events: none; }
+
+#shopify-section-{{ section.id }} .db-card-icon {
+  width: 60px; height: 60px; border-radius: 18px; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 22px; position: relative; transition: transform 0.3s ease;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.09); border: 1px solid rgba(100,149,237,0.3);
+  box-shadow: 0 4px 20px rgba(100,149,237,0.2), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+#shopify-section-{{ section.id }} .db-card-icon svg { width: 28px; height: 28px; stroke: rgba(255,255,255,0.92); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+#shopify-section-{{ section.id }} .db-service-card:hover .db-card-icon { transform: scale(1.08); }
+#shopify-section-{{ section.id }} .db-card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: #fff; margin-bottom: 10px; letter-spacing: 0.5px; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+#shopify-section-{{ section.id }} .db-card-desc { font-family: 'Montserrat', sans-serif; font-size: 12.5px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.75; letter-spacing: 0.3px; }
+#shopify-section-{{ section.id }} .db-card-arrow { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; transition: gap 0.3s ease, opacity 0.3s ease; opacity: 0.7; color: rgba(180,210,255,0.9); }
+#shopify-section-{{ section.id }} .db-service-card:hover .db-card-arrow { gap: 14px; opacity: 1; }
+#shopify-section-{{ section.id }} .db-card-arrow svg { width: 14px; height: 14px; transition: transform 0.3s ease; }
+#shopify-section-{{ section.id }} .db-service-card:hover .db-card-arrow svg { transform: translateX(4px); }
+
+#shopify-section-{{ section.id }} .db-card-featured { grid-column: span 2; display: flex; align-items: center; gap: 36px; padding: 40px 44px; }
+#shopify-section-{{ section.id }} .db-card-featured .db-card-icon { width: 80px; height: 80px; border-radius: 22px; flex-shrink: 0; }
+#shopify-section-{{ section.id }} .db-card-featured .db-card-icon svg { width: 36px; height: 36px; stroke-width: 1.5; }
+#shopify-section-{{ section.id }} .db-card-featured .db-card-title { font-size: 28px; }
+#shopify-section-{{ section.id }} .db-card-featured .db-card-desc { font-size: 13.5px; }
+
+#shopify-section-{{ section.id }} .db-section-cta { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
+#shopify-section-{{ section.id }} .db-btn-primary {
+  display: inline-flex; align-items: center; gap: 10px; padding: 16px 40px; border-radius: 50px;
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2.5px;
+  text-transform: uppercase; text-decoration: none; position: relative; overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(100,149,237,0.5); color: #fff;
+  box-shadow: 0 8px 30px rgba(100,149,237,0.2), inset 0 1px 0 rgba(255,255,255,0.2);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+}
+#shopify-section-{{ section.id }} .db-btn-primary::before { content: ''; position: absolute; inset: 0; border-radius: 50px; background: rgba(255,255,255,0.1); opacity: 0; transition: opacity 0.3s ease; }
+#shopify-section-{{ section.id }} .db-btn-primary:hover::before { opacity: 1; }
+#shopify-section-{{ section.id }} .db-btn-primary:hover { background: rgba(255,255,255,0.16); border-color: rgba(100,149,237,0.8); box-shadow: 0 12px 40px rgba(100,149,237,0.3), inset 0 1px 0 rgba(255,255,255,0.3); transform: translateY(-2px); }
+#shopify-section-{{ section.id }} .db-btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); transition: all 0.3s ease; }
+#shopify-section-{{ section.id }} .db-btn-secondary:hover { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.05); }
+
+#shopify-section-{{ section.id }} .db-deco-line { position: absolute; pointer-events: none; opacity: 0.06; }
+#shopify-section-{{ section.id }} .db-deco-line-1 { top: 10%; left: 5%; width: 300px; height: 300px; border: 1px solid rgba(100,149,237,1); border-radius: 50%; animation: db-spin-{{ section.id }} 30s linear infinite; }
+#shopify-section-{{ section.id }} .db-deco-line-2 { bottom: 10%; right: 3%; width: 200px; height: 200px; border: 1px solid rgba(255,255,255,1); border-radius: 50%; animation: db-spin-{{ section.id }} 20s linear infinite reverse; }
+
+@media (max-width: 900px) { #shopify-section-{{ section.id }} .db-services-grid { grid-template-columns: repeat(2, 1fr); } #shopify-section-{{ section.id }} .db-card-featured { grid-column: span 2; flex-direction: column; gap: 24px; } }
+@media (max-width: 560px) { #shopify-section-{{ section.id }} .db-services-grid { grid-template-columns: 1fr; } #shopify-section-{{ section.id }} .db-men-section { padding: 80px 20px; } #shopify-section-{{ section.id }} .db-card-featured { grid-column: span 1; } #shopify-section-{{ section.id }} .db-stat-divider { display: none; } #shopify-section-{{ section.id }} .db-stats-row { gap: 30px; } }
+</style>
+
+<div class="db-services-wrapper">
+<section class="db-men-section">
+  <div class="db-orb db-orb-1"></div>
+  <div class="db-orb db-orb-2"></div>
+  <div class="db-orb db-orb-3"></div>
+  <div class="db-deco-line db-deco-line-1"></div>
+  <div class="db-deco-line db-deco-line-2"></div>
+
+  <div class="db-section-inner">
+    <div class="db-section-header">
+      {% if section.settings.eyebrow != blank %}<span class="db-section-eyebrow">{{ section.settings.eyebrow }}</span>{% endif %}
+      <h2 class="db-section-title">{{ section.settings.title }}<br><em>{{ section.settings.title_em }}</em></h2>
+      <div class="db-title-divider"><span></span><i></i><span></span></div>
+      {% if section.settings.subtitle != blank %}<p class="db-section-subtitle">{{ section.settings.subtitle }}</p>{% endif %}
+    </div>
+
+    {% if section.settings.show_stats %}
+    <div class="db-stats-row">
+      <div class="db-stat-item"><div class="db-stat-number">{{ section.settings.stat1_num }}</div><div class="db-stat-label">{{ section.settings.stat1_label }}</div></div>
+      <div class="db-stat-divider"></div>
+      <div class="db-stat-item"><div class="db-stat-number">{{ section.settings.stat2_num }}</div><div class="db-stat-label">{{ section.settings.stat2_label }}</div></div>
+      <div class="db-stat-divider"></div>
+      <div class="db-stat-item"><div class="db-stat-number">{{ section.settings.stat3_num }}</div><div class="db-stat-label">{{ section.settings.stat3_label }}</div></div>
+    </div>
+    {% endif %}
+
+    <div class="db-services-grid">
+      {% for block in section.blocks %}
+        <div class="db-service-card{% if block.settings.featured %} db-card-featured{% endif %}" {{ block.shopify_attributes }}>
+          <div class="db-card-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              {% case block.settings.icon %}
+                {% when 'heart' %}<path d="M12 19c3.5-2.2 5.5-5.1 5.5-8a3.5 3.5 0 0 0-6-2.4A3.5 3.5 0 0 0 5.5 11c0 2.9 2 5.8 6.5 8z"></path><path d="M12 6.5v-2"></path>
+                {% when 'manicure' %}<path d="M7 5c0-1.1.9-2 2-2h6"></path><path d="M9 3v5"></path><path d="M12 3v6"></path><path d="M15 3v5"></path><path d="M7 10c0 5 2.5 9 5 9s5-4 5-9"></path><path d="M7 10h10"></path>
+                {% when 'pedicure' %}<path d="M8 18c-1.6 0-2.8-1.2-2.8-2.8 0-1.5 1-2.5 2.1-3.6.9-.9 1.7-1.8 1.7-3.1 0-.9.8-1.7 1.7-1.7 1 0 1.8.8 1.8 1.7 0 1.3.8 2.2 1.7 3.1 1.1 1.1 2.1 2.1 2.1 3.6A2.8 2.8 0 0 1 14 18"></path><path d="M8 18h6"></path>
+                {% when 'hair' %}<path d="M7 7l10 10"></path><path d="M14 5l5 5"></path><path d="M5 14l5 5"></path><path d="M8 6l2 2"></path><path d="M14 14l4 4"></path>
+                {% when 'waxing' %}<path d="M6 18l8-8"></path><path d="M12 6l6 6"></path><path d="M14 4l6 6"></path><path d="M4 20l4-4"></path>
+                {% when 'facial' %}<path d="M8 9c0-2.2 1.8-4 4-4s4 1.8 4 4"></path><path d="M7 11c0 5 2 8 5 8s5-3 5-8"></path><path d="M9 14h6"></path>
+                {% when 'sports' %}<path d="M7 14c2.5 0 3.2-2 5-2s2.5 2 5 2"></path><path d="M8 11c1.2 0 2-.8 2-2"></path><path d="M16 11c-1.2 0-2-.8-2-2"></path><path d="M6 16c1.5 2 3.5 3 6 3s4.5-1 6-3"></path>
+                {% when 'manipedi' %}<path d="M7 6c0-1 .8-2 1.8-2H15"></path><path d="M9 4v5"></path><path d="M12 4v6"></path><path d="M15 4v5"></path><path d="M7 10c0 5 2.5 8 5 8s5-3 5-8"></path><path d="M7 10h10"></path>
+                {% when 'facial_men' %}<path d="M10 5h4"></path><path d="M9 5h6v3l-1 2v8a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-8L9 8V5z"></path><path d="M10 12h4"></path>
+                {% else %}<path d="M7 7l10 10"></path><path d="M14 5l5 5"></path><path d="M5 14l5 5"></path><path d="M8 6l2 2"></path><path d="M14 14l4 4"></path>
+              {% endcase %}
+            </svg>
+          </div>
+          <div class="db-card-body">
+            <div class="db-card-title">{{ block.settings.title }}</div>
+            <div class="db-card-desc">{{ block.settings.desc }}</div>
+            {% if block.settings.link != blank %}
+              <a class="db-card-arrow" href="{{ block.settings.link }}">{{ block.settings.arrow_text }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="db-section-cta">
+      {% if section.settings.btn1_text != blank %}<a class="db-btn-primary" href="{{ section.settings.btn1_link | default: '#' }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"></path></svg>{{ section.settings.btn1_text }}</a>{% endif %}
+      {% if section.settings.btn2_text != blank %}<a class="db-btn-secondary" href="{{ section.settings.btn2_link | default: '#' }}">{{ section.settings.btn2_text }}</a>{% endif %}
+    </div>
+  </div>
+</section>
+</div>
+
+{% schema %}
+{
+  "name": "Donna Bella · For Him",
+  "tag": "section",
+  "class": "section-db-him",
+  "settings": [
+    { "type": "header", "content": "Header" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "For Him · Premium Grooming" },
+    { "type": "text", "id": "title", "label": "Title line 1", "default": "Refined Grooming," },
+    { "type": "text", "id": "title_em", "label": "Title line 2 (italic accent)", "default": "Crafted for Him" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Upgrade your grooming routine with professional home services. Experience comfort, style, and confidence - without leaving your home." },
+    { "type": "header", "content": "Stats row" },
+    { "type": "checkbox", "id": "show_stats", "label": "Show stats row", "default": true },
+    { "type": "text", "id": "stat1_num", "label": "Stat 1 number", "default": "100%" },
+    { "type": "text", "id": "stat1_label", "label": "Stat 1 label", "default": "At-Home Service" },
+    { "type": "text", "id": "stat2_num", "label": "Stat 2 number", "default": "60+" },
+    { "type": "text", "id": "stat2_label", "label": "Stat 2 label", "default": "Min Sessions" },
+    { "type": "text", "id": "stat3_num", "label": "Stat 3 number", "default": "★ 4.9" },
+    { "type": "text", "id": "stat3_label", "label": "Stat 3 label", "default": "Client Rating" },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "btn1_text", "label": "Primary button text", "default": "Explore All Men Services" },
+    { "type": "url", "id": "btn1_link", "label": "Primary button link" },
+    { "type": "text", "id": "btn2_text", "label": "Secondary button text", "default": "Book a Consultation" },
+    { "type": "url", "id": "btn2_link", "label": "Secondary button link" }
+  ],
+  "blocks": [
+    {
+      "type": "service_card",
+      "name": "Service card",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "hair", "options": [
+          { "value": "heart", "label": "Heart (Massage)" },
+          { "value": "manicure", "label": "Manicure" },
+          { "value": "pedicure", "label": "Pedicure" },
+          { "value": "hair", "label": "Hair / Scissors" },
+          { "value": "waxing", "label": "Waxing (Men)" },
+          { "value": "facial", "label": "Facial" },
+          { "value": "sports", "label": "Sports Massage" },
+          { "value": "manipedi", "label": "Mani & Pedi" },
+          { "value": "facial_men", "label": "Men's Facial" }
+        ] },
+        { "type": "checkbox", "id": "featured", "label": "Featured (wide) card", "default": false },
+        { "type": "text", "id": "title", "label": "Title", "default": "Service" },
+        { "type": "textarea", "id": "desc", "label": "Description" },
+        { "type": "text", "id": "arrow_text", "label": "Link text", "default": "Explore" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Donna Bella · For Him",
+      "blocks": [
+        { "type": "service_card", "settings": { "icon": "hair", "featured": true, "title": "Precision Hair Care", "desc": "From sharp cuts to expert styling and scalp treatments - our professional barbers and stylists bring the full salon experience directly to your home. Look sharp, feel sharp.", "arrow_text": "Book Now" } },
+        { "type": "service_card", "settings": { "icon": "sports", "title": "Sports Massage", "desc": "Deep tissue and sports massage to relieve muscle tension, improve recovery, and restore peak performance.", "arrow_text": "Explore" } },
+        { "type": "service_card", "settings": { "icon": "waxing", "title": "Waxing & Grooming", "desc": "Clean, precise waxing for chest, back, and facial areas. Professional results with premium, skin-safe wax.", "arrow_text": "Explore" } },
+        { "type": "service_card", "settings": { "icon": "manipedi", "title": "Manicure & Pedicure", "desc": "Clean, shaped, and polished nails with a relaxing hand and foot treatment. Grooming at its finest.", "arrow_text": "Explore" } },
+        { "type": "service_card", "settings": { "icon": "facial_men", "title": "Men's Facial", "desc": "Deep pore cleansing, exfoliation, and hydration treatments designed specifically for men's skin. Clear, healthy skin awaits.", "arrow_text": "Explore" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

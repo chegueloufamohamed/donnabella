@@ -68,7 +68,7 @@
     },
     "marketing_agency_eFFP9n": {
       "type": "marketing-agency",
-      "name": "Marketing Agency",
+      "name": "Couples Services",
       "settings": {}
     },
     "massage_women_UckznX": {
@@ -84,6 +84,7 @@
     },
     "book_now_BJLr9X": {
       "type": "book-now",
+      "disabled": true,
       "name": "Book Now",
       "settings": {
         "heading": "Book Your Appointment",
@@ -171,8 +172,8 @@
         "button_hover_color": "#405365",
         "button_text_color": "#ffffff",
         "show_trust_badges": true,
-        "trust_text_color": "#FFFFFF",
-        "trust_border_color": "#FFFFFF",
+        "trust_text_color": "#ffffff",
+        "trust_border_color": "#ffffff",
         "anchor_id": "book-now",
         "form_action": ""
       }
