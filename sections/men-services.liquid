@@ -1,7 +1,7 @@
 {% comment %}
-  Couples Care — Belladona Care · Add-to-selection + FIXED sticky summary
-  Pedi-Mani 290 · Massage 470 · Hair 200 · Skin Care 300 · Waxing 259
-  >>> Set WHATSAPP_NUMBER in the script · tune cart position with --nls-top · hero offset in .nls-hero padding <
+  Men's Care — Belladona Care · Add-to-selection + FIXED sticky summary
+  Manicure 100 · Pedicure 90 · Massage (Deep Tissue 450 / Aromatherapy 350, 60 min) · Haircut 120
+  >>> Set WHATSAPP_NUMBER in the script · tune cart vertical position with --nls-top <
 {% endcomment %}
 
 {% assign current_locale = request.locale.iso_code %}
@@ -17,14 +17,13 @@
   .nls-{{ section.id }} {
     --bg: #405264; --bg-dark: #2f3d4d; --bg-deeper: #354656;
     --gold: #c9a96e; --gold-line: rgba(201,169,110,0.35);
-    --blush: #c9a0a0; --blush-line: rgba(201,160,160,0.3);
     --white: #ffffff; --white-60: rgba(255,255,255,0.6);
     --glass: rgba(255,255,255,0.06); --glass-b: rgba(255,255,255,0.11);
     --serif: 'Cormorant Garamond', Georgia, serif;
     --sans: 'Jost', sans-serif; --arabic: 'Cairo', sans-serif;
     --font-main: {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
     --font-display: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %};
-    --nls-top: 150px; /* ← cart vertical position; increase to push down */
+    --nls-top: 150px; /* ← cart vertical position; increase to push it further down */
     background-color: var(--bg); color: var(--white);
     font-family: var(--font-main); font-weight: 300;
   }
@@ -35,17 +34,17 @@
     50% { opacity: 0.8; transform: translate(-50%,-50%) scale(1.05); }
   }
 
-  /* ── HERO ──  (first padding value = top offset for sticky header) */
-  .nls-{{ section.id }} .nls-hero { position: relative; min-height: 54vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 160px 30px 50px; overflow: hidden; }
-  .nls-{{ section.id }} .nls-hero::before { content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(201,160,160,0.10) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
-  .nls-{{ section.id }} .nls-hero::after { content: ''; position: absolute; width: 360px; height: 360px; border-radius: 50%; border: 1px solid var(--blush-line); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; animation: nls-ring-{{ section.id }} 4s ease-in-out infinite; }
-  .nls-{{ section.id }} .nls-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--blush); margin-bottom: 20px; position: relative; z-index: 1; opacity: 0; transform: translateY(16px); animation: nls-fadeUp-{{ section.id }} 0.8s ease 0.2s forwards; }
+  /* ── HERO ── */
+  .nls-{{ section.id }} .nls-hero { position: relative; min-height: 54vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 80px 30px 50px; overflow: hidden; }
+  .nls-{{ section.id }} .nls-hero::before { content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(201,169,110,0.09) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+  .nls-{{ section.id }} .nls-hero::after { content: ''; position: absolute; width: 360px; height: 360px; border-radius: 50%; border: 1px solid var(--gold-line); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; animation: nls-ring-{{ section.id }} 4s ease-in-out infinite; }
+  .nls-{{ section.id }} .nls-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); margin-bottom: 20px; position: relative; z-index: 1; opacity: 0; transform: translateY(16px); animation: nls-fadeUp-{{ section.id }} 0.8s ease 0.2s forwards; }
   .nls-{{ section.id }} .nls-title { font-family: var(--font-display); font-size: clamp(48px, 9vw, 94px); font-weight: {% if is_arabic %}400{% else %}300{% endif %}; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; line-height: {% if is_arabic %}1.2{% else %}0.95{% endif %}; color: var(--white); position: relative; z-index: 1; opacity: 0; transform: translateY(20px); animation: nls-fadeUp-{{ section.id }} 0.9s ease 0.4s forwards; }
   .nls-{{ section.id }} .nls-title span { color: var(--gold); font-style: normal; font-weight: 500; }
   .nls-{{ section.id }} .nls-desc { margin-top: 26px; font-size: 13px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.14em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-60); position: relative; z-index: 1; opacity: 0; transform: translateY(16px); animation: nls-fadeUp-{{ section.id }} 0.9s ease 0.6s forwards; }
   .nls-{{ section.id }} .nls-divider { margin-top: 40px; width: 1px; height: 60px; background: linear-gradient(to bottom, var(--gold), transparent); opacity: 0; animation: nls-fadeUp-{{ section.id }} 0.9s ease 0.8s forwards; }
 
-  /* ── SHELL ── */
+  /* ── SHELL: content + reserved summary column ── */
   .nls-{{ section.id }} .nls-shell { max-width: 1320px; margin: 0 auto; padding: 0 30px; display: grid; grid-template-columns: minmax(0,1fr) 330px; gap: 60px; align-items: start; }
   .nls-{{ section.id }} .nls-main { min-width: 0; }
   .nls-{{ section.id }} .nls-section { position: relative; z-index: 1; padding: 52px 0 62px; }
@@ -57,12 +56,12 @@
   .nls-{{ section.id }} .nls-label-line { flex: 1; height: 1px; background: linear-gradient(to {% if is_arabic %}left{% else %}right{% endif %}, var(--gold-line), transparent); }
   .nls-{{ section.id }} .nls-label-text { font-size: 10px; font-weight: 500; letter-spacing: {% if is_arabic %}0.05em{% else %}0.45em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); white-space: nowrap; }
 
-  /* ── SHOWCASE CARD ── */
+  /* ── SHOWCASE IMAGE CARD ── */
   .nls-{{ section.id }} .nls-show { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; background: var(--glass); border: 1px solid var(--glass-b); overflow: hidden; margin-bottom: 2px; opacity: 0; transform: translateY(24px); transition: opacity .75s ease, transform .75s ease, border-color .35s; }
   .nls-{{ section.id }} .nls-show.visible { opacity: 1; transform: translateY(0); }
   .nls-{{ section.id }} .nls-show:hover { border-color: var(--gold-line); }
   .nls-{{ section.id }} .nls-show::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); z-index: 4; }
-  .nls-{{ section.id }} .nls-show-media { position: relative; min-height: 380px; overflow: hidden; }
+  .nls-{{ section.id }} .nls-show-media { position: relative; min-height: 360px; overflow: hidden; }
   .nls-{{ section.id }} .nls-show-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: transform .8s ease; }
   .nls-{{ section.id }} .nls-show:hover .nls-show-media img { transform: scale(1.05); }
   .nls-{{ section.id }} .nls-show-media::before { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(47,61,77,0.12), rgba(47,61,77,0.32)); pointer-events: none; }
@@ -79,8 +78,19 @@
   .nls-{{ section.id }} .nls-sfoot-left { display: flex; flex-direction: column; gap: 6px; }
   .nls-{{ section.id }} .nls-sprice { font-family: var(--serif); font-size: 40px; font-weight: 300; color: var(--white); line-height: 1; }
   .nls-{{ section.id }} .nls-sprice sup { font-size: 14px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
-  .nls-{{ section.id }} .nls-spill { display: inline-block; font-family: var(--sans); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-top: 8px; }
   .nls-{{ section.id }} .nls-sdur { font-size: 10px; color: var(--white-60); letter-spacing: 0.06em; }
+
+  /* ── MASSAGE OPTIONS ── */
+  .nls-{{ section.id }} .nls-opts { border-top: 1px solid var(--glass-b); margin-top: 4px; }
+  .nls-{{ section.id }} .nls-opt { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .nls-{{ section.id }} .nls-opt:last-child { border-bottom: none; }
+  .nls-{{ section.id }} .nls-opt-name { font-family: var(--font-display); font-size: 19px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); }
+  .nls-{{ section.id }} .nls-opt-name small { display: block; font-family: var(--font-main); font-size: 10px; letter-spacing: 0.04em; color: var(--gold); margin-top: 3px; opacity: 0.85; }
+  .nls-{{ section.id }} .nls-opt-end { display: flex; align-items: center; gap: 14px; white-space: nowrap; }
+  .nls-{{ section.id }} .nls-opt-price { font-family: var(--serif); font-size: 26px; font-weight: 300; color: var(--white); }
+  .nls-{{ section.id }} .nls-opt-price sup { font-size: 11px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .nls-{{ section.id }} .nls-show-dur { margin-top: 16px; font-size: 10px; letter-spacing: 0.06em; color: var(--white-60); }
+  .nls-{{ section.id }} .nls-show-dur span { color: var(--gold); }
 
   /* ── ADD BUTTON ── */
   .nls-{{ section.id }} .nls-add { border: 1px solid var(--gold-line); background: transparent; color: var(--gold); font-family: var(--font-main); font-size: 10px; letter-spacing: {% if is_arabic %}0.03em{% else %}0.18em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} padding: 11px 20px; cursor: pointer; transition: .25s; white-space: nowrap; }
@@ -117,10 +127,11 @@
   .nls-{{ section.id }} .nls-bottom h2 { font-family: var(--font-display); font-size: clamp(28px, 5vw, 52px); font-weight: 300; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; color: var(--white); line-height: 1.3; margin-bottom: 16px; }
   .nls-{{ section.id }} .nls-bottom p { font-size: 12px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.2em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-60); }
 
-  /* ── DESKTOP FIXED CART ── */
+  /* ── DESKTOP: cart FIXED & always visible ── */
   @media (min-width: 901px) {
     .nls-{{ section.id }} .nls-cart {
-      position: fixed; top: var(--nls-top);
+      position: fixed;
+      top: var(--nls-top);
       {% if is_arabic %}left{% else %}right{% endif %}: max(30px, (100vw - 1320px) / 2 + 30px);
       width: 330px; box-sizing: border-box;
       max-height: calc(100vh - var(--nls-top) - 30px); overflow-y: auto;
@@ -130,7 +141,7 @@
     .nls-{{ section.id }}.cart-pinned .nls-cart { opacity: 1; visibility: visible; transform: none; }
   }
 
-  /* ── MOBILE BAR ── */
+  /* ── MOBILE: bottom bar ── */
   @media (max-width: 900px) {
     .nls-{{ section.id }} .nls-shell { grid-template-columns: 1fr; gap: 0; }
     .nls-{{ section.id }} .nls-aside { position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 60; display: none; }
@@ -159,9 +170,9 @@
 
 <!-- ════════ HERO ════════ -->
 <section class="nls-hero">
-  <p class="nls-eyebrow">{% if is_arabic %}لكما · رفاهية في المنزل{% else %}For Two · At-Home Luxury{% endif %}</p>
-  <h1 class="nls-title">{% if is_arabic %}لحظات <span>معاً</span>{% else %}Together &amp;<br><span>Pampered</span>{% endif %}</h1>
-  <p class="nls-desc">{% if is_arabic %}باقات للأزواج · خدمة منزلية{% else %}Couples Packages · Home Service{% endif %}</p>
+  <p class="nls-eyebrow">{% if is_arabic %}للرجال · رفاهية في المنزل{% else %}For Him · At-Home Luxury{% endif %}</p>
+  <h1 class="nls-title">{% if is_arabic %}العناية <span>الرجالية</span>{% else %}Groomed &amp;<br><span>Refined</span>{% endif %}</h1>
+  <p class="nls-desc">{% if is_arabic %}أظافر · مساج · حلاقة · خدمة منزلية{% else %}Nails · Massage · Grooming · Home Service{% endif %}</p>
   <div class="nls-divider"></div>
 </section>
 
@@ -170,27 +181,47 @@
 <div class="nls-shell">
 <div class="nls-main">
 
-  <!-- ════════ PEDI-MANI ════════ -->
+  <!-- ════════ HANDS & FEET ════════ -->
   <section class="nls-section">
     <div class="nls-label" data-nls-reveal>
       <span class="nls-label-text">{% if is_arabic %}اليدين والقدمين{% else %}Hands & Feet{% endif %}</span>
       <div class="nls-label-line"></div>
     </div>
+
     <div class="nls-show" data-nls-reveal>
       <div class="nls-show-media">
-        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/Nails.webp?v=1770735870" alt="Couples mani-pedi">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/professional-manicurist-filing-man-nails-with-emer-2026-01-05-06-16-06-utc.jpg?v=1771337954" alt="Men's manicure">
       </div>
       <div class="nls-show-body">
-        <p class="nls-stag">{% if is_arabic %}للاثنين · اليدين والقدمين{% else %}For Two · Hands & Feet{% endif %}</p>
-        <h3 class="nls-stitle">{% if is_arabic %}مانيكير وباديكير للأزواج{% else %}Couples Mani-Pedi{% endif %}</h3>
-        <p class="nls-ssub">{% if is_arabic %}دلال جنباً إلى جنب{% else %}Side-by-side pampering{% endif %}</p>
-        <p class="nls-sdesc">{% if is_arabic %}مانيكير وباديكير لشخصين، عناية كاملة لليدين والقدمين تستمتعان بها معاً.{% else %}Manicure and pedicure for two — complete hand and foot care, enjoyed together.{% endif %}</p>
+        <p class="nls-stag">{% if is_arabic %}للرجال · اليدين{% else %}Gent · Hands{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}مانيكير للرجال{% else %}Gent Manicure{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}أيدٍ نظيفة، انطباع واثق{% else %}Clean hands, confident impression{% endif %}</p>
+        <p class="nls-sdesc">{% if is_arabic %}ينظّف ويُشكّل وينعش أظافرك وجلدها، تاركاً يديك مرتبتين وناعمتين وأنيقتين.{% else %}Cleans, shapes, and refreshes your nails and cuticles, leaving your hands neat, smooth, and well-groomed.{% endif %}</p>
         <div class="nls-sfoot">
           <div class="nls-sfoot-left">
-            <div class="nls-sprice"><sup>AED </sup>290</div>
-            <span class="nls-spill">{% if is_arabic %}لشخصين{% else %}For 2 people{% endif %}</span>
+            <div class="nls-sprice"><sup>AED </sup>100</div>
+            <div class="nls-sdur">◷ {% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div>
           </div>
-          <button type="button" class="nls-add" data-svc-id="c-manipedi" data-svc-price="290" data-svc-name="{% if is_arabic %}مانيكير وباديكير للأزواج{% else %}Couples Mani-Pedi{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+          <button type="button" class="nls-add" data-svc-id="gent-mani" data-svc-price="100" data-svc-name="{% if is_arabic %}مانيكير للرجال{% else %}Gent Manicure{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="nls-show rev" data-nls-reveal>
+      <div class="nls-show-media">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/image-gen_25.png?v=1771337704" alt="Men's pedicure">
+      </div>
+      <div class="nls-show-body">
+        <p class="nls-stag">{% if is_arabic %}للرجال · القدمين{% else %}Gent · Feet{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}باديكير للرجال{% else %}Gent Pedicure{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}نظيفة، مرتبة، أنيقة{% else %}Clean, neat, well-groomed{% endif %}</p>
+        <p class="nls-sdesc">{% if is_arabic %}ينظّف ويهذّب وينعش قدميك وأظافرها، ويُنعّم الجلد الخشن لإنهاءٍ مرتب وأنيق ومريح.{% else %}Cleans, trims, and refreshes your feet and nails, smoothing rough skin for a neat, comfortable, well-groomed finish.{% endif %}</p>
+        <div class="nls-sfoot">
+          <div class="nls-sfoot-left">
+            <div class="nls-sprice"><sup>AED </sup>90</div>
+            <div class="nls-sdur">◷ {% if is_arabic %}ساعة{% else %}1 hr{% endif %}</div>
+          </div>
+          <button type="button" class="nls-add" data-svc-id="gent-pedi" data-svc-price="90" data-svc-name="{% if is_arabic %}باديكير للرجال{% else %}Gent Pedicure{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
         </div>
       </div>
     </div>
@@ -202,99 +233,62 @@
       <span class="nls-label-text">{% if is_arabic %}المساج{% else %}Massage{% endif %}</span>
       <div class="nls-label-line"></div>
     </div>
-    <div class="nls-show rev" data-nls-reveal>
-      <div class="nls-show-media">
-        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/woman-receiving-massage-back.jpg?v=1771487152" alt="Couples massage">
-      </div>
-      <div class="nls-show-body">
-        <p class="nls-stag">{% if is_arabic %}للاثنين · مساج{% else %}For Two · Massage{% endif %}</p>
-        <h3 class="nls-stitle">{% if is_arabic %}مساج للأزواج{% else %}Couples Massage{% endif %}</h3>
-        <p class="nls-ssub">{% if is_arabic %}استرخاء، معاً{% else %}Unwind, together{% endif %}</p>
-        <p class="nls-sdesc">{% if is_arabic %}جلسة مساج لشخصين جنباً إلى جنب، للتخلص من التوتر واستعادة الهدوء معاً.{% else %}A side-by-side massage for two — release tension and restore calm, together.{% endif %}</p>
-        <div class="nls-sfoot">
-          <div class="nls-sfoot-left">
-            <div class="nls-sprice"><sup>AED </sup>470</div>
-            <span class="nls-spill">{% if is_arabic %}لشخصين{% else %}For 2 people{% endif %}</span>
-          </div>
-          <button type="button" class="nls-add" data-svc-id="c-massage" data-svc-price="470" data-svc-name="{% if is_arabic %}مساج للأزواج{% else %}Couples Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ════════ HAIR ════════ -->
-  <section class="nls-section">
-    <div class="nls-label" data-nls-reveal>
-      <span class="nls-label-text">{% if is_arabic %}الشعر{% else %}Hair{% endif %}</span>
-      <div class="nls-label-line"></div>
-    </div>
     <div class="nls-show" data-nls-reveal>
       <div class="nls-show-media">
-        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/Couples_Hair.webp?v=1782215208" alt="Couples hair styling">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/resized_smaller_image.jpg?v=1771338253" alt="Men's massage">
       </div>
       <div class="nls-show-body">
-        <p class="nls-stag">{% if is_arabic %}للاثنين · الشعر{% else %}For Two · Hair{% endif %}</p>
-        <h3 class="nls-stitle">{% if is_arabic %}تصفيف الشعر للأزواج{% else %}Couples Hair{% endif %}</h3>
-        <p class="nls-ssub">{% if is_arabic %}إطلالة متناسقة لكليكما{% else %}A polished look for both{% endif %}</p>
-        <p class="nls-sdesc">{% if is_arabic %}قص وتصفيف احترافي لشخصين، لتخرجا بإطلالة أنيقة معاً.{% else %}Professional cut and styling for two, so you both step out beautifully finished.{% endif %}</p>
-        <div class="nls-sfoot">
-          <div class="nls-sfoot-left">
-            <div class="nls-sprice"><sup>AED </sup>200</div>
-            <span class="nls-spill">{% if is_arabic %}لشخصين{% else %}For 2 people{% endif %}</span>
+        <p class="nls-stag">{% if is_arabic %}الجسم · مساج{% else %}Body · Massage{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}مساج للرجال{% else %}Men's Massage{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}تخلّص من التوتر، استعد الهدوء{% else %}Release tension, restore calm{% endif %}</p>
+        <div class="nls-opts">
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}أنسجة عميقة{% else %}Deep Tissue{% endif %}
+              <small>{% if is_arabic %}ضغط قوي لراحة العضلات العميقة{% else %}Firm pressure, deep muscle relief{% endif %}</small>
+            </div>
+            <div class="nls-opt-end">
+              <div class="nls-opt-price"><sup>AED </sup>450</div>
+              <button type="button" class="nls-add" data-svc-id="massage-deep" data-svc-price="450" data-svc-name="{% if is_arabic %}مساج أنسجة عميقة{% else %}Deep Tissue Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+            </div>
           </div>
-          <button type="button" class="nls-add" data-svc-id="c-hair" data-svc-price="200" data-svc-name="{% if is_arabic %}تصفيف الشعر للأزواج{% else %}Couples Hair{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+          <div class="nls-opt">
+            <div class="nls-opt-name">{% if is_arabic %}أروماثيرابي{% else %}Aromatherapy{% endif %}
+              <small>{% if is_arabic %}زيوت عطرية لاسترخاء تام{% else %}Essential oils, total relaxation{% endif %}</small>
+            </div>
+            <div class="nls-opt-end">
+              <div class="nls-opt-price"><sup>AED </sup>350</div>
+              <button type="button" class="nls-add" data-svc-id="massage-aroma" data-svc-price="350" data-svc-name="{% if is_arabic %}مساج أروماثيرابي{% else %}Aromatherapy Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+            </div>
+          </div>
         </div>
+        <div class="nls-show-dur">◷ <span>{% if is_arabic %}60 دقيقة{% else %}60 minutes{% endif %}</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ════════ SKIN CARE ════════ -->
+  <!-- ════════ GROOMING ════════ -->
   <section class="nls-section">
     <div class="nls-label" data-nls-reveal>
-      <span class="nls-label-text">{% if is_arabic %}العناية بالبشرة{% else %}Skin Care{% endif %}</span>
+      <span class="nls-label-text">{% if is_arabic %}الحلاقة{% else %}Grooming{% endif %}</span>
       <div class="nls-label-line"></div>
     </div>
+
     <div class="nls-show rev" data-nls-reveal>
       <div class="nls-show-media">
-        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/Couples_Skin_Care.webp?v=1782215390" alt="Couples skin care">
+        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/hair_Men.webp?v=1782212320" alt="Men's haircut">
       </div>
       <div class="nls-show-body">
-        <p class="nls-stag">{% if is_arabic %}للاثنين · البشرة{% else %}For Two · Skin{% endif %}</p>
-        <h3 class="nls-stitle">{% if is_arabic %}العناية بالبشرة للأزواج{% else %}Couples Skin Care{% endif %}</h3>
-        <p class="nls-ssub">{% if is_arabic %}إشراقة لكليكما{% else %}A glow for both of you{% endif %}</p>
-        <p class="nls-sdesc">{% if is_arabic %}جلسة عناية بالبشرة لشخصين، ترطيب وتغذية تتركان بشرتكما ناعمة ومشرقة.{% else %}A skin care session for two — hydrating, nourishing care that leaves you both soft and glowing.{% endif %}</p>
+        <p class="nls-stag">{% if is_arabic %}الشعر · الحلاقة{% else %}Hair · Grooming{% endif %}</p>
+        <h3 class="nls-stitle">{% if is_arabic %}قص شعر للرجال{% else %}Men's Haircut{% endif %}</h3>
+        <p class="nls-ssub">{% if is_arabic %}حاد، أنيق، مصمم لك{% else %}Sharp, clean, tailored to you{% endif %}</p>
+        <p class="nls-sdesc">{% if is_arabic %}قص شعر احترافي وتصفيف يناسب ملامحك وأسلوبك، في راحة منزلك.{% else %}A professional cut and styling shaped to your features and personal style, in the comfort of your home.{% endif %}</p>
         <div class="nls-sfoot">
           <div class="nls-sfoot-left">
-            <div class="nls-sprice"><sup>AED </sup>300</div>
-            <span class="nls-spill">{% if is_arabic %}لشخصين{% else %}For 2 people{% endif %}</span>
+            <div class="nls-sprice"><sup>AED </sup>120</div>
+            <div class="nls-sdur">◷ {% if is_arabic %}45 دقيقة{% else %}45 min{% endif %}</div>
           </div>
-          <button type="button" class="nls-add" data-svc-id="c-skin" data-svc-price="300" data-svc-name="{% if is_arabic %}العناية بالبشرة للأزواج{% else %}Couples Skin Care{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════ WAXING ════════ -->
-  <section class="nls-section">
-    <div class="nls-label" data-nls-reveal>
-      <span class="nls-label-text">{% if is_arabic %}إزالة الشعر بالشمع{% else %}Waxing{% endif %}</span>
-      <div class="nls-label-line"></div>
-    </div>
-    <div class="nls-show" data-nls-reveal>
-      <div class="nls-show-media">
-        <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/the-specialist-depilates-the-hair-with-wax-on-the-2026-01-08-01-14-16-utc.jpg?v=1771336328" alt="Couples waxing">
-      </div>
-      <div class="nls-show-body">
-        <p class="nls-stag">{% if is_arabic %}للاثنين · إزالة الشعر{% else %}For Two · Waxing{% endif %}</p>
-        <h3 class="nls-stitle">{% if is_arabic %}إزالة الشعر بالشمع للأزواج{% else %}Couples Waxing{% endif %}</h3>
-        <p class="nls-ssub">{% if is_arabic %}نعومة لكليكما{% else %}Smooth, for both{% endif %}</p>
-        <p class="nls-sdesc">{% if is_arabic %}باقة إزالة شعر بالشمع لشخصين، لبشرة ناعمة بلمسة لطيفة.{% else %}A waxing package for two — gentle care for beautifully smooth skin.{% endif %}</p>
-        <div class="nls-sfoot">
-          <div class="nls-sfoot-left">
-            <div class="nls-sprice"><sup>AED </sup>259</div>
-            <span class="nls-spill">{% if is_arabic %}لشخصين{% else %}For 2 people{% endif %}</span>
-          </div>
-          <button type="button" class="nls-add" data-svc-id="c-waxing" data-svc-price="259" data-svc-name="{% if is_arabic %}إزالة الشعر بالشمع للأزواج{% else %}Couples Waxing{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+          <button type="button" class="nls-add" data-svc-id="haircut" data-svc-price="120" data-svc-name="{% if is_arabic %}قص شعر للرجال{% else %}Men's Haircut{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
         </div>
       </div>
     </div>
@@ -311,9 +305,9 @@
       <span class="nls-bar-chev">▴</span>
     </button>
     <div class="nls-cart-panel">
-      <div class="nls-cart-tag">{% if is_arabic %}حجزكما{% else %}Your Booking{% endif %}</div>
+      <div class="nls-cart-tag">{% if is_arabic %}حجزك{% else %}Your Booking{% endif %}</div>
       <div class="nls-cart-head">{% if is_arabic %}الخدمات المختارة{% else %}Your Selection{% endif %}</div>
-      <div class="nls-cart-empty" id="nlsEmpty-{{ section.id }}">{% if is_arabic %}لم تختارا أي خدمة بعد{% else %}No services selected yet{% endif %}</div>
+      <div class="nls-cart-empty" id="nlsEmpty-{{ section.id }}">{% if is_arabic %}لم تختر أي خدمة بعد{% else %}No services selected yet{% endif %}</div>
       <div class="nls-cart-items" id="nlsItems-{{ section.id }}" style="display:none;"></div>
       <div class="nls-cart-total"><span class="label">{% if is_arabic %}الإجمالي{% else %}Total{% endif %}</span><span class="val" id="nlsTotal-{{ section.id }}">{% if is_arabic %}د.إ 0{% else %}AED 0{% endif %}</span></div>
       <button type="button" class="nls-cart-btn is-disabled" id="nlsBook-{{ section.id }}">{% if is_arabic %}المتابعة للدفع{% else %}Proceed to Checkout{% endif %}</button>
@@ -326,8 +320,8 @@
 <!-- ════════ BOTTOM ════════ -->
 <div class="nls-bottom" data-nls-reveal>
   <div class="nls-bottom-line"><div class="nls-bottom-rule"></div><span class="nls-bottom-diamond">◆</span><div class="nls-bottom-rule"></div></div>
-  <h2>{% if is_arabic %}لحظاتكما،<br>بإتقان{% else %}Your moment,<br><em>beautifully shared</em>{% endif %}</h2>
-  <p>{% if is_arabic %}جميع الخدمات متاحة في منزلكما في جميع أنحاء الإمارات{% else %}All services available at your home across the UAE{% endif %}</p>
+  <h2>{% if is_arabic %}عناية رجالية،<br>بإتقان{% else %}Men's grooming,<br><em>beautifully done</em>{% endif %}</h2>
+  <p>{% if is_arabic %}جميع الخدمات متاحة في منزلك في جميع أنحاء الإمارات{% else %}All services available at your home across the UAE{% endif %}</p>
 </div>
 
 </div>
@@ -348,6 +342,7 @@
   }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
   root.querySelectorAll('[data-nls-reveal]').forEach(function(el){ obs.observe(el); });
 
+  /* ===== fixed cart reveal (desktop) ===== */
   var trigger = root.querySelector('#nlsTrigger-{{ section.id }}');
   function syncPin(){
     if(window.innerWidth <= 900){ root.classList.remove('cart-pinned'); return; }
@@ -359,12 +354,13 @@
   window.addEventListener('resize', syncPin);
   syncPin();
 
+  /* ===== Selection summary ===== */
   var IS_AR = {{ is_arabic | json }};
   var WHATSAPP_NUMBER = "9715XXXXXXXX"; /* ←←← REPLACE with your number, intl format, no + */
   var CUR = IS_AR ? 'د.إ' : 'AED';
   var L = IS_AR
-    ? { add:'أضف', added:'✓ مضافة', intro:'مرحباً! نود حجز الخدمات التالية:', total:'الإجمالي' }
-    : { add:'Add', added:'✓ Added', intro:"Hi! We'd like to book:", total:'Total' };
+    ? { add:'أضف', added:'✓ مضافة', intro:'مرحباً! أود حجز الخدمات التالية:', total:'الإجمالي' }
+    : { add:'Add', added:'✓ Added', intro:"Hi! I'd like to book:", total:'Total' };
 
   var cart = [];
   try {
@@ -448,12 +444,12 @@
 
 {% schema %}
 {
-  "name": "Couples Services",
+  "name": "Men Services",
   "tag": "section",
   "class": "section",
   "presets": [
     {
-      "name": "Couples Services"
+      "name": "Men Services"
     }
   ]
 }

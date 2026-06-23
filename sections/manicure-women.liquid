@@ -455,7 +455,7 @@
       <div class="nls-cart-items" id="nlsItems-{{ section.id }}" style="display:none;"></div>
       <div class="nls-cart-total"><span class="label">{% if is_arabic %}الإجمالي{% else %}Total{% endif %}</span><span class="val" id="nlsTotal-{{ section.id }}">{% if is_arabic %}د.إ 0{% else %}AED 0{% endif %}</span></div>
       <div class="nls-cart-note" id="nlsNote-{{ section.id }}" style="display:none;">{% if is_arabic %}* بعض الأسعار تبدأ من، ويُؤكَّد السعر النهائي عند الحجز{% else %}* Some prices start "from"; final price confirmed on booking{% endif %}</div>
-      <button type="button" class="nls-cart-btn is-disabled" id="nlsBook-{{ section.id }}">{% if is_arabic %}احجزي عبر واتساب{% else %}Book via WhatsApp{% endif %}</button>
+      <button type="button" class="nls-cart-btn is-disabled" id="nlsBook-{{ section.id }}">{% if is_arabic %}المتابعة للدفع{% else %}Proceed to Checkout{% endif %}</button>
     </div>
   </div>
 </aside>
@@ -508,6 +508,16 @@
     : { add:'Add', added:'✓ Added', intro:"Hi! I'd like to book:", total:'Total', from:'from' };
 
   var cart = [];
+  try {
+    var saved = localStorage.getItem('donnabella_cart');
+    if (saved) { cart = JSON.parse(saved); }
+  } catch (e) {}
+
+  function saveCart() {
+    try {
+      localStorage.setItem('donnabella_cart', JSON.stringify(cart));
+    } catch (e) {}
+  }
   var addBtns  = root.querySelectorAll('.nls-add');
   var itemsEl  = root.querySelector('#nlsItems-{{ section.id }}');
   var emptyEl  = root.querySelector('#nlsEmpty-{{ section.id }}');
@@ -530,7 +540,13 @@
   function syncArtBtn(){
     var b = root.querySelector('[data-svc-id="w-nailart"]');
     var i = cart.find(function(x){ return x.id==='w-nailart'; });
-    if(i){ i.qty = artCount; i.price = artCount * 10; if(artCount===0){ cart = cart.filter(function(x){return x.id!=='w-nailart';}); } render(); }
+    if(i){
+      i.qty = artCount;
+      i.price = artCount * 10;
+      if(artCount===0){ cart = cart.filter(function(x){return x.id!=='w-nailart';}); }
+      saveCart();
+      render();
+    }
   }
 
   /* blow-dry +50 curls extra */
@@ -542,7 +558,18 @@
     var has = cart.some(function(x){ return x.id==='w-curls'; });
     if(want && !has){ cart.push({ id:'w-curls', name:(IS_AR?'تجعيد / موجات':'Curls / Beach Waves'), price:50 }); }
     else if(!want && has){ cart = cart.filter(function(x){ return x.id!=='w-curls'; }); }
+    saveCart();
     render();
+  }
+
+  // Restore states from loaded cart
+  var artItem = cart.find(function(x){ return x.id==='w-nailart'; });
+  if (artItem) {
+    artCount = artItem.qty || 0;
+    if (artSpan) artSpan.textContent = artCount;
+  }
+  if (blowExtra) {
+    blowExtra.checked = cart.some(function(x){ return x.id==='w-curls'; });
   }
 
   function fmt(n){ return CUR + ' ' + n; }
@@ -592,6 +619,7 @@
         }
       }
       applyBlowExtra();
+      saveCart();
       render();
     });
   });
@@ -601,6 +629,7 @@
     if(rm){
       cart = cart.filter(function(i){ return i.id !== rm; });
       if(rm.indexOf('w-blow-')===0){ applyBlowExtra(); }
+      saveCart();
       render();
     }
   });
@@ -609,14 +638,25 @@
 
   bookEl.addEventListener('click', function(){
     if(!cart.length) return;
-    var lines = cart.map(function(i){
-      return '• ' + i.name + (i.qty ? ' ×'+i.qty : '') + (i.from ? ' ('+L.from+')' : '') + ' — ' + fmt(i.price);
-    });
-    var total = cart.reduce(function(s,i){ return s + i.price; }, 0);
-    var msg = L.intro + '\n' + lines.join('\n') + '\n' + L.total + ': ' + fmt(total);
-    window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+    var dest = (window.location.hostname.indexOf('donnabella.ae') > -1 || window.location.hostname.indexOf('myshopify.com') > -1) 
+      ? '/pages/checkout' 
+      : 'pages_checkout.html';
+    window.location.href = dest;
   });
 
   render();
 })();
 </script>
+
+{% schema %}
+{
+  "name": "Women Services",
+  "tag": "section",
+  "class": "section",
+  "presets": [
+    {
+      "name": "Women Services"
+    }
+  ]
+}
+{% endschema %}
