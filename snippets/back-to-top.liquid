@@ -1,9 +1,3 @@
-{% assign has_sticky_cart = false %}
-{% assign path = request.path %}
-{% if path contains '/pages/men' or path contains '/pages/women' or path contains '/pages/massage' or path contains '/pages/checkout' %}
-  {% assign has_sticky_cart = true %}
-{% endif %}
-
 <!-- Back to Top Floating Button with Progress Ring -->
 <div class="crony-backtotop" id="crony-backtotop" role="button" aria-label="Back to top">
   <svg id="crony-progress-ring" viewBox="0 0 56 56">
@@ -85,10 +79,14 @@
   /* Mobile adjustments */
   @media (max-width: 600px) {
     .crony-backtotop {
-      bottom: {% if has_sticky_cart %}90px{% else %}10px{% endif %} !important;
+      bottom: 10px !important;
       right: 10px !important;
       width: 53px;
       height: 53px;
+      transition: bottom 0.3s ease;
+    }
+    .crony-backtotop.crony-has-sticky-cart {
+      bottom: 90px !important;
     }
     .crony-backtotop img {
       width: 42px;

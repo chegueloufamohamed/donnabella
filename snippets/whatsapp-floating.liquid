@@ -2,12 +2,6 @@
 {% assign is_arabic = false %}
 {% if current_locale contains 'ar' %}{% assign is_arabic = true %}{% endif %}
 
-{% assign has_sticky_cart = false %}
-{% assign path = request.path %}
-{% if path contains '/pages/men' or path contains '/pages/women' or path contains '/pages/massage' or path contains '/pages/checkout' %}
-  {% assign has_sticky_cart = true %}
-{% endif %}
-
 <!-- WhatsApp Floating Button - FIXED -->
 <div class="crony-whatsapp" id="cronyWhatsapp">
   <div class="crony-whatsapp-tooltip">
@@ -149,8 +143,13 @@
 
   @media (max-width:600px){
     .crony-whatsapp {
-      bottom: {% if has_sticky_cart %}95px{% else %}10px{% endif %} !important;
+      bottom: 10px !important;
       left: 12px !important;
+      transition: bottom 0.3s ease;
+    }
+    
+    .crony-whatsapp.crony-has-sticky-cart {
+      bottom: 95px !important;
     }
 
     .crony-whatsapp img {
@@ -323,12 +322,55 @@
     }
   }
 
+  function initMobilePositioning() {
+    var updatePosition = function() {
+      var hasSticky = false;
+      var aside = document.querySelector('.nls-aside');
+      if (aside) {
+        var style = window.getComputedStyle(aside);
+        if (style.display !== 'none') {
+          hasSticky = true;
+        }
+      } else if (isCheckoutPage) {
+        hasSticky = true;
+      }
+
+      var bttEl = document.getElementById('crony-backtotop');
+      if (whatsappEl) {
+        whatsappEl.classList.toggle('crony-has-sticky-cart', hasSticky);
+      }
+      if (bttEl) {
+        bttEl.classList.toggle('crony-has-sticky-cart', hasSticky);
+      }
+    };
+
+    updatePosition();
+
+    // Listen to changes in the DOM to update positioning dynamically (e.g. cart items added/removed)
+    try {
+      var observer = new MutationObserver(updatePosition);
+      observer.observe(document.body, {
+        attributes: true,
+        childList: true,
+        subtree: true,
+        attributeFilter: ['class', 'style']
+      });
+    } catch(e){}
+  }
+
   // Run on page load and on pageshow (handles BFcache back button)
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function() {
+      init();
+      initMobilePositioning();
+    });
   } else {
     init();
+    initMobilePositioning();
   }
-  window.addEventListener('pageshow', init);
+  window.addEventListener('pageshow', function() {
+    init();
+    initMobilePositioning();
+  });
 })();
 </script>
