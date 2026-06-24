@@ -734,6 +734,7 @@ Language & Style:
     }
 
     typingIndicator.style.display = 'flex';
+    messagesArea.appendChild(typingIndicator);
     scrollChatToBottom();
 
     // Prepare payload
@@ -762,22 +763,30 @@ Language & Style:
       })
     })
     .then(function(res) {
-      if (!res.ok) {
-        return res.json().then(function(errJson) {
+      return res.text().then(function(text) {
+        if (!res.ok) {
           var errMsg = 'API Request failed (' + res.status + ')';
-          if (errJson && errJson.error && errJson.error.message) {
-            errMsg += ': ' + errJson.error.message;
+          try {
+            var errJson = JSON.parse(text);
+            if (errJson && errJson.error && errJson.error.message) {
+              errMsg += ': ' + errJson.error.message;
+            }
+            console.error("Gemini API Error details:", errJson);
+          } catch(e) {
+            console.error("Gemini API Error raw text:", text);
+            if (text) {
+              errMsg += ': ' + (text.length > 150 ? text.substring(0, 150) + '...' : text);
+            }
           }
-          console.error("Gemini API Error details:", errJson);
           throw new Error(errMsg);
-        }).catch(function() {
-          return res.text().then(function(errText) {
-            console.error("Gemini API Error raw text:", errText);
-            throw new Error('API Request failed (' + res.status + '): ' + errText);
-          });
-        });
-      }
-      return res.json();
+        }
+        
+        try {
+          return JSON.parse(text);
+        } catch (e) {
+          throw new Error("Invalid response format from server");
+        }
+      });
     })
     .then(function(data) {
       typingIndicator.style.display = 'none';
