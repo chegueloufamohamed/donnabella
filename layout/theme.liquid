@@ -293,5 +293,14 @@
     {{ 'smooth-scroll.js' | asset_url | script_tag }}
     {% render 'whatsapp-floating' %}
     {% render 'back-to-top' %}
+    <script>
+      (function() {
+        if (window.location.pathname.indexOf('/thank_you') > -1 || window.location.pathname.indexOf('/orders/') > -1) {
+          try {
+            localStorage.removeItem('donnabella_cart');
+          } catch(e){}
+        }
+      })();
+    </script>
   </body>  
 </html>

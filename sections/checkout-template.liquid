@@ -589,6 +589,11 @@
 
       var permalink = 'https://www.donnabella.ae/cart/' + items.join(',');
       
+      // Parse first name and last name
+      var nameParts = info.name.trim().split(/\s+/);
+      var firstName = nameParts[0] || '';
+      var lastName = nameParts.slice(1).join(' ') || '';
+
       // Append booking details as cart attributes
       permalink += '?attributes[Name]=' + encodeURIComponent(info.name);
       permalink += '&attributes[Phone]=' + encodeURIComponent(info.phone);
@@ -598,10 +603,15 @@
       permalink += '&attributes[Emirate]=' + encodeURIComponent(info.emirate);
       permalink += '&attributes[Address]=' + encodeURIComponent(info.address);
       
-      // Clear cart localStorage upon redirection so it doesn't double-book
-      try {
-        localStorage.removeItem('donnabella_cart');
-      } catch (e) {}
+      // Append prefilled shipping and email parameters for Shopify Checkout page
+      permalink += '&checkout[email]=' + encodeURIComponent(info.email);
+      permalink += '&checkout[shipping_address][first_name]=' + encodeURIComponent(firstName);
+      permalink += '&checkout[shipping_address][last_name]=' + encodeURIComponent(lastName);
+      permalink += '&checkout[shipping_address][phone]=' + encodeURIComponent(info.phone);
+      permalink += '&checkout[shipping_address][address1]=' + encodeURIComponent(info.address);
+      permalink += '&checkout[shipping_address][city]=' + encodeURIComponent(info.emirate);
+      permalink += '&checkout[shipping_address][province]=' + encodeURIComponent(info.emirate);
+      permalink += '&checkout[shipping_address][country]=' + encodeURIComponent('United Arab Emirates');
 
       window.location.href = permalink;
     });
