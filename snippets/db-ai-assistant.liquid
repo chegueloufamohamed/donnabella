@@ -23,7 +23,12 @@
         {% if is_arabic %}دونا بيلا - مساعد ذكي{% else %}Donna Bella - AI Concierge{% endif %}
       </div>
       <div class="db-ai-header-actions">
-        <button type="button" class="db-ai-close-btn" id="dbAIChatClose" aria-label="Close">&times;</button>
+        <button type="button" class="db-ai-close-btn" id="dbAIChatClose" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; display: block;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
       </div>
     </div>
   </div>
@@ -66,8 +71,8 @@
   <form class="db-ai-footer" id="dbAIChatForm">
     <input type="text" id="dbAIChatInput" class="db-ai-input-field" required placeholder="{% if is_arabic %}اكتب رسالتك هنا...{% else %}Type your message...{% endif %}" autocomplete="off">
     <button type="submit" class="db-ai-send-btn" aria-label="Send">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="#354656" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px; transform: rotate(45deg); display: block;">
+        <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
   </form>
@@ -83,26 +88,30 @@
     display: flex !important;
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
-    background: #354656;
-    border: 1px solid #c9a96e;
-    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 200, 215, 0.3) !important;
+    border-radius: 50% !important;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-    transition: transform 0.2s, bottom 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255, 182, 193, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), bottom 0.3s ease;
   }
 
   .db-ai-icon {
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
     display: block;
-    transition: transform 0.2s;
+    transition: transform 0.3s ease;
   }
 
   .db-ai-btn:hover {
     transform: translateY(-6px) scale(1.08) !important;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)) !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+    border-color: rgba(255, 200, 215, 0.5) !important;
+    box-shadow: 0 8px 25px rgba(255, 182, 193, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
   }
 
   .db-ai-pulse-glow {
@@ -112,7 +121,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    border: 1px solid #c9a96e;
+    border: 1px solid rgba(255, 200, 215, 0.3);
     animation: db-ai-pulse 2s infinite ease-in-out;
     pointer-events: none;
     z-index: -1;
@@ -123,7 +132,7 @@
     100% { transform: scale(1.4); opacity: 0; }
   }
 
-  /* Chat Modal Style */
+  /* Chat Modal Style - Glassmorphism Card matching Screenshot */
   .db-ai-modal {
     position: fixed !important;
     bottom: 150px !important;
@@ -133,10 +142,10 @@
     z-index: 1000 !important;
     backdrop-filter: blur(30px) !important;
     -webkit-backdrop-filter: blur(30px) !important;
-    background: rgba(255,255,255,0.08) !important;
-    border: 1px solid rgba(255,255,255,0.16) !important;
-    border-radius: 16px !important;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(255,255,255,0.05) !important;
+    background: linear-gradient(135deg, rgba(26, 10, 30, 0.86) 0%, rgba(45, 27, 53, 0.86) 30%, rgba(30, 15, 42, 0.88) 60%, rgba(18, 8, 24, 0.92) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 24px !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 40px rgba(255,182,193,0.12), inset 0 1px 0 rgba(255,255,255,0.22) !important;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -161,7 +170,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: inherit;
+    border-radius: 24px;
     background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.06) 0%, transparent 60%);
     pointer-events: none;
     z-index: 5;
@@ -180,9 +189,9 @@
 
   /* Header banner */
   .db-ai-header {
-    background: rgba(20, 25, 35, 0.25);
+    background: transparent;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 12px 16px;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
     position: relative;
@@ -197,13 +206,15 @@
   }
 
   .db-ai-header-title {
-    color: #c9a96e;
-    font-weight: 600;
-    font-size: 13px;
+    color: #ffffff;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
     letter-spacing: 0.5px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    text-shadow: 0 0 15px rgba(255,255,255,0.2);
   }
 
   .db-ai-status-dot {
@@ -212,7 +223,7 @@
     background: #00e676;
     border-radius: 50%;
     display: inline-block;
-    box-shadow: 0 0 6px #00e676;
+    box-shadow: 0 0 8px #00e676;
   }
 
   .db-ai-header-actions {
@@ -221,11 +232,11 @@
     gap: 8px;
   }
 
+  /* Close Button Styled like the Card's Icon Box */
   .db-ai-close-btn {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(201, 169, 110, 0.4);
-    color: #c9a96e;
-    font-size: 18px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,200,215,0.3);
+    color: #ffffff;
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -233,14 +244,17 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 4px 15px rgba(255,182,193,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
     line-height: 1;
     padding: 0;
   }
 
   .db-ai-close-btn:hover {
-    background: #c9a96e;
-    color: #354656;
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255,200,215,0.6);
+    box-shadow: 0 4px 20px rgba(255,182,193,0.3), inset 0 1px 0 rgba(255,255,255,0.3);
+    color: #ffffff;
     transform: rotate(90deg);
   }
 
@@ -251,7 +265,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(37, 51, 64, 0.95);
+    background: rgba(26, 10, 30, 0.92) !important;
     z-index: 10;
     display: flex;
     align-items: center;
@@ -260,75 +274,97 @@
   }
 
   .db-ai-settings-content {
-    background: #354656;
-    border: 1px solid #c9a96e;
-    padding: 16px;
-    border-radius: 8px;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    background: rgba(45, 27, 53, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    padding: 24px;
+    border-radius: 20px;
     width: 100%;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    max-width: 320px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
   }
 
   .db-ai-settings-content h4 {
-    color: #c9a96e;
-    margin: 0 0 8px 0;
-    font-size: 14px;
-    text-transform: uppercase;
+    color: #ffffff;
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
   }
 
   .db-ai-settings-content p {
-    color: #ffffff;
+    color: rgba(255,255,255,0.7);
     font-size: 12px;
-    margin: 0 0 12px 0;
-    opacity: 0.8;
+    margin: 0 0 16px 0;
+    line-height: 1.5;
   }
 
   .db-ai-settings-actions {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
-    margin-top: 12px;
+    margin-top: 16px;
   }
 
   .db-ai-save-btn {
-    background: #c9a96e;
-    color: #354656;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 200, 215, 0.4);
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
     font-size: 12px;
-    transition: background 0.2s;
+    transition: all 0.3s ease;
   }
 
   .db-ai-save-btn:hover {
-    background: #d9b97e;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 200, 215, 0.7);
   }
 
   .db-ai-cancel-btn {
     background: none;
-    color: #ffffff;
-    border: 1px solid rgba(255,255,255,0.3);
-    padding: 6px 14px;
-    border-radius: 4px;
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 8px 18px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 12px;
-    transition: background 0.2s;
+    transition: all 0.3s ease;
   }
 
   .db-ai-cancel-btn:hover {
     background: rgba(255,255,255,0.05);
+    color: #ffffff;
   }
 
   /* Message area scrollable body */
   .db-ai-messages {
     flex: 1;
     overflow-y: auto;
-    padding: 16px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar for messages area */
+  .db-ai-messages::-webkit-scrollbar {
+    width: 6px;
+  }
+  .db-ai-messages::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .db-ai-messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 3px;
+  }
+  .db-ai-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
   }
 
   .db-ai-msg {
@@ -346,37 +382,44 @@
   }
 
   .db-ai-bubble {
-    max-width: 80%;
-    padding: 10px 14px;
-    border-radius: 12px;
-    font-size: 12.5px;
-    line-height: 1.5;
+    max-width: 85%;
+    padding: 12px 18px;
+    font-size: 13px;
+    line-height: 1.6;
     word-wrap: break-word;
     font-family: inherit;
   }
 
+  /* Assistant bubble - styled with soft glow matching design system */
   .db-ai-msg.assistant .db-ai-bubble {
-    background: rgba(255, 255, 255, 0.05);
-    border-left: 3px solid #c9a96e;
-    color: #ffffff;
-    border-top-left-radius: 2px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 3px solid rgba(255, 200, 215, 0.6);
+    color: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    border-top-left-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
   }
 
+  /* User bubble - styled with translucent gold to fit the aesthetic */
   .db-ai-msg.user .db-ai-bubble {
-    background: #c9a96e;
-    color: #354656;
-    font-weight: 550;
-    border-top-right-radius: 2px;
+    background: rgba(201, 169, 110, 0.18);
+    border: 1px solid rgba(201, 169, 110, 0.35);
+    color: #ffffff;
+    font-weight: 400;
+    border-radius: 18px;
+    border-top-right-radius: 4px;
+    box-shadow: 0 4px 15px rgba(201, 169, 110, 0.1);
   }
 
   /* Typing indicator dots */
   .db-ai-typing {
-    padding: 8px 16px;
+    padding: 8px 20px;
     display: flex;
-    gap: 4px;
+    gap: 5px;
     align-items: center;
     background: transparent;
-    margin-left: 16px;
+    margin-left: 20px;
     margin-bottom: 12px;
     width: fit-content;
   }
@@ -384,7 +427,7 @@
   .db-dot {
     width: 6px;
     height: 6px;
-    background: #c9a96e;
+    background: rgba(255, 255, 255, 0.6);
     border-radius: 50%;
     animation: db-bounce 1.4s infinite ease-in-out both;
   }
@@ -399,11 +442,11 @@
 
   /* Chat Input footer */
   .db-ai-footer {
-    padding: 12px 16px;
-    background: rgba(20, 25, 35, 0.25);
+    padding: 16px 20px;
+    background: transparent;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
-    gap: 8px;
+    gap: 12px;
     align-items: center;
     position: relative;
     z-index: 6; /* sit above the gloss overlays */
@@ -411,41 +454,44 @@
 
   .db-ai-input-field {
     flex: 1;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 6px;
-    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 10px 16px;
     color: #ffffff;
     font-size: 13px;
     outline: none;
-    transition: border 0.2s;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
   }
 
   .db-ai-input-field:focus {
-    border-color: #c9a96e;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 200, 215, 0.4);
+    box-shadow: 0 0 10px rgba(255, 182, 193, 0.15), inset 0 1px 2px rgba(0,0,0,0.15);
   }
 
+  /* Send Button Styled like standard icon box but smaller */
   .db-ai-send-btn {
-    background: #c9a96e;
-    border: none;
-    border-radius: 6px;
-    width: 32px;
-    height: 32px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 200, 215, 0.3);
+    border-radius: 12px;
+    width: 38px;
+    height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 4px 15px rgba(255,182,193,0.1), inset 0 1px 0 rgba(255,255,255,0.2);
+    color: #ffffff;
   }
 
   .db-ai-send-btn:hover {
-    background: #d9b97e;
-  }
-
-  .db-ai-send-btn svg {
-    width: 16px;
-    height: 16px;
-    transform: rotate(45deg);
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255,200,215,0.5);
+    box-shadow: 0 4px 20px rgba(255,182,193,0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+    color: #ffffff;
   }
 
   /* Mobile Responsive adjustments */
@@ -453,8 +499,8 @@
     .db-ai-btn {
       bottom: 65px !important; /* Floats above mobile WhatsApp (10px + 55px) */
       left: 12px !important;
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
     }
 
     .db-ai-btn.db-has-sticky-cart {
@@ -468,6 +514,7 @@
       width: calc(100% - 20px);
       height: 70vh;
       max-height: 480px;
+      border-radius: 24px !important;
     }
 
     .db-ai-icon {
