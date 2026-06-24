@@ -20,7 +20,7 @@
     <div class="db-ai-header-inner">
       <div class="db-ai-header-title">
         <span class="db-ai-status-dot"></span>
-        <img src="{{ 'header_logo_Donna_Bella.webp' | file_img_url: '150x' }}" alt="Donna Bella" class="db-ai-header-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+        <img src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/header_logo_Donna_Bella.webp?v=1774436775" alt="Donna Bella" class="db-ai-header-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
         <span class="db-ai-header-text" style="display: none;">{% if is_arabic %}دونا بيلا{% else %}Donna Bella{% endif %}</span>
       </div>
       <div class="db-ai-header-actions">
@@ -54,13 +54,15 @@
         {% endif %}
       </div>
     </div>
-  </div>
 
-  <!-- Typing Indicator -->
-  <div class="db-ai-typing" id="dbAITypingIndicator" style="display: none;">
-    <span class="db-dot"></span>
-    <span class="db-dot"></span>
-    <span class="db-dot"></span>
+    <!-- Typing Indicator (inside messages area) -->
+    <div class="db-ai-typing" id="dbAITypingIndicator" style="display: none;">
+      <div class="db-ai-bubble">
+        <span class="db-dot"></span>
+        <span class="db-dot"></span>
+        <span class="db-dot"></span>
+      </div>
+    </div>
   </div>
 
   <!-- Chat Input Footer -->
@@ -424,16 +426,27 @@
     box-shadow: 0 4px 15px rgba(201, 169, 110, 0.1);
   }
 
-  /* Typing indicator dots */
+  /* Typing indicator container */
   .db-ai-typing {
-    padding: 8px 20px;
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    background: transparent;
-    margin-left: 20px;
+    display: none;
+    justify-content: flex-start;
+    width: 100%;
     margin-bottom: 12px;
-    width: fit-content;
+    padding: 0;
+  }
+
+  .db-ai-typing .db-ai-bubble {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 3px solid rgba(255, 200, 215, 0.6);
+    border-radius: 18px;
+    border-top-left-radius: 4px;
+    padding: 12px 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    width: auto;
   }
 
   .db-dot {
@@ -454,29 +467,37 @@
 
   /* Chat Input footer */
   .db-ai-footer {
-    padding: 16px 20px;
-    background: transparent;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    position: relative;
-    z-index: 6; /* sit above the gloss overlays */
+    padding: 16px 20px !important;
+    background: transparent !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    display: flex !important;
+    gap: 12px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    z-index: 6 !important;
+    box-sizing: border-box !important;
   }
 
   .db-ai-input-field {
-    flex: 1;
+    flex: 1 !important;
     height: 42px !important;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 14px;
-    padding: 0 16px;
-    color: #ffffff;
-    font-size: 13px;
-    outline: none;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 14px !important;
+    padding: 0 16px !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    outline: none !important;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1) !important;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.15) !important;
     box-sizing: border-box !important;
+    margin: 0 !important;
+    align-self: center !important;
+  }
+  .db-ai-input-field::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+    opacity: 1 !important;
   }
 
   .db-ai-input-field:focus {
@@ -487,20 +508,23 @@
 
   /* Send Button Styled like standard icon box but smaller */
   .db-ai-send-btn {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 200, 215, 0.3);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 200, 215, 0.3) !important;
+    border-radius: 12px !important;
     width: 42px !important;
     height: 42px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 4px 15px rgba(255,182,193,0.1), inset 0 1px 0 rgba(255,255,255,0.2);
-    color: #ffffff;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1) !important;
+    box-shadow: 0 4px 15px rgba(255,182,193,0.1), inset 0 1px 0 rgba(255,255,255,0.2) !important;
+    color: #ffffff !important;
     box-sizing: border-box !important;
-    flex-shrink: 0;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    align-self: center !important;
   }
 
   .db-ai-send-btn:hover {
