@@ -131,17 +131,40 @@
     width: 360px;
     height: 480px;
     z-index: 1000 !important;
-    background: rgba(53, 70, 86, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid #c9a96e;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    backdrop-filter: blur(30px) !important;
+    -webkit-backdrop-filter: blur(30px) !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(255,255,255,0.05) !important;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     font-family: 'Jost', 'Cairo', sans-serif;
     animation: db-ai-slidein 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .db-ai-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
+    opacity: 0.6;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .db-ai-modal::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 5;
   }
 
   @keyframes db-ai-slidein {
@@ -157,11 +180,13 @@
 
   /* Header banner */
   .db-ai-header {
-    background: #253340;
-    border-bottom: 1px solid #c9a96e;
+    background: rgba(20, 25, 35, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding: 12px 16px;
     display: flex;
     align-items: center;
+    position: relative;
+    z-index: 6; /* sit above the gloss overlays */
   }
 
   .db-ai-header-inner {
@@ -375,11 +400,13 @@
   /* Chat Input footer */
   .db-ai-footer {
     padding: 12px 16px;
-    background: #253340;
-    border-top: 1px solid #c9a96e;
+    background: rgba(20, 25, 35, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     gap: 8px;
     align-items: center;
+    position: relative;
+    z-index: 6; /* sit above the gloss overlays */
   }
 
   .db-ai-input-field {
@@ -459,7 +486,7 @@
       width: calc(100% - 150px) !important; /* 100% - left (110px) - right (40px) */
       height: calc(100vh - 140px) !important; /* covers height for any desktop screen */
       max-height: none !important;
-      border-radius: 16px !important; /* rounded card since it does not touch edges */
+      border-radius: 24px !important; /* rounded card since it does not touch edges */
       animation: db-ai-slidein-desktop 0.4s forwards cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
