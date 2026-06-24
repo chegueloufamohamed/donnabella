@@ -2,6 +2,11 @@
   Belladona Custom Footer
 {% endcomment %}
 
+{% assign is_arabic = false %}
+{% if request.locale.iso_code == 'ar' or request.path contains '/ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&family=Lato:wght@300;400;700;900&family=Raleway:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700;900&family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&family=Dancing+Script:wght@400;500;600;700&family=Pacifico&family=Abril+Fatface&family=Righteous&family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600;700&family=EB+Garamond:wght@400;500;600;700;800&family=Quicksand:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700;800;900&family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap');
 
@@ -248,6 +253,34 @@
       justify-content: center !important;
     }
   }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-location {
+    margin-top: 15px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-location a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-weight: 500 !important;
+    color: var(--footer-link) !important;
+    transition: color 0.3s ease, transform 0.3s ease !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-location a:hover {
+    color: var(--footer-hover) !important;
+    transform: translateX({% if is_arabic %}-4px{% else %}4px{% endif %}) !important;
+  }
+
+  #shopify-section-{{ section.id }} .belladona-footer .footer-location svg {
+    width: 18px !important;
+    height: 18px !important;
+    fill: currentColor !important;
+    flex-shrink: 0 !important;
+  }
 </style>
 
 <footer class="belladona-footer">
@@ -275,6 +308,21 @@
                 {{ block.settings.text }}
               </div>
             {% endif %}
+
+            <div class="footer-location">
+              <a href="https://maps.app.goo.gl/o6YjCpTT2aJHJTZS9" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                <span>
+                  {% if is_arabic %}
+                    موقعنا على الخريطة
+                  {% else %}
+                    Our Location on Maps
+                  {% endif %}
+                </span>
+              </a>
+            </div>
 
             <div class="footer-social-icons">
               {% if block.settings.facebook_url != blank %}

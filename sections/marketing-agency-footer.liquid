@@ -169,12 +169,16 @@
               <strong>شركة دونا بيلا لإدارة التسويق ذ.م.م</strong><br>
               رخصة دائرة الاقتصاد رقم <strong>{{ section.settings.license_no }}</strong><br>
               السجل التجاري رقم <strong>{{ section.settings.reg_no }}</strong><br>
-              {{ section.settings.address_ar | default: section.settings.address }}
+              <a href="https://maps.app.goo.gl/o6YjCpTT2aJHJTZS9" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">
+                {{ section.settings.address_ar | default: section.settings.address }}
+              </a>
             {% else %}
               <strong>Donna Bella Marketing Management L.L.C</strong><br>
               DET License No. <strong>{{ section.settings.license_no }}</strong><br>
               Commercial Reg. No. <strong>{{ section.settings.reg_no }}</strong><br>
-              {{ section.settings.address }}
+              <a href="https://maps.app.goo.gl/o6YjCpTT2aJHJTZS9" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">
+                {{ section.settings.address }}
+              </a>
             {% endif %}
           </div>
         </div>
@@ -248,7 +252,9 @@
             <div class="db-ft-contact-item">
               <div class="db-ft-contact-label">{% if is_arabic %}الموقع{% else %}Location{% endif %}</div>
               <div class="db-ft-contact-val">
-                {% if is_arabic %}{{ section.settings.contact_address_ar | default: section.settings.contact_address }}{% else %}{{ section.settings.contact_address }}{% endif %}
+                <a href="https://maps.app.goo.gl/o6YjCpTT2aJHJTZS9" target="_blank" rel="noopener">
+                  {% if is_arabic %}{{ section.settings.contact_address_ar | default: section.settings.contact_address }}{% else %}{{ section.settings.contact_address }}{% endif %}
+                </a>
               </div>
             </div>
           {% endif %}

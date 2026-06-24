@@ -15,6 +15,9 @@
       nav.classList.remove('active');
       toggle.classList.remove('active');
       overlay.classList.remove('active');
+      var header = document.querySelector('.custom-header-belladona');
+      if (header) header.classList.remove('menu-open');
+      document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.width = '';
@@ -22,6 +25,15 @@
   }
   
   function initSmoothScroll() {
+    // Redirect Book Now CTA button clicks to the checkout page
+    var bookNowBtns = document.querySelectorAll('.book-now-btn');
+    bookNowBtns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = '/pages/checkout';
+      });
+    });
+
     var links = document.querySelectorAll('a[href^="#"]');
     
     links.forEach(function(link) {

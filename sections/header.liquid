@@ -777,18 +777,9 @@
       {% endif %}
       width: {{ section.settings.mobile_menu_width }}% !important;
       height: 100vh !important;
-      {% assign mobile_bg = section.settings.mobile_menu_background_color %}
-      {% assign mobile_r = mobile_bg | remove: '#' | slice: 0, 2 | times: 1 %}
-      {% assign mobile_g = mobile_bg | remove: '#' | slice: 2, 2 | times: 1 %}
-      {% assign mobile_b = mobile_bg | remove: '#' | slice: 4, 2 | times: 1 %}
-      {% assign mobile_r_dec = mobile_r | divided_by: 255.0 | times: 255 | round %}
-      {% assign mobile_g_dec = mobile_g | divided_by: 255.0 | times: 255 | round %}
-      {% assign mobile_b_dec = mobile_b | divided_by: 255.0 | times: 255 | round %}
-      background: rgba({{ mobile_r_dec }}, {{ mobile_g_dec }}, {{ mobile_b_dec }}, {{ section.settings.mobile_menu_opacity | divided_by: 100.0 }}) !important;
-      {% if section.settings.mobile_menu_blur %}
-      backdrop-filter: blur({{ section.settings.mobile_blur_amount }}px) !important;
-      -webkit-backdrop-filter: blur({{ section.settings.mobile_blur_amount }}px) !important;
-      {% endif %}
+      background: rgba(255, 255, 255, 0.03) !important;
+      backdrop-filter: blur(25px) !important;
+      -webkit-backdrop-filter: blur(25px) !important;
       flex-direction: column !important;
       padding: 100px 30px 30px !important;
       transition: {% if is_arabic %}left{% else %}right{% endif %} 0.4s ease !important;
@@ -831,8 +822,14 @@
     }
 
     .custom-header-belladona {
+      z-index: 1000000 !important;
       border-bottom-left-radius: {{ section.settings.bottom_radius_mobile }}px !important;
       border-bottom-right-radius: {{ section.settings.bottom_radius_mobile }}px !important;
+    }
+
+    .custom-header-belladona.menu-open {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
     }
 
     /* Mobile lang switcher inside nav */
@@ -902,6 +899,39 @@
     .mobile-overlay.active {
       opacity: 1 !important;
       visibility: visible !important;
+    }
+
+    /* Force white text in mobile menu & language switcher adjustments */
+    .header-nav,
+    .header-nav a,
+    .header-nav ul li a,
+    .header-nav .mega-menu-card-title,
+    .header-nav .mega-menu-card-arrow span,
+    .header-nav .lang-switcher__btn,
+    .header-nav .lang-switcher__divider {
+      color: #ffffff !important;
+    }
+
+    .header-nav a:hover,
+    .header-nav ul li a:hover,
+    .header-nav > ul > li:hover > a,
+    .header-nav > ul > li > a:hover {
+      color: #ffffff !important;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5) !important;
+    }
+
+    .header-nav .mega-menu-card-arrow-icon svg {
+      stroke: #ffffff !important;
+      fill: #ffffff !important;
+    }
+
+    .header-nav .lang-switcher {
+      border-color: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    .header-nav .lang-switcher__btn--active {
+      background: #ffffff !important;
+      color: #000000 !important;
     }
   }
 
@@ -1189,18 +1219,20 @@
       menuToggle.classList.add('active');
       headerNav.classList.add('active');
       overlay.classList.add('active');
+      var header = document.querySelector('.custom-header-belladona');
+      if (header) header.classList.add('menu-open');
+      document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow   = 'hidden';
-      document.body.style.position   = 'fixed';
-      document.body.style.width      = '100%';
     }
 
     function closeMenu() {
       menuToggle.classList.remove('active');
       headerNav.classList.remove('active');
       overlay.classList.remove('active');
+      var header = document.querySelector('.custom-header-belladona');
+      if (header) header.classList.remove('menu-open');
+      document.documentElement.style.overflow = '';
       document.body.style.overflow  = '';
-      document.body.style.position  = '';
-      document.body.style.width     = '';
     }
 
     menuToggle.addEventListener('click', function(e) {
@@ -1212,8 +1244,18 @@
     overlay.addEventListener('click', closeMenu);
 
     headerNav.querySelectorAll('a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        if (window.innerWidth <= 768) closeMenu();
+      link.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+          var href = link.getAttribute('href');
+          if (link.classList.contains('mega-menu-trigger-link')) {
+            return;
+          }
+          if (!href || href === '#' || href.startsWith('#')) {
+            closeMenu();
+          } else {
+            setTimeout(closeMenu, 150);
+          }
+        }
       });
     });
 

@@ -188,6 +188,28 @@
     color: var(--white-60);
   }
 
+  .nls-checkout-{{ section.id }} .summary-item-end {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .nls-checkout-{{ section.id }} .summary-item-remove {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    opacity: 0.65;
+    transition: opacity 0.2s;
+  }
+
+  .nls-checkout-{{ section.id }} .summary-item-remove:hover {
+    opacity: 1;
+  }
+
   .nls-checkout-{{ section.id }} .summary-total {
     display: flex;
     justify-content: space-between;
@@ -324,18 +346,6 @@
     </h2>
     <div class="form-grid">
       <div class="form-group">
-        <label class="form-label">{% if is_arabic %}الاسم الكامل{% else %}Full Name{% endif %}</label>
-        <input type="text" id="chkName" class="form-input" required placeholder="{% if is_arabic %}أدخل اسمك{% else %}Enter your name{% endif %}">
-      </div>
-      <div class="form-group">
-        <label class="form-label">{% if is_arabic %}رقم الهاتف{% else %}Phone Number{% endif %}</label>
-        <input type="tel" id="chkPhone" class="form-input" required placeholder="+971 5X XXX XXXX">
-      </div>
-      <div class="form-group full-width">
-        <label class="form-label">{% if is_arabic %}البريد الإلكتروني{% else %}Email Address{% endif %}</label>
-        <input type="email" id="chkEmail" class="form-input" required placeholder="name@example.com">
-      </div>
-      <div class="form-group">
         <label class="form-label">{% if is_arabic %}التاريخ المفضل{% else %}Preferred Date{% endif %}</label>
         <input type="date" id="chkDate" class="form-input" required>
       </div>
@@ -357,28 +367,9 @@
           <option value="08:00 PM">08:00 PM</option>
         </select>
       </div>
-    </div>
-
-    <h2 class="form-section-title">
-      {% if is_arabic %}عنوان الخدمة{% else %}Service Address{% endif %}
-    </h2>
-    <div class="form-grid">
       <div class="form-group full-width">
-        <label class="form-label">{% if is_arabic %}الإمارة{% else %}Emirate{% endif %}</label>
-        <select id="chkEmirate" class="form-input" required>
-          <option value="">{% if is_arabic %}اختر إمارتك{% else %}Select your Emirate{% endif %}</option>
-          <option value="Dubai">Dubai</option>
-          <option value="Abu Dhabi">Abu Dhabi</option>
-          <option value="Sharjah">Sharjah</option>
-          <option value="Ajman">Ajman</option>
-          <option value="Umm Al Quwain">Umm Al Quwain</option>
-          <option value="Ras Al Khaimah">Ras Al Khaimah</option>
-          <option value="Fujairah">Fujairah</option>
-        </select>
-      </div>
-      <div class="form-group full-width">
-        <label class="form-label">{% if is_arabic %}تفاصيل العنوان (المنطقة، الشارع، الفيلا/الشقة){% else %}Address Details (Area, Street, Villa/Apt){% endif %}</label>
-        <input type="text" id="chkAddress" class="form-input" required placeholder="{% if is_arabic %}مثال: البرشاء 1، شارع 12، فيلا 5{% else %}e.g. Al Barsha 1, Street 12, Villa 5{% endif %}">
+        <label class="form-label">{% if is_arabic %}ملاحظة الحجز: هل هناك أي متطلبات خاصة للحجز؟{% else %}Booking note: Any booking special requirements needed ?{% endif %}</label>
+        <textarea id="chkNote" class="form-input" rows="4" placeholder="{% if is_arabic %}اكتب أي متطلبات خاصة هنا...{% else %}Write any special requirements here...{% endif %}"></textarea>
       </div>
     </div>
   </div>
@@ -539,7 +530,11 @@
         var div = document.createElement('div');
         div.className = 'summary-item';
         var nameLabel = item.name + (item.qty ? ' ×' + item.qty : '') + (item.from ? ' (' + L.from + ')' : '');
-        div.innerHTML = '<span class="summary-item-name"></span><span class="summary-item-price">' + CUR + ' ' + item.price + '</span>';
+        div.innerHTML = '<span class="summary-item-name"></span>' +
+                        '<span class="summary-item-end">' +
+                          '<span class="summary-item-price">' + CUR + ' ' + item.price + '</span>' +
+                          '<button type="button" class="summary-item-remove" data-rm="' + item.id + '">×</button>' +
+                        '</span>';
         div.querySelector('.summary-item-name').textContent = nameLabel;
         itemsListEl.appendChild(div);
       });
@@ -549,20 +544,29 @@
     if (totalValEl) totalValEl.textContent = CUR + ' ' + total;
   }
 
+  if (itemsListEl) {
+    itemsListEl.addEventListener('click', function(e) {
+      var rm = e.target.getAttribute('data-rm');
+      if (rm) {
+        cart = cart.filter(function(item) { return item.id !== rm; });
+        try {
+          localStorage.setItem('donnabella_cart', JSON.stringify(cart));
+        } catch (err) {}
+        renderCheckout();
+      }
+    });
+  }
+
   function getFormValues() {
-    var name = root.querySelector('#chkName').value.trim();
-    var phone = root.querySelector('#chkPhone').value.trim();
-    var email = root.querySelector('#chkEmail').value.trim();
     var date = root.querySelector('#chkDate').value;
     var time = root.querySelector('#chkTime').value;
-    var emirate = root.querySelector('#chkEmirate').value;
-    var address = root.querySelector('#chkAddress').value.trim();
+    var note = root.querySelector('#chkNote').value.trim();
 
-    if (!name || !phone || !email || !date || !time || !emirate || !address) {
+    if (!date || !time) {
       alert(L.empty_error);
       return null;
     }
-    return { name: name, phone: phone, email: email, date: date, time: time, emirate: emirate, address: address };
+    return { date: date, time: time, note: note };
   }
 
   // Handle Booking Confirmation and Redirect to Shopify Checkout
@@ -587,31 +591,15 @@
         return;
       }
 
-      var permalink = 'https://www.donnabella.ae/cart/' + items.join(',');
-      
-      // Parse first name and last name
-      var nameParts = info.name.trim().split(/\s+/);
-      var firstName = nameParts[0] || '';
-      var lastName = nameParts.slice(1).join(' ') || '';
+      var permalink = '/cart/' + items.join(',');
 
-      // Append booking details as cart attributes
-      permalink += '?attributes[Name]=' + encodeURIComponent(info.name);
-      permalink += '&attributes[Phone]=' + encodeURIComponent(info.phone);
-      permalink += '&attributes[Email]=' + encodeURIComponent(info.email);
-      permalink += '&attributes[BookingDate]=' + encodeURIComponent(info.date);
+      // Append booking details as cart attributes and cart notes
+      permalink += '?attributes[BookingDate]=' + encodeURIComponent(info.date);
       permalink += '&attributes[BookingTime]=' + encodeURIComponent(info.time);
-      permalink += '&attributes[Emirate]=' + encodeURIComponent(info.emirate);
-      permalink += '&attributes[Address]=' + encodeURIComponent(info.address);
-      
-      // Append prefilled shipping and email parameters for Shopify Checkout page
-      permalink += '&checkout[email]=' + encodeURIComponent(info.email);
-      permalink += '&checkout[shipping_address][first_name]=' + encodeURIComponent(firstName);
-      permalink += '&checkout[shipping_address][last_name]=' + encodeURIComponent(lastName);
-      permalink += '&checkout[shipping_address][phone]=' + encodeURIComponent(info.phone);
-      permalink += '&checkout[shipping_address][address1]=' + encodeURIComponent(info.address);
-      permalink += '&checkout[shipping_address][city]=' + encodeURIComponent(info.emirate);
-      permalink += '&checkout[shipping_address][province]=' + encodeURIComponent(info.emirate);
-      permalink += '&checkout[shipping_address][country]=' + encodeURIComponent('United Arab Emirates');
+      if (info.note) {
+        permalink += '&note=' + encodeURIComponent(info.note);
+        permalink += '&attributes[BookingNote]=' + encodeURIComponent(info.note);
+      }
 
       window.location.href = permalink;
     });
