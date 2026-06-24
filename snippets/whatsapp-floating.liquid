@@ -181,6 +181,7 @@
 
   var playTimeoutId = null;
   var audio = null;
+  var audioPlayed = false;
 
   function triggerAttention() {
     // Check if already showing to prevent duplicate play
@@ -192,8 +193,26 @@
 
       audio = new Audio('https://cdn.shopify.com/s/files/1/0749/0227/4185/files/WhatsApp_Sound_message_received.mp3?v=1782315380');
       audio.volume = 0.5;
-      audio.play().catch(function(err) {
-        console.warn('Audio play failed:', err);
+      audio.play().then(function() {
+        audioPlayed = true;
+      }).catch(function(err) {
+        console.warn('Audio play failed, adding fallback interaction listener:', err);
+        // Fallback for browser autoplay policies
+        var playFallback = function() {
+          if (audioPlayed) return;
+          audio.play().then(function() {
+            audioPlayed = true;
+            removeFallback();
+          }).catch(function(e) {});
+        };
+        var removeFallback = function() {
+          document.removeEventListener('click', playFallback);
+          document.removeEventListener('touchstart', playFallback);
+          document.removeEventListener('scroll', playFallback);
+        };
+        document.addEventListener('click', playFallback, { once: true });
+        document.addEventListener('touchstart', playFallback, { once: true });
+        document.addEventListener('scroll', playFallback, { once: true });
       });
     } catch (err) {
       console.warn('Audio loading failed:', err);
@@ -211,6 +230,7 @@
     }
     whatsappEl.classList.remove('crony-whatsapp--attention');
     sessionStorage.removeItem('visited_checkout');
+    sessionStorage.removeItem('site_browse_start');
     sessionStorage.setItem('whatsapp_dismissed', 'true');
   }
 
@@ -234,6 +254,7 @@
     if (isCheckoutPage) {
       // 1. We are on checkout page: set flag and start inactivity timer
       sessionStorage.setItem('visited_checkout', 'true');
+      sessionStorage.removeItem('site_browse_start'); // Stop browse timer since they reached checkout
 
       var checkoutTimeoutId = null;
       var resetCheckoutTimer = function() {
@@ -255,7 +276,7 @@
       });
 
     } else {
-      // 2. We are on another page: check checkout abandonment
+      // 2. We are on another page: check checkout abandonment or general site browse time
       var visitedCheckout = sessionStorage.getItem('visited_checkout');
       
       // Check if cart is empty
@@ -275,13 +296,29 @@
       }
 
       if (visitedCheckout === 'true') {
-        // Remove class first in case of browser bfcache restore
+        // Condition 1: Abandoned checkout - trigger INSTANTLY on page load!
         whatsappEl.classList.remove('crony-whatsapp--attention');
+        triggerAttention();
+      } else {
+        // Condition 2: Browsing for 2 minutes without visiting checkout
+        var browseStart = sessionStorage.getItem('site_browse_start');
+        if (!browseStart) {
+          browseStart = Date.now().toString();
+          sessionStorage.setItem('site_browse_start', browseStart);
+        }
 
-        // Wait 4 seconds on page load, then automatically trigger the notification
-        playTimeoutId = setTimeout(function() {
+        var elapsed = Date.now() - parseInt(browseStart, 10);
+        var twoMinutes = 120000; // 2 minutes in ms
+
+        if (elapsed >= twoMinutes) {
           triggerAttention();
-        }, 4000);
+        } else {
+          var remaining = twoMinutes - elapsed;
+          if (playTimeoutId) clearTimeout(playTimeoutId);
+          playTimeoutId = setTimeout(function() {
+            triggerAttention();
+          }, remaining);
+        }
       }
     }
   }
