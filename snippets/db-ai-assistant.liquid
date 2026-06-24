@@ -20,15 +20,11 @@
     <div class="db-ai-header-inner">
       <div class="db-ai-header-title">
         <span class="db-ai-status-dot"></span>
-        {% if is_arabic %}دونا بيلا - مساعد ذكي{% else %}Donna Bella - AI Concierge{% endif %}
+        <img src="{{ 'header_logo_Donna_Bella.webp' | file_img_url: '150x' }}" alt="Donna Bella" class="db-ai-header-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+        <span class="db-ai-header-text" style="display: none;">{% if is_arabic %}دونا بيلا{% else %}Donna Bella{% endif %}</span>
       </div>
       <div class="db-ai-header-actions">
-        <button type="button" class="db-ai-close-btn" id="dbAIChatClose" aria-label="Close">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; display: block;">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
+        <button type="button" class="db-ai-close-btn" id="dbAIChatClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 14px; height: 14px; display: block;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
       </div>
     </div>
   </div>
@@ -217,6 +213,14 @@
     text-shadow: 0 0 15px rgba(255,255,255,0.2);
   }
 
+  .db-ai-header-logo {
+    height: 24px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    max-width: 140px;
+  }
+
   .db-ai-status-dot {
     width: 8px;
     height: 8px;
@@ -234,20 +238,28 @@
 
   /* Close Button Styled like the Card's Icon Box */
   .db-ai-close-btn {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,200,215,0.3);
-    color: #ffffff;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: 0 4px 15px rgba(255,182,193,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
-    line-height: 1;
-    padding: 0;
+    box-sizing: border-box !important;
+    background: rgba(255,255,255,0.12) !important;
+    border: 1px solid rgba(255,200,215,0.3) !important;
+    color: #ffffff !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1) !important;
+    box-shadow: 0 4px 15px rgba(255,182,193,0.15), inset 0 1px 0 rgba(255,255,255,0.2) !important;
+    line-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .db-ai-close-btn svg {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    flex-shrink: 0 !important;
   }
 
   .db-ai-close-btn:hover {
@@ -454,15 +466,17 @@
 
   .db-ai-input-field {
     flex: 1;
+    height: 42px !important;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 14px;
-    padding: 10px 16px;
+    padding: 0 16px;
     color: #ffffff;
     font-size: 13px;
     outline: none;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+    box-sizing: border-box !important;
   }
 
   .db-ai-input-field:focus {
@@ -476,8 +490,8 @@
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 200, 215, 0.3);
     border-radius: 12px;
-    width: 38px;
-    height: 38px;
+    width: 42px !important;
+    height: 42px !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -485,6 +499,8 @@
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     box-shadow: 0 4px 15px rgba(255,182,193,0.1), inset 0 1px 0 rgba(255,255,255,0.2);
     color: #ffffff;
+    box-sizing: border-box !important;
+    flex-shrink: 0;
   }
 
   .db-ai-send-btn:hover {
