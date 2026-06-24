@@ -14,6 +14,7 @@
 <body>
   {{ content_for_layout }}
   {{ 'smooth-scroll.js' | asset_url | script_tag }}
+  {% render 'crony-ai-assistant' %}
   {% render 'whatsapp-floating' %}
   {% render 'back-to-top' %}
 </body>

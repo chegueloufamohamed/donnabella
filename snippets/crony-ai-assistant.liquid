@@ -1,0 +1,676 @@
+<!-- snippets/crony-ai-assistant.liquid -->
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}{% assign is_arabic = true %}{% endif %}
+
+<!-- AI Chat Floating Button -->
+<div class="crony-ai-btn" id="cronyAIAssistant" role="button" aria-label="Open AI Assistant">
+  <svg class="crony-ai-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Beautiful AI sparkles SVG -->
+    <path d="M12 3V6M12 18V21M21 12H18M6 12H3M18.36 5.64L16.24 7.76M7.76 16.24L5.64 18.36M18.36 18.36L16.24 16.24M7.76 7.76L5.64 9.88M12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16C14.21 16 16 14.21 16 12C16 9.79 14.21 8 12 8Z" stroke="#c9a96e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M12 10.5C11.17 10.5 10.5 11.17 10.5 12C10.5 12.83 11.17 13.5 12 13.5C12.83 13.5 13.5 12.83 13.5 12C13.5 11.17 12.83 10.5 12 10.5Z" fill="#c9a96e"/>
+  </svg>
+  <span class="crony-ai-pulse-glow"></span>
+</div>
+
+<!-- AI Chat Modal -->
+<div class="crony-ai-modal" id="cronyAIChatModal" style="display: none;">
+  <!-- Modal Header -->
+  <div class="crony-ai-header">
+    <div class="crony-ai-header-title">
+      <span class="crony-ai-status-dot"></span>
+      {% if is_arabic %}دونا بيلا - مساعد ذكي{% else %}Donna Bella - AI Concierge{% endif %}
+    </div>
+    <div class="crony-ai-header-actions">
+      <!-- Settings gear icon for API key -->
+      <button type="button" class="crony-ai-settings-btn" id="cronyAISettingsToggle" title="Settings">⚙️</button>
+      <button type="button" class="crony-ai-close-btn" id="cronyAIChatClose" aria-label="Close">&times;</button>
+    </div>
+  </div>
+
+  <!-- API Key Setup Overlay -->
+  <div class="crony-ai-settings-overlay" id="cronyAISettingsOverlay" style="display: none;">
+    <div class="crony-ai-settings-content">
+      <h4>Gemini API Key</h4>
+      <p>{% if is_arabic %}أدخل مفتاح API لـ Gemini للتشغيل:{% else %}Enter Gemini API Key to enable assistant:{% endif %}</p>
+      <input type="password" id="cronyGeminiApiKeyInput" class="crony-ai-input-field" placeholder="AIzaSy...">
+      <div class="crony-ai-settings-actions">
+        <button type="button" id="cronyAISaveSettings" class="crony-ai-save-btn">{% if is_arabic %}حفظ{% else %}Save{% endif %}</button>
+        <button type="button" id="cronyAICloseSettings" class="crony-ai-cancel-btn">{% if is_arabic %}إلغاء{% else %}Cancel{% endif %}</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Messages History -->
+  <div class="crony-ai-messages" id="cronyAIMessagesArea">
+    <!-- Welcome Message -->
+    <div class="crony-ai-msg assistant">
+      <div class="crony-ai-bubble">
+        {% if is_arabic %}
+          مرحباً! أنا مساعد دونا بيلا الذكي 🌸 كيف يمكنني مساعدتك في حجز خدمات التجميل الفاخرة في منزلك اليوم؟ يمكنك سؤالي عن خدماتنا، أسعارنا، عروضنا أو كيفية إتمام الحجز.
+        {% else %}
+          Hi! I am your Donna Bella AI Concierge 🌸 How can I help you book your luxury home beauty service today? You can ask me about our services, pricing, promotions, or how to proceed with checkout.
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Typing Indicator -->
+  <div class="crony-ai-typing" id="cronyAITypingIndicator" style="display: none;">
+    <span class="crony-dot"></span>
+    <span class="crony-dot"></span>
+    <span class="crony-dot"></span>
+  </div>
+
+  <!-- Chat Input Footer -->
+  <form class="crony-ai-footer" id="cronyAIChatForm">
+    <input type="text" id="cronyAIChatInput" class="crony-ai-input-field" required placeholder="{% if is_arabic %}اكتب رسالتك هنا...{% else %}Type your message...{% endif %}" autocomplete="off">
+    <button type="submit" class="crony-ai-send-btn" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="#354656" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </form>
+</div>
+
+<style>
+  /* AI Button Positioning & Styles */
+  .crony-ai-btn {
+    position: fixed !important;
+    bottom: 90px !important; /* Floats directly above WhatsApp (30px + 60px) */
+    left: 20px !important;
+    z-index: 99 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: #354656;
+    border: 1px solid #c9a96e;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    transition: transform 0.2s, bottom 0.3s ease;
+  }
+
+  .crony-ai-icon {
+    width: 25px;
+    height: 25px;
+    display: block;
+    transition: transform 0.2s;
+  }
+
+  .crony-ai-btn:hover {
+    transform: translateY(-6px) scale(1.08) !important;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)) !important;
+  }
+
+  .crony-ai-pulse-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid #c9a96e;
+    animation: crony-ai-pulse 2s infinite ease-in-out;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  @keyframes crony-ai-pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+
+  /* Chat Modal Style */
+  .crony-ai-modal {
+    position: fixed !important;
+    bottom: 150px !important;
+    left: 20px !important;
+    width: 360px;
+    height: 480px;
+    z-index: 1000 !important;
+    background: rgba(53, 70, 86, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid #c9a96e;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Jost', 'Cairo', sans-serif;
+    animation: crony-ai-slidein 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes crony-ai-slidein {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Header banner */
+  .crony-ai-header {
+    background: #253340;
+    border-bottom: 1px solid #c9a96e;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .crony-ai-header-title {
+    color: #c9a96e;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .crony-ai-status-dot {
+    width: 8px;
+    height: 8px;
+    background: #00e676;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 6px #00e676;
+  }
+
+  .crony-ai-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .crony-ai-settings-btn,
+  .crony-ai-close-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .crony-ai-settings-btn:hover,
+  .crony-ai-close-btn:hover {
+    opacity: 1;
+  }
+
+  .crony-ai-close-btn {
+    font-size: 22px;
+  }
+
+  /* Settings overlay for manual API key input */
+  .crony-ai-settings-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(37, 51, 64, 0.95);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .crony-ai-settings-content {
+    background: #354656;
+    border: 1px solid #c9a96e;
+    padding: 16px;
+    border-radius: 8px;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+
+  .crony-ai-settings-content h4 {
+    color: #c9a96e;
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+
+  .crony-ai-settings-content p {
+    color: #ffffff;
+    font-size: 12px;
+    margin: 0 0 12px 0;
+    opacity: 0.8;
+  }
+
+  .crony-ai-settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .crony-ai-save-btn {
+    background: #c9a96e;
+    color: #354656;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 12px;
+    transition: background 0.2s;
+  }
+
+  .crony-ai-save-btn:hover {
+    background: #d9b97e;
+  }
+
+  .crony-ai-cancel-btn {
+    background: none;
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+  }
+
+  .crony-ai-cancel-btn:hover {
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* Message area scrollable body */
+  .crony-ai-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scroll-behavior: smooth;
+  }
+
+  .crony-ai-msg {
+    display: flex;
+    width: 100%;
+    margin-bottom: 2px;
+  }
+
+  .crony-ai-msg.assistant {
+    justify-content: flex-start;
+  }
+
+  .crony-ai-msg.user {
+    justify-content: flex-end;
+  }
+
+  .crony-ai-bubble {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    font-family: inherit;
+  }
+
+  .crony-ai-msg.assistant .crony-ai-bubble {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid #c9a96e;
+    color: #ffffff;
+    border-top-left-radius: 2px;
+  }
+
+  .crony-ai-msg.user .crony-ai-bubble {
+    background: #c9a96e;
+    color: #354656;
+    font-weight: 550;
+    border-top-right-radius: 2px;
+  }
+
+  /* Typing indicator dots */
+  .crony-ai-typing {
+    padding: 8px 16px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    background: transparent;
+    margin-left: 16px;
+    margin-bottom: 12px;
+    width: fit-content;
+  }
+
+  .crony-dot {
+    width: 6px;
+    height: 6px;
+    background: #c9a96e;
+    border-radius: 50%;
+    animation: crony-bounce 1.4s infinite ease-in-out both;
+  }
+
+  .crony-dot:nth-child(1) { animation-delay: -0.32s; }
+  .crony-dot:nth-child(2) { animation-delay: -0.16s; }
+
+  @keyframes crony-bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+  }
+
+  /* Chat Input footer */
+  .crony-ai-footer {
+    padding: 12px 16px;
+    background: #253340;
+    border-top: 1px solid #c9a96e;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .crony-ai-input-field {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: #ffffff;
+    font-size: 13px;
+    outline: none;
+    transition: border 0.2s;
+  }
+
+  .crony-ai-input-field:focus {
+    border-color: #c9a96e;
+  }
+
+  .crony-ai-send-btn {
+    background: #c9a96e;
+    border: none;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .crony-ai-send-btn:hover {
+    background: #d9b97e;
+  }
+
+  .crony-ai-send-btn svg {
+    width: 16px;
+    height: 16px;
+    transform: rotate(45deg);
+  }
+
+  /* Mobile Responsive adjustments */
+  @media (max-width: 600px) {
+    .crony-ai-btn {
+      bottom: 65px !important; /* Floats above mobile WhatsApp (10px + 55px) */
+      left: 12px !important;
+      width: 42px;
+      height: 42px;
+    }
+
+    .crony-ai-btn.crony-has-sticky-cart {
+      bottom: 150px !important; /* Shifted higher on sticky cart pages (95px + 55px) */
+    }
+
+    .crony-ai-modal {
+      bottom: 20px !important;
+      left: 10px !important;
+      right: 10px !important;
+      width: calc(100% - 20px);
+      height: 70vh;
+      max-height: 480px;
+    }
+
+    .crony-ai-icon {
+      width: 22px;
+      height: 22px;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  var isCheckoutPage = window.location.pathname.indexOf('/pages/checkout') > -1;
+  var assistantBtn = document.getElementById('cronyAIAssistant');
+  var chatModal = document.getElementById('cronyAIChatModal');
+  var chatClose = document.getElementById('cronyAIChatClose');
+  var chatForm = document.getElementById('cronyAIChatForm');
+  var chatInput = document.getElementById('cronyAIChatInput');
+  var messagesArea = document.getElementById('cronyAIMessagesArea');
+  var typingIndicator = document.getElementById('cronyAITypingIndicator');
+
+  // Settings elements for custom key input
+  var settingsToggle = document.getElementById('cronyAISettingsToggle');
+  var settingsOverlay = document.getElementById('cronyAISettingsOverlay');
+  var saveSettingsBtn = document.getElementById('cronyAISaveSettings');
+  var closeSettingsBtn = document.getElementById('cronyAICloseSettings');
+  var apiKeyInput = document.getElementById('cronyGeminiApiKeyInput');
+
+  if (!assistantBtn || !chatModal) return;
+
+  // Retrieve global setting key or local override
+  var themeApiKey = "{{ settings.gemini_api_key | escape }}".trim();
+
+  function getApiKey() {
+    return themeApiKey || localStorage.getItem('gemini_api_key') || '';
+  }
+
+  // System instructions - Contains full details about Donna Bella services, location, bookings and discounts
+  var SYSTEM_PROMPT = `You are the Donna Bella Luxury Home Services AI Assistant, a warm, professional, and helpful beauty concierge in the UAE.
+Donna Bella provides premium at-home beauty services including Manicures, Pedicures, Acrylic/Gel Nails, Hair Styling, Massages, and Waxing. The team travels directly to the client's home/villa/apartment.
+
+Locations Covered:
+We travel to all UAE Emirates: Dubai, Abu Dhabi, Sharjah, Ajman, Umm Al Quwain, Ras Al Khaimah, and Fujairah.
+
+Pricing and Services:
+1. Women's Nails: Manicure (AED 100), Pedicure (AED 90), Acrylic Nails (AED 315), Gel Nails (AED 295), Polygel (AED 250), Mani-Pedi Gel (AED 250), Cutting & Shaping (AED 35), Nail Art (AED 10 per unit).
+2. Women's Hair: Hair Collar (from AED 150), Straightening (from AED 600), Blow Dry (Short: AED 100, Medium: AED 150, Long: AED 180), Hot Oil (AED 150).
+3. Women's Waxing: Full Arm (AED 85), Half Arm (AED 60), Under Arm (AED 45), Bikini Line (AED 50), Brazilian (AED 75), Full Body (AED 400).
+4. Women's Massage: Aromatherapy (AED 300), Deep Tissue (AED 350), Madero Slimming (AED 350), Lymphatic (AED 375).
+5. Men's Services: Gent Manicure (AED 100), Gent Pedicure (AED 90), Deep Tissue Massage (AED 450), Aromatherapy Massage (AED 350), Men's Haircut (AED 120).
+6. Couples' Services: Couples Mani-Pedi (AED 290), Couples Massage (AED 470), Couples Hair styling (AED 200), Couples Skin Care (AED 300), Couples Waxing (AED 259).
+
+Exclusive Benefits & Discounts:
+- Explain that we offer premium, VIP treatment at home (highly certified therapists, professional sterilised tool kits, high-end organic/spa products).
+- Mention that customers receive special treatment and sterilised disposable kits once the Donna Bella team reaches their home.
+- Present our active discount: First-time bookers or multiple services bookings receive 10% off on bookings or special treatments. Let them know they will have highly relaxing experience.
+
+How to Book & Proceed to Checkout:
+- Explain the steps clearly:
+  "To book a service, navigate to the Men, Women, or Couples category tab, select your desired services by clicking the "Add" button, and then click "Book Now" in the menu or cart bar to go to the checkout page. There, you can choose your preferred date and time, add any custom booking notes, and click "Confirm Booking" to securely complete your payment."
+
+Handoff to Human Customer Services:
+- If they have a custom request, are confused/stuck, or specifically ask to speak with a human, explain: "I can connect you with one of our booking agents on WhatsApp!" and provide this direct clickable link: https://wa.me/971566115888.
+
+Language & Style:
+- Respond in the language the user speaks. If they speak Arabic, respond in fluent, polite, and professional Arabic. If they speak English, respond in fluent, friendly, and persuasive English.
+- Always be highly encouraging and persuasive. Your primary goal is to guide the user to make a booking and feel secure, pampered, and excited about the luxury service. Keep responses concise and friendly.`;
+
+  var conversationHistory = [];
+
+  // Toggle Modal
+  assistantBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (chatModal.style.display === 'none') {
+      chatModal.style.display = 'flex';
+      scrollChatToBottom();
+      
+      // If API key is missing, prompt user
+      if (!getApiKey()) {
+        setTimeout(function() {
+          appendSystemMessage("Please click the settings gear (⚙️) icon in the header to enter your Gemini API Key and start chatting with the smart assistant!");
+        }, 500);
+      }
+    } else {
+      chatModal.style.display = 'none';
+    }
+  });
+
+  chatClose.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    chatModal.style.display = 'none';
+  });
+
+  // Settings Overlay Toggles
+  settingsToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    apiKeyInput.value = localStorage.getItem('gemini_api_key') || '';
+    settingsOverlay.style.display = 'flex';
+  });
+
+  closeSettingsBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    settingsOverlay.style.display = 'none';
+  });
+
+  saveSettingsBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var key = apiKeyInput.value.trim();
+    if (key) {
+      localStorage.setItem('gemini_api_key', key);
+      settingsOverlay.style.display = 'none';
+      appendSystemMessage("API Key saved successfully! Ask me anything.");
+    } else {
+      localStorage.removeItem('gemini_api_key');
+      settingsOverlay.style.display = 'none';
+    }
+  });
+
+  // Chat Submissions
+  chatForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var text = chatInput.value.trim();
+    if (!text) return;
+
+    chatInput.value = '';
+    appendUserMessage(text);
+    scrollChatToBottom();
+
+    // Call Gemini API
+    var apiKey = getApiKey();
+    if (!apiKey) {
+      appendSystemMessage("API Key is missing. Click the settings gear (⚙️) icon above to enter your API key.");
+      return;
+    }
+
+    typingIndicator.style.display = 'flex';
+    scrollChatToBottom();
+
+    // Prepare payload
+    conversationHistory.push({
+      role: 'user',
+      parts: [{ text: text }]
+    });
+
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + encodeURIComponent(apiKey);
+    
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        systemInstruction: {
+          parts: [{ text: SYSTEM_PROMPT }]
+        },
+        contents: conversationHistory,
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 800
+        }
+      })
+    })
+    .then(function(res) {
+      if (!res.ok) {
+        throw new Error('API Request failed. Please check your API key.');
+      }
+      return res.json();
+    })
+    .then(function(data) {
+      typingIndicator.style.display = 'none';
+      var replyText = '';
+      try {
+        replyText = data.candidates[0].content.parts[0].text;
+      } catch (e) {
+        replyText = "Sorry, I couldn't process that response. Please try again.";
+      }
+      
+      // Save assistant reply to history
+      conversationHistory.push({
+        role: 'model',
+        parts: [{ text: replyText }]
+      });
+
+      appendAssistantMessage(replyText);
+      scrollChatToBottom();
+    })
+    .catch(function(err) {
+      typingIndicator.style.display = 'none';
+      appendSystemMessage(err.message || "An error occurred while contacting the AI server.");
+      // Pop the last user message from history on error to prevent broken history
+      conversationHistory.pop();
+      scrollChatToBottom();
+    });
+  });
+
+  // UI Helpers
+  function appendUserMessage(text) {
+    var msgDiv = document.createElement('div');
+    msgDiv.className = 'crony-ai-msg user';
+    msgDiv.innerHTML = '<div class="crony-ai-bubble"></div>';
+    msgDiv.querySelector('.crony-ai-bubble').textContent = text;
+    messagesArea.appendChild(msgDiv);
+  }
+
+  function appendAssistantMessage(text) {
+    var msgDiv = document.createElement('div');
+    msgDiv.className = 'crony-ai-msg assistant';
+    msgDiv.innerHTML = '<div class="crony-ai-bubble"></div>';
+    
+    // Parse markdown-like WhatsApp links and format them as HTML clickable links
+    var formattedText = escapeHtml(text)
+      .replace(/(https?:\/\/wa\.me\/[0-9]+)/g, '<a href="$1" target="_blank" style="color: #c9a96e; text-decoration: underline; font-weight: bold;">WhatsApp Link</a>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>');
+
+    msgDiv.querySelector('.crony-ai-bubble').innerHTML = formattedText;
+    messagesArea.appendChild(msgDiv);
+  }
+
+  function appendSystemMessage(text) {
+    var msgDiv = document.createElement('div');
+    msgDiv.className = 'crony-ai-msg assistant';
+    msgDiv.innerHTML = '<div class="crony-ai-bubble" style="background: rgba(229, 57, 53, 0.1); border-left-color: #ff1744; font-style: italic;"></div>';
+    msgDiv.querySelector('.crony-ai-bubble').textContent = text;
+    messagesArea.appendChild(msgDiv);
+  }
+
+  function scrollChatToBottom() {
+    messagesArea.scrollTop = messagesArea.scrollHeight;
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+})();
+</script>

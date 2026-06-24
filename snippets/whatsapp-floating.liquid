@@ -336,11 +336,15 @@
       }
 
       var bttEl = document.getElementById('crony-backtotop');
+      var assistantEl = document.getElementById('cronyAIAssistant');
       if (whatsappEl) {
         whatsappEl.classList.toggle('crony-has-sticky-cart', hasSticky);
       }
       if (bttEl) {
         bttEl.classList.toggle('crony-has-sticky-cart', hasSticky);
+      }
+      if (assistantEl) {
+        assistantEl.classList.toggle('crony-has-sticky-cart', hasSticky);
       }
     };
 

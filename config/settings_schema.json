@@ -2013,6 +2013,16 @@
     "settings": [
       {
         "type": "header",
+        "content": "Gemini AI Assistant"
+      },
+      {
+        "type": "text",
+        "id": "gemini_api_key",
+        "label": "Gemini API Key",
+        "info": "Obtain a key from Google AI Studio. Leave empty to allow customers/testers to input their own key in the chat console settings."
+      },
+      {
+        "type": "header",
         "content": "Back to top"
       },
       {
