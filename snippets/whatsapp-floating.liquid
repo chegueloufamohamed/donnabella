@@ -245,16 +245,11 @@
   }
 
   function init() {
-    if (sessionStorage.getItem('whatsapp_dismissed') === 'true') {
-      // If the user closed it in this session, make sure we remove the attention class and do nothing
-      whatsappEl.classList.remove('crony-whatsapp--attention');
-      return;
-    }
-
     if (isCheckoutPage) {
-      // 1. We are on checkout page: set flag and start inactivity timer
+      // 1. We are on checkout page: set flag, stop browse timer, and reset dismissed state
       sessionStorage.setItem('visited_checkout', 'true');
       sessionStorage.removeItem('site_browse_start'); // Stop browse timer since they reached checkout
+      sessionStorage.removeItem('whatsapp_dismissed'); // Reset dismissed flag so they can get help again on next abandonment!
 
       var checkoutTimeoutId = null;
       var resetCheckoutTimer = function() {
@@ -276,6 +271,11 @@
       });
 
     } else {
+      // 2. We are on another page: check if they dismissed it in this session first
+      if (sessionStorage.getItem('whatsapp_dismissed') === 'true') {
+        whatsappEl.classList.remove('crony-whatsapp--attention');
+        return;
+      }
       // 2. We are on another page: check checkout abandonment or general site browse time
       var visitedCheckout = sessionStorage.getItem('visited_checkout');
       
