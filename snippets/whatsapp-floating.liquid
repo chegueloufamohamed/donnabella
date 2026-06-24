@@ -2,6 +2,12 @@
 {% assign is_arabic = false %}
 {% if current_locale contains 'ar' %}{% assign is_arabic = true %}{% endif %}
 
+{% assign has_sticky_cart = false %}
+{% assign path = request.path %}
+{% if path contains '/pages/men' or path contains '/pages/women' or path contains '/pages/massage' or path contains '/pages/checkout' %}
+  {% assign has_sticky_cart = true %}
+{% endif %}
+
 <!-- WhatsApp Floating Button - FIXED -->
 <div class="crony-whatsapp" id="cronyWhatsapp">
   <div class="crony-whatsapp-tooltip">
@@ -143,17 +149,13 @@
 
   @media (max-width:600px){
     .crony-whatsapp {
-      bottom: 95px !important;
+      bottom: {% if has_sticky_cart %}95px{% else %}10px{% endif %} !important;
       left: 12px !important;
     }
 
     .crony-whatsapp img {
       width: 42px !important;
       height: 42px !important;
-    }
-
-    .crony-whatsapp.with-sticky-cart {
-      bottom: 145px !important;
     }
 
     .crony-whatsapp-tooltip {
