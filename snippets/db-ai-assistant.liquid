@@ -196,26 +196,27 @@
     gap: 8px;
   }
 
-  .db-ai-settings-btn,
   .db-ai-close-btn {
-    background: none;
-    border: none;
-    color: #ffffff;
-    font-size: 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(201, 169, 110, 0.4);
+    color: #c9a96e;
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-    padding: 0;
+    transition: all 0.2s ease;
     line-height: 1;
+    padding: 0;
   }
 
-  .db-ai-settings-btn:hover,
   .db-ai-close-btn:hover {
-    opacity: 1;
-  }
-
-  .db-ai-close-btn {
-    font-size: 22px;
+    background: #c9a96e;
+    color: #354656;
+    transform: rotate(90deg);
   }
 
   /* Settings overlay for manual API key input */
@@ -451,25 +452,15 @@
   /* Desktop Full Screen slide-out console */
   @media (min-width: 1024px) {
     .db-ai-modal {
-      bottom: 0 !important;
+      bottom: 40px !important; /* Ends almost at the bottom of the first section */
       left: 110px !important; /* Pushed from the left to clear the social sidebar */
-      right: 0 !important;
-      top: 0 !important;
-      width: calc(100% - 110px) !important;
-      height: 100vh !important;
+      right: 40px !important; /* Provides some space on the right */
+      top: 100px !important; /* Starts from under the header */
+      width: calc(100% - 150px) !important; /* 100% - left (110px) - right (40px) */
+      height: calc(100vh - 140px) !important; /* covers height for any desktop screen */
       max-height: none !important;
-      border-radius: 0 !important;
-      border-top-left-radius: 16px !important;
-      border-bottom-left-radius: 16px !important;
-      border-right: none !important;
-      border-top: none !important;
-      border-bottom: none !important;
+      border-radius: 16px !important; /* rounded card since it does not touch edges */
       animation: db-ai-slidein-desktop 0.4s forwards cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-
-    .db-ai-header-inner {
-      max-width: 800px;
-      margin: 0 auto;
     }
 
     .db-ai-messages,
