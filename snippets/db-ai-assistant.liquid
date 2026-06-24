@@ -17,14 +17,14 @@
 <div class="db-ai-modal" id="dbAIChatModal" style="display: none;">
   <!-- Modal Header -->
   <div class="db-ai-header">
-    <div class="db-ai-header-title">
-      <span class="db-ai-status-dot"></span>
-      {% if is_arabic %}دونا بيلا - مساعد ذكي{% else %}Donna Bella - AI Concierge{% endif %}
-    </div>
-    <div class="db-ai-header-actions">
-      <!-- Settings gear icon for API key -->
-      <button type="button" class="db-ai-settings-btn" id="dbAISettingsToggle" title="Settings">⚙️</button>
-      <button type="button" class="db-ai-close-btn" id="dbAIChatClose" aria-label="Close">&times;</button>
+    <div class="db-ai-header-inner">
+      <div class="db-ai-header-title">
+        <span class="db-ai-status-dot"></span>
+        {% if is_arabic %}دونا بيلا - مساعد ذكي{% else %}Donna Bella - AI Concierge{% endif %}
+      </div>
+      <div class="db-ai-header-actions">
+        <button type="button" class="db-ai-close-btn" id="dbAIChatClose" aria-label="Close">&times;</button>
+      </div>
     </div>
   </div>
 
@@ -160,6 +160,12 @@
     background: #253340;
     border-bottom: 1px solid #c9a96e;
     padding: 12px 16px;
+    display: flex;
+    align-items: center;
+  }
+
+  .db-ai-header-inner {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -441,6 +447,49 @@
       height: 22px;
     }
   }
+
+  /* Desktop Full Screen slide-out console */
+  @media (min-width: 1024px) {
+    .db-ai-modal {
+      bottom: 0 !important;
+      left: 110px !important; /* Pushed from the left to clear the social sidebar */
+      right: 0 !important;
+      top: 0 !important;
+      width: calc(100% - 110px) !important;
+      height: 100vh !important;
+      max-height: none !important;
+      border-radius: 0 !important;
+      border-top-left-radius: 16px !important;
+      border-bottom-left-radius: 16px !important;
+      border-right: none !important;
+      border-top: none !important;
+      border-bottom: none !important;
+      animation: db-ai-slidein-desktop 0.4s forwards cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .db-ai-header-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .db-ai-messages,
+    .db-ai-footer {
+      max-width: 800px !important;
+      width: 100% !important;
+      margin: 0 auto !important;
+    }
+  }
+
+  @keyframes db-ai-slidein-desktop {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 </style>
 
 <script>
@@ -529,32 +578,38 @@ Language & Style:
   });
 
   // Settings Overlay Toggles
-  settingsToggle.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    apiKeyInput.value = localStorage.getItem('gemini_api_key') || '';
-    settingsOverlay.style.display = 'flex';
-  });
+  if (settingsToggle) {
+    settingsToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      apiKeyInput.value = localStorage.getItem('gemini_api_key') || '';
+      settingsOverlay.style.display = 'flex';
+    });
+  }
 
-  closeSettingsBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    settingsOverlay.style.display = 'none';
-  });
+  if (closeSettingsBtn) {
+    closeSettingsBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      settingsOverlay.style.display = 'none';
+    });
+  }
 
-  saveSettingsBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var key = apiKeyInput.value.trim();
-    if (key) {
-      localStorage.setItem('gemini_api_key', key);
-      settingsOverlay.style.display = 'none';
-      appendSystemMessage("API Key saved successfully! Ask me anything.");
-    } else {
-      localStorage.removeItem('gemini_api_key');
-      settingsOverlay.style.display = 'none';
-    }
-  });
+  if (saveSettingsBtn) {
+    saveSettingsBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var key = apiKeyInput.value.trim();
+      if (key) {
+        localStorage.setItem('gemini_api_key', key);
+        settingsOverlay.style.display = 'none';
+        appendSystemMessage("API Key saved successfully! Ask me anything.");
+      } else {
+        localStorage.removeItem('gemini_api_key');
+        settingsOverlay.style.display = 'none';
+      }
+    });
+  }
 
   // Chat Submissions
   chatForm.addEventListener('submit', function(e) {
