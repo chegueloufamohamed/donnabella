@@ -808,7 +808,15 @@ Language & Style:
     })
     .catch(function(err) {
       typingIndicator.style.display = 'none';
-      appendSystemMessage(err.message || "An error occurred while contacting the AI server.");
+      
+      var friendlyMsg = err.message || "An error occurred while contacting the AI server.";
+      if (err.message && err.message.indexOf('429') > -1) {
+        var secondsMatch = err.message.match(/in\s+([0-9.]+\s*s?)/i);
+        var secondsStr = secondsMatch ? " in " + secondsMatch[1] : " in a few seconds";
+        friendlyMsg = "🌸 Donna Bella AI is receiving many requests right now! Please try again" + secondsStr + ".";
+      }
+      
+      appendSystemMessage(friendlyMsg);
       // Pop the last user message from history on error to prevent broken history
       conversationHistory.pop();
       scrollChatToBottom();
