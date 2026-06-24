@@ -3,9 +3,9 @@
 {% if current_locale contains 'ar' %}{% assign is_arabic = true %}{% endif %}
 
 <!-- WhatsApp Floating Button - FIXED -->
-<div class="crony-whatsapp" id="cronyWhatsapp">
-  <div class="crony-whatsapp-tooltip">
-    <button type="button" class="crony-whatsapp-tooltip-close" aria-label="Close">&times;</button>
+<div class="db-whatsapp" id="dbWhatsapp">
+  <div class="db-whatsapp-tooltip">
+    <button type="button" class="db-whatsapp-tooltip-close" aria-label="Close">&times;</button>
     {% if is_arabic %}
       هل تواجه صعوبة في الحجز؟ نحن هنا لمساعدتك
     {% else %}
@@ -26,7 +26,7 @@
 </div>
 
 <style>
-  .crony-whatsapp {
+  .db-whatsapp {
     position: fixed !important;
     bottom: 30px !important;
     left: 20px !important;
@@ -34,35 +34,35 @@
     display: block !important;
   }
 
-  .crony-whatsapp a {
+  .db-whatsapp a {
     display: block !important;
   }
 
-  .crony-whatsapp img {
+  .db-whatsapp img {
     display: block !important;
     width: 45px !important;
     height: 45px !important;
     transition: transform 0.2s;
   }
 
-  .crony-whatsapp a:hover img {
+  .db-whatsapp a:hover img {
     animation: none !important;
     transform: translateY(-6px) scale(1.08) !important;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)) !important;
   }
 
   /* Pulse animation to catch attention gently (breathe scale) */
-  @keyframes crony-whatsapp-pulse {
+  @keyframes db-whatsapp-pulse {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.15); }
   }
 
-  .crony-whatsapp--attention img {
-    animation: crony-whatsapp-pulse 2s infinite ease-in-out;
+  .db-whatsapp--attention img {
+    animation: db-whatsapp-pulse 2s infinite ease-in-out;
   }
 
 
-  .crony-whatsapp-tooltip {
+  .db-whatsapp-tooltip {
     display: none;
     position: absolute;
     left: 55px;
@@ -86,7 +86,7 @@
     direction: {% if is_arabic %}rtl{% else %}ltr{% endif %};
   }
 
-  .crony-whatsapp-tooltip::before {
+  .db-whatsapp-tooltip::before {
     content: "";
     position: absolute;
     left: -6px;
@@ -99,7 +99,7 @@
     border-bottom: 1px solid #c9a96e;
   }
 
-  .crony-whatsapp-tooltip-close {
+  .db-whatsapp-tooltip-close {
     position: absolute;
     top: 2px;
     {% if is_arabic %}
@@ -118,12 +118,12 @@
     transition: color 0.2s;
   }
 
-  .crony-whatsapp-tooltip-close:hover {
+  .db-whatsapp-tooltip-close:hover {
     color: #ffffff;
   }
 
   /* Fade-in animation for the tooltip */
-  @keyframes crony-tooltip-fadein {
+  @keyframes db-tooltip-fadein {
     from {
       opacity: 0;
       transform: translateX(-5px);
@@ -134,30 +134,30 @@
     }
   }
 
-  .crony-whatsapp--attention .crony-whatsapp-tooltip {
+  .db-whatsapp--attention .db-whatsapp-tooltip {
     display: block;
-    animation: crony-tooltip-fadein 0.5s forwards;
+    animation: db-tooltip-fadein 0.5s forwards;
     pointer-events: auto;
   }
 
 
   @media (max-width:600px){
-    .crony-whatsapp {
+    .db-whatsapp {
       bottom: 10px !important;
       left: 12px !important;
       transition: bottom 0.3s ease;
     }
     
-    .crony-whatsapp.crony-has-sticky-cart {
+    .db-whatsapp.db-has-sticky-cart {
       bottom: 95px !important;
     }
 
-    .crony-whatsapp img {
+    .db-whatsapp img {
       width: 42px !important;
       height: 42px !important;
     }
 
-    .crony-whatsapp-tooltip {
+    .db-whatsapp-tooltip {
       left: 50px;
       white-space: normal;
       width: 210px;
@@ -175,7 +175,7 @@
 <script>
 (function() {
   var isCheckoutPage = window.location.pathname.indexOf('/pages/checkout') > -1;
-  var whatsappEl = document.getElementById('cronyWhatsapp');
+  var whatsappEl = document.getElementById('dbWhatsapp');
   if (!whatsappEl) return;
 
   var playTimeoutId = null;
@@ -184,11 +184,11 @@
 
   function triggerAttention() {
     // Check if already showing to prevent duplicate play
-    if (whatsappEl.classList.contains('crony-whatsapp--attention')) return;
+    if (whatsappEl.classList.contains('db-whatsapp--attention')) return;
 
     try {
       // Add the attention class (triggers pulse and shows the tooltip)
-      whatsappEl.classList.add('crony-whatsapp--attention');
+      whatsappEl.classList.add('db-whatsapp--attention');
 
       audio = new Audio('https://cdn.shopify.com/s/files/1/0749/0227/4185/files/WhatsApp_Sound_message_received.mp3?v=1782315380');
       audio.volume = 0.5;
@@ -227,14 +227,14 @@
         audio.pause();
       } catch(err) {}
     }
-    whatsappEl.classList.remove('crony-whatsapp--attention');
+    whatsappEl.classList.remove('db-whatsapp--attention');
     sessionStorage.removeItem('visited_checkout');
     sessionStorage.removeItem('site_browse_start');
     sessionStorage.setItem('whatsapp_dismissed', 'true');
   }
 
   // Bind close button
-  var closeBtn = whatsappEl.querySelector('.crony-whatsapp-tooltip-close');
+  var closeBtn = whatsappEl.querySelector('.db-whatsapp-tooltip-close');
   if (closeBtn) {
     closeBtn.addEventListener('click', function(e) {
       e.preventDefault();
@@ -272,7 +272,7 @@
     } else {
       // 2. We are on another page: check if they dismissed it in this session first
       if (sessionStorage.getItem('whatsapp_dismissed') === 'true') {
-        whatsappEl.classList.remove('crony-whatsapp--attention');
+        whatsappEl.classList.remove('db-whatsapp--attention');
         return;
       }
       // 2. We are on another page: check checkout abandonment or general site browse time
@@ -296,7 +296,7 @@
 
       if (visitedCheckout === 'true') {
         // Condition 1: Abandoned checkout - trigger INSTANTLY on page load!
-        whatsappEl.classList.remove('crony-whatsapp--attention');
+        whatsappEl.classList.remove('db-whatsapp--attention');
         triggerAttention();
       } else {
         // Condition 2: Browsing for 2 minutes without visiting checkout
@@ -335,16 +335,16 @@
         hasSticky = true;
       }
 
-      var bttEl = document.getElementById('crony-backtotop');
-      var assistantEl = document.getElementById('cronyAIAssistant');
+      var bttEl = document.getElementById('db-backtotop');
+      var assistantEl = document.getElementById('dbAIAssistant');
       if (whatsappEl) {
-        whatsappEl.classList.toggle('crony-has-sticky-cart', hasSticky);
+        whatsappEl.classList.toggle('db-has-sticky-cart', hasSticky);
       }
       if (bttEl) {
-        bttEl.classList.toggle('crony-has-sticky-cart', hasSticky);
+        bttEl.classList.toggle('db-has-sticky-cart', hasSticky);
       }
       if (assistantEl) {
-        assistantEl.classList.toggle('crony-has-sticky-cart', hasSticky);
+        assistantEl.classList.toggle('db-has-sticky-cart', hasSticky);
       }
     };
 

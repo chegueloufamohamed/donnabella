@@ -1,8 +1,8 @@
 <!-- Back to Top Floating Button with Progress Ring -->
-<div class="crony-backtotop" id="crony-backtotop" role="button" aria-label="Back to top">
-  <svg id="crony-progress-ring" viewBox="0 0 56 56">
+<div class="db-backtotop" id="db-backtotop" role="button" aria-label="Back to top">
+  <svg id="db-progress-ring" viewBox="0 0 56 56">
     <circle
-      id="crony-progress-circle"
+      id="db-progress-circle"
       cx="28"
       cy="28"
       r="21"
@@ -16,7 +16,7 @@
 </div>
 
 <style>
-  .crony-backtotop {
+  .db-backtotop {
     position: fixed;
     bottom: 30px;
     right: 15px;
@@ -32,7 +32,7 @@
     -webkit-backdrop-filter: blur(2px);
   }
 
-  .crony-backtotop img {
+  .db-backtotop img {
     width: 45px;
     height: 45px;
     display: block;
@@ -44,7 +44,7 @@
   }
 
   /* SVG Progress Circle */
-  #crony-progress-ring {
+  #db-progress-ring {
     position: absolute;
     top: 0;
     left: 0;
@@ -58,7 +58,7 @@
     overflow: visible;
   }
 
-  #crony-progress-circle {
+  #db-progress-circle {
     fill: none;
     stroke: #ffffff;
     stroke-width: 2.5;
@@ -67,28 +67,28 @@
     /* removed filter from here — was causing the rectangular box glow */
   }
 
-  .crony-backtotop:hover {
+  .db-backtotop:hover {
     transform: translateY(-6px) scale(1.08);
     overflow: visible; /* allow scale to show fully on hover */
   }
 
-  .crony-backtotop:hover img {
+  .db-backtotop:hover img {
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
   }
 
   /* Mobile adjustments */
   @media (max-width: 600px) {
-    .crony-backtotop {
+    .db-backtotop {
       bottom: 10px !important;
       right: 10px !important;
       width: 53px;
       height: 53px;
       transition: bottom 0.3s ease;
     }
-    .crony-backtotop.crony-has-sticky-cart {
+    .db-backtotop.db-has-sticky-cart {
       bottom: 90px !important;
     }
-    .crony-backtotop img {
+    .db-backtotop img {
       width: 42px;
       height: 42px;
     }
@@ -97,8 +97,8 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const btn = document.getElementById("crony-backtotop");
-    const circle = document.getElementById("crony-progress-circle");
+    const btn = document.getElementById("db-backtotop");
+    const circle = document.getElementById("db-progress-circle");
 
     // Set up the progress circle
     const radius = 21;

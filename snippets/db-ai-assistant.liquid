@@ -1,51 +1,51 @@
-<!-- snippets/crony-ai-assistant.liquid -->
+<!-- snippets/db-ai-assistant.liquid -->
 {% assign current_locale = request.locale.iso_code %}
 {% assign is_arabic = false %}
 {% if current_locale contains 'ar' %}{% assign is_arabic = true %}{% endif %}
 
 <!-- AI Chat Floating Button -->
-<div class="crony-ai-btn" id="cronyAIAssistant" role="button" aria-label="Open AI Assistant">
-  <svg class="crony-ai-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<div class="db-ai-btn" id="dbAIAssistant" role="button" aria-label="Open AI Assistant">
+  <svg class="db-ai-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <!-- Beautiful AI sparkles SVG -->
     <path d="M12 3V6M12 18V21M21 12H18M6 12H3M18.36 5.64L16.24 7.76M7.76 16.24L5.64 18.36M18.36 18.36L16.24 16.24M7.76 7.76L5.64 9.88M12 8C9.79 8 8 9.79 8 12C8 14.21 9.79 16 12 16C14.21 16 16 14.21 16 12C16 9.79 14.21 8 12 8Z" stroke="#c9a96e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M12 10.5C11.17 10.5 10.5 11.17 10.5 12C10.5 12.83 11.17 13.5 12 13.5C12.83 13.5 13.5 12.83 13.5 12C13.5 11.17 12.83 10.5 12 10.5Z" fill="#c9a96e"/>
   </svg>
-  <span class="crony-ai-pulse-glow"></span>
+  <span class="db-ai-pulse-glow"></span>
 </div>
 
 <!-- AI Chat Modal -->
-<div class="crony-ai-modal" id="cronyAIChatModal" style="display: none;">
+<div class="db-ai-modal" id="dbAIChatModal" style="display: none;">
   <!-- Modal Header -->
-  <div class="crony-ai-header">
-    <div class="crony-ai-header-title">
-      <span class="crony-ai-status-dot"></span>
+  <div class="db-ai-header">
+    <div class="db-ai-header-title">
+      <span class="db-ai-status-dot"></span>
       {% if is_arabic %}دونا بيلا - مساعد ذكي{% else %}Donna Bella - AI Concierge{% endif %}
     </div>
-    <div class="crony-ai-header-actions">
+    <div class="db-ai-header-actions">
       <!-- Settings gear icon for API key -->
-      <button type="button" class="crony-ai-settings-btn" id="cronyAISettingsToggle" title="Settings">⚙️</button>
-      <button type="button" class="crony-ai-close-btn" id="cronyAIChatClose" aria-label="Close">&times;</button>
+      <button type="button" class="db-ai-settings-btn" id="dbAISettingsToggle" title="Settings">⚙️</button>
+      <button type="button" class="db-ai-close-btn" id="dbAIChatClose" aria-label="Close">&times;</button>
     </div>
   </div>
 
   <!-- API Key Setup Overlay -->
-  <div class="crony-ai-settings-overlay" id="cronyAISettingsOverlay" style="display: none;">
-    <div class="crony-ai-settings-content">
+  <div class="db-ai-settings-overlay" id="dbAISettingsOverlay" style="display: none;">
+    <div class="db-ai-settings-content">
       <h4>Gemini API Key</h4>
       <p>{% if is_arabic %}أدخل مفتاح API لـ Gemini للتشغيل:{% else %}Enter Gemini API Key to enable assistant:{% endif %}</p>
-      <input type="password" id="cronyGeminiApiKeyInput" class="crony-ai-input-field" placeholder="AIzaSy...">
-      <div class="crony-ai-settings-actions">
-        <button type="button" id="cronyAISaveSettings" class="crony-ai-save-btn">{% if is_arabic %}حفظ{% else %}Save{% endif %}</button>
-        <button type="button" id="cronyAICloseSettings" class="crony-ai-cancel-btn">{% if is_arabic %}إلغاء{% else %}Cancel{% endif %}</button>
+      <input type="password" id="dbGeminiApiKeyInput" class="db-ai-input-field" placeholder="AIzaSy...">
+      <div class="db-ai-settings-actions">
+        <button type="button" id="dbAISaveSettings" class="db-ai-save-btn">{% if is_arabic %}حفظ{% else %}Save{% endif %}</button>
+        <button type="button" id="dbAICloseSettings" class="db-ai-cancel-btn">{% if is_arabic %}إلغاء{% else %}Cancel{% endif %}</button>
       </div>
     </div>
   </div>
 
   <!-- Messages History -->
-  <div class="crony-ai-messages" id="cronyAIMessagesArea">
+  <div class="db-ai-messages" id="dbAIMessagesArea">
     <!-- Welcome Message -->
-    <div class="crony-ai-msg assistant">
-      <div class="crony-ai-bubble">
+    <div class="db-ai-msg assistant">
+      <div class="db-ai-bubble">
         {% if is_arabic %}
           مرحباً! أنا مساعد دونا بيلا الذكي 🌸 كيف يمكنني مساعدتك في حجز خدمات التجميل الفاخرة في منزلك اليوم؟ يمكنك سؤالي عن خدماتنا، أسعارنا، عروضنا أو كيفية إتمام الحجز.
         {% else %}
@@ -56,16 +56,16 @@
   </div>
 
   <!-- Typing Indicator -->
-  <div class="crony-ai-typing" id="cronyAITypingIndicator" style="display: none;">
-    <span class="crony-dot"></span>
-    <span class="crony-dot"></span>
-    <span class="crony-dot"></span>
+  <div class="db-ai-typing" id="dbAITypingIndicator" style="display: none;">
+    <span class="db-dot"></span>
+    <span class="db-dot"></span>
+    <span class="db-dot"></span>
   </div>
 
   <!-- Chat Input Footer -->
-  <form class="crony-ai-footer" id="cronyAIChatForm">
-    <input type="text" id="cronyAIChatInput" class="crony-ai-input-field" required placeholder="{% if is_arabic %}اكتب رسالتك هنا...{% else %}Type your message...{% endif %}" autocomplete="off">
-    <button type="submit" class="crony-ai-send-btn" aria-label="Send">
+  <form class="db-ai-footer" id="dbAIChatForm">
+    <input type="text" id="dbAIChatInput" class="db-ai-input-field" required placeholder="{% if is_arabic %}اكتب رسالتك هنا...{% else %}Type your message...{% endif %}" autocomplete="off">
+    <button type="submit" class="db-ai-send-btn" aria-label="Send">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="#354656" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -75,7 +75,7 @@
 
 <style>
   /* AI Button Positioning & Styles */
-  .crony-ai-btn {
+  .db-ai-btn {
     position: fixed !important;
     bottom: 90px !important; /* Floats directly above WhatsApp (30px + 60px) */
     left: 20px !important;
@@ -93,19 +93,19 @@
     transition: transform 0.2s, bottom 0.3s ease;
   }
 
-  .crony-ai-icon {
+  .db-ai-icon {
     width: 25px;
     height: 25px;
     display: block;
     transition: transform 0.2s;
   }
 
-  .crony-ai-btn:hover {
+  .db-ai-btn:hover {
     transform: translateY(-6px) scale(1.08) !important;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)) !important;
   }
 
-  .crony-ai-pulse-glow {
+  .db-ai-pulse-glow {
     position: absolute;
     top: 0;
     left: 0;
@@ -113,18 +113,18 @@
     height: 100%;
     border-radius: 50%;
     border: 1px solid #c9a96e;
-    animation: crony-ai-pulse 2s infinite ease-in-out;
+    animation: db-ai-pulse 2s infinite ease-in-out;
     pointer-events: none;
     z-index: -1;
   }
 
-  @keyframes crony-ai-pulse {
+  @keyframes db-ai-pulse {
     0% { transform: scale(1); opacity: 0.8; }
     100% { transform: scale(1.4); opacity: 0; }
   }
 
   /* Chat Modal Style */
-  .crony-ai-modal {
+  .db-ai-modal {
     position: fixed !important;
     bottom: 150px !important;
     left: 20px !important;
@@ -141,10 +141,10 @@
     flex-direction: column;
     overflow: hidden;
     font-family: 'Jost', 'Cairo', sans-serif;
-    animation: crony-ai-slidein 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+    animation: db-ai-slidein 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  @keyframes crony-ai-slidein {
+  @keyframes db-ai-slidein {
     from {
       opacity: 0;
       transform: translateY(20px) scale(0.95);
@@ -156,7 +156,7 @@
   }
 
   /* Header banner */
-  .crony-ai-header {
+  .db-ai-header {
     background: #253340;
     border-bottom: 1px solid #c9a96e;
     padding: 12px 16px;
@@ -165,7 +165,7 @@
     justify-content: space-between;
   }
 
-  .crony-ai-header-title {
+  .db-ai-header-title {
     color: #c9a96e;
     font-weight: 600;
     font-size: 13px;
@@ -175,7 +175,7 @@
     gap: 8px;
   }
 
-  .crony-ai-status-dot {
+  .db-ai-status-dot {
     width: 8px;
     height: 8px;
     background: #00e676;
@@ -184,14 +184,14 @@
     box-shadow: 0 0 6px #00e676;
   }
 
-  .crony-ai-header-actions {
+  .db-ai-header-actions {
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
-  .crony-ai-settings-btn,
-  .crony-ai-close-btn {
+  .db-ai-settings-btn,
+  .db-ai-close-btn {
     background: none;
     border: none;
     color: #ffffff;
@@ -203,17 +203,17 @@
     line-height: 1;
   }
 
-  .crony-ai-settings-btn:hover,
-  .crony-ai-close-btn:hover {
+  .db-ai-settings-btn:hover,
+  .db-ai-close-btn:hover {
     opacity: 1;
   }
 
-  .crony-ai-close-btn {
+  .db-ai-close-btn {
     font-size: 22px;
   }
 
   /* Settings overlay for manual API key input */
-  .crony-ai-settings-overlay {
+  .db-ai-settings-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -227,7 +227,7 @@
     padding: 20px;
   }
 
-  .crony-ai-settings-content {
+  .db-ai-settings-content {
     background: #354656;
     border: 1px solid #c9a96e;
     padding: 16px;
@@ -236,28 +236,28 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   }
 
-  .crony-ai-settings-content h4 {
+  .db-ai-settings-content h4 {
     color: #c9a96e;
     margin: 0 0 8px 0;
     font-size: 14px;
     text-transform: uppercase;
   }
 
-  .crony-ai-settings-content p {
+  .db-ai-settings-content p {
     color: #ffffff;
     font-size: 12px;
     margin: 0 0 12px 0;
     opacity: 0.8;
   }
 
-  .crony-ai-settings-actions {
+  .db-ai-settings-actions {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
     margin-top: 12px;
   }
 
-  .crony-ai-save-btn {
+  .db-ai-save-btn {
     background: #c9a96e;
     color: #354656;
     border: none;
@@ -269,11 +269,11 @@
     transition: background 0.2s;
   }
 
-  .crony-ai-save-btn:hover {
+  .db-ai-save-btn:hover {
     background: #d9b97e;
   }
 
-  .crony-ai-cancel-btn {
+  .db-ai-cancel-btn {
     background: none;
     color: #ffffff;
     border: 1px solid rgba(255,255,255,0.3);
@@ -284,12 +284,12 @@
     transition: background 0.2s;
   }
 
-  .crony-ai-cancel-btn:hover {
+  .db-ai-cancel-btn:hover {
     background: rgba(255,255,255,0.05);
   }
 
   /* Message area scrollable body */
-  .crony-ai-messages {
+  .db-ai-messages {
     flex: 1;
     overflow-y: auto;
     padding: 16px;
@@ -299,21 +299,21 @@
     scroll-behavior: smooth;
   }
 
-  .crony-ai-msg {
+  .db-ai-msg {
     display: flex;
     width: 100%;
     margin-bottom: 2px;
   }
 
-  .crony-ai-msg.assistant {
+  .db-ai-msg.assistant {
     justify-content: flex-start;
   }
 
-  .crony-ai-msg.user {
+  .db-ai-msg.user {
     justify-content: flex-end;
   }
 
-  .crony-ai-bubble {
+  .db-ai-bubble {
     max-width: 80%;
     padding: 10px 14px;
     border-radius: 12px;
@@ -323,14 +323,14 @@
     font-family: inherit;
   }
 
-  .crony-ai-msg.assistant .crony-ai-bubble {
+  .db-ai-msg.assistant .db-ai-bubble {
     background: rgba(255, 255, 255, 0.05);
     border-left: 3px solid #c9a96e;
     color: #ffffff;
     border-top-left-radius: 2px;
   }
 
-  .crony-ai-msg.user .crony-ai-bubble {
+  .db-ai-msg.user .db-ai-bubble {
     background: #c9a96e;
     color: #354656;
     font-weight: 550;
@@ -338,7 +338,7 @@
   }
 
   /* Typing indicator dots */
-  .crony-ai-typing {
+  .db-ai-typing {
     padding: 8px 16px;
     display: flex;
     gap: 4px;
@@ -349,24 +349,24 @@
     width: fit-content;
   }
 
-  .crony-dot {
+  .db-dot {
     width: 6px;
     height: 6px;
     background: #c9a96e;
     border-radius: 50%;
-    animation: crony-bounce 1.4s infinite ease-in-out both;
+    animation: db-bounce 1.4s infinite ease-in-out both;
   }
 
-  .crony-dot:nth-child(1) { animation-delay: -0.32s; }
-  .crony-dot:nth-child(2) { animation-delay: -0.16s; }
+  .db-dot:nth-child(1) { animation-delay: -0.32s; }
+  .db-dot:nth-child(2) { animation-delay: -0.16s; }
 
-  @keyframes crony-bounce {
+  @keyframes db-bounce {
     0%, 80%, 100% { transform: scale(0); }
     40% { transform: scale(1.0); }
   }
 
   /* Chat Input footer */
-  .crony-ai-footer {
+  .db-ai-footer {
     padding: 12px 16px;
     background: #253340;
     border-top: 1px solid #c9a96e;
@@ -375,7 +375,7 @@
     align-items: center;
   }
 
-  .crony-ai-input-field {
+  .db-ai-input-field {
     flex: 1;
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.15);
@@ -387,11 +387,11 @@
     transition: border 0.2s;
   }
 
-  .crony-ai-input-field:focus {
+  .db-ai-input-field:focus {
     border-color: #c9a96e;
   }
 
-  .crony-ai-send-btn {
+  .db-ai-send-btn {
     background: #c9a96e;
     border: none;
     border-radius: 6px;
@@ -404,11 +404,11 @@
     transition: background 0.2s;
   }
 
-  .crony-ai-send-btn:hover {
+  .db-ai-send-btn:hover {
     background: #d9b97e;
   }
 
-  .crony-ai-send-btn svg {
+  .db-ai-send-btn svg {
     width: 16px;
     height: 16px;
     transform: rotate(45deg);
@@ -416,18 +416,18 @@
 
   /* Mobile Responsive adjustments */
   @media (max-width: 600px) {
-    .crony-ai-btn {
+    .db-ai-btn {
       bottom: 65px !important; /* Floats above mobile WhatsApp (10px + 55px) */
       left: 12px !important;
       width: 42px;
       height: 42px;
     }
 
-    .crony-ai-btn.crony-has-sticky-cart {
+    .db-ai-btn.db-has-sticky-cart {
       bottom: 150px !important; /* Shifted higher on sticky cart pages (95px + 55px) */
     }
 
-    .crony-ai-modal {
+    .db-ai-modal {
       bottom: 20px !important;
       left: 10px !important;
       right: 10px !important;
@@ -436,7 +436,7 @@
       max-height: 480px;
     }
 
-    .crony-ai-icon {
+    .db-ai-icon {
       width: 22px;
       height: 22px;
     }
@@ -446,20 +446,20 @@
 <script>
 (function() {
   var isCheckoutPage = window.location.pathname.indexOf('/pages/checkout') > -1;
-  var assistantBtn = document.getElementById('cronyAIAssistant');
-  var chatModal = document.getElementById('cronyAIChatModal');
-  var chatClose = document.getElementById('cronyAIChatClose');
-  var chatForm = document.getElementById('cronyAIChatForm');
-  var chatInput = document.getElementById('cronyAIChatInput');
-  var messagesArea = document.getElementById('cronyAIMessagesArea');
-  var typingIndicator = document.getElementById('cronyAITypingIndicator');
+  var assistantBtn = document.getElementById('dbAIAssistant');
+  var chatModal = document.getElementById('dbAIChatModal');
+  var chatClose = document.getElementById('dbAIChatClose');
+  var chatForm = document.getElementById('dbAIChatForm');
+  var chatInput = document.getElementById('dbAIChatInput');
+  var messagesArea = document.getElementById('dbAIMessagesArea');
+  var typingIndicator = document.getElementById('dbAITypingIndicator');
 
   // Settings elements for custom key input
-  var settingsToggle = document.getElementById('cronyAISettingsToggle');
-  var settingsOverlay = document.getElementById('cronyAISettingsOverlay');
-  var saveSettingsBtn = document.getElementById('cronyAISaveSettings');
-  var closeSettingsBtn = document.getElementById('cronyAICloseSettings');
-  var apiKeyInput = document.getElementById('cronyGeminiApiKeyInput');
+  var settingsToggle = document.getElementById('dbAISettingsToggle');
+  var settingsOverlay = document.getElementById('dbAISettingsOverlay');
+  var saveSettingsBtn = document.getElementById('dbAISaveSettings');
+  var closeSettingsBtn = document.getElementById('dbAICloseSettings');
+  var apiKeyInput = document.getElementById('dbGeminiApiKeyInput');
 
   if (!assistantBtn || !chatModal) return;
 
@@ -636,16 +636,16 @@ Language & Style:
   // UI Helpers
   function appendUserMessage(text) {
     var msgDiv = document.createElement('div');
-    msgDiv.className = 'crony-ai-msg user';
-    msgDiv.innerHTML = '<div class="crony-ai-bubble"></div>';
-    msgDiv.querySelector('.crony-ai-bubble').textContent = text;
+    msgDiv.className = 'db-ai-msg user';
+    msgDiv.innerHTML = '<div class="db-ai-bubble"></div>';
+    msgDiv.querySelector('.db-ai-bubble').textContent = text;
     messagesArea.appendChild(msgDiv);
   }
 
   function appendAssistantMessage(text) {
     var msgDiv = document.createElement('div');
-    msgDiv.className = 'crony-ai-msg assistant';
-    msgDiv.innerHTML = '<div class="crony-ai-bubble"></div>';
+    msgDiv.className = 'db-ai-msg assistant';
+    msgDiv.innerHTML = '<div class="db-ai-bubble"></div>';
     
     // Parse markdown-like WhatsApp links and format them as HTML clickable links
     var formattedText = escapeHtml(text)
@@ -653,15 +653,15 @@ Language & Style:
       .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
       .replace(/\n/g, '<br>');
 
-    msgDiv.querySelector('.crony-ai-bubble').innerHTML = formattedText;
+    msgDiv.querySelector('.db-ai-bubble').innerHTML = formattedText;
     messagesArea.appendChild(msgDiv);
   }
 
   function appendSystemMessage(text) {
     var msgDiv = document.createElement('div');
-    msgDiv.className = 'crony-ai-msg assistant';
-    msgDiv.innerHTML = '<div class="crony-ai-bubble" style="background: rgba(229, 57, 53, 0.1); border-left-color: #ff1744; font-style: italic;"></div>';
-    msgDiv.querySelector('.crony-ai-bubble').textContent = text;
+    msgDiv.className = 'db-ai-msg assistant';
+    msgDiv.innerHTML = '<div class="db-ai-bubble" style="background: rgba(229, 57, 53, 0.1); border-left-color: #ff1744; font-style: italic;"></div>';
+    msgDiv.querySelector('.db-ai-bubble').textContent = text;
     messagesArea.appendChild(msgDiv);
   }
 
