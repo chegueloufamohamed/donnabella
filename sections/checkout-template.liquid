@@ -242,15 +242,25 @@
     color: #2f3d4d;
   }
 
-  .nls-checkout-{{ section.id }} .pay-btn.btn-whatsapp {
-    background: transparent;
-    color: var(--gold);
-    border: 1px solid var(--gold-line);
+  .nls-checkout-{{ section.id }} .payment-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+    opacity: 0.85;
   }
 
-  .nls-checkout-{{ section.id }} .pay-btn.btn-whatsapp:hover {
-    background: rgba(201, 169, 110, 0.1);
-    border-color: var(--gold);
+  .nls-checkout-{{ section.id }} .payment-badges .badge-item {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--white-60);
+    border: 1px solid var(--glass-b);
+    padding: 6px 12px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .nls-checkout-{{ section.id }} .pay-btn.is-disabled {
@@ -396,12 +406,16 @@
       </div>
 
       <div class="payment-options">
-        <button type="button" id="btnOnlinePay" class="pay-btn btn-online">
-          {% if is_arabic %}الدفع عبر الإنترنت{% else %}Pay Online (Card / Tabby / Tamara){% endif %}
+        <button type="button" id="btnConfirmBooking" class="pay-btn btn-online">
+          {% if is_arabic %}تأكيد الحجز والدفع{% else %}Book & Proceed to Payment{% endif %}
         </button>
-        <button type="button" id="btnWhatsappPay" class="pay-btn btn-whatsapp">
-          {% if is_arabic %}حجز وتأكيد عبر واتساب{% else %}Book & Confirm via WhatsApp{% endif %}
-        </button>
+        
+        <div class="payment-badges">
+          <span class="badge-item">{% if is_arabic %}تابي{% else %}Tabby{% endif %}</span>
+          <span class="badge-item">{% if is_arabic %}تمارا{% else %}Tamara{% endif %}</span>
+          <span class="badge-item">{% if is_arabic %}فيزا / ماستركارد{% else %}Visa / Mastercard{% endif %}</span>
+          <span class="badge-item">{% if is_arabic %}الدفع عند الاستلام{% else %}Cash on Delivery{% endif %}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -551,10 +565,10 @@
     return { name: name, phone: phone, email: email, date: date, time: time, emirate: emirate, address: address };
   }
 
-  // Handle Online Payments
-  var btnOnline = root.querySelector('#btnOnlinePay');
-  if (btnOnline) {
-    btnOnline.addEventListener('click', function() {
+  // Handle Booking Confirmation and Redirect to Shopify Checkout
+  var btnConfirm = root.querySelector('#btnConfirmBooking');
+  if (btnConfirm) {
+    btnConfirm.addEventListener('click', function() {
       var info = getFormValues();
       if (!info) return;
 
@@ -590,38 +604,6 @@
       } catch (e) {}
 
       window.location.href = permalink;
-    });
-  }
-
-  // Handle WhatsApp Cash/Direct Booking
-  var btnWhatsapp = root.querySelector('#btnWhatsappPay');
-  if (btnWhatsapp) {
-    btnWhatsapp.addEventListener('click', function() {
-      var info = getFormValues();
-      if (!info) return;
-
-      var lines = cart.map(function(i) {
-        return '• ' + i.name + (i.qty ? ' ×' + i.qty : '') + (i.from ? ' (' + L.from + ')' : '') + ' — ' + CUR + ' ' + i.price;
-      });
-      var total = cart.reduce(function(s, i) { return s + i.price; }, 0);
-
-      var msg = L.whatsapp_intro + '\n\n' +
-                L.name + ': ' + info.name + '\n' +
-                L.phone + ': ' + info.phone + '\n' +
-                L.email + ': ' + info.email + '\n' +
-                L.date + ': ' + info.date + '\n' +
-                L.time + ': ' + info.time + '\n' +
-                L.emirate + ': ' + info.emirate + '\n' +
-                L.address + ': ' + info.address + '\n\n' +
-                L.items_label + '\n' + lines.join('\n') + '\n\n' +
-                L.total + ': ' + CUR + ' ' + total;
-
-      try {
-        localStorage.removeItem('donnabella_cart');
-      } catch (e) {}
-
-      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
-      window.location.href = '/';
     });
   }
 
