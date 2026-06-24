@@ -582,12 +582,13 @@ Language & Style:
       parts: [{ text: text }]
     });
 
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + encodeURIComponent(apiKey);
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
     
     fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-goog-api-key': apiKey
       },
       body: JSON.stringify({
         systemInstruction: {
@@ -602,7 +603,19 @@ Language & Style:
     })
     .then(function(res) {
       if (!res.ok) {
-        throw new Error('API Request failed. Please check your API key.');
+        return res.json().then(function(errJson) {
+          var errMsg = 'API Request failed (' + res.status + ')';
+          if (errJson && errJson.error && errJson.error.message) {
+            errMsg += ': ' + errJson.error.message;
+          }
+          console.error("Gemini API Error details:", errJson);
+          throw new Error(errMsg);
+        }).catch(function() {
+          return res.text().then(function(errText) {
+            console.error("Gemini API Error raw text:", errText);
+            throw new Error('API Request failed (' + res.status + '): ' + errText);
+          });
+        });
       }
       return res.json();
     })
