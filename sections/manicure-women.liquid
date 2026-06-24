@@ -514,11 +514,17 @@
 
   /* fixed cart reveal */
   var trigger = root.querySelector('#nlsTrigger-{{ section.id }}');
+  var mainEl = root.querySelector('.nls-main');
+  var cartEl = root.querySelector('.nls-cart');
   function syncPin(){
     if(window.innerWidth <= 900){ root.classList.remove('cart-pinned'); return; }
     var t  = trigger ? trigger.getBoundingClientRect().top : 9999;
-    var rb = root.getBoundingClientRect().bottom;
-    root.classList.toggle('cart-pinned', (t <= 150) && (rb > 280));
+    var rb = mainEl ? mainEl.getBoundingClientRect().bottom : 9999;
+    var cartHeight = cartEl ? cartEl.offsetHeight : 450;
+    var nlsTopVal = window.getComputedStyle(root).getPropertyValue('--nls-top').trim();
+    var cartTop = parseFloat(nlsTopVal) || 150;
+    var threshold = cartTop + cartHeight;
+    root.classList.toggle('cart-pinned', (t <= cartTop) && (rb > threshold));
   }
   window.addEventListener('scroll', syncPin, { passive:true });
   window.addEventListener('resize', syncPin);
