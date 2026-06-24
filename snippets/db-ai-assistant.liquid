@@ -140,7 +140,7 @@
     z-index: 1000 !important;
     backdrop-filter: blur(30px) !important;
     -webkit-backdrop-filter: blur(30px) !important;
-    background: linear-gradient(135deg, rgba(26, 10, 30, 0.86) 0%, rgba(45, 27, 53, 0.86) 30%, rgba(30, 15, 42, 0.88) 60%, rgba(18, 8, 24, 0.92) 100%) !important;
+    background: linear-gradient(135deg, rgba(26, 10, 30, 0.65) 0%, rgba(45, 27, 53, 0.65) 30%, rgba(30, 15, 42, 0.68) 60%, rgba(18, 8, 24, 0.72) 100%) !important;
     border: 1px solid rgba(255, 255, 255, 0.18) !important;
     border-radius: 24px !important;
     box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 40px rgba(255,182,193,0.12), inset 0 1px 0 rgba(255,255,255,0.22) !important;
@@ -548,13 +548,18 @@
     }
 
     .db-ai-modal {
-      bottom: 20px !important;
+      bottom: 85px !important; /* raised to leave space for WhatsApp and back to top */
       left: 10px !important;
       right: 10px !important;
       width: calc(100% - 20px);
-      height: 70vh;
-      max-height: 480px;
+      height: 72vh; /* increased height */
+      max-height: 540px; /* capped to fit screens nicely */
       border-radius: 24px !important;
+      transition: bottom 0.3s ease !important;
+    }
+
+    .db-ai-modal.db-has-sticky-cart {
+      bottom: 165px !important; /* shifted higher on pages with sticky add to cart bar */
     }
 
     .db-ai-icon {

@@ -337,6 +337,7 @@
 
       var bttEl = document.getElementById('db-backtotop');
       var assistantEl = document.getElementById('dbAIAssistant');
+      var assistantModal = document.getElementById('dbAIChatModal');
       if (whatsappEl) {
         whatsappEl.classList.toggle('db-has-sticky-cart', hasSticky);
       }
@@ -345,6 +346,9 @@
       }
       if (assistantEl) {
         assistantEl.classList.toggle('db-has-sticky-cart', hasSticky);
+      }
+      if (assistantModal) {
+        assistantModal.classList.toggle('db-has-sticky-cart', hasSticky);
       }
     };
 
