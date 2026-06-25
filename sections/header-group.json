@@ -130,7 +130,7 @@
           "settings": {
             "nav_title": "Home",
             "nav_title_ar": "الرئيسية",
-            "link": "https://belladona.ae/"
+            "link": "/"
           }
         },
         "mega_parent_mhJFKM": {
@@ -154,7 +154,7 @@
           "settings": {
             "nav_title": "Couples",
             "nav_title_ar": "أزواج",
-            "link": "https://belladona.ae/pages/massage"
+            "link": "/pages/massage"
           }
         },
         "mega_parent_MwNqVj": {
@@ -162,7 +162,7 @@
           "settings": {
             "nav_title": "Our Story",
             "nav_title_ar": "قصتنا",
-            "link": "https://belladona.ae/pages/about-us"
+            "link": "/pages/about-us"
           }
         },
         "mega_parent_P7nne4": {
@@ -170,7 +170,7 @@
           "settings": {
             "nav_title": "Contact Us",
             "nav_title_ar": "إتصل بنا",
-            "link": "https://belladona.ae/pages/contact"
+            "link": "/pages/contact"
           }
         }
       },

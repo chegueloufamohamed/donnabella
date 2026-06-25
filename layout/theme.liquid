@@ -302,6 +302,63 @@
           } catch(e){}
         }
 
+        // Helper to check if a URL is local and return its relative path
+        function getRelativePath(href) {
+          if (!href) return null;
+          if (href.indexOf('#') === 0 || 
+              href.indexOf('mailto:') === 0 || 
+              href.indexOf('tel:') === 0 || 
+              href.indexOf('javascript:') === 0 ||
+              href.indexOf('sms:') === 0) {
+            return null;
+          }
+          
+          try {
+            var urlObj = new URL(href, window.location.origin);
+            var host = urlObj.host;
+            var isLocal = (host === window.location.host || 
+                           host === 'belladona.ae' || 
+                           host === 'www.belladona.ae' || 
+                           host === 'donnabella.ae' || 
+                           host === 'www.donnabella.ae');
+            if (isLocal) {
+              return urlObj.pathname + urlObj.search + urlObj.hash;
+            }
+          } catch(e) {
+            if (href.indexOf('http://') !== 0 && href.indexOf('https://') !== 0 && href.indexOf('//') !== 0) {
+              return href;
+            }
+          }
+          return null;
+        }
+
+        // Helper to check if a form action is local and return its relative path
+        function getRelativeFormAction(action) {
+          if (!action) return null;
+          if (action.indexOf('javascript:') === 0 || action.indexOf('/localization') === 0) {
+            return null;
+          }
+          try {
+            var urlObj = new URL(action, window.location.origin);
+            var host = urlObj.host;
+            var isLocal = (host === window.location.host || 
+                           host === 'belladona.ae' || 
+                           host === 'www.belladona.ae' || 
+                           host === 'donnabella.ae' || 
+                           host === 'www.donnabella.ae');
+            if (isLocal) {
+              var path = urlObj.pathname + urlObj.search + urlObj.hash;
+              if (path.indexOf('/localization') === 0) return null;
+              return path;
+            }
+          } catch(e) {
+            if (action.indexOf('http://') !== 0 && action.indexOf('https://') !== 0 && action.indexOf('//') !== 0) {
+              return action;
+            }
+          }
+          return null;
+        }
+
         // Keep language locale sticky across navigations
         function localizeAllLinks() {
           var rootUrl = '{{ request.locale.root_url }}';
@@ -311,20 +368,13 @@
           var links = document.querySelectorAll('a[href]');
           links.forEach(function(el) {
             var href = el.getAttribute('href');
-            if (!href) return;
-            if (href.indexOf('http://') === 0 || 
-                href.indexOf('https://') === 0 || 
-                href.indexOf('#') === 0 || 
-                href.indexOf('mailto:') === 0 || 
-                href.indexOf('tel:') === 0 || 
-                href.indexOf('javascript:') === 0 ||
-                href.indexOf('sms:') === 0) {
+            var relativePath = getRelativePath(href);
+            if (!relativePath) return;
+
+            if (relativePath === rootUrl || relativePath.indexOf(rootUrl + '/') === 0) {
               return;
             }
-            if (href === rootUrl || href.indexOf(rootUrl + '/') === 0) {
-              return;
-            }
-            var targetPath = href;
+            var targetPath = relativePath;
             if (targetPath === '/') {
               el.setAttribute('href', rootUrl);
             } else {
@@ -339,17 +389,13 @@
           var forms = document.querySelectorAll('form[action]');
           forms.forEach(function(el) {
             var action = el.getAttribute('action');
-            if (!action) return;
-            if (action.indexOf('http://') === 0 || 
-                action.indexOf('https://') === 0 || 
-                action.indexOf('javascript:') === 0 ||
-                action.indexOf('/localization') === 0) { // Don't localize switcher form action
+            var relativeAction = getRelativeFormAction(action);
+            if (!relativeAction) return;
+
+            if (relativeAction === rootUrl || relativeAction.indexOf(rootUrl + '/') === 0) {
               return;
             }
-            if (action === rootUrl || action.indexOf(rootUrl + '/') === 0) {
-              return;
-            }
-            var targetPath = action;
+            var targetPath = relativeAction;
             if (targetPath === '/') {
               el.setAttribute('action', rootUrl);
             } else {
@@ -379,22 +425,15 @@
             var rootUrl = '{{ request.locale.root_url }}';
             if (!rootUrl || rootUrl === '/') return;
             var href = anchor.getAttribute('href');
-            if (!href) return;
             
-            if (href.indexOf('http://') === 0 || 
-                href.indexOf('https://') === 0 || 
-                href.indexOf('#') === 0 || 
-                href.indexOf('mailto:') === 0 || 
-                href.indexOf('tel:') === 0 || 
-                href.indexOf('javascript:') === 0 ||
-                href.indexOf('sms:') === 0) {
-              return;
-            }
-            if (href === rootUrl || href.indexOf(rootUrl + '/') === 0) {
+            var relativePath = getRelativePath(href);
+            if (!relativePath) return;
+
+            if (relativePath === rootUrl || relativePath.indexOf(rootUrl + '/') === 0) {
               return;
             }
             
-            var targetPath = href;
+            var targetPath = relativePath;
             if (targetPath === '/') {
               anchor.setAttribute('href', rootUrl);
             } else {

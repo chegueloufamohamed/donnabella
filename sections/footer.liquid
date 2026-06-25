@@ -358,7 +358,12 @@
               <h6 style="font-size: {{ block.settings.heading_size }}px;">{{ linklists[block.settings.menu].title }}</h6>
               <ul>
                 {% for link in linklists[block.settings.menu].links %}
-                  {%- assign localized_footer_link = link.url -%}
+                  {%- assign raw_footer_link = link.url -%}
+                  {%- assign shop_domain_with_proto1 = 'https://' | append: shop.domain -%}
+                  {%- assign shop_domain_with_proto2 = 'http://' | append: shop.domain -%}
+                  {%- assign shop_permanent_domain_with_proto1 = 'https://' | append: shop.permanent_domain -%}
+                  {%- assign shop_permanent_domain_with_proto2 = 'http://' | append: shop.permanent_domain -%}
+                  {%- assign localized_footer_link = raw_footer_link | replace: shop_domain_with_proto1, '' | replace: shop_domain_with_proto2, '' | replace: shop_permanent_domain_with_proto1, '' | replace: shop_permanent_domain_with_proto2, '' | replace: 'https://belladona.ae', '' | replace: 'http://belladona.ae', '' | replace: 'https://donnabella.ae', '' | replace: 'http://donnabella.ae', '' -%}
                   {%- if request.locale.root_url != '/' -%}
                     {%- assign link_first_char = localized_footer_link | slice: 0 -%}
                     {%- assign link_protocol = localized_footer_link | slice: 0, 4 -%}

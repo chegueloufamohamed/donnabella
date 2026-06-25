@@ -312,7 +312,12 @@
             <div class="db-card-title">{{ active_block_title }}</div>
             <div class="db-card-desc">{{ active_block_desc }}</div>
             {% if block.settings.link != blank %}
-              {%- assign localized_card_link = block.settings.link -%}
+              {%- assign raw_card_link = block.settings.link -%}
+              {%- assign shop_domain_with_proto1 = 'https://' | append: shop.domain -%}
+              {%- assign shop_domain_with_proto2 = 'http://' | append: shop.domain -%}
+              {%- assign shop_permanent_domain_with_proto1 = 'https://' | append: shop.permanent_domain -%}
+              {%- assign shop_permanent_domain_with_proto2 = 'http://' | append: shop.permanent_domain -%}
+              {%- assign localized_card_link = raw_card_link | replace: shop_domain_with_proto1, '' | replace: shop_domain_with_proto2, '' | replace: shop_permanent_domain_with_proto1, '' | replace: shop_permanent_domain_with_proto2, '' | replace: 'https://belladona.ae', '' | replace: 'http://belladona.ae', '' | replace: 'https://donnabella.ae', '' | replace: 'http://donnabella.ae', '' -%}
               {%- if request.locale.root_url != '/' -%}
                 {%- assign link_first_char = localized_card_link | slice: 0 -%}
                 {%- assign link_protocol = localized_card_link | slice: 0, 4 -%}
@@ -327,7 +332,12 @@
       {% endfor %}
     </div>
 
-    {%- assign localized_btn1_link = section.settings.btn1_link | default: '#' -%}
+    {%- assign raw_btn1_link = section.settings.btn1_link | default: '#' -%}
+    {%- assign shop_domain_with_proto1 = 'https://' | append: shop.domain -%}
+    {%- assign shop_domain_with_proto2 = 'http://' | append: shop.domain -%}
+    {%- assign shop_permanent_domain_with_proto1 = 'https://' | append: shop.permanent_domain -%}
+    {%- assign shop_permanent_domain_with_proto2 = 'http://' | append: shop.permanent_domain -%}
+    {%- assign localized_btn1_link = raw_btn1_link | replace: shop_domain_with_proto1, '' | replace: shop_domain_with_proto2, '' | replace: shop_permanent_domain_with_proto1, '' | replace: shop_permanent_domain_with_proto2, '' | replace: 'https://belladona.ae', '' | replace: 'http://belladona.ae', '' | replace: 'https://donnabella.ae', '' | replace: 'http://donnabella.ae', '' -%}
     {%- if request.locale.root_url != '/' -%}
       {%- assign link_first_char = localized_btn1_link | slice: 0 -%}
       {%- assign link_protocol = localized_btn1_link | slice: 0, 4 -%}
@@ -335,7 +345,8 @@
         {%- assign localized_btn1_link = request.locale.root_url | append: localized_btn1_link -%}
       {%- endunless -%}
     {%- endif -%}
-    {%- assign localized_btn2_link = section.settings.btn2_link | default: '#' -%}
+    {%- assign raw_btn2_link = section.settings.btn2_link | default: '#' -%}
+    {%- assign localized_btn2_link = raw_btn2_link | replace: shop_domain_with_proto1, '' | replace: shop_domain_with_proto2, '' | replace: shop_permanent_domain_with_proto1, '' | replace: shop_permanent_domain_with_proto2, '' | replace: 'https://belladona.ae', '' | replace: 'http://belladona.ae', '' | replace: 'https://donnabella.ae', '' | replace: 'http://donnabella.ae', '' -%}
     {%- if request.locale.root_url != '/' -%}
       {%- assign link_first_char = localized_btn2_link | slice: 0 -%}
       {%- assign link_protocol = localized_btn2_link | slice: 0, 4 -%}
