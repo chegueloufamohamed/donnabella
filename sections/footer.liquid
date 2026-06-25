@@ -358,7 +358,15 @@
               <h6 style="font-size: {{ block.settings.heading_size }}px;">{{ linklists[block.settings.menu].title }}</h6>
               <ul>
                 {% for link in linklists[block.settings.menu].links %}
-                  <li><a href="{{ link.url }}" style="font-size: {{ block.settings.link_size }}px;">{{ link.title }}</a></li>
+                  {%- assign localized_footer_link = link.url -%}
+                  {%- if request.locale.root_url != '/' -%}
+                    {%- assign link_first_char = localized_footer_link | slice: 0 -%}
+                    {%- assign link_protocol = localized_footer_link | slice: 0, 4 -%}
+                    {%- unless localized_footer_link contains request.locale.root_url or link_first_char == '#' or link_protocol == 'http' -%}
+                      {%- assign localized_footer_link = request.locale.root_url | append: localized_footer_link -%}
+                    {%- endunless -%}
+                  {%- endif -%}
+                  <li><a href="{{ localized_footer_link }}" style="font-size: {{ block.settings.link_size }}px;">{{ link.title }}</a></li>
                 {% endfor %}
               </ul>
             {% endif %}

@@ -301,6 +301,110 @@
             localStorage.removeItem('donnabella_cart');
           } catch(e){}
         }
+
+        // Keep language locale sticky across navigations
+        function localizeAllLinks() {
+          var rootUrl = '{{ request.locale.root_url }}';
+          if (!rootUrl || rootUrl === '/') return;
+
+          // Localize relative links
+          var links = document.querySelectorAll('a[href]');
+          links.forEach(function(el) {
+            var href = el.getAttribute('href');
+            if (!href) return;
+            if (href.indexOf('http://') === 0 || 
+                href.indexOf('https://') === 0 || 
+                href.indexOf('#') === 0 || 
+                href.indexOf('mailto:') === 0 || 
+                href.indexOf('tel:') === 0 || 
+                href.indexOf('javascript:') === 0 ||
+                href.indexOf('sms:') === 0) {
+              return;
+            }
+            if (href === rootUrl || href.indexOf(rootUrl + '/') === 0) {
+              return;
+            }
+            var targetPath = href;
+            if (targetPath === '/') {
+              el.setAttribute('href', rootUrl);
+            } else {
+              if (targetPath.charAt(0) !== '/') {
+                targetPath = '/' + targetPath;
+              }
+              el.setAttribute('href', rootUrl + targetPath);
+            }
+          });
+
+          // Localize relative forms
+          var forms = document.querySelectorAll('form[action]');
+          forms.forEach(function(el) {
+            var action = el.getAttribute('action');
+            if (!action) return;
+            if (action.indexOf('http://') === 0 || 
+                action.indexOf('https://') === 0 || 
+                action.indexOf('javascript:') === 0 ||
+                action.indexOf('/localization') === 0) { // Don't localize switcher form action
+              return;
+            }
+            if (action === rootUrl || action.indexOf(rootUrl + '/') === 0) {
+              return;
+            }
+            var targetPath = action;
+            if (targetPath === '/') {
+              el.setAttribute('action', rootUrl);
+            } else {
+              if (targetPath.charAt(0) !== '/') {
+                targetPath = '/' + targetPath;
+              }
+              el.setAttribute('action', rootUrl + targetPath);
+            }
+          });
+        }
+
+        // Run on initial load
+        document.addEventListener('DOMContentLoaded', localizeAllLinks);
+        window.addEventListener('load', localizeAllLinks);
+
+        // Run when InstantClick transitions to a new page
+        if (typeof InstantClick !== 'undefined' && InstantClick.on) {
+          InstantClick.on('change', localizeAllLinks);
+        }
+
+        // Fallback: intercept interactions on any link and localize dynamically
+        var interceptEvents = ['click', 'mousedown', 'touchstart'];
+        interceptEvents.forEach(function(evt) {
+          document.addEventListener(evt, function(e) {
+            var anchor = e.target.closest('a[href]');
+            if (!anchor) return;
+            var rootUrl = '{{ request.locale.root_url }}';
+            if (!rootUrl || rootUrl === '/') return;
+            var href = anchor.getAttribute('href');
+            if (!href) return;
+            
+            if (href.indexOf('http://') === 0 || 
+                href.indexOf('https://') === 0 || 
+                href.indexOf('#') === 0 || 
+                href.indexOf('mailto:') === 0 || 
+                href.indexOf('tel:') === 0 || 
+                href.indexOf('javascript:') === 0 ||
+                href.indexOf('sms:') === 0) {
+              return;
+            }
+            if (href === rootUrl || href.indexOf(rootUrl + '/') === 0) {
+              return;
+            }
+            
+            var targetPath = href;
+            if (targetPath === '/') {
+              anchor.setAttribute('href', rootUrl);
+            } else {
+              if (targetPath.charAt(0) !== '/') {
+                targetPath = '/' + targetPath;
+              }
+              anchor.setAttribute('href', rootUrl + targetPath);
+            }
+          }, { capture: true });
+        });
       })();
     </script>
   </body>  

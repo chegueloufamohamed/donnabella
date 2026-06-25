@@ -311,16 +311,40 @@
             <div class="db-card-title">{{ active_block_title }}</div>
             <div class="db-card-desc">{{ active_block_desc }}</div>
             {% if block.settings.link != blank %}
-              <a class="db-card-arrow" href="{{ block.settings.link }}">{{ active_block_arrow }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
+              {%- assign localized_card_link = block.settings.link -%}
+              {%- if request.locale.root_url != '/' -%}
+                {%- assign link_first_char = localized_card_link | slice: 0 -%}
+                {%- assign link_protocol = localized_card_link | slice: 0, 4 -%}
+                {%- unless localized_card_link contains request.locale.root_url or link_first_char == '#' or link_protocol == 'http' -%}
+                  {%- assign localized_card_link = request.locale.root_url | append: localized_card_link -%}
+                {%- endunless -%}
+              {%- endif -%}
+              <a class="db-card-arrow" href="{{ localized_card_link }}">{{ active_block_arrow }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></a>
             {% endif %}
           </div>
         </div>
       {% endfor %}
     </div>
 
+    {%- assign localized_btn1_link = section.settings.btn1_link | default: '#' -%}
+    {%- if request.locale.root_url != '/' -%}
+      {%- assign link_first_char = localized_btn1_link | slice: 0 -%}
+      {%- assign link_protocol = localized_btn1_link | slice: 0, 4 -%}
+      {%- unless localized_btn1_link contains request.locale.root_url or link_first_char == '#' or link_protocol == 'http' -%}
+        {%- assign localized_btn1_link = request.locale.root_url | append: localized_btn1_link -%}
+      {%- endunless -%}
+    {%- endif -%}
+    {%- assign localized_btn2_link = section.settings.btn2_link | default: '#' -%}
+    {%- if request.locale.root_url != '/' -%}
+      {%- assign link_first_char = localized_btn2_link | slice: 0 -%}
+      {%- assign link_protocol = localized_btn2_link | slice: 0, 4 -%}
+      {%- unless localized_btn2_link contains request.locale.root_url or link_first_char == '#' or link_protocol == 'http' -%}
+        {%- assign localized_btn2_link = request.locale.root_url | append: localized_btn2_link -%}
+      {%- endunless -%}
+    {%- endif -%}
     <div class="db-section-cta">
-      {% if active_btn1_text != blank %}<a class="db-btn-primary" href="{{ section.settings.btn1_link | default: '#' }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"></path></svg>{{ active_btn1_text }}</a>{% endif %}
-      {% if active_btn2_text != blank %}<a class="db-btn-secondary" href="{{ section.settings.btn2_link | default: '#' }}">{{ active_btn2_text }}</a>{% endif %}
+      {% if active_btn1_text != blank %}<a class="db-btn-primary" href="{{ localized_btn1_link }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"></path></svg>{{ active_btn1_text }}</a>{% endif %}
+      {% if active_btn2_text != blank %}<a class="db-btn-secondary" href="{{ localized_btn2_link }}">{{ active_btn2_text }}</a>{% endif %}
     </div>
   </div>
 </section>

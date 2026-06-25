@@ -1024,7 +1024,7 @@
 
     <!-- Logo -->
     <div class="header-logo">
-      <a href="/">
+      <a href="{{ routes.root_url }}">
         {% if section.settings.logo %}
           <img src="{{ section.settings.logo | img_url: 'master' }}" alt="{{ shop.name }}">
         {% else %}
@@ -1046,8 +1046,16 @@
             {% else %}
               {% assign nav_label = block.settings.label_en %}
             {% endif %}
+            {%- assign localized_link = block.settings.link -%}
+            {%- if request.locale.root_url != '/' -%}
+              {%- assign link_first_char = localized_link | slice: 0 -%}
+              {%- assign link_protocol = localized_link | slice: 0, 4 -%}
+              {%- unless localized_link contains request.locale.root_url or link_first_char == '#' or link_protocol == 'http' -%}
+                {%- assign localized_link = request.locale.root_url | append: localized_link -%}
+              {%- endunless -%}
+            {%- endif -%}
             <li {{ block.shopify_attributes }}>
-              <a href="{{ block.settings.link }}">{{ nav_label }}</a>
+              <a href="{{ localized_link }}">{{ nav_label }}</a>
             </li>
 
           {% comment %} ── Mega menu parent — with optional direct link ── {% endcomment %}
@@ -1062,10 +1070,18 @@
             {% assign this_parent_key = block.settings.nav_title %}
 
             {% comment %} If a direct link is set → plain nav link. If blank → dropdown. {% endcomment %}
+            {%- assign localized_link = block.settings.link -%}
+            {%- if request.locale.root_url != '/' -%}
+              {%- assign link_first_char = localized_link | slice: 0 -%}
+              {%- assign link_protocol = localized_link | slice: 0, 4 -%}
+              {%- unless localized_link contains request.locale.root_url or link_first_char == '#' or link_protocol == 'http' -%}
+                {%- assign localized_link = request.locale.root_url | append: localized_link -%}
+              {%- endunless -%}
+            {%- endif -%}
             {% if block.settings.link != blank %}
 
               <li {{ block.shopify_attributes }}>
-                <a href="{{ block.settings.link }}">{{ nav_label }}</a>
+                <a href="{{ localized_link }}">{{ nav_label }}</a>
               </li>
 
             {% else %}
@@ -1100,7 +1116,15 @@
                           {% assign card_title = child_block.settings.title %}
                         {% endif %}
 
-                        <a href="{{ child_block.settings.link }}" class="mega-menu-card" {{ child_block.shopify_attributes }}>
+                        {%- assign localized_child_link = child_block.settings.link -%}
+                        {%- if request.locale.root_url != '/' -%}
+                          {%- assign link_first_char = localized_child_link | slice: 0 -%}
+                          {%- assign link_protocol = localized_child_link | slice: 0, 4 -%}
+                          {%- unless localized_child_link contains request.locale.root_url or link_first_char == '#' or link_protocol == 'http' -%}
+                            {%- assign localized_child_link = request.locale.root_url | append: localized_child_link -%}
+                          {%- endunless -%}
+                        {%- endif -%}
+                        <a href="{{ localized_child_link }}" class="mega-menu-card" {{ child_block.shopify_attributes }}>
                           {% if child_block.settings.image %}
                             <img
                               class="mega-menu-card-image"
@@ -1188,8 +1212,16 @@
     </div>
 
     <!-- CTA Button -->
+    {%- assign localized_btn_link = section.settings.button_link -%}
+    {%- if request.locale.root_url != '/' -%}
+      {%- assign link_first_char = localized_btn_link | slice: 0 -%}
+      {%- assign link_protocol = localized_btn_link | slice: 0, 4 -%}
+      {%- unless localized_btn_link contains request.locale.root_url or link_first_char == '#' or link_protocol == 'http' -%}
+        {%- assign localized_btn_link = request.locale.root_url | append: localized_btn_link -%}
+      {%- endunless -%}
+    {%- endif -%}
     <div class="header-cta">
-      <a href="{{ section.settings.button_link }}" class="book-now-btn">
+      <a href="{{ localized_btn_link }}" class="book-now-btn">
         {{ label_book_now }}
       </a>
     </div>
