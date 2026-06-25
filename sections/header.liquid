@@ -743,21 +743,25 @@
     }
 
     .header-cta {
-      order: 1 !important;
+      order: 2 !important;
+      flex: 1 1 auto !important;
+      display: flex !important;
+      justify-content: center !important;
       {% if section.settings.hide_button_mobile %}
       display: none !important;
       {% endif %}
     }
 
     .header-logo {
-      order: 2 !important;
-      flex: 1 1 auto !important;
-      justify-content: center !important;
+      order: 1 !important;
+      flex: 0 0 auto !important;
+      justify-content: flex-start !important;
     }
 
     .mobile-menu-toggle {
       order: 3 !important;
       display: flex !important;
+      flex: 0 0 auto !important;
     }
 
     /* Hide switcher from header on mobile — show inside mobile menu instead */
