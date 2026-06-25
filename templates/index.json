@@ -30,7 +30,10 @@
             "title": "Relaxing Massage",
             "desc": "Melt away stress with our signature full-body massage, performed by certified therapists in the comfort of your own home. Choose from Swedish, deep tissue, or aromatherapy.",
             "arrow_text": "Book Now",
-            "link": ""
+            "link": "",
+            "title_ar": "مساج للاسترخاء",
+            "desc_ar": "تخلصي من التوتر والضغوطات مع جلسة مساج كامل للجسم المميزة لدينا، تقدمها أخصائيات معتمدات في راحة منزلكِ. اختاري من بين المساج السويدي، الأنسجة العميقة، أو العلاج العطري.",
+            "arrow_text_ar": "احجزي الآن"
           }
         },
         "service_card_aMkyVx": {
@@ -41,7 +44,10 @@
             "title": "Manicure",
             "desc": "Flawless nails with gel, classic, or nail art finishes. Cuticle care, shaping, and a luxurious hand massage included.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "مانيكير (العناية باليدين)",
+            "desc_ar": "أظافر خالية من العيوب مع طلاء الجل، الكلاسيكي، أو نقوش أظافر مميزة. تشمل الخدمة العناية بالجلد الزائد، التشكيل، ومساجاً فاخراً لليدين.",
+            "arrow_text_ar": "اكتشفي المزيد"
           }
         },
         "service_card_aQdQcd": {
@@ -52,7 +58,10 @@
             "title": "Pedicure",
             "desc": "Treat your feet to a spa-grade pedicure. Exfoliation, callus removal, nail shaping, and a soothing foot soak.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "باديكير (العناية بالقدمين)",
+            "desc_ar": "امنحي قدميكِ العناية التي تستحقها مع باديكير بمستوى السبا. تشمل الخدمة التقشير، إزالة الخلايا الميتة، تشكيل الأظافر، ونقع القدمين بماء دافئ مهدئ.",
+            "arrow_text_ar": "اكتشفي المزيد"
           }
         },
         "service_card_gNwxG3": {
@@ -63,7 +72,10 @@
             "title": "Hair Care",
             "desc": "Professional blow-dry, styling, deep conditioning, and treatments for every hair type. Salon results at home.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "العناية بالشعر",
+            "desc_ar": "استشوار احترافي، تسريح وتصفيف، ترطيب عميق، وعلاجات مخصصة لكل نوع شعر. نتائج الصالون في راحة منزلكِ.",
+            "arrow_text_ar": "اكتشفي المزيد"
           }
         },
         "service_card_m6FjCp": {
@@ -74,7 +86,10 @@
             "title": "Waxing",
             "desc": "Smooth, long-lasting results with premium wax formulas. Full body, bikini, and facial waxing by trained specialists.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "إزالة الشعر بالواكس",
+            "desc_ar": "بشرة ناعمة ونتائج تدوم طويلاً مع تركيبات الواكس الفاخرة. إزالة شعر الجسم بالكامل، البكيني، والوجه بواسطة أخصائيات مدربات.",
+            "arrow_text_ar": "اكتشفي المزيد"
           }
         },
         "service_card_tbBDbh": {
@@ -85,7 +100,10 @@
             "title": "Facial & Skin Care",
             "desc": "Radiant skin starts here. Deep cleansing facials, brightening treatments, and hydration therapies tailored to your skin type.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "فيشل وعناية بالبشرة",
+            "desc_ar": "البشرة المشرقة تبدأ من هنا. جلسات فيشل للتنظيف العميق، علاجات التفتيح، وعلاجات الترطيب المصممة خصيصاً لنوع بشرتكِ.",
+            "arrow_text_ar": "اكتشفي المزيد"
           }
         }
       },
@@ -100,19 +118,31 @@
       "name": "Donna Bella · For Her",
       "settings": {
         "eyebrow": "For Her · At-Home Luxury",
+        "eyebrow_ar": "خصيصاً لها · فخامة في منزلكِ",
         "title": "Luxury Beauty,",
+        "title_ar": "جمال فاخر،",
         "title_em": "Designed for Her",
+        "title_em_ar": "مصمم خصيصاً لها",
         "subtitle": "Indulge in personalized beauty rituals delivered to your door. Every service crafted to make you feel radiant, confident, and beautifully you.",
+        "subtitle_ar": "دللي نفسكِ بطقوس الجمال المخصصة التي تصلكِ حتى باب منزلكِ. صُممت كل خدمة لتمنحكِ شعوراً بالإشراق، الثقة، والجمال الذي يعبر عنكِ.",
         "show_stats": true,
         "stat1_num": "250+",
+        "stat1_num_ar": "٢٥٠+",
         "stat1_label": "Expert Therapists",
+        "stat1_label_ar": "أخصائيات خبيرات",
         "stat2_num": "5K+",
+        "stat2_num_ar": "٥٠٠٠+",
         "stat2_label": "Happy Clients",
+        "stat2_label_ar": "عميلة سعيدة",
         "stat3_num": "10+",
+        "stat3_num_ar": "١٠+",
         "stat3_label": "Services Offered",
+        "stat3_label_ar": "خدمات مميزة",
         "btn1_text": "Explore All Women Services",
+        "btn1_text_ar": "اكتشفي جميع خدمات النساء",
         "btn1_link": "shopify://pages/women",
         "btn2_text": "Book a Consultation",
+        "btn2_text_ar": "احجزي استشارة",
         "btn2_link": ""
       }
     },
@@ -127,7 +157,10 @@
             "title": "Precision Hair Care",
             "desc": "From sharp cuts to expert styling and scalp treatments - our professional barbers and stylists bring the full salon experience directly to your home. Look sharp, feel sharp.",
             "arrow_text": "Book Now",
-            "link": ""
+            "link": "",
+            "title_ar": "العناية الاحترافية بالشعر",
+            "desc_ar": "من القصات الدقيقة والتصفيف الاحترافي إلى علاجات فروة الرأس — يجلب لك الحلاقون ومصففو الشعر لدينا تجربة الصالون الكاملة مباشرة إلى منزلك. تمتع بمظهر رائع وشعور متجدد.",
+            "arrow_text_ar": "احجز الآن"
           }
         },
         "service_card_grcwwN": {
@@ -138,7 +171,10 @@
             "title": "Sports Massage",
             "desc": "Deep tissue and sports massage to relieve muscle tension, improve recovery, and restore peak performance.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "مساج رياضي",
+            "desc_ar": "جلسات مساج الأنسجة العميقة والمساج الرياضي لتخفيف التوتر العضلي، تسريع الاستشفاء، واستعادة قمة أدائك البدني.",
+            "arrow_text_ar": "اكتشف المزيد"
           }
         },
         "service_card_KH8jTz": {
@@ -149,7 +185,10 @@
             "title": "Waxing & Grooming",
             "desc": "Clean, precise waxing for chest, back, and facial areas. Professional results with premium, skin-safe wax.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "إزالة الشعر والعناية",
+            "desc_ar": "إزالة شعر دقيقة ونظيفة لمنطقة الصدر، الظهر، والوجه. نتائج احترافية باستخدام واكس فاخر وآمن على البشرة.",
+            "arrow_text_ar": "اكتشف المزيد"
           }
         },
         "service_card_9HRw9j": {
@@ -160,7 +199,10 @@
             "title": "Manicure & Pedicure",
             "desc": "Clean, shaped, and polished nails with a relaxing hand and foot treatment. Grooming at its finest.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "مانيكير وباديكير للرجال",
+            "desc_ar": "أظافر نظيفة، متناسقة ومصقولة مع جلسة علاجية مريحة لليدين والقدمين. العناية الشخصية في أرقى صورها.",
+            "arrow_text_ar": "اكتشف المزيد"
           }
         },
         "service_card_tD3dtt": {
@@ -171,7 +213,10 @@
             "title": "Men's Facial",
             "desc": "Deep pore cleansing, exfoliation, and hydration treatments designed specifically for men's skin. Clear, healthy skin awaits.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "فيشل للرجال",
+            "desc_ar": "جلسات تنظيف المسام العميقة، التقشير، والترطيب المصممة خصيصاً لبشرة الرجال. بشرة نقية وصحية في انتظارك.",
+            "arrow_text_ar": "اكتشف المزيد"
           }
         }
       },
@@ -185,19 +230,31 @@
       "name": "Donna Bella · For Him",
       "settings": {
         "eyebrow": "For Him · Premium Grooming",
+        "eyebrow_ar": "خصيصاً له · عناية فائقة",
         "title": "Refined Grooming,",
+        "title_ar": "عناية راقية،",
         "title_em": "Crafted for Him",
+        "title_em_ar": "مُصممة خصيصاً له",
         "subtitle": "Upgrade your grooming routine with professional home services. Experience comfort, style, and confidence - without leaving your home.",
+        "subtitle_ar": "ارتقِ بروتين العناية الخاص بك مع خدماتنا المنزلية الاحترافية. اختبر الراحة والجاذبية والثقة دون مغادرة منزلك.",
         "show_stats": true,
         "stat1_num": "100%",
+        "stat1_num_ar": "١٠٠٪",
         "stat1_label": "At-Home Service",
+        "stat1_label_ar": "خدمة منزلية",
         "stat2_num": "60+",
+        "stat2_num_ar": "٦٠+ د",
         "stat2_label": "Min Sessions",
+        "stat2_label_ar": "أقل مدة للجلسة",
         "stat3_num": "★ 4.9",
+        "stat3_num_ar": "★ ٤.٩",
         "stat3_label": "Client Rating",
+        "stat3_label_ar": "تقييم العملاء",
         "btn1_text": "Explore All Men Services",
+        "btn1_text_ar": "اكتشف جميع خدمات الرجال",
         "btn1_link": "shopify://pages/men",
         "btn2_text": "Book a Consultation",
+        "btn2_text_ar": "احجز استشارة",
         "btn2_link": ""
       }
     },
@@ -212,7 +269,10 @@
             "title": "Couples Massage",
             "desc": "Unwind side by side with a relaxing full-body massage for two, performed by certified therapists in the comfort of your home. The perfect way to relax and reconnect together.",
             "arrow_text": "Book Now",
-            "link": ""
+            "link": "",
+            "title_ar": "مساج للأزواج",
+            "desc_ar": "استرخي جنباً إلى جنب مع مساج كامل للجسم لشخصين، تقدمه أخصائيات معتمدات في راحة منزلكما. الطريقة المثالية للراحة وإعادة التواصل معاً.",
+            "arrow_text_ar": "احجزا الآن"
           }
         },
         "service_card_fHN4L7": {
@@ -223,7 +283,10 @@
             "title": "Couples Mani-Pedi",
             "desc": "Pamper your hands and feet together. Shaping, cuticle care, and polish for two, in one shared session.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "مانيكير وباديكير للأزواج",
+            "desc_ar": "دلال لليدين والقدمين معاً. تشمل الجلسة تشكيل الأظافر، العناية بالجلد، والطلاء لشخصين في جلسة واحدة مشتركة.",
+            "arrow_text_ar": "اكتشفا المزيد"
           }
         },
         "service_card_feRpEb": {
@@ -234,7 +297,10 @@
             "title": "Couples Hair",
             "desc": "Wash, style, and blow-dry for two. Look your best together for any occasion, at home.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "تصفيف الشعر للأزواج",
+            "desc_ar": "غسيل، تصفيف، واستشوار لشخصين. تألقا معاً بأفضل مظهر لأي مناسبة، دون مغادرة المنزل.",
+            "arrow_text_ar": "اكتشفا المزيد"
           }
         },
         "service_card_mwznyV": {
@@ -245,7 +311,10 @@
             "title": "Couples Skin Care",
             "desc": "Glow together with deep-cleansing facials and hydration treatments tailored to each of your skin types.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "عناية بالبشرة للأزواج",
+            "desc_ar": "تألقا معاً ببشرة نضرة مع جلسات الفيشل للتنظيف العميق وعلاجات الترطيب المصممة خصيصاً لتناسب نوع بشرة كل منكما.",
+            "arrow_text_ar": "اكتشفا المزيد"
           }
         },
         "service_card_T3VWbn": {
@@ -256,7 +325,10 @@
             "title": "Couples Waxing",
             "desc": "Smooth, long-lasting waxing for two with premium, skin-safe formulas, handled discreetly and professionally.",
             "arrow_text": "Explore",
-            "link": ""
+            "link": "",
+            "title_ar": "إزالة الشعر بالواكس للأزواج",
+            "desc_ar": "إزالة شعر ناعمة ونتائج تدوم طويلاً لشخصين باستخدام تركيبات فاخرة وآمنة على البشرة، بكل احترافية وخصوصية.",
+            "arrow_text_ar": "اكتشفا المزيد"
           }
         }
       },
@@ -270,19 +342,31 @@
       "name": "Donna Bella · For Two",
       "settings": {
         "eyebrow": "For Two · At-Home Luxury",
+        "eyebrow_ar": "للأزواج · فخامة منزلية",
         "title": "Together &",
+        "title_ar": "معاً ودلال",
         "title_em": "Pampered",
+        "title_em_ar": "بلا حدود",
         "subtitle": "Share the experience. Side-by-side beauty and grooming rituals delivered to your home — the perfect way to relax and reconnect together.",
+        "subtitle_ar": "طقوس الجمال والعناية جنباً إلى جنب تصلكما حتى المنزل — الطريقة المثالية للاسترخاء وإعادة التواصل معاً.",
         "show_stats": true,
         "stat1_num": "2",
+        "stat1_num_ar": "٢",
         "stat1_label": "Therapists Together",
+        "stat1_label_ar": "أخصائيتان معاً",
         "stat2_num": "100%",
+        "stat2_num_ar": "١٠٠٪",
         "stat2_label": "At-Home Service",
+        "stat2_label_ar": "خدمة منزلية",
         "stat3_num": "★ 4.9",
+        "stat3_num_ar": "★ ٤.٩",
         "stat3_label": "Client Rating",
+        "stat3_label_ar": "تقييم العملاء",
         "btn1_text": "Explore Couples Packages",
+        "btn1_text_ar": "اكتشفا باقات الأزواج",
         "btn1_link": "shopify://pages/couples",
         "btn2_text": "Book a Consultation",
+        "btn2_text_ar": "احجزا استشارة",
         "btn2_link": ""
       }
     },

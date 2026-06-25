@@ -52,13 +52,8 @@
 
 <style>
 #shopify-section-{{ section.id }} .db-services-wrapper {
-  width: 100vw; position: relative;
-  {% if is_arabic %}
-    right: 50%; margin-right: -50vw; margin-left: 0; left: auto;
-  {% else %}
-    left: 50%; margin-left: -50vw; margin-right: 0; right: auto;
-  {% endif %}
-  overflow: hidden;
+  width: 100vw; position: relative; left: 50%; right: 50%;
+  margin-left: -50vw; margin-right: -50vw; overflow: hidden;
 }
 #shopify-section-{{ section.id }} .db-couples-section {
   position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
