@@ -339,6 +339,7 @@
                 class="video-{{ id }} {% if section.settings.mobile_iframe_video != blank or section.settings.mobile_html5_video != blank %}is-hidden-mobile-only{% endif %}"
                 data-video-element
                 data-html5-video
+                crossorigin="anonymous"
                 {% unless section.settings.show_controls %}autoplay muted loop playsinline{% endunless %}
                 preload="auto"
                 webkit-playsinline
@@ -381,6 +382,7 @@
                   class="video-mobile-{{ id }} is-hidden-desktop-only"
                   data-video-element
                   data-html5-video
+                  crossorigin="anonymous"
                   {% unless section.settings.show_controls %}autoplay muted loop playsinline{% endunless %}
                   preload="auto"
                   webkit-playsinline
@@ -395,6 +397,23 @@
                 </video>
               {% endif %}
             {% endif %}
+
+            <!-- Custom Sound Toggle Button -->
+            <button class="video-sound-toggle" aria-label="Toggle sound" style="z-index: 12;">
+              <span class="sound-icon-unmuted" style="display: none;">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              </span>
+              <span class="sound-icon-muted">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+              </span>
+            </button>
+
+            <!-- Custom Loading Spinner -->
+            <div class="video-loading-spinner" style="z-index: 4;">
+              <div class="spinner-dot"></div>
+              <div class="spinner-dot"></div>
+              <div class="spinner-dot"></div>
+            </div>
 
             <div
               class="
@@ -465,6 +484,87 @@
   const isMobile = window.innerWidth <= 768;
   
   if (!showControls && videoWrapper) {
+    // Canvas frame capture for instant poster fallback
+    const captureFirstFrame = (video, wrapper) => {
+      if (!video || !wrapper) return;
+      
+      // If a real poster image is already present, don't overwrite it
+      const hasRealPoster = wrapper.querySelector('.video-wrapper__image:not(.js-fallback-poster) img');
+      if (hasRealPoster) return;
+      
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      const grabFrame = () => {
+        try {
+          if (video.videoWidth === 0 || video.videoHeight === 0) return;
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const dataURL = canvas.toDataURL('image/jpeg', 0.85);
+          
+          let fallbackPoster = wrapper.querySelector('.js-fallback-poster');
+          if (!fallbackPoster) {
+            fallbackPoster = document.createElement('div');
+            fallbackPoster.className = 'video-wrapper__image js-fallback-poster';
+            fallbackPoster.style.cssText = 'position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important; transition: opacity 0.6s ease !important;';
+            
+            const img = document.createElement('img');
+            img.style.cssText = 'width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;';
+            fallbackPoster.appendChild(img);
+            
+            // Insert before video element
+            wrapper.insertBefore(fallbackPoster, wrapper.firstChild);
+          }
+          
+          fallbackPoster.querySelector('img').src = dataURL;
+        } catch (e) {
+          console.warn('Canvas capture failed: ', e);
+        }
+      };
+      
+      if (video.readyState >= 2) {
+        grabFrame();
+      } else {
+        video.addEventListener('loadeddata', grabFrame, { once: true });
+        video.addEventListener('seeked', grabFrame, { once: true });
+      }
+    };
+
+    // Sound Toggle Logic
+    const soundToggle = videoWrapper.querySelector('.video-sound-toggle');
+    const updateSoundIcon = (isMuted) => {
+      if (!soundToggle) return;
+      const unmutedIcon = soundToggle.querySelector('.sound-icon-unmuted');
+      const mutedIcon = soundToggle.querySelector('.sound-icon-muted');
+      if (isMuted) {
+        unmutedIcon.style.display = 'none';
+        mutedIcon.style.display = 'block';
+      } else {
+        unmutedIcon.style.display = 'block';
+        mutedIcon.style.display = 'none';
+      }
+    };
+    
+    if (soundToggle) {
+      soundToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const video = videoWrapper.querySelector('video');
+        const plyrElement = videoWrapper.querySelector('[data-video-element]');
+        
+        if (plyrElement && plyrElement.plyr) {
+          const player = plyrElement.plyr;
+          player.muted = !player.muted;
+          updateSoundIcon(player.muted);
+        } else if (video) {
+          video.muted = !video.muted;
+          updateSoundIcon(video.muted);
+        }
+      });
+    }
+
     // Function to mark video as playing and fade out poster
     const markVideoAsPlaying = () => {
       videoWrapper.classList.add('video-playing');
@@ -484,6 +584,13 @@
           video.muted = true;
           video.setAttribute('playsinline', '');
           video.setAttribute('webkit-playsinline', '');
+          video.setAttribute('crossorigin', 'anonymous');
+          
+          // Capture first frame as poster
+          captureFirstFrame(video, videoWrapper);
+          
+          // Initial sound icon sync
+          updateSoundIcon(video.muted);
           
           let canPlayThrough = false;
           let hasPlayed = false;
@@ -624,7 +731,12 @@
               
               player.on('ready', () => {
                 player.muted = true;
+                updateSoundIcon(player.muted);
                 setTimeout(attemptPlay, 100);
+              });
+              
+              player.on('volumechange', () => {
+                updateSoundIcon(player.muted);
               });
               
               if (isMobile) {
@@ -1101,5 +1213,83 @@
   color: #ffffff !important;
   fill: #ffffff !important;
   stroke: #ffffff !important;
+}
+
+/* FIX #9: Custom Sound Toggle Button styling */
+#shopify-section-{{ section.id }} .video-sound-toggle {
+  position: absolute !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  z-index: 12 !important;
+}
+
+#shopify-section-{{ section.id }} .video-sound-toggle:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+#shopify-section-{{ section.id }} .video-sound-toggle:active {
+  transform: scale(0.95) !important;
+}
+
+#shopify-section-{{ section.id }} .video-controls-enabled--true .video-sound-toggle {
+  display: none !important;
+}
+
+@media only screen and (max-width: 768px) {
+  #shopify-section-{{ section.id }} .video-sound-toggle {
+    bottom: 15px !important;
+    right: 15px !important;
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
+
+/* FIX #10: Custom Loading Spinner styling */
+#shopify-section-{{ section.id }} .video-loading-spinner {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  display: flex !important;
+  gap: 8px !important;
+  transition: opacity 0.4s ease !important;
+  z-index: 4 !important;
+}
+
+#shopify-section-{{ section.id }} .video-wrapper.video-playing .video-loading-spinner {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+#shopify-section-{{ section.id }} .spinner-dot {
+  width: 12px !important;
+  height: 12px !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  border-radius: 50% !important;
+  animation: spinnerBounce 1.4s infinite ease-in-out both !important;
+}
+
+#shopify-section-{{ section.id }} .spinner-dot:nth-child(1) { animation-delay: -0.32s !important; }
+#shopify-section-{{ section.id }} .spinner-dot:nth-child(2) { animation-delay: -0.16s !important; }
+
+@keyframes spinnerBounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1.0); }
 }
 </style>

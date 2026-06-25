@@ -71,18 +71,17 @@
     },
     "video_7kn6Qf": {
       "type": "video",
-      "disabled": true,
       "name": "Video",
       "settings": {
         "wide_display": true,
         "aspect_ratio": "16:9",
         "autoplay": true,
         "autoloop": true,
-        "mute_video": false,
+        "mute_video": true,
         "show_controls": false,
         "video_dark_overlay": false,
         "iframe_video": "",
-        "html5_video": "https://cdn.shopify.com/videos/c/o/v/e75033b6e9f346db9c3eb151020df536.mp4",
+        "html5_video": "https://cdn.shopify.com/videos/c/o/v/c4c2ca4f9c3b4667a852b6c3ae44d38d.mp4",
         "display_text_over_video": false,
         "preheading": "",
         "heading": "",
@@ -96,9 +95,8 @@
         "text_position": "center",
         "text_align": "center",
         "caption_content_background": "original",
-        "mobile_image": "shopify://shop_images/Happy_Facial.png",
         "mobile_iframe_video": "",
-        "mobile_html5_video": "",
+        "mobile_html5_video": "https://cdn.shopify.com/videos/c/o/v/fa48588d0832426aa17ef438e283d5b0.mp4",
         "mobile_text_below_image": true,
         "mobile_text_color": "",
         "padding_top": 0,
@@ -124,7 +122,9 @@
       "type": "custom-liquid",
       "disabled": true,
       "name": "Custom liquid",
-      "settings": {}
+      "settings": {
+        "custom_liquid": ""
+      }
     },
     "for_her_bQyTH9": {
       "type": "for-her",
@@ -495,6 +495,7 @@
         "collection_Y6bwkF",
         "collection_n3mnM7"
       ],
+      "disabled": true,
       "name": "Collections Slider",
       "settings": {
         "background_color": "#405264",
@@ -622,6 +623,7 @@
         "card_EHkaqT",
         "card_KrAwAD"
       ],
+      "disabled": true,
       "name": "Before/After Slider",
       "settings": {
         "before_image": "shopify://shop_images/Before.png",
@@ -651,6 +653,7 @@
     },
     "images_text_RBadb3": {
       "type": "images-text",
+      "disabled": true,
       "name": "Image & Text Two Column",
       "settings": {
         "reverse_layout": false,
@@ -842,6 +845,7 @@
         "text_item_h7zbak",
         "text_item_QmBybR"
       ],
+      "disabled": true,
       "name": "Animated Services",
       "settings": {
         "show_title": true,
@@ -1150,6 +1154,7 @@
     },
     "images_text_3x674t": {
       "type": "images-text",
+      "disabled": true,
       "name": "Image & Text Two Column",
       "settings": {
         "reverse_layout": false,
@@ -1456,6 +1461,7 @@
         "team_member_TBwUEp",
         "team_member_pFqJhN"
       ],
+      "disabled": true,
       "name": "Team Grid",
       "settings": {
         "section_title": "OUR TEAM",

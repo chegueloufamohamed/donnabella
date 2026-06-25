@@ -168,38 +168,15 @@
     "twitter_link": "",
     "vimeo_link": "",
     "whatsapp_link": "",
-    "gemini_api_key": "AQ.Ab8RN6LEzKnPyDa0vJa7e3TP7IMZFHWO3PWphPoaSXhPFq9mbQ",
     "youtube_link": "",
     "favicon": "shopify://shop_images/Favicon.png",
+    "gemini_api_key": "AQ.Ab8RN6LEzKnPyDa0vJa7e3TP7IMZFHWO3PWphPoaSXhPFq9mbQ",
     "disqus_enabled": false,
     "disqus_shortname": "",
     "enable_shopify_review_comments": false,
     "enable_shopify_collection_badges": false,
     "tikok_link": "",
     "dribble_link": "",
-    "sections": {
-      "social-sidebar": {
-        "type": "social-sidebar",
-        "settings": {
-          "facebook_url": "https://belladone.ae",
-          "instagram_url": "https://belladone.ae",
-          "tiktok_url": "https://belladone.ae",
-          "snapchat_url": "https://belladone.ae",
-          "background_color": "#ffffff",
-          "background_opacity": 30,
-          "enable_backdrop_blur": true,
-          "blur_amount": 4,
-          "border_radius": 50,
-          "enable_border": true,
-          "border_opacity": 10,
-          "shadow_opacity": 20,
-          "icon_spacing": 12,
-          "icon_color": "#ffffff",
-          "hover_icon_color": "#000000",
-          "hover_circle_color": "#ffffff"
-        }
-      }
-    },
     "content_for_index": []
   }
 }
