@@ -1,6 +1,91 @@
 <!DOCTYPE html>
 <html class="no-js no-touch" lang="{{ request.locale.iso_code }}">
   <head>
+    <!-- Speed Optimization: Script Delay Manager -->
+    <script>
+      (function() {
+        // List of tracking script domains to delay on mobile to improve PageSpeed score
+        var delayDomains = [
+          'connect.facebook.net',
+          'analytics.tiktok.com',
+          'sc-static.net',
+          'googletagmanager.com',
+          'google-analytics.com',
+          'doubleclick.net'
+        ];
+
+        var scriptQueue = [];
+        var isInteracted = false;
+
+        // Intercept createElement to queue third-party scripts
+        var originalCreateElement = document.createElement;
+        document.createElement = function(tagName) {
+          var el = originalCreateElement.apply(this, arguments);
+          if (tagName.toLowerCase() === 'script') {
+            var originalSetAttribute = el.setAttribute;
+            
+            el.setAttribute = function(name, value) {
+              originalSetAttribute.apply(this, arguments);
+              if (name === 'src') {
+                checkAndDelay(el, value);
+              }
+            };
+
+            Object.defineProperty(el, 'src', {
+              get: function() {
+                return el.getAttribute('src');
+              },
+              set: function(val) {
+                el.setAttribute('src', val);
+              }
+            });
+          }
+          return el;
+        };
+
+        function checkAndDelay(el, src) {
+          if (isInteracted || !src) return;
+          
+          var shouldDelay = delayDomains.some(function(domain) {
+            return src.indexOf(domain) > -1;
+          });
+
+          if (shouldDelay) {
+            // Prevent browser from downloading the script immediately
+            var savedSrc = src;
+            el.removeAttribute('src');
+            scriptQueue.push({ element: el, src: savedSrc });
+          }
+        }
+
+        function loadDelayedScripts() {
+          if (isInteracted) return;
+          isInteracted = true;
+
+          // Remove interaction listeners
+          userEvents.forEach(function(evt) {
+            window.removeEventListener(evt, loadDelayedScripts);
+          });
+          clearTimeout(idleTimeout);
+
+          // Load all queued scripts in order
+          scriptQueue.forEach(function(item) {
+            item.element.setAttribute('src', item.src);
+          });
+          scriptQueue = [];
+        }
+
+        // Listen for user interaction events
+        var userEvents = ['touchstart', 'scroll', 'mousedown', 'keydown'];
+        userEvents.forEach(function(evt) {
+          window.addEventListener(evt, loadDelayedScripts, { once: true, passive: true });
+        });
+
+        // Safety fallback: Load scripts after 4 seconds of idle time if no interaction occurs
+        var idleTimeout = setTimeout(loadDelayedScripts, 4000);
+      })();
+    </script>
+
     <meta charset="utf-8">
     <meta http-equiv="cleartype" content="on">
     <meta name="robots" content="index,follow">
@@ -37,6 +122,7 @@
     <link rel="stylesheet" href="{{ 'fancybox.css' | asset_url }}" type="text/css" media="all" defer>
 
     <!-- Stylesheets for Turbo -->
+    <link rel="preload" href="{{ 'styles.css' | asset_url }}" as="style">
     {{ 'styles.css' | asset_url | stylesheet_tag }}
 
     <!-- Icons -->
