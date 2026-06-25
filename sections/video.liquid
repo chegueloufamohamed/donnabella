@@ -258,12 +258,12 @@
           data-mute-video="{% if section.settings.show_controls %}{{ section.settings.mute_video }}{% else %}true{% endif %}"
           data-video-src="{{ section.settings.iframe_video.id }}"
           data-aspect-ratio="{{ section.settings.aspect_ratio }}"
-          data-poster-image-uploaded="{%- if section.settings.image != blank -%}true{%- else -%}false{%- endif -%}"
+          data-poster-image-uploaded="{%- if section.settings.image != blank or section.settings.mobile_image != blank -%}true{%- else -%}false{%- endif -%}"
         >
           <div class="video__overlay"></div>
             {% comment %} CRITICAL: Poster images FIRST in HTML for instant display {% endcomment %}
             {% if section.settings.image != blank %}
-              <div class="video-wrapper__image {% if section.settings.mobile_image %}is-hidden-mobile-only{% endif %}" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important;">
+              <div class="video-wrapper__image {% if section.settings.mobile_image != blank %}is-hidden-mobile-only{% endif %}" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important;">
                 {%
                   render 'image-element',
                   image: section.settings.image,
@@ -275,14 +275,28 @@
                   <div class="darken-bg"></div>
                 {% endif %}
               </div>
+            {% elsif section.settings.mobile_image != blank %}
+              {% comment %} Fallback for desktop when desktop image is missing but mobile is set {% endcomment %}
+              <div class="video-wrapper__image is-hidden-mobile-only" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important;">
+                {%
+                  render 'image-element',
+                  image: section.settings.mobile_image,
+                  alt: section.settings.mobile_image.alt,
+                  stretch_width: true,
+                  focal_point: section.settings.mobile_image.presentation.focal_point,
+                %}
+                {% if section.settings.caption_content_background == 'darken_bg' %}
+                  <div class="darken-bg"></div>
+                {% endif %}
+              </div>
             {% else %}
               {% unless section.settings.html5_video != blank or section.settings.iframe_video != blank %}
-                <div class="video-wrapper__image {% if section.settings.mobile_image %}is-hidden-mobile-only{% endif %}" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important;">
+                <div class="video-wrapper__image {% if section.settings.mobile_image != blank %}is-hidden-mobile-only{% endif %}" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important;">
                   {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--video' }}
                 </div>
               {% endunless %}
             {% endif %}
-            {% if section.settings.mobile_image and section.settings.image %}
+            {% if section.settings.mobile_image != blank %}
               <div class="video-wrapper__image is-hidden-desktop-only" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important;">
                 {%
                   render 'image-element',
@@ -488,7 +502,6 @@
             if (canPlayThrough || isBuffered() || video.readyState >= 2) {
               video.play().then(() => {
                 hasPlayed = true;
-                markVideoAsPlaying();
               }).catch(e => {
                 setTimeout(attemptPlay, isMobile ? 150 : 100);
               });
@@ -508,7 +521,24 @@
             if (isBuffered()) attemptPlay();
           });
           
-          video.addEventListener('playing', markVideoAsPlaying);
+          // CRITICAL: Prevent black screen flash by waiting for actual painted frames (currentTime > 0)
+          const checkVideoStarted = () => {
+            if (video.currentTime > 0) {
+              markVideoAsPlaying();
+            } else {
+              requestAnimationFrame(checkVideoStarted);
+            }
+          };
+          
+          video.addEventListener('playing', () => {
+            requestAnimationFrame(checkVideoStarted);
+          });
+          
+          video.addEventListener('timeupdate', () => {
+            if (video.currentTime > 0) {
+              markVideoAsPlaying();
+            }
+          });
           
           video.addEventListener('waiting', () => console.log('⏳ Buffering...'));
           video.addEventListener('stalled', () => {
@@ -552,7 +582,15 @@
               
               const attemptPlay = () => {
                 player.play().then(() => {
-                  markVideoAsPlaying();
+                  // Wait for actual frames
+                  const checkPlyrStarted = () => {
+                    if (player.currentTime > 0) {
+                      markVideoAsPlaying();
+                    } else {
+                      requestAnimationFrame(checkPlyrStarted);
+                    }
+                  };
+                  requestAnimationFrame(checkPlyrStarted);
                 }).catch(e => {
                   playAttempts++;
                   if (playAttempts < maxAttempts) {
@@ -567,7 +605,23 @@
                 player.elements.controls.style.display = 'none';
               }
               
-              player.on('playing', markVideoAsPlaying);
+              player.on('playing', () => {
+                const checkPlyrStarted = () => {
+                  if (player.currentTime > 0) {
+                    markVideoAsPlaying();
+                  } else {
+                    requestAnimationFrame(checkPlyrStarted);
+                  }
+                };
+                requestAnimationFrame(checkPlyrStarted);
+              });
+              
+              player.on('timeupdate', () => {
+                if (player.currentTime > 0) {
+                  markVideoAsPlaying();
+                }
+              });
+              
               player.on('ready', () => {
                 player.muted = true;
                 setTimeout(attemptPlay, 100);
@@ -604,7 +658,8 @@
         }
         
         iframe.addEventListener('load', () => {
-          setTimeout(markVideoAsPlaying, 1000);
+          // Fallback loader if events don't fire: wait 3.5s to let the stream buffer
+          setTimeout(markVideoAsPlaying, 3500);
         });
       });
     };
@@ -1029,5 +1084,22 @@
 #shopify-section-{{ section.id }} .video-wrapper__image {
   will-change: auto;
   contain: layout style paint;
+}
+
+/* FIX #8: Make control icons (especially the sound icon) white */
+#shopify-section-{{ section.id }} .plyr {
+  --plyr-video-control-color: #ffffff !important;
+  --plyr-video-control-color-hover: #ffffff !important;
+  --plyr-color-main: #ffffff !important;
+}
+
+#shopify-section-{{ section.id }} .plyr__controls,
+#shopify-section-{{ section.id }} .plyr__controls .plyr__control,
+#shopify-section-{{ section.id }} .plyr__controls svg,
+#shopify-section-{{ section.id }} .plyr__controls button svg,
+#shopify-section-{{ section.id }} .plyr__control[data-plyr="mute"] svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
 }
 </style>
