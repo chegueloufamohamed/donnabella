@@ -93,6 +93,8 @@
             alt="{{ section.settings.photo_alt | default: 'Booking image' }}"
             class="book-photo-{{ section.id }}"
             loading="eager"
+            width="{{ section.settings.photo.width }}"
+            height="{{ section.settings.photo.height }}"
           >
           {% if section.settings.photo_overlay_opacity > 0 %}
             <div class="book-photo-overlay-{{ section.id }}"></div>
@@ -187,8 +189,6 @@
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&family=Merriweather:wght@300;400;700;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lato:wght@300;400;700;900&family=Raleway:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=EB+Garamond:wght@400;500;600;700;800&family=Cinzel:wght@400;500;600;700;800;900&family=Crimson+Text:wght@400;600;700&family=Roboto:wght@300;400;500;700;900&family=Open+Sans:wght@300;400;600;700;800&family=Nunito:wght@300;400;600;700;800;900&family=Work+Sans:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&family=Almarai:wght@300;400;700;800&family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap');
-
   {% assign bg_color = section.settings.background_color %}
   {% assign bg_r = bg_color | color_extract: 'red' %}
   {% assign bg_g = bg_color | color_extract: 'green' %}

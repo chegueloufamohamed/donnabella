@@ -66,92 +66,55 @@
 </style>
 
 <div id="vs-{{ id }}">
-
-  {% comment %} DESKTOP {% endcomment %}
-  <div class="vs-desktop" style="position:absolute;inset:0;width:100%;height:100%;">
-
+  {% comment %}
+    We only render the active viewport's thumbnail instantly in HTML.
+    This prevents loading double thumbnails and ensures fast LCP.
+  {% endcomment %}
+  <div class="vs-desktop-thumb-wrap">
     {% if desktop_thumb != blank %}
-      <div class="vs-thumb" id="vs-dthumb-{{ id }}">
+      <div class="vs-thumb vs-desktop-only-thumb" id="vs-dthumb-{{ id }}">
         {{ desktop_thumb | image_url: width: 1600 | image_tag:
           loading: 'eager',
           fetchpriority: 'high',
           widths: '800, 1200, 1600',
-          sizes: '100vw'
+          sizes: '100vw',
+          alt: 'Desktop Video Thumbnail'
         }}
       </div>
     {% endif %}
-
-    {% if desktop_video != blank %}
-      <video
-        class="vs-video"
-        id="vs-dvid-{{ id }}"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        webkit-playsinline
-      >
-        <source src="{{ desktop_video }}" type="video/mp4">
-      </video>
-    {% endif %}
-
   </div>
 
-  {% comment %} MOBILE {% endcomment %}
-  <div class="vs-mobile" style="position:absolute;inset:0;width:100%;height:100%;display:none;">
-
+  <div class="vs-mobile-thumb-wrap" style="display:none;">
     {% if mobile_thumb != blank %}
-      <div class="vs-thumb" id="vs-mthumb-{{ id }}">
+      <div class="vs-thumb vs-mobile-only-thumb" id="vs-mthumb-{{ id }}">
         {{ mobile_thumb | image_url: width: 800 | image_tag:
           loading: 'eager',
           fetchpriority: 'high',
           widths: '400, 600, 800',
-          sizes: '100vw'
+          sizes: '100vw',
+          alt: 'Mobile Video Thumbnail'
         }}
       </div>
     {% elsif desktop_thumb != blank %}
-      <div class="vs-thumb" id="vs-mthumb-{{ id }}">
+      <div class="vs-thumb vs-mobile-only-thumb" id="vs-mthumb-{{ id }}">
         {{ desktop_thumb | image_url: width: 800 | image_tag:
           loading: 'eager',
           fetchpriority: 'high',
           widths: '400, 600, 800',
-          sizes: '100vw'
+          sizes: '100vw',
+          alt: 'Mobile Video Thumbnail'
         }}
       </div>
     {% endif %}
-
-    {% if mobile_video != blank %}
-      <video
-        class="vs-video"
-        id="vs-mvid-{{ id }}"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        webkit-playsinline
-      >
-        <source src="{{ mobile_video }}" type="video/mp4">
-      </video>
-    {% elsif desktop_video != blank %}
-      <video
-        class="vs-video"
-        id="vs-mvid-{{ id }}"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        webkit-playsinline
-      >
-        <source src="{{ desktop_video }}" type="video/mp4">
-      </video>
-    {% endif %}
-
   </div>
-
 </div>
+
+<style>
+  @media (max-width: 768px) {
+    .vs-desktop-only-thumb { display: none !important; }
+    .vs-mobile-thumb-wrap { display: block !important; }
+  }
+</style>
 
 <script>
 (function () {
@@ -160,26 +123,30 @@
   var wrapper  = document.getElementById('vs-' + id);
   if (!wrapper) return;
 
-  var desktop = wrapper.querySelector('.vs-desktop');
-  var mobile  = wrapper.querySelector('.vs-mobile');
+  var videoUrl = isMobile ? '{{ mobile_video | default: desktop_video }}' : '{{ desktop_video }}';
+  var thumbId  = isMobile ? 'vs-mthumb-' + id : 'vs-dthumb-' + id;
+  var thumb    = document.getElementById(thumbId);
 
-  if (isMobile) {
-    desktop.style.display = 'none';
-    mobile.style.display  = 'block';
-  } else {
-    desktop.style.display = 'block';
-    mobile.style.display  = 'none';
-  }
+  if (!videoUrl) return;
 
-  var thumbId = isMobile ? 'vs-mthumb-' + id : 'vs-dthumb-' + id;
-  var vidId   = isMobile ? 'vs-mvid-'   + id : 'vs-dvid-'  + id;
-  var thumb   = document.getElementById(thumbId);
-  var video   = document.getElementById(vidId);
+  var video = document.createElement('video');
+  video.className = 'vs-video';
+  video.id = isMobile ? 'vs-mvid-' + id : 'vs-dvid-' + id;
+  video.autoplay = true;
+  video.muted = true;
+  video.loop = true;
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
+  video.setAttribute('preload', 'auto');
 
-  if (!video) return;
+  var source = document.createElement('source');
+  source.src = videoUrl;
+  source.type = 'video/mp4';
+  video.appendChild(source);
+
+  wrapper.appendChild(video);
 
   var faded = false;
-
   function fadeThumb() {
     if (faded || !thumb) return;
     faded = true;
@@ -209,7 +176,6 @@
       }, { once: true, passive: true });
     });
   }
-
 })();
 </script>
 

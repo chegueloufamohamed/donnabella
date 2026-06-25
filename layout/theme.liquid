@@ -23,6 +23,9 @@
     <link rel="preconnect" href="https://fonts.shopifycdn.com" />
     <link rel="preconnect" href="https://cdn.shopify.com" />
     <link rel="preconnect" href="https://cdn.shopifycloud.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&family=Merriweather:wght@300;400;700;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <link rel="dns-prefetch" href="https://v.shopify.com" />
     <link rel="dns-prefetch" href="https://www.youtube.com" />
@@ -290,7 +293,7 @@
     {%- endif -%}
     <script>(function(n, v) {/* eslint-disable-next-line max-len */if (window.Shopify && window.Shopify.theme && navigator && navigator.sendBeacon && window.Shopify.designMode) {if (sessionStorage.getItem('oots_beacon')) return;navigator.sendBeacon('https://app.outofthesandbox.com/beacon', new URLSearchParams({shop_domain: window.Shopify.shop.toLowerCase(),shop_id: window.BOOMR.shopId,shop_email: '{{ shop.email }}',theme_name: n.toLowerCase(),theme_version: v.toLowerCase(),theme_store_id: window.Shopify.theme.theme_store_id,theme_id: window.Shopify.theme.id,theme_role: window.Shopify.theme.role,}));sessionStorage.setItem('oots_beacon', '');}}('turbo','9.5.1'))</script>
     {% render 'social-sidebar' %}
-    {{ 'smooth-scroll.js' | asset_url | script_tag }}
+    <script src="{{ 'smooth-scroll.js' | asset_url }}" defer></script>
     {% render 'db-ai-assistant' %}
     {% render 'whatsapp-floating' %}
     {% render 'back-to-top' %}
