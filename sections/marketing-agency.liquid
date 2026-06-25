@@ -463,7 +463,19 @@
     if(rm){ cart = cart.filter(function(i){ return i.id !== rm; }); saveCart(); render(); }
   });
 
-  if(barEl){ barEl.addEventListener('click', function(){ cartEl.classList.toggle('is-open'); }); }
+  if(barEl){
+    barEl.addEventListener('click', function(){
+      var isOpen = cartEl.classList.toggle('is-open');
+      if (isOpen && window.innerWidth <= 900) {
+        var panelEl = cartEl.querySelector('.nls-cart-panel');
+        if (panelEl) {
+          setTimeout(function() {
+            panelEl.scrollTop = panelEl.scrollHeight;
+          }, 50);
+        }
+      }
+    });
+  }
 
   bookEl.addEventListener('click', function(){
     if(!cart.length) return;
