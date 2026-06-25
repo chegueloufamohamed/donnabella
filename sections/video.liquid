@@ -1,1145 +1,260 @@
-<script
-  type="application/json"
-  data-section-type="video"
-  data-section-id="{{ section.id }}"
->
-</script>
-
 {% liquid
   assign id = section.id
-  assign object_selector = '#shopify-section-' | append: id
-  assign mobile_text_alpha = section.settings.mobile_text_color | default: 'rgba(0,0,0,0)' | color_extract: 'alpha'
+  assign desktop_video = section.settings.desktop_video
+  assign desktop_thumb = section.settings.desktop_thumbnail
+  assign mobile_video = section.settings.mobile_video
+  assign mobile_thumb = section.settings.mobile_thumbnail
 %}
 
-{% style %}
-  /* CRITICAL: Inline styles for instant load - prevents black screen flash */
-  {{ object_selector }} .video-wrapper__image {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 5 !important;
-    opacity: 1 !important;
-    display: block !important;
-    background: #000 !important;
-  }
-
-  {{ object_selector }} .video-wrapper__image img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-  }
-
-  {% render 'section-space' %}
-
-  {{ object_selector }} .is-hidden {
-    display: none !important;
-  }
-
-  {{ object_selector }} .is-hidden-mobile-only {
+<style>
+  #shopify-section-{{ id }} {
     display: block;
-  }
-
-  {{ object_selector }} .is-hidden-desktop-only {
-    display: none;
-  }
-
-  @media only screen and (max-width: 768px) {
-    {{ object_selector }} .is-hidden-mobile-only {
-      display: none !important;
-    }
-    
-    {{ object_selector }} .is-hidden-desktop-only {
-      display: block !important;
-    }
-  }
-
-  {{ object_selector }} .video-wrapper {
-    background: transparent !important;
-    position: relative !important;
-  }
-
-  {{ object_selector }} .plyr {
-    min-height: auto;
-  }
-
-  {{ object_selector }} .plyr__video-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
     background: transparent;
   }
 
-  {{ object_selector }} .plyr__video-embed.is-hidden-desktop-only,
-  {{ object_selector }} video.is-hidden-desktop-only {
-    display: none;
+  #vs-{{ id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: transparent;
+    aspect-ratio: 16 / 9;
   }
 
-  @media only screen and (max-width: 768px) {
-    {{ object_selector }} .plyr__video-embed.is-hidden-desktop-only,
-    {{ object_selector }} video.is-hidden-desktop-only {
-      display: block !important;
-    }
-    
-    {{ object_selector }} .plyr__video-embed.is-hidden-mobile-only,
-    {{ object_selector }} video.is-hidden-mobile-only {
-      display: none !important;
-    }
+  #vs-{{ id }} .vs-thumb {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+  }
 
-    {{ object_selector }}.section {
-      padding: 0 !important;
-      margin: 0 !important;
-      min-height: 100vh;
-      min-height: 100dvh;
-    }
+  #vs-{{ id }} .vs-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 
-    {{ object_selector }} .container {
-      padding: 0 !important;
-      margin: 0 !important;
-      max-width: 100% !important;
-      width: 100% !important;
-      min-height: 100vh;
-      min-height: 100dvh;
-    }
+  #vs-{{ id }} .vs-thumb.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 
-    {{ object_selector }} .one-whole.column {
-      padding: 0 !important;
-      margin: 0 !important;
-      width: 100%;
-    }
+  #vs-{{ id }} video.vs-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    object-fit: cover;
+    display: block;
+    background: transparent;
+  }
 
-    {{ object_selector }} .video-section {
-      padding: 0 !important;
-      margin: 0 !important;
-      width: 100%;
-    }
-
-    {{ object_selector }} .video-wrapper {
-      padding: 0 !important;
-      margin: 0 !important;
+  @media (max-width: 768px) {
+    #vs-{{ id }} {
+      aspect-ratio: unset;
       width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      background: transparent !important;
-      position: relative;
-      overflow: hidden;
-    }
-
-    {{ object_selector }} .video__overlay {
-      display: none !important;
-    }
-
-    {{ object_selector }} .plyr,
-    {{ object_selector }} .plyr__video-wrapper,
-    {{ object_selector }} .plyr__video-embed {
-      width: 100% !important;
-      height: 100% !important;
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-
-    {{ object_selector }} iframe,
-    {{ object_selector }} video {
-      position: absolute !important;
-      top: 0 !important;
-      left: 50% !important;
-      transform: translateX(-50%) !important;
-      width: 100vw !important;
-      height: 100vh !important;
-      height: 100dvh !important;
-      object-fit: cover !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      will-change: transform;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-
-    /* FIXED: Poster stays on top until video plays */
-    {{ object_selector }} .video-wrapper__image {
-      position: absolute !important;
-      width: 100% !important;
-      height: 100% !important;
-      top: 0 !important;
-      left: 0 !important;
-      z-index: 5 !important;
-      opacity: 1 !important;
-      transition: opacity 0.6s ease !important;
-    }
-
-    {{ object_selector }} .video-wrapper.video-playing .video-wrapper__image {
-      opacity: 0 !important;
-      pointer-events: none !important;
-      z-index: 1 !important;
+      height: 100svh;
     }
   }
+</style>
 
-  /* Desktop poster fade */
-  {{ object_selector }} .video-wrapper__image {
-    transition: opacity 0.6s ease !important;
-  }
+<div id="vs-{{ id }}">
 
-  {{ object_selector }} .video-wrapper.video-playing .video-wrapper__image {
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
+  {% comment %} DESKTOP {% endcomment %}
+  <div class="vs-desktop" style="position:absolute;inset:0;width:100%;height:100%;">
 
-  {% unless section.settings.show_controls %}
-    {{ object_selector }} .plyr__poster {
-      display: none !important;
-    }
-  {% endunless %}
-
-  {% if section.settings.mobile_text_below_image and mobile_text_alpha != 0 %}
-    @media only screen and (max-width: 480px) {
-      {{ object_selector }} .pretext,
-      {{ object_selector }} .headline,
-      {{ object_selector }} .subtitle {
-        color: {{ section.settings.mobile_text_color }};
-      }
-    }
-  {% endif %}
-
-  {% unless section.settings.show_controls %}
-    {{ object_selector }} .video__text-container [data-play-button] {
-      display: none !important;
-    }
-    {{ object_selector }} .plyr__controls,
-    {{ object_selector }} .plyr__control,
-    {{ object_selector }} .plyr__play-large {
-      display: none !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
-    {{ object_selector }} .video-wrapper:hover .plyr__controls {
-      display: none !important;
-    }
-    {{ object_selector }} .video-wrapper {
-      pointer-events: none;
-    }
-    {{ object_selector }} .video-wrapper * {
-      cursor: default !important;
-    }
-  {% endunless %}
-
-  {%
-    render 'css-loop',
-    css: section.settings.custom_css,
-    id: id,
-  %}
-{% endstyle %}
-
-<section
-  class="
-    section
-    {% if section.settings.wide_display == true %}
-      is-width-wide
-      has-no-side-gutter
-    {% endif %}
-    {{ section.settings.css_class }}
-  "
->
-  <div class="container">
-    <div class="one-whole column">
-      <div class="video-section full-width--{{ section.settings.wide_display }}">
-        <div
-          class="
-            video-wrapper
-            video-controls-enabled--{{ section.settings.show_controls }}
-            darken-video--{{ section.settings.video_dark_overlay }}
-            caption-background-{{ section.settings.caption_content_background }}
-            caption--below-{{ section.settings.mobile_text_below_image }}
-          "
-          id="video-{{ id }}"
-          data-autoplay="{% if section.settings.show_controls %}{{ section.settings.autoplay }}{% else %}true{% endif %}"
-          data-autoloop="{% if section.settings.show_controls %}{{ section.settings.autoloop }}{% else %}true{% endif %}"
-          data-mute-video="{% if section.settings.show_controls %}{{ section.settings.mute_video }}{% else %}true{% endif %}"
-          data-video-src="{{ section.settings.iframe_video.id }}"
-          data-aspect-ratio="{{ section.settings.aspect_ratio }}"
-          data-poster-image-uploaded="{%- if section.settings.image != blank or section.settings.mobile_image != blank -%}true{%- else -%}false{%- endif -%}"
-        >
-          <div class="video__overlay"></div>
-            {% comment %} CRITICAL: Poster images FIRST in HTML for instant display {% endcomment %}
-            {% if section.settings.image != blank %}
-              <div class="video-wrapper__image {% if section.settings.mobile_image != blank %}is-hidden-mobile-only{% endif %}" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important;">
-                {%
-                  render 'image-element',
-                  image: section.settings.image,
-                  alt: section.settings.image.alt,
-                  stretch_width: true,
-                  focal_point: section.settings.image.presentation.focal_point,
-                %}
-                {% if section.settings.caption_content_background == 'darken_bg' %}
-                  <div class="darken-bg"></div>
-                {% endif %}
-              </div>
-            {% elsif section.settings.mobile_image != blank %}
-              {% comment %} Fallback for desktop when desktop image is missing but mobile is set {% endcomment %}
-              <div class="video-wrapper__image is-hidden-mobile-only" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important;">
-                {%
-                  render 'image-element',
-                  image: section.settings.mobile_image,
-                  alt: section.settings.mobile_image.alt,
-                  stretch_width: true,
-                  focal_point: section.settings.mobile_image.presentation.focal_point,
-                %}
-                {% if section.settings.caption_content_background == 'darken_bg' %}
-                  <div class="darken-bg"></div>
-                {% endif %}
-              </div>
-            {% else %}
-              {% unless section.settings.html5_video != blank or section.settings.iframe_video != blank %}
-                <div class="video-wrapper__image {% if section.settings.mobile_image != blank %}is-hidden-mobile-only{% endif %}" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important;">
-                  {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--video' }}
-                </div>
-              {% endunless %}
-            {% endif %}
-            {% if section.settings.mobile_image != blank %}
-              <div class="video-wrapper__image is-hidden-desktop-only" style="position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important;">
-                {%
-                  render 'image-element',
-                  image: section.settings.mobile_image,
-                  alt: section.settings.mobile_image.alt,
-                  stretch_width: true,
-                  focal_point: section.settings.mobile_image.presentation.focal_point,
-                %}
-                {% if section.settings.caption_content_background == 'darken_bg' %}
-                  <div class="darken-bg"></div>
-                {% endif %}
-              </div>
-            {% endif %}
-
-            {% comment %} Videos load AFTER poster for better experience {% endcomment %}
-            {% if section.settings.iframe_video != blank %}
-              {% if section.settings.iframe_video.type == 'vimeo' %}
-                <div
-                  class="plyr__video-embed {% if section.settings.mobile_iframe_video != blank or section.settings.mobile_html5_video != blank %}is-hidden-mobile-only{% endif %}"
-                  id="video-{{ id }}"
-                  data-video-element
-                  data-external-video
-                  style="z-index: 2;"
-                >
-                  <iframe src="https://player.vimeo.com/video/{{ section.settings.iframe_video.id }}?autoplay={% unless section.settings.show_controls %}1{% else %}0{% endunless %}&muted={% unless section.settings.show_controls %}1{% else %}0{% endunless %}&loop=1&autopause=0&background={% unless section.settings.show_controls %}1{% else %}0{% endunless %}&controls={% if section.settings.show_controls %}1{% else %}0{% endif %}&byline=false&portrait=false&title=false&playsinline=1" allowfullscreen allowtransparency allow="autoplay; fullscreen; picture-in-picture" playsinline></iframe>
-                </div>
-              {% elsif section.settings.iframe_video.type == 'youtube' %}
-                <div
-                  class="plyr__video-embed {% if section.settings.mobile_iframe_video != blank or section.settings.mobile_html5_video != blank %}is-hidden-mobile-only{% endif %}"
-                  id="video-{{ id }}"
-                  data-video-element
-                  data-external-video
-                  style="z-index: 2;"
-                >
-                  <iframe src="https://www.youtube.com/embed/{{ section.settings.iframe_video.id }}?autoplay={% unless section.settings.show_controls %}1{% else %}0{% endunless %}&mute={% unless section.settings.show_controls %}1{% else %}0{% endunless %}&loop=1&controls={% if section.settings.show_controls %}1{% else %}0{% endif %}&playlist={{ section.settings.iframe_video.id }}&playsinline=1&modestbranding=1&showinfo=0&rel=0&enablejsapi=1{% unless section.settings.show_controls %}&disablekb=1&fs=0&iv_load_policy=3{% endunless %}" allowfullscreen allowtransparency allow="autoplay; fullscreen; picture-in-picture" playsinline></iframe>
-                </div>
-              {% endif %}
-            {% elsif section.settings.html5_video != blank %}
-              <video
-                class="video-{{ id }} {% if section.settings.mobile_iframe_video != blank or section.settings.mobile_html5_video != blank %}is-hidden-mobile-only{% endif %}"
-                data-video-element
-                data-html5-video
-                crossorigin="anonymous"
-                {% unless section.settings.show_controls %}autoplay muted loop playsinline{% endunless %}
-                preload="auto"
-                webkit-playsinline
-                x5-playsinline
-                x5-video-player-type="h5"
-                x5-video-player-fullscreen="false"
-                poster=""
-                style="z-index: 2;"
-              >
-                <source src="{{ section.settings.html5_video }}" type="video/mp4">
-              </video>
-            {% endif %}
-
-            {% comment %} Mobile Video Section {% endcomment %}
-            {% if section.settings.mobile_iframe_video != blank or section.settings.mobile_html5_video != blank %}
-              {% if section.settings.mobile_iframe_video != blank %}
-                {% if section.settings.mobile_iframe_video.type == 'vimeo' %}
-                  <div
-                    class="plyr__video-embed is-hidden-desktop-only"
-                    id="video-mobile-{{ id }}"
-                    data-video-element
-                    data-external-video
-                    style="z-index: 2;"
-                  >
-                    <iframe src="https://player.vimeo.com/video/{{ section.settings.mobile_iframe_video.id }}?autoplay=1&muted=1&loop=1&autopause=0&background=1&controls=0&byline=false&portrait=false&title=false&playsinline=1" allowfullscreen allowtransparency allow="autoplay; fullscreen; picture-in-picture" playsinline></iframe>
-                  </div>
-                {% elsif section.settings.mobile_iframe_video.type == 'youtube' %}
-                  <div
-                    class="plyr__video-embed is-hidden-desktop-only"
-                    id="video-mobile-{{ id }}"
-                    data-video-element
-                    data-external-video
-                    style="z-index: 2;"
-                  >
-                    <iframe src="https://www.youtube.com/embed/{{ section.settings.mobile_iframe_video.id }}?autoplay=1&mute=1&loop=1&controls=0&playlist={{ section.settings.mobile_iframe_video.id }}&playsinline=1&modestbranding=1&showinfo=0&rel=0&enablejsapi=1&disablekb=1&fs=0&iv_load_policy=3" allowfullscreen allowtransparency allow="autoplay; fullscreen; picture-in-picture" playsinline></iframe>
-                  </div>
-                {% endif %}
-              {% elsif section.settings.mobile_html5_video != blank %}
-                <video
-                  class="video-mobile-{{ id }} is-hidden-desktop-only"
-                  data-video-element
-                  data-html5-video
-                  crossorigin="anonymous"
-                  {% unless section.settings.show_controls %}autoplay muted loop playsinline{% endunless %}
-                  preload="auto"
-                  webkit-playsinline
-                  x5-playsinline
-                  x5-video-player-type="h5"
-                  x5-video-player-fullscreen="false"
-                  x5-video-orientation="portraint"
-                  poster=""
-                  style="z-index: 2;"
-                >
-                  <source src="{{ section.settings.mobile_html5_video }}" type="video/mp4">
-                </video>
-              {% endif %}
-            {% endif %}
-
-            <!-- Custom Sound Toggle Button -->
-            <button class="video-sound-toggle" aria-label="Toggle sound" style="z-index: 12;">
-              <span class="sound-icon-unmuted" style="display: none;">
-                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-              </span>
-              <span class="sound-icon-muted">
-                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-              </span>
-            </button>
-
-            <!-- Custom Loading Spinner -->
-            <div class="video-loading-spinner" style="z-index: 4;">
-              <div class="spinner-dot"></div>
-              <div class="spinner-dot"></div>
-              <div class="spinner-dot"></div>
-            </div>
-
-            <div
-              class="
-                video__text-container
-                display-text-over-video--{{ section.settings.display_text_over_video }}
-                caption
-                js-caption position-{{ section.settings.text_position }}
-              "
-              data-video-text-container
-              style="z-index: 10;"
-            >
-              <div
-                class="
-                  video__text-wrapper
-                  caption-content
-                  align-{{ section.settings.text_align }}
-                "
-              >
-                {% if section.settings.preheading != blank %}
-                  <div class="pretext" data-video-text>
-                    {{ section.settings.preheading }}
-                  </div>
-                {% endif %}
-
-                {% if section.settings.heading != blank %}
-                  <h1 class="headline" data-video-text>
-                    {{ section.settings.heading | escape }}
-                  </h1>
-                {% endif %}
-
-                {% if section.settings.subheading != blank %}
-                  <div class="subtitle" data-video-text>
-                    {{ section.settings.subheading }}
-                  </div>
-                {% endif %}
-
-                {% if section.settings.button1_link == blank %}
-                  {% assign button1_attrs = 'data-play-button' %}
-                {% endif %}
-
-                {% if section.settings.show_controls %}
-                  {%
-                    render 'banner-buttons',
-                    button1_text: section.settings.button1_label,
-                    button1_style: section.settings.button1_style,
-                    button1_link: section.settings.button1_link,
-                    button1_attrs: button1_attrs,
-                    button2_text: section.settings.button2_label,
-                    button2_style: section.settings.button2_style,
-                    button2_link: section.settings.button2_link,
-                    mobile_text_below_image: section.settings.mobile_text_below_image,
-                    mobile_text_color: section.settings.mobile_text_color,
-                    object_selector: object_selector,
-                  %}
-                {% endif %}
-            </div>
-          </div>
-        </div>
+    {% if desktop_thumb != blank %}
+      <div class="vs-thumb" id="vs-dthumb-{{ id }}">
+        {{ desktop_thumb | image_url: width: 1600 | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '800, 1200, 1600',
+          sizes: '100vw'
+        }}
       </div>
-    </div>
+    {% endif %}
+
+    {% if desktop_video != blank %}
+      <video
+        class="vs-video"
+        id="vs-dvid-{{ id }}"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        webkit-playsinline
+      >
+        <source src="{{ desktop_video }}" type="video/mp4">
+      </video>
+    {% endif %}
+
   </div>
-</section>
+
+  {% comment %} MOBILE {% endcomment %}
+  <div class="vs-mobile" style="position:absolute;inset:0;width:100%;height:100%;display:none;">
+
+    {% if mobile_thumb != blank %}
+      <div class="vs-thumb" id="vs-mthumb-{{ id }}">
+        {{ mobile_thumb | image_url: width: 800 | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '400, 600, 800',
+          sizes: '100vw'
+        }}
+      </div>
+    {% elsif desktop_thumb != blank %}
+      <div class="vs-thumb" id="vs-mthumb-{{ id }}">
+        {{ desktop_thumb | image_url: width: 800 | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '400, 600, 800',
+          sizes: '100vw'
+        }}
+      </div>
+    {% endif %}
+
+    {% if mobile_video != blank %}
+      <video
+        class="vs-video"
+        id="vs-mvid-{{ id }}"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        webkit-playsinline
+      >
+        <source src="{{ mobile_video }}" type="video/mp4">
+      </video>
+    {% elsif desktop_video != blank %}
+      <video
+        class="vs-video"
+        id="vs-mvid-{{ id }}"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        webkit-playsinline
+      >
+        <source src="{{ desktop_video }}" type="video/mp4">
+      </video>
+    {% endif %}
+
+  </div>
+
+</div>
 
 <script>
-(function() {
-  const videoWrapper = document.querySelector('#video-{{ id }}');
-  const showControls = {{ section.settings.show_controls | json }};
-  const isMobile = window.innerWidth <= 768;
-  
-  if (!showControls && videoWrapper) {
-    // Canvas frame capture for instant poster fallback
-    const captureFirstFrame = (video, wrapper) => {
-      if (!video || !wrapper) return;
-      
-      // If a real poster image is already present, don't overwrite it
-      const hasRealPoster = wrapper.querySelector('.video-wrapper__image:not(.js-fallback-poster) img');
-      if (hasRealPoster) return;
-      
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      
-      const grabFrame = () => {
-        try {
-          if (video.videoWidth === 0 || video.videoHeight === 0) return;
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          const dataURL = canvas.toDataURL('image/jpeg', 0.85);
-          
-          let fallbackPoster = wrapper.querySelector('.js-fallback-poster');
-          if (!fallbackPoster) {
-            fallbackPoster = document.createElement('div');
-            fallbackPoster.className = 'video-wrapper__image js-fallback-poster';
-            fallbackPoster.style.cssText = 'position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; z-index: 5 !important; opacity: 1 !important; transition: opacity 0.6s ease !important;';
-            
-            const img = document.createElement('img');
-            img.style.cssText = 'width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;';
-            fallbackPoster.appendChild(img);
-            
-            // Insert before video element
-            wrapper.insertBefore(fallbackPoster, wrapper.firstChild);
-          }
-          
-          fallbackPoster.querySelector('img').src = dataURL;
-        } catch (e) {
-          console.warn('Canvas capture failed: ', e);
-        }
-      };
-      
-      if (video.readyState >= 2) {
-        grabFrame();
-      } else {
-        video.addEventListener('loadeddata', grabFrame, { once: true });
-        video.addEventListener('seeked', grabFrame, { once: true });
-      }
-    };
+(function () {
+  var isMobile = window.innerWidth <= 768;
+  var id       = '{{ id }}';
+  var wrapper  = document.getElementById('vs-' + id);
+  if (!wrapper) return;
 
-    // Sound Toggle Logic
-    const soundToggle = videoWrapper.querySelector('.video-sound-toggle');
-    const updateSoundIcon = (isMuted) => {
-      if (!soundToggle) return;
-      const unmutedIcon = soundToggle.querySelector('.sound-icon-unmuted');
-      const mutedIcon = soundToggle.querySelector('.sound-icon-muted');
-      if (isMuted) {
-        unmutedIcon.style.display = 'none';
-        mutedIcon.style.display = 'block';
-      } else {
-        unmutedIcon.style.display = 'block';
-        mutedIcon.style.display = 'none';
-      }
-    };
-    
-    if (soundToggle) {
-      soundToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const video = videoWrapper.querySelector('video');
-        const plyrElement = videoWrapper.querySelector('[data-video-element]');
-        
-        if (plyrElement && plyrElement.plyr) {
-          const player = plyrElement.plyr;
-          player.muted = !player.muted;
-          updateSoundIcon(player.muted);
-        } else if (video) {
-          video.muted = !video.muted;
-          updateSoundIcon(video.muted);
-        }
-      });
-    }
+  var desktop = wrapper.querySelector('.vs-desktop');
+  var mobile  = wrapper.querySelector('.vs-mobile');
 
-    // Function to mark video as playing and fade out poster
-    const markVideoAsPlaying = () => {
-      videoWrapper.classList.add('video-playing');
-      console.log('✅ Video started - poster fading out');
-    };
-    
-    // Force immediate video initialization
-    const initVideo = () => {
-      const plyrElements = videoWrapper.querySelectorAll('[data-video-element]');
-      const iframes = videoWrapper.querySelectorAll('iframe');
-      const html5Videos = videoWrapper.querySelectorAll('video');
-      
-      // For HTML5 videos
-      html5Videos.forEach(video => {
-        if (!video.hasAttribute('data-initialized')) {
-          video.setAttribute('data-initialized', 'true');
-          video.muted = true;
-          video.setAttribute('playsinline', '');
-          video.setAttribute('webkit-playsinline', '');
-          video.setAttribute('crossorigin', 'anonymous');
-          
-          // Capture first frame as poster
-          captureFirstFrame(video, videoWrapper);
-          
-          // Initial sound icon sync
-          updateSoundIcon(video.muted);
-          
-          let canPlayThrough = false;
-          let hasPlayed = false;
-          
-          const isBuffered = () => {
-            if (video.buffered.length === 0) return false;
-            const bufferedEnd = video.buffered.end(video.buffered.length - 1);
-            const duration = video.duration;
-            const requiredPercent = isMobile ? 0.15 : 0.10;
-            return duration > 0 && (bufferedEnd / duration) >= requiredPercent;
-          };
-          
-          const attemptPlay = () => {
-            if (hasPlayed) return;
-            
-            if (canPlayThrough || isBuffered() || video.readyState >= 2) {
-              video.play().then(() => {
-                hasPlayed = true;
-              }).catch(e => {
-                setTimeout(attemptPlay, isMobile ? 150 : 100);
-              });
-            } else {
-              setTimeout(attemptPlay, isMobile ? 150 : 100);
-            }
-          };
-          
-          video.addEventListener('canplaythrough', () => {
-            canPlayThrough = true;
-            attemptPlay();
-          });
-          
-          video.addEventListener('loadeddata', attemptPlay);
-          video.addEventListener('canplay', attemptPlay);
-          video.addEventListener('progress', () => {
-            if (isBuffered()) attemptPlay();
-          });
-          
-          // CRITICAL: Prevent black screen flash by waiting for actual painted frames (currentTime > 0)
-          const checkVideoStarted = () => {
-            if (video.currentTime > 0) {
-              markVideoAsPlaying();
-            } else {
-              requestAnimationFrame(checkVideoStarted);
-            }
-          };
-          
-          video.addEventListener('playing', () => {
-            requestAnimationFrame(checkVideoStarted);
-          });
-          
-          video.addEventListener('timeupdate', () => {
-            if (video.currentTime > 0) {
-              markVideoAsPlaying();
-            }
-          });
-          
-          video.addEventListener('waiting', () => console.log('⏳ Buffering...'));
-          video.addEventListener('stalled', () => {
-            console.log('⚠️ Stalled, reloading...');
-            video.load();
-          });
-          
-          video.load();
-          setTimeout(attemptPlay, isMobile ? 200 : 50);
-          
-          if (isMobile) {
-            const mobilePlayTriggers = ['touchstart', 'touchend', 'click'];
-            const enablePlayback = () => {
-              video.muted = true;
-              attemptPlay();
-              mobilePlayTriggers.forEach(event => {
-                document.removeEventListener(event, enablePlayback);
-              });
-            };
-            
-            mobilePlayTriggers.forEach(event => {
-              document.addEventListener(event, enablePlayback, { once: true, passive: true });
-            });
-          }
-        }
-      });
-      
-      // For Plyr videos
-      if (window.Plyr) {
-        plyrElements.forEach(plyrElement => {
-          const checkPlyr = setInterval(() => {
-            if (plyrElement.plyr) {
-              clearInterval(checkPlyr);
-              const player = plyrElement.plyr;
-              
-              player.muted = true;
-              player.autoplay = true;
-              
-              let playAttempts = 0;
-              const maxAttempts = isMobile ? 8 : 4;
-              
-              const attemptPlay = () => {
-                player.play().then(() => {
-                  // Wait for actual frames
-                  const checkPlyrStarted = () => {
-                    if (player.currentTime > 0) {
-                      markVideoAsPlaying();
-                    } else {
-                      requestAnimationFrame(checkPlyrStarted);
-                    }
-                  };
-                  requestAnimationFrame(checkPlyrStarted);
-                }).catch(e => {
-                  playAttempts++;
-                  if (playAttempts < maxAttempts) {
-                    setTimeout(attemptPlay, 150);
-                  }
-                });
-              };
-              
-              attemptPlay();
-              
-              if (player.elements && player.elements.controls) {
-                player.elements.controls.style.display = 'none';
-              }
-              
-              player.on('playing', () => {
-                const checkPlyrStarted = () => {
-                  if (player.currentTime > 0) {
-                    markVideoAsPlaying();
-                  } else {
-                    requestAnimationFrame(checkPlyrStarted);
-                  }
-                };
-                requestAnimationFrame(checkPlyrStarted);
-              });
-              
-              player.on('timeupdate', () => {
-                if (player.currentTime > 0) {
-                  markVideoAsPlaying();
-                }
-              });
-              
-              player.on('ready', () => {
-                player.muted = true;
-                updateSoundIcon(player.muted);
-                setTimeout(attemptPlay, 100);
-              });
-              
-              player.on('volumechange', () => {
-                updateSoundIcon(player.muted);
-              });
-              
-              if (isMobile) {
-                const mobileEvents = ['touchstart', 'touchend'];
-                const playOnInteraction = () => {
-                  player.muted = true;
-                  attemptPlay();
-                  mobileEvents.forEach(evt => {
-                    document.removeEventListener(evt, playOnInteraction);
-                  });
-                };
-                
-                mobileEvents.forEach(evt => {
-                  document.addEventListener(evt, playOnInteraction, { once: true, passive: true });
-                });
-              }
-            }
-          }, 50);
-          
-          setTimeout(() => clearInterval(checkPlyr), 5000);
-        });
-      }
-      
-      // For iframes
-      iframes.forEach(iframe => {
-        iframe.style.opacity = '1';
-        iframe.setAttribute('allow', 'autoplay; fullscreen');
-        
-        if (isMobile) {
-          iframe.setAttribute('playsinline', '');
-        }
-        
-        iframe.addEventListener('load', () => {
-          // Fallback loader if events don't fire: wait 3.5s to let the stream buffer
-          setTimeout(markVideoAsPlaying, 3500);
-        });
-      });
-    };
-    
-    // Initialize immediately if DOM ready
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      initVideo();
-    } else {
-      window.addEventListener('load', initVideo);
-      document.addEventListener('DOMContentLoaded', initVideo);
-    }
-    
-    // Multiple initialization attempts for reliability
-    const timings = isMobile ? [50, 150, 300, 600] : [50, 100, 250];
-    timings.forEach(delay => {
-      setTimeout(initVideo, delay);
-    });
-    
-    // Intersection observer
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            initVideo();
-            if (isMobile) {
-              setTimeout(initVideo, 200);
-            }
-          }
-        });
-      }, { threshold: 0.1 });
-      
-      observer.observe(videoWrapper);
-    }
-    
-    // Mobile visibility change
-    if (isMobile) {
-      document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) {
-          setTimeout(initVideo, 100);
-        }
-      });
-    }
+  if (isMobile) {
+    desktop.style.display = 'none';
+    mobile.style.display  = 'block';
+  } else {
+    desktop.style.display = 'block';
+    mobile.style.display  = 'none';
   }
+
+  var thumbId = isMobile ? 'vs-mthumb-' + id : 'vs-dthumb-' + id;
+  var vidId   = isMobile ? 'vs-mvid-'   + id : 'vs-dvid-'  + id;
+  var thumb   = document.getElementById(thumbId);
+  var video   = document.getElementById(vidId);
+
+  if (!video) return;
+
+  var faded = false;
+
+  function fadeThumb() {
+    if (faded || !thumb) return;
+    faded = true;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        thumb.classList.add('hidden');
+      });
+    });
+  }
+
+  video.addEventListener('timeupdate', function () {
+    if (video.currentTime > 0) fadeThumb();
+  });
+
+  video.addEventListener('playing', function () {
+    setTimeout(fadeThumb, 200);
+  });
+
+  video.muted = true;
+  video.play().catch(function () {});
+
+  if (isMobile) {
+    ['touchstart', 'touchend', 'click'].forEach(function (evt) {
+      document.addEventListener(evt, function () {
+        video.muted = true;
+        video.play().catch(function () {});
+      }, { once: true, passive: true });
+    });
+  }
+
 })();
 </script>
 
 {% schema %}
 {
-  "name": "Custom Video",
+  "name": "Video Section",
   "class": "shopify-section--video under-menu",
   "settings": [
     {
-      "type": "checkbox",
-      "id": "wide_display",
-      "label": "Wide display",
-      "default": true
-    },
-    {
-      "type": "select",
-      "id": "aspect_ratio",
-      "label": "Aspect ratio",
-      "default": "16:9",
-      "options": [
-        {
-          "value": "16:9",
-          "label": "16:9"
-        },
-        {
-          "value": "4:3",
-          "label": "4:3"
-        }
-      ]
-    },
-    {
-      "type": "checkbox",
-      "id": "autoplay",
-      "label": "Autoplay video",
-      "info": "Limited browser support for autoplaying video. Learn more at https://help.outofthesandbox.com/hc/en-us/articles/360000661568",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "autoloop",
-      "label": "Autoloop video",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "mute_video",
-      "label": "Mute video",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "show_controls",
-      "label": "Show video controls",
-      "default": true,
-      "info": "When disabled, all controls and play buttons will be hidden and the video will autoplay muted"
-    },
-    {
-      "type": "checkbox",
-      "id": "video_dark_overlay",
-      "label": "Darken video",
-      "default": false
-    },
-    {
-      "type": "video_url",
-      "id": "iframe_video",
-      "label": "Video link",
-      "accept": ["youtube", "vimeo"],
-      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+      "type": "header",
+      "content": "Desktop"
     },
     {
       "type": "text",
-      "id": "html5_video",
-      "label": "HTML5 MP4/OGV File URL"
-    },
-    {
-      "type": "header",
-      "content": "Content"
+      "id": "desktop_video",
+      "label": "Desktop video URL",
+      "info": "Go to Shopify Admin → Content → Files, upload your MP4, then copy and paste the file URL here."
     },
     {
       "type": "image_picker",
-      "id": "image",
-      "label": "Image",
-      "info": "1600 x 900px recommended"
-    },
-    {
-      "type": "checkbox",
-      "id": "display_text_over_video",
-      "label": "Show text when video is playing",
-      "default": false
-    },
-    {
-      "type": "richtext",
-      "id": "preheading",
-      "label": "Preheading"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading"
-    },
-    {
-      "type": "richtext",
-      "id": "subheading",
-      "label": "Subheading"
-    },
-    {
-      "type": "text",
-      "id": "button1_label",
-      "label": "First button label"
-    },
-    {
-      "type": "url",
-      "id": "button1_link",
-      "label": "First button link"
-    },
-    {
-      "type": "select",
-      "id": "button1_style",
-      "label": "First button color",
-      "options": [
-        {
-          "value": "global-button--primary",
-          "label": "Primary button"
-        },
-        {
-          "value": "global-button--banner",
-          "label": "Banner button (outline)"
-        },
-        {
-          "value": "global-button--banner-highlighted",
-          "label": "Banner button (solid)"
-        },
-        {
-          "value": "global-button--banner-text",
-          "label": "Banner text button (outline)"
-        },
-        {
-          "value": "global-button--banner-text-highlighted",
-          "label": "Banner text button (solid)"
-        }
-      ],
-      "default": "global-button--banner"
-    },
-    {
-      "type": "text",
-      "id": "button2_label",
-      "label": "Second button label"
-    },
-    {
-      "type": "url",
-      "id": "button2_link",
-      "label": "Second button link"
-    },
-    {
-      "type": "select",
-      "id": "button2_style",
-      "label": "Second button color",
-      "options": [
-        {
-          "value": "global-button--primary",
-          "label": "Primary button"
-        },
-        {
-          "value": "global-button--banner",
-          "label": "Banner button (outline)"
-        },
-        {
-          "value": "global-button--banner-highlighted",
-          "label": "Banner button (solid)"
-        },
-        {
-          "value": "global-button--banner-text",
-          "label": "Banner text button (outline)"
-        },
-        {
-          "value": "global-button--banner-text-highlighted",
-          "label": "Banner text button (solid)"
-        }
-      ],
-      "default": "global-button--banner"
-    },
-    {
-      "type": "header",
-      "content": "Content layout"
-    },
-    {
-      "type": "select",
-      "id": "text_position",
-      "label": "Text position",
-      "default": "center",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ]
-    },
-    {
-      "type": "text_alignment",
-      "id": "text_align",
-      "label": "Text alignment",
-      "default": "center"
-    },
-    {
-      "type": "header",
-      "content": "Text contrast",
-      "info": "Improve legibility by applying a contrast technique to your banner's text."
-    },
-    {
-      "type": "select",
-      "id": "caption_content_background",
-      "label": "Contrast technique",
-      "default": "original",
-      "options": [
-        {
-          "value": "original",
-          "label": "None"
-        },
-        {
-          "value": "darken_bg",
-          "label": "Darken banner image"
-        },
-        {
-          "value": "text_box",
-          "label": "Solid box"
-        },
-        {
-          "value": "translucent_text_box",
-          "label": "Translucent box"
-        }
-      ]
+      "id": "desktop_thumbnail",
+      "label": "Desktop thumbnail",
+      "info": "Shown instantly on load, fades out when video starts. 1600x900px recommended."
     },
     {
       "type": "header",
       "content": "Mobile"
     },
     {
+      "type": "text",
+      "id": "mobile_video",
+      "label": "Mobile video URL",
+      "info": "Optional. Go to Shopify Admin → Content → Files and copy the URL of your mobile video. Falls back to desktop video if empty."
+    },
+    {
       "type": "image_picker",
-      "id": "mobile_image",
-      "label": "Image",
-      "info": "Display a different image on mobile screens. This only appears when the desktop image is set."
-    },
-    {
-      "type": "video_url",
-      "id": "mobile_iframe_video",
-      "label": "Mobile Video link",
-      "accept": ["youtube", "vimeo"],
-      "info": "Optional: Use a different video on mobile devices (768px and below). Leave empty to use the desktop video."
-    },
-    {
-      "type": "text",
-      "id": "mobile_html5_video",
-      "label": "Mobile HTML5 MP4/OGV File URL",
-      "info": "Optional: Use optimized video for mobile (768px and below). Recommended: 540x960 resolution, 2-3 Mbps bitrate, under 5-10 MB file size."
-    },
-    {
-      "type": "checkbox",
-      "id": "mobile_text_below_image",
-      "label": "Show text below image",
-      "default": true
-    },
-    {
-      "type": "color",
-      "id": "mobile_text_color",
-      "label": "Text below image",
-      "info": "Set this to None to use the Regular text color."
-    },
-    {
-      "type": "header",
-      "content": "Section spacing"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Top spacing",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "label": "Bottom spacing",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "Advanced"
-    },
-    {
-      "type": "paragraph",
-      "content": "Learn more at https://help.outofthesandbox.com/hc/en-us/articles/360022329373"
-    },
-    {
-      "type": "text",
-      "id": "css_class",
-      "label": "CSS Class"
-    },
-    {
-      "type": "textarea",
-      "id": "custom_css",
-      "label": "Custom CSS"
+      "id": "mobile_thumbnail",
+      "label": "Mobile thumbnail",
+      "info": "Optional. Falls back to desktop thumbnail if empty."
     }
   ],
   "presets": [
     {
-      "name": "Custom Video",
-      "category": "Video",
-      "settings": {
-        "iframe_video": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
-      }
+      "name": "Video Section",
+      "category": "Video"
     }
   ],
   "disabled_on": {
@@ -1147,149 +262,3 @@
   }
 }
 {% endschema %}
-<style>
-/* FIX #1: Keep Plyr transparent (prevents Plyr's black background) */
-.plyr, 
-.plyr--full-ui, 
-.plyr--video,
-.plyr--html5,
-.plyr__video-wrapper,
-.plyr__video-embed {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-/* FIX #2: Video wrapper needs DARK background (prevents white body showing) */
-#shopify-section-{{ section.id }} .video-wrapper,
-#shopify-section-{{ section.id }} .video-section {
-  background: #000 !important;
-  background-color: #000 !important;
-}
-
-/* FIX #3: Poster images stay on TOP with dark fallback */
-#shopify-section-{{ section.id }} .video-wrapper__image {
-  background: #000 !important;
-  z-index: 10 !important;
-}
-
-/* FIX #4: Video elements stay BELOW poster */
-#shopify-section-{{ section.id }} video,
-#shopify-section-{{ section.id }} iframe,
-#shopify-section-{{ section.id }} .plyr__video-embed {
-  z-index: 2 !important;
-}
-
-/* FIX #5: Light controls (not black) */
-#shopify-section-{{ section.id }} .plyr__controls {
-  background: rgba(255, 255, 255, 0.3) !important;
-}
-
-/* FIX #6: Keep poster visible during buffering */
-#shopify-section-{{ section.id }} .plyr--buffering .video-wrapper__image {
-  opacity: 1 !important;
-  z-index: 10 !important;
-}
-
-/* FIX #7: Performance optimization */
-#shopify-section-{{ section.id }} .plyr,
-#shopify-section-{{ section.id }} .video-wrapper,
-#shopify-section-{{ section.id }} .video-wrapper__image {
-  will-change: auto;
-  contain: layout style paint;
-}
-
-/* FIX #8: Make control icons (especially the sound icon) white */
-#shopify-section-{{ section.id }} .plyr {
-  --plyr-video-control-color: #ffffff !important;
-  --plyr-video-control-color-hover: #ffffff !important;
-  --plyr-color-main: #ffffff !important;
-}
-
-#shopify-section-{{ section.id }} .plyr__controls,
-#shopify-section-{{ section.id }} .plyr__controls .plyr__control,
-#shopify-section-{{ section.id }} .plyr__controls svg,
-#shopify-section-{{ section.id }} .plyr__controls button svg,
-#shopify-section-{{ section.id }} .plyr__control[data-plyr="mute"] svg {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-  stroke: #ffffff !important;
-}
-
-/* FIX #9: Custom Sound Toggle Button styling */
-#shopify-section-{{ section.id }} .video-sound-toggle {
-  position: absolute !important;
-  bottom: 20px !important;
-  right: 20px !important;
-  width: 44px !important;
-  height: 44px !important;
-  border-radius: 50% !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #ffffff !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  z-index: 12 !important;
-}
-
-#shopify-section-{{ section.id }} .video-sound-toggle:hover {
-  background: rgba(255, 255, 255, 0.25) !important;
-  transform: scale(1.05) !important;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25) !important;
-}
-
-#shopify-section-{{ section.id }} .video-sound-toggle:active {
-  transform: scale(0.95) !important;
-}
-
-#shopify-section-{{ section.id }} .video-controls-enabled--true .video-sound-toggle {
-  display: none !important;
-}
-
-@media only screen and (max-width: 768px) {
-  #shopify-section-{{ section.id }} .video-sound-toggle {
-    bottom: 15px !important;
-    right: 15px !important;
-    width: 38px !important;
-    height: 38px !important;
-  }
-}
-
-/* FIX #10: Custom Loading Spinner styling */
-#shopify-section-{{ section.id }} .video-loading-spinner {
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  display: flex !important;
-  gap: 8px !important;
-  transition: opacity 0.4s ease !important;
-  z-index: 4 !important;
-}
-
-#shopify-section-{{ section.id }} .video-wrapper.video-playing .video-loading-spinner {
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-#shopify-section-{{ section.id }} .spinner-dot {
-  width: 12px !important;
-  height: 12px !important;
-  background-color: rgba(255, 255, 255, 0.7) !important;
-  border-radius: 50% !important;
-  animation: spinnerBounce 1.4s infinite ease-in-out both !important;
-}
-
-#shopify-section-{{ section.id }} .spinner-dot:nth-child(1) { animation-delay: -0.32s !important; }
-#shopify-section-{{ section.id }} .spinner-dot:nth-child(2) { animation-delay: -0.16s !important; }
-
-@keyframes spinnerBounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1.0); }
-}
-</style>
