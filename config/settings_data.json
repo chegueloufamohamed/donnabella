@@ -149,10 +149,10 @@
     "clubhouse_link": "",
     "discord_link": "",
     "email_link": "",
-    "facebook_link": "",
+    "facebook_link": "https://www.facebook.com/donna.bella.care/?ref=1",
     "flickr_link": "",
     "houzz_link": "",
-    "instagram_link": "",
+    "instagram_link": "https://www.instagram.com/donnabella_care/",
     "kickstarter_link": "",
     "linkedin_link": "",
     "medium_link": "",
@@ -175,7 +175,8 @@
     "disqus_shortname": "",
     "enable_shopify_review_comments": false,
     "enable_shopify_collection_badges": false,
-    "tikok_link": "",
+    "tikok_link": "https://www.tiktok.com/@donna_bella_care",
+    "tiktok_link": "https://www.tiktok.com/@donna_bella_care",
     "dribble_link": "",
     "content_for_index": []
   }
