@@ -125,6 +125,11 @@
     border-color: var(--gold);
   }
 
+  .nls-checkout-{{ section.id }} input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+  }
+
   .nls-checkout-{{ section.id }} select.form-input {
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c9a96e' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
@@ -402,6 +407,8 @@
         </button>
         
         <div class="payment-badges">
+          <span class="badge-item">{% if is_arabic %}أبل باي{% else %}Apple Pay{% endif %}</span>
+          <span class="badge-item">{% if is_arabic %}جوجل باي{% else %}Google Pay{% endif %}</span>
           <span class="badge-item">{% if is_arabic %}تابي{% else %}Tabby{% endif %}</span>
           <span class="badge-item">{% if is_arabic %}تمارا{% else %}Tamara{% endif %}</span>
           <span class="badge-item">{% if is_arabic %}فيزا / ماستركارد{% else %}Visa / Mastercard{% endif %}</span>
