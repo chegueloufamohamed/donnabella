@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "policy": {
+      "type": "marketing-agency-policy",
+      "settings": {}
+    }
+  },
+  "order": [
+    "policy"
+  ]
+}
