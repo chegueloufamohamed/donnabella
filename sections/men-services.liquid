@@ -258,7 +258,7 @@
       <span class="nls-label-text">{% if is_arabic %}المساج{% else %}Massage{% endif %}</span>
       <div class="nls-label-line"></div>
     </div>
-
+ 
     <div class="nls-show" data-nls-reveal>
       <div class="nls-show-media">
         <img loading="lazy" src="https://cdn.shopify.com/s/files/1/0749/0227/4185/files/resized_smaller_image.jpg?v=1771338253" alt="Men's massage">
@@ -268,24 +268,53 @@
         <h3 class="nls-stitle">{% if is_arabic %}مساج للرجال{% else %}Men's Massage{% endif %}</h3>
         <p class="nls-ssub">{% if is_arabic %}تخلّص من التوتر، استعد الهدوء{% else %}Release tension, restore calm{% endif %}</p>
         <div class="nls-opts">
+          <!-- Men's Signature -->
           <div class="nls-opt">
-            <div class="nls-opt-name">{% if is_arabic %}أنسجة عميقة{% else %}Deep Tissue{% endif %}
+            <div class="nls-opt-name">{% if is_arabic %}أنسجة عميقة (الخط المميز){% else %}Deep Tissue (Signature){% endif %}
               <small>{% if is_arabic %}ضغط قوي لراحة العضلات العميقة{% else %}Firm pressure, deep muscle relief{% endif %}</small>
             </div>
             <div class="nls-opt-end">
               <div class="nls-opt-price"><sup>AED </sup>450</div>
-              <button type="button" class="nls-add" data-svc-id="massage-deep" data-svc-price="450" data-svc-name="{% if is_arabic %}مساج أنسجة عميقة{% else %}Deep Tissue Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+              <button type="button" class="nls-add" data-svc-id="massage-deep" data-svc-price="450" data-svc-name="{% if is_arabic %}مساج أنسجة عميقة (الخط المميز){% else %}Deep Tissue (Signature){% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
             </div>
           </div>
           <div class="nls-opt">
-            <div class="nls-opt-name">{% if is_arabic %}أروماثيرابي{% else %}Aromatherapy{% endif %}
+            <div class="nls-opt-name">{% if is_arabic %}أروماثيرابي (الخط المميز){% else %}Aromatherapy (Signature){% endif %}
               <small>{% if is_arabic %}زيوت عطرية لاسترخاء تام{% else %}Essential oils, total relaxation{% endif %}</small>
             </div>
             <div class="nls-opt-end">
               <div class="nls-opt-price"><sup>AED </sup>350</div>
-              <button type="button" class="nls-add" data-svc-id="massage-aroma" data-svc-price="350" data-svc-name="{% if is_arabic %}مساج أروماثيرابي{% else %}Aromatherapy Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+              <button type="button" class="nls-add" data-svc-id="massage-aroma" data-svc-price="350" data-svc-name="{% if is_arabic %}مساج أروماثيرابي (الخط المميز){% else %}Aromatherapy (Signature){% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
             </div>
           </div>
+          <!-- Shared Massages -->
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}مساج بالي{% else %}Balinese Massage{% endif %}<small>{% if is_arabic %}حركات انسيابية ناعمة لانسجام عميق{% else %}Smooth, flowing strokes for deep harmony{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>300</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-bali" data-svc-price="300" data-svc-name="{% if is_arabic %}مساج بالي{% else %}Balinese Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}التدليك التايلاندي{% else %}Thai Massage{% endif %}<small>{% if is_arabic %}إطالة وضغط لتحرير مسارات الطاقة{% else %}Stretching and targeted pressure{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>300</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-thai" data-svc-price="300" data-svc-name="{% if is_arabic %}التدليك التايلاندي{% else %}Thai Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}تدليك الحجارة الساخنة{% else %}Hot Stone Massage{% endif %}<small>{% if is_arabic %}حجارة دافئة لإذابة توتر العضلات{% else %}Heated stones to melt muscle tension{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>350</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-hot" data-svc-price="350" data-svc-name="{% if is_arabic %}تدليك الحجارة الساخنة{% else %}Hot Stone Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}مساج مهدئ باللافا شيل{% else %}Soothing Massage with Lava Shells{% endif %}<small>{% if is_arabic %}أصداف دافئة لاسترخاء عضلي أعمق{% else %}Warm clam shells for comforting relief{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>415</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-lava" data-svc-price="415" data-svc-name="{% if is_arabic %}مساج مهدئ باللافا شيل{% else %}Soothing Massage with Lava Shells{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}تصريف الليمفاوي{% else %}Lymphatic Drainage{% endif %}<small>{% if is_arabic %}مساج لتنشيط الدورة اللمفاوية وإزالة السموم{% else %}Lymphatic drainage detox massage{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>375</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-lymph" data-svc-price="375" data-svc-name="{% if is_arabic %}مساج تصريف الليمفاوي{% else %}Lymphatic Drainage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}تدليك الأنسجة العميقة{% else %}Deep Tissue Massage{% endif %}<small>{% if is_arabic %}ضغط قوي ومستهدف لراحة طبقات العضلات العميقة{% else %}Firm targeted deep muscle relief{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>375</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-deep" data-svc-price="375" data-svc-name="{% if is_arabic %}تدليك الأنسجة العميقة{% else %}Deep Tissue Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}مساج الظهر والكتف{% else %}Back & Shoulder Massage{% endif %}<small>{% if is_arabic %}راحة حيث تحتاجها أكثر (30 دقيقة){% else %}Relief for back, neck & shoulders (30 min){% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>165</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-back" data-svc-price="165" data-svc-name="{% if is_arabic %}مساج الظهر والكتف{% else %}Back & Shoulder Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}مساج الرأس والكتف{% else %}Head & Shoulder Massage{% endif %}<small>{% if is_arabic %}تخفيف التوتر، استعادة الراحة (30 دقيقة){% else %}Focused head & neck tension melt (30 min){% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>150</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-head" data-svc-price="150" data-svc-name="{% if is_arabic %}مساج الرأس والكتف{% else %}Head & Shoulder Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}مساج القدمين{% else %}Foot Massage{% endif %}<small>{% if is_arabic %}انتعاش وحيوية للقدمين المتعبتين (30 دقيقة){% else %}Refresh tired feet & pressure points (30 min){% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>150</div>
+              <button type="button" class="nls-add" data-svc-id="w-mas-foot" data-svc-price="150" data-svc-name="{% if is_arabic %}مساج القدمين{% else %}Foot Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
         </div>
         <div class="nls-show-dur">◷ <span>{% if is_arabic %}60 دقيقة{% else %}60 minutes{% endif %}</span></div>
       </div>
