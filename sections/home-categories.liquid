@@ -1,0 +1,238 @@
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign text_dir = 'rtl' %}
+{% endif %}
+
+<style>
+#shopify-section-{{ section.id }} .hc-wrapper {
+  width: 100vw; position: relative; left: 50%; right: 50%;
+  margin-left: -50vw; margin-right: -50vw; overflow: hidden;
+}
+#shopify-section-{{ section.id }} .hc-container {
+  background: linear-gradient(135deg, #10151d 0%, #1a222c 50%, #0d1116 100%);
+  padding: 100px 40px;
+  position: relative;
+  direction: {{ text_dir }};
+}
+#shopify-section-{{ section.id }} .hc-container::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle 600px at 50% 50%, rgba(201,169,110,0.04) 0%, transparent 80%);
+}
+#shopify-section-{{ section.id }} .hc-header {
+  text-align: center; margin-bottom: 60px; position: relative; z-index: 2;
+}
+#shopify-section-{{ section.id }} .hc-eyebrow {
+  display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: {% if is_arabic %}0{% else %}4px{% endif %}; text-transform: uppercase; padding: 8px 24px; border-radius: 50px; margin-bottom: 20px;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(201,169,110,0.3); color: var(--gold);
+}
+#shopify-section-{{ section.id }} .hc-title {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 5vw, 64px); font-weight: 300;
+  line-height: 1.2; color: #fff; margin-bottom: 16px;
+}
+#shopify-section-{{ section.id }} .hc-title em { font-style: italic; font-weight: 400; color: var(--gold); }
+#shopify-section-{{ section.id }} .hc-subtitle {
+  font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 300; letter-spacing: 0.5px;
+  color: rgba(255,255,255,0.55); max-width: 600px; margin: 0 auto; line-height: 1.7;
+}
+#shopify-section-{{ section.id }} .hc-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+  max-width: 1300px; margin: 0 auto; position: relative; z-index: 2;
+}
+#shopify-section-{{ section.id }} .hc-card {
+  position: relative; height: 480px; border-radius: 24px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 40px 30px; transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), border-color 0.5s ease, box-shadow 0.5s ease;
+  text-decoration: none;
+}
+#shopify-section-{{ section.id }} .hc-card-img {
+  position: absolute; inset: 0; background-size: cover; background-position: center;
+  transition: transform 0.6s cubic-bezier(0.23,1,0.32,1); z-index: 1;
+}
+#shopify-section-{{ section.id }} .hc-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(13,17,22,0.92) 0%, rgba(13,17,22,0.4) 50%, transparent 100%);
+  z-index: 2; transition: background 0.5s ease;
+}
+#shopify-section-{{ section.id }} .hc-card-content {
+  position: relative; z-index: 3; transition: transform 0.5s ease;
+  {% if is_arabic %}
+    text-align: right;
+  {% else %}
+    text-align: left;
+  {% endif %}
+}
+#shopify-section-{{ section.id }} .hc-card-tag {
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: {% if is_arabic %}0{% else %}2px{% endif %};
+  text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: inline-block;
+}
+#shopify-section-{{ section.id }} .hc-card-title {
+  font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3.5vw, 36px); font-weight: 300;
+  color: #fff; margin-bottom: 8px; line-height: 1.2;
+}
+#shopify-section-{{ section.id }} .hc-card-desc {
+  font-family: 'Montserrat', sans-serif; font-size: 12.5px; font-weight: 300;
+  color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 24px;
+}
+#shopify-section-{{ section.id }} .hc-card-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600;
+  letter-spacing: {% if is_arabic %}0{% else %}2px{% endif %}; text-transform: uppercase;
+  color: #fff; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 4px;
+  transition: all 0.3s ease;
+}
+#shopify-section-{{ section.id }} .hc-card-btn svg {
+  width: 12px; height: 12px; stroke: currentColor; stroke-width: 2.5; fill: none;
+  transition: transform 0.3s ease;
+  {% if is_arabic %}
+    transform: scaleX(-1);
+  {% endif %}
+}
+
+/* Category Specific styles (hover color glows) */
+#shopify-section-{{ section.id }} .hc-card-women:hover {
+  border-color: rgba(255,182,193,0.4);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.4), 0 0 25px rgba(255,182,193,0.15);
+}
+#shopify-section-{{ section.id }} .hc-card-women .hc-card-tag { color: #ffb6c1; }
+#shopify-section-{{ section.id }} .hc-card-women .hc-card-btn { color: #ffb6c1; border-color: rgba(255,182,193,0.3); }
+
+#shopify-section-{{ section.id }} .hc-card-men:hover {
+  border-color: rgba(135,206,250,0.4);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.4), 0 0 25px rgba(135,206,250,0.12);
+}
+#shopify-section-{{ section.id }} .hc-card-men .hc-card-tag { color: #87cefa; }
+#shopify-section-{{ section.id }} .hc-card-men .hc-card-btn { color: #87cefa; border-color: rgba(135,206,250,0.3); }
+
+#shopify-section-{{ section.id }} .hc-card-couples:hover {
+  border-color: rgba(201,169,110,0.4);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.4), 0 0 25px rgba(201,169,110,0.15);
+}
+#shopify-section-{{ section.id }} .hc-card-couples .hc-card-tag { color: var(--gold); }
+#shopify-section-{{ section.id }} .hc-card-couples .hc-card-btn { color: var(--gold); border-color: rgba(201,169,110,0.3); }
+
+#shopify-section-{{ section.id }} .hc-card:hover {
+  transform: translateY(-6px);
+}
+#shopify-section-{{ section.id }} .hc-card:hover .hc-card-img {
+  transform: scale(1.06);
+}
+#shopify-section-{{ section.id }} .hc-card:hover .hc-card-overlay {
+  background: linear-gradient(to top, rgba(13,17,22,0.95) 0%, rgba(13,17,22,0.5) 50%, transparent 100%);
+}
+#shopify-section-{{ section.id }} .hc-card:hover .hc-card-btn {
+  border-color: currentColor;
+}
+#shopify-section-{{ section.id }} .hc-card:hover .hc-card-btn svg {
+  {% if is_arabic %}
+    transform: scaleX(-1) translateX(-4px);
+  {% else %}
+    transform: translateX(4px);
+  {% endif %}
+}
+
+{% if is_arabic %}
+  #shopify-section-{{ section.id }} .hc-eyebrow,
+  #shopify-section-{{ section.id }} .hc-subtitle,
+  #shopify-section-{{ section.id }} .hc-card-tag,
+  #shopify-section-{{ section.id }} .hc-card-desc,
+  #shopify-section-{{ section.id }} .hc-card-btn {
+    font-family: 'Tajawal', sans-serif !important;
+  }
+  #shopify-section-{{ section.id }} .hc-title,
+  #shopify-section-{{ section.id }} .hc-card-title {
+    font-family: 'Cairo', sans-serif !important;
+  }
+{% endif %}
+
+@media (max-width: 900px) {
+  #shopify-section-{{ section.id }} .hc-grid { grid-template-columns: 1fr; gap: 24px; }
+  #shopify-section-{{ section.id }} .hc-card { height: 380px; }
+  #shopify-section-{{ section.id }} .hc-container { padding: 80px 20px; }
+}
+</style>
+
+<div class="hc-wrapper">
+<section class="hc-container">
+  <div class="hc-header">
+    <span class="hc-eyebrow">{% if is_arabic %}الخدمات المنزلية{% else %}At-Home Services{% endif %}</span>
+    <h2 class="hc-title">{% if is_arabic %}اختر <em>فئتك المفضلة</em>{% else %}Choose <em>Your Category</em>{% endif %}</h2>
+    <p class="hc-subtitle">{% if is_arabic %}طقوس الفخامة والجمال والعناية الشخصية تصلك أينما كنت في الإمارات العربية المتحدة.{% else %}Indulge in personalized beauty and grooming rituals delivered directly to your doorstep across the UAE.{% endif %}</p>
+  </div>
+
+  <div class="hc-grid">
+    <!-- Card 1: Women -->
+    <a class="hc-card hc-card-women" href="{{ request.locale.root_url | append: 'pages/women' | replace: '//', '/' }}">
+      <div class="hc-card-img" style="background-image: url('{{ section.settings.women_img | image_url: width: 800 | default: 'https://cdn.shopify.com/s/files/1/0749/0227/4185/files/manicure.jpg?v=1770735870' }}');"></div>
+      <div class="hc-card-overlay"></div>
+      <div class="hc-card-content">
+        <span class="hc-card-tag">{% if is_arabic %}للنساء{% else %}For Her{% endif %}</span>
+        <h3 class="hc-card-title">{% if is_arabic %}خدمات النساء{% else %}Women's Services{% endif %}</h3>
+        <p class="hc-card-desc">{% if is_arabic %}مساج استرخائي، مانيكير، باديكير، تسريح الشعر وعلاجات البشرة الفاخرة.{% else %}Luxury massage, manicure, pedicure, professional hair care, and radiant facials.{% endif %}</p>
+        <span class="hc-card-btn">{% if is_arabic %}اكتشفي المزيد{% else %}Explore services{% endif %} <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></span>
+      </div>
+    </a>
+
+    <!-- Card 2: Men -->
+    <a class="hc-card hc-card-men" href="{{ request.locale.root_url | append: 'pages/men' | replace: '//', '/' }}">
+      <div class="hc-card-img" style="background-image: url('{{ section.settings.men_img | image_url: width: 800 | default: 'https://cdn.shopify.com/s/files/1/0749/0227/4185/files/resized_smaller_image.jpg?v=1771338253' }}');"></div>
+      <div class="hc-card-overlay"></div>
+      <div class="hc-card-content">
+        <span class="hc-card-tag">{% if is_arabic %}للرجال{% else %}For Him{% endif %}</span>
+        <h3 class="hc-card-title">{% if is_arabic %}خدمات الرجال{% else %}Men's Services{% endif %}</h3>
+        <p class="hc-card-desc">{% if is_arabic %}حلاقة وقص شعر دقيق، مساج رياضي، تنظيف البشرة وعناية متكاملة للرجال.{% else %}Precision haircuts, sports massages, deep-cleansing facials, and refined grooming.{% endif %}</p>
+        <span class="hc-card-btn">{% if is_arabic %}اكتشف المزيد{% else %}Explore services{% endif %} <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></span>
+      </div>
+    </a>
+
+    <!-- Card 3: Couples -->
+    <a class="hc-card hc-card-couples" href="{{ request.locale.root_url | append: 'pages/couples' | replace: '//', '/' }}">
+      <div class="hc-card-img" style="background-image: url('{{ section.settings.couples_img | image_url: width: 800 | default: 'https://cdn.shopify.com/s/files/1/0749/0227/4185/files/woman-receiving-massage-back.jpg?v=1771487152' }}');"></div>
+      <div class="hc-card-overlay"></div>
+      <div class="hc-card-content">
+        <span class="hc-card-tag">{% if is_arabic %}للاثنين{% else %}For Two{% endif %}</span>
+        <h3 class="hc-card-title">{% if is_arabic %}جلسات الأزواج{% else %}Couples Packages{% endif %}</h3>
+        <p class="hc-card-desc">{% if is_arabic %}مساج مشترك جنباً إلى جنب، مانيكير وباديكير وباقات دلال مميزة لشخصين.{% else %}Side-by-side couples massages, shared mani-pedis, and luxury home packages.{% endif %}</p>
+        <span class="hc-card-btn">{% if is_arabic %}اكتشفا المزيد{% else %}Explore services{% endif %} <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg></span>
+      </div>
+    </a>
+  </div>
+</section>
+</div>
+
+{% schema %}
+{
+  "name": "Home Categories Grid",
+  "tag": "section",
+  "class": "section-home-categories",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "women_img",
+      "label": "Women Card Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "men_img",
+      "label": "Men Card Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "couples_img",
+      "label": "Couples Card Background Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Categories Grid"
+    }
+  ]
+}
+{% endschema %}
