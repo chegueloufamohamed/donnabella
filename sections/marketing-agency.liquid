@@ -128,7 +128,10 @@
   .nls-{{ section.id }} .nls-cart-bar { display: none; }
   .nls-{{ section.id }} .nls-cart-panel { padding: 26px 24px 24px; }
   .nls-{{ section.id }} .nls-cart-tag { font-size: 9px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.4em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--gold); margin-bottom: 8px; }
-  .nls-{{ section.id }} .nls-cart-head { font-family: var(--font-display); font-size: 22px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 14px; }
+  .nls-{{ section.id }} .nls-cart-head-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .nls-{{ section.id }} .nls-cart-head { font-family: var(--font-display); font-size: 22px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 0 !important; }
+  .nls-{{ section.id }} .nls-cart-clear { background: none; border: none; color: var(--gold); font-family: var(--font-main); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 4px 0; opacity: 0.7; transition: opacity 0.25s; }
+  .nls-{{ section.id }} .nls-cart-clear:hover { opacity: 1; }
   .nls-{{ section.id }} .nls-cart-empty { color: var(--white-60); font-size: 12px; padding: 12px 0 16px; }
   .nls-{{ section.id }} .nls-citem { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .nls-{{ section.id }} .nls-citem-name { font-size: 12.5px; color: var(--white); line-height: 1.35; }
@@ -350,7 +353,10 @@
     </button>
     <div class="nls-cart-panel">
       <div class="nls-cart-tag">{% if is_arabic %}حجزكما{% else %}Your Booking{% endif %}</div>
-      <div class="nls-cart-head">{% if is_arabic %}الخدمات المختارة{% else %}Your Selection{% endif %}</div>
+      <div class="nls-cart-head-row">
+        <div class="nls-cart-head">{% if is_arabic %}الخدمات المختارة{% else %}Your Selection{% endif %}</div>
+        <button type="button" class="nls-cart-clear" id="nlsClearAll-{{ section.id }}">{% if is_arabic %}مسح الكل{% else %}Clear all{% endif %}</button>
+      </div>
       <div class="nls-cart-empty" id="nlsEmpty-{{ section.id }}">{% if is_arabic %}لم تختارا أي خدمة بعد{% else %}No services selected yet{% endif %}</div>
       <div class="nls-cart-items" id="nlsItems-{{ section.id }}" style="display:none;"></div>
       <div class="nls-cart-total"><span class="label">{% if is_arabic %}الإجمالي{% else %}Total{% endif %}</span><span class="val" id="nlsTotal-{{ section.id }}">{% if is_arabic %}د.إ 0{% else %}AED 0{% endif %}</span></div>
@@ -475,6 +481,15 @@
     var rm = e.target.getAttribute('data-rm');
     if(rm){ cart = cart.filter(function(i){ return i.id !== rm; }); saveCart(); render(); }
   });
+
+  var clearBtn = root.querySelector('#nlsClearAll-{{ section.id }}');
+  if(clearBtn) {
+    clearBtn.addEventListener('click', function(){
+      cart = [];
+      saveCart();
+      render();
+    });
+  }
 
   if(barEl){
     barEl.addEventListener('click', function(){

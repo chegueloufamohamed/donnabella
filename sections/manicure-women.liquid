@@ -113,6 +113,11 @@
   .nls-{{ section.id }} .nls-qty span { min-width: 30px; text-align: center; font-family: var(--serif); font-size: 16px; color: var(--white); }
 
   /* ── SUMMARY ── */
+  .nls-{{ section.id }} .nls-cart-head-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .nls-{{ section.id }} .nls-cart-head { margin-bottom: 0 !important; }
+  .nls-{{ section.id }} .nls-cart-clear { background: none; border: none; color: var(--gold); font-family: var(--font-main); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 4px 0; opacity: 0.7; transition: opacity 0.25s; }
+  .nls-{{ section.id }} .nls-cart-clear:hover { opacity: 1; }
+
   .nls-{{ section.id }} .nls-cart,
   .nls-{{ section.id }} .nls-cart-panel {
     scrollbar-width: thin;
@@ -547,7 +552,10 @@
     </button>
     <div class="nls-cart-panel">
       <div class="nls-cart-tag">{% if is_arabic %}حجزكِ{% else %}Your Booking{% endif %}</div>
-      <div class="nls-cart-head">{% if is_arabic %}الخدمات المختارة{% else %}Your Selection{% endif %}</div>
+      <div class="nls-cart-head-row">
+        <div class="nls-cart-head">{% if is_arabic %}الخدمات المختارة{% else %}Your Selection{% endif %}</div>
+        <button type="button" class="nls-cart-clear" id="nlsClearAll-{{ section.id }}">{% if is_arabic %}مسح الكل{% else %}Clear all{% endif %}</button>
+      </div>
       <div class="nls-cart-empty" id="nlsEmpty-{{ section.id }}">{% if is_arabic %}لم تختاري أي خدمة بعد{% else %}No services selected yet{% endif %}</div>
       <div class="nls-cart-items" id="nlsItems-{{ section.id }}" style="display:none;"></div>
       <div class="nls-cart-total"><span class="label">{% if is_arabic %}الإجمالي{% else %}Total{% endif %}</span><span class="val" id="nlsTotal-{{ section.id }}">{% if is_arabic %}د.إ 0{% else %}AED 0{% endif %}</span></div>
@@ -736,6 +744,18 @@
       render();
     }
   });
+
+  var clearBtn = root.querySelector('#nlsClearAll-{{ section.id }}');
+  if(clearBtn) {
+    clearBtn.addEventListener('click', function(){
+      cart = [];
+      artCount = 0;
+      if (artSpan) artSpan.textContent = '0';
+      if (blowExtra) blowExtra.checked = false;
+      saveCart();
+      render();
+    });
+  }
 
   if(barEl){
     barEl.addEventListener('click', function(){
