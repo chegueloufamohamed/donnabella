@@ -170,10 +170,10 @@
       {% if is_arabic %}دونا بيلا لإدارة التسويق{% else %}Donna Bella Marketing Management{% endif %}
     </div>
     <h1 class="pp-hero-title">
-      {% if is_arabic %}سياسة <em>الخصوصية</em>{% else %}<em>Privacy</em> Policy{% endif %}
+      {% if is_arabic %}شروط <em>الخدمة</em>{% else %}<em>Terms</em> of Service{% endif %}
     </h1>
     <div class="pp-hero-date">
-      {% if is_arabic %}آخر تحديث: مايو 2026{% else %}Last updated: May 2026{% endif %}
+      {% if is_arabic %}آخر تحديث: يونيو 2026{% else %}Last updated: June 2026{% endif %}
     </div>
   </div>
 
@@ -184,144 +184,154 @@
     <div class="pp-section">
       <div class="pp-highlight">
         {% if is_arabic %}
-          تلتزم شركة دونا بيلا لإدارة التسويق ذ.م.م بحماية خصوصيتك. توضّح هذه السياسة كيفية جمعنا لمعلوماتك واستخدامها والحفاظ عليها والإفصاح عنها عند استخدامك لموقعنا الإلكتروني أو خدماتنا.
+          تحكم شروط الخدمة هذه ("الشروط") وصولك واستخدامك للموقع الإلكتروني والخدمات المقدمة من شركة دونا بيلا لإدارة التسويق ذ.م.م. من خلال تصفح موقعنا أو حجز خدماتنا، فإنك توافق على الالتزام بهذه الشروط.
         {% else %}
-          Donna Bella Marketing Management L.L.C is committed to protecting your privacy. This policy explains how we collect, use, maintain, and disclose information when you use our website or services.
+          These Terms of Service ("Terms") govern your access to and use of the website and services provided by Donna Bella Marketing Management L.L.C. By accessing our website or booking our services, you agree to be bound by these Terms.
         {% endif %}
       </div>
     </div>
 
-    <!-- 1. Info we collect -->
+    <!-- 1. Agreement to Terms -->
     <div class="pp-section">
       <div class="pp-section-title">
         <span class="pp-section-num">01</span>
-        {% if is_arabic %}المعلومات التي نجمعها{% else %}Information We Collect{% endif %}
+        {% if is_arabic %}الموافقة على الشروط{% else %}Agreement to Terms{% endif %}
       </div>
       <p class="pp-text">
-        {% if is_arabic %}قد نجمع المعلومات الشخصية التالية:{% else %}We may collect the following personal information:{% endif %}
+        {% if is_arabic %}
+          باستخدام خدماتنا أو تصفح موقعنا، فإنك تقر بأن عمرك لا يقل عن 18 عاماً وتوافق على الالتزام بهذه الشروط وجميع القوانين السارية في دولة الإمارات العربية المتحدة. إذا كنت لا توافق على هذه الشروط، يرجى عدم استخدام موقعنا أو حجز خدماتنا.
+        {% else %}
+          By using our services or accessing our site, you represent that you are at least 18 years old and agree to comply with these Terms and all applicable laws of the United Arab Emirates. If you do not agree to these Terms, please do not use our website or book our services.
+        {% endif %}
       </p>
-      <ul class="pp-list">
-        <li>{% if is_arabic %}الاسم الكامل وبيانات التواصل (البريد الإلكتروني، الهاتف، الواتساب){% else %}Full name and contact details (email, phone, WhatsApp){% endif %}</li>
-        <li>{% if is_arabic %}معلومات الأعمال (اسم الصالون، الموقع، نوع الخدمة){% else %}Business information (salon name, location, service type){% endif %}</li>
-        <li>{% if is_arabic %}بيانات الاستخدام والتفضيلات عند التصفح{% else %}Usage data and browsing preferences on our website{% endif %}</li>
-        <li>{% if is_arabic %}أي معلومات تقدمها طوعاً عبر نماذج الحجز أو التواصل{% else %}Any information you voluntarily submit via booking or contact forms{% endif %}</li>
-      </ul>
     </div>
 
-    <!-- 2. How we use it -->
+    <!-- 2. Services & Bookings -->
     <div class="pp-section">
       <div class="pp-section-title">
         <span class="pp-section-num">02</span>
-        {% if is_arabic %}كيف نستخدم معلوماتك{% else %}How We Use Your Information{% endif %}
+        {% if is_arabic %}الخدمات والحجوزات{% else %}Services & Bookings{% endif %}
       </div>
       <p class="pp-text">
-        {% if is_arabic %}نستخدم البيانات التي نجمعها للأغراض التالية:{% else %}We use the data we collect for the following purposes:{% endif %}
+        {% if is_arabic %}
+          نحن نقدم خدمات التجميل والعناية المنزلية. يرجى مراعاة ما يلي:
+        {% else %}
+          We provide professional home beauty and wellness services. Please note the following:
+        {% endif %}
       </p>
       <ul class="pp-list">
-        <li>{% if is_arabic %}الرد على استفساراتك وطلبات الحجز{% else %}Responding to your enquiries and booking requests{% endif %}</li>
-        <li>{% if is_arabic %}تقديم وإدارة خدمات التسويق التعاقدية{% else %}Providing and managing contracted marketing services{% endif %}</li>
-        <li>{% if is_arabic %}إرسال تحديثات الخدمة والتقارير الشهرية{% else %}Sending service updates and monthly performance reports{% endif %}</li>
-        <li>{% if is_arabic %}تحسين موقعنا وعروضنا بناءً على ملاحظاتك{% else %}Improving our website and offerings based on your feedback{% endif %}</li>
-        <li>{% if is_arabic %}الامتثال للالتزامات القانونية والتنظيمية في الإمارات{% else %}Complying with legal and regulatory obligations in the UAE{% endif %}</li>
+        <li>{% if is_arabic %}تخضع جميع طلبات الحجز للتوافر وتأكيد موعد الخدمة النهائي من جانبنا.{% else %}All booking requests are subject to availability and final confirmation of the service slot by us.{% endif %}</li>
+        <li>{% if is_arabic %}نحتفظ بالحق في رفض تقديم الخدمة أو إعادة جدولة المواعيد لأسباب طارئة أو قوة قاهرة.{% else %}We reserve the right to refuse service or reschedule appointments due to emergency circumstances or force majeure.{% endif %}</li>
+        <li>{% if is_arabic %}يجب تقديم تفاصيل دقيقة حول الموقع والخدمات المطلوبة لضمان جودة الخدمة.{% else %}Accurate details regarding the location and requested services must be provided to ensure service quality.{% endif %}</li>
       </ul>
     </div>
 
-    <!-- 3. Sharing -->
+    <!-- 3. Payments & Pricing -->
     <div class="pp-section">
       <div class="pp-section-title">
         <span class="pp-section-num">03</span>
-        {% if is_arabic %}مشاركة المعلومات{% else %}Sharing of Information{% endif %}
+        {% if is_arabic %}الدفع والأسعار{% else %}Payments & Pricing{% endif %}
       </div>
       <p class="pp-text">
         {% if is_arabic %}
-          لا نبيع معلوماتك الشخصية ولا نتاجر بها. قد نشاركها مع أطراف ثالثة موثوقة تساعدنا في تشغيل موقعنا وخدماتنا — شريطة الالتزام بسرية هذه المعلومات. وقد نفصح عن بياناتك عند الاقتضاء القانوني أو لحماية حقوقنا.
+          شروط الدفع والتسعير لدينا تشمل:
         {% else %}
-          We do not sell or trade your personal information. We may share it with trusted third parties who assist in operating our website and services — subject to confidentiality obligations. We may also disclose information when required by law or to protect our rights.
+          Our payment and pricing terms include the following:
         {% endif %}
       </p>
+      <ul class="pp-list">
+        <li>{% if is_arabic %}جميع الأسعار المعروضة بالدرهم الإماراتي (AED) وهي عرضة للتغيير دون إشعار مسبق.{% else %}All displayed prices are in UAE Dirhams (AED) and are subject to change without prior notice.{% endif %}</li>
+        <li>{% if is_arabic %}يجب إتمام الدفع بالكامل عبر طرق الدفع المعتمدة على موقعنا أو نقداً/بالبطاقة فور إتمام الخدمة كما هو متفق عليه.{% else %}Full payment must be completed via approved online payment methods on our website or by cash/card upon service completion as agreed.{% endif %}</li>
+        <li>{% if is_arabic %}الأسعار تشمل ضريبة القيمة المضافة المعمول بها في دولة الإمارات ما لم ينص على خلاف ذلك.{% else %}Prices are inclusive of applicable UAE Value Added Tax (VAT) unless stated otherwise.{% endif %}</li>
+      </ul>
     </div>
 
-    <!-- 4. Cookies -->
+    <!-- 4. Cancellation & Refund Policy -->
     <div class="pp-section">
       <div class="pp-section-title">
         <span class="pp-section-num">04</span>
-        {% if is_arabic %}ملفات تعريف الارتباط (الكوكيز){% else %}Cookies{% endif %}
+        {% if is_arabic %}سياسة الإلغاء والاسترداد{% else %}Cancellation & Refund Policy{% endif %}
       </div>
       <p class="pp-text">
         {% if is_arabic %}
-          قد يستخدم موقعنا ملفات تعريف الارتباط لتحسين تجربة التصفح. يمكنك ضبط متصفحك لرفض الكوكيز، غير أن ذلك قد يؤثر على بعض وظائف الموقع.
+          نحن نقدر وقت عملائنا وموظفينا على حد سواء، لذا يرجى الالتزام بالسياسة التالية:
         {% else %}
-          Our website may use cookies to enhance your browsing experience. You can set your browser to refuse cookies, though this may affect some website functionality.
+          We value the time of both our clients and professional therapists, so please adhere to the following policy:
         {% endif %}
       </p>
+      <ul class="pp-list">
+        <li>{% if is_arabic %}يجب تقديم طلبات إلغاء أو إعادة جدولة المواعيد قبل 24 ساعة على الأقل من الموعد المحدد.{% else %}Cancellation or rescheduling requests must be submitted at least 24 hours prior to the scheduled appointment.{% endif %}</li>
+        <li>{% if is_arabic %}قد يؤدي الإلغاء أو التغيير قبل أقل من 24 ساعة من الموعد إلى فرض رسوم إلغاء أو خسارة العربون.{% else %}Cancellations or changes made less than 24 hours before the appointment may incur a cancellation fee or forfeiture of deposit.{% endif %}</li>
+        <li>{% if is_arabic %}يتم تقييم طلبات الاسترداد على أساس كل حالة على حدة وفقاً لظروف الخدمة والسياسات المتبعة لدينا.{% else %}Refund requests are evaluated on a case-by-case basis according to our service conditions and policies.{% endif %}</li>
+      </ul>
     </div>
 
-    <!-- 5. Data security -->
+    <!-- 5. Customer Responsibilities -->
     <div class="pp-section">
       <div class="pp-section-title">
         <span class="pp-section-num">05</span>
-        {% if is_arabic %}أمان البيانات{% else %}Data Security{% endif %}
+        {% if is_arabic %}مسؤوليات العميل{% else %}Customer Responsibilities{% endif %}
       </div>
       <p class="pp-text">
         {% if is_arabic %}
-          نطبّق ممارسات أمنية معيارية في الصناعة لحماية بياناتك من الوصول غير المصرح به أو الإفصاح أو التعديل أو الإتلاف. بيد أنه لا توجد طريقة نقل عبر الإنترنت آمنة بنسبة 100%.
+          لضمان سلامة تقديم الخدمة وجودتها، يجب على العميل:
         {% else %}
-          We implement industry-standard security practices to protect your data from unauthorized access, disclosure, alteration, or destruction. However, no method of internet transmission is 100% secure.
+          To ensure the safety and quality of the home service, the customer must:
         {% endif %}
       </p>
+      <ul class="pp-list">
+        <li>{% if is_arabic %}توفير مساحة آمنة ونظيفة ومناسبة لتقديم الخدمات المنزلية المطلوبة.{% else %}Provide a safe, clean, and suitable space for the requested home services.{% endif %}</li>
+        <li>{% if is_arabic %}إبلاغنا بأي حالة صحية أو حساسية جلدية أو متطلبات خاصة قبل بدء تقديم الخدمة.{% else %}Inform us of any medical conditions, skin allergies, or specific requirements before the service begins.{% endif %}</li>
+        <li>{% if is_arabic %}معاملة مقدمي الخدمة باحترام ومهنية كاملة.{% else %}Treat our service providers with respect and full professionalism.{% endif %}</li>
+      </ul>
     </div>
 
-    <!-- 6. Your rights -->
+    <!-- 6. Intellectual Property -->
     <div class="pp-section">
       <div class="pp-section-title">
         <span class="pp-section-num">06</span>
-        {% if is_arabic %}حقوقك{% else %}Your Rights{% endif %}
+        {% if is_arabic %}الملكية الفكرية{% else %}Intellectual Property{% endif %}
       </div>
       <p class="pp-text">
-        {% if is_arabic %}لديك الحق في:{% else %}You have the right to:{% endif %}
-      </p>
-      <ul class="pp-list">
-        <li>{% if is_arabic %}الوصول إلى بياناتك الشخصية التي نحتفظ بها{% else %}Access the personal data we hold about you{% endif %}</li>
-        <li>{% if is_arabic %}طلب تصحيح أو حذف بياناتك{% else %}Request correction or deletion of your data{% endif %}</li>
-        <li>{% if is_arabic %}الاعتراض على معالجة بياناتك أو تقييدها{% else %}Object to or restrict the processing of your data{% endif %}</li>
-        <li>{% if is_arabic %}سحب موافقتك في أي وقت{% else %}Withdraw your consent at any time{% endif %}</li>
-      </ul>
-      <p class="pp-text">
-        {% if is_arabic %}لممارسة أي من هذه الحقوق، يرجى التواصل معنا عبر البيانات الواردة أدناه.{% else %}To exercise any of these rights, please contact us using the details below.{% endif %}
+        {% if is_arabic %}
+          جميع المحتويات الموجودة على هذا الموقع، بما في ذلك النصوص، الرسومات، الشعارات، الصور، والبرمجيات، هي ملك لشركة دونا بيلا لإدارة التسويق ذ.م.م ومحمية بموجب قوانين حقوق النشر وحماية الملكية الفكرية المعمول بها في دولة الإمارات العربية المتحدة.
+        {% else %}
+          All content on this website, including text, graphics, logos, images, and software, is the property of Donna Bella Marketing Management L.L.C and is protected by copyright and intellectual property laws in the United Arab Emirates.
+        {% endif %}
       </p>
     </div>
 
-    <!-- 7. Third-party links -->
+    <!-- 7. Limitation of Liability -->
     <div class="pp-section">
       <div class="pp-section-title">
         <span class="pp-section-num">07</span>
-        {% if is_arabic %}روابط الطرف الثالث{% else %}Third-Party Links{% endif %}
+        {% if is_arabic %}تحديد المسؤولية{% else %}Limitation of Liability{% endif %}
       </div>
       <p class="pp-text">
         {% if is_arabic %}
-          قد يحتوي موقعنا على روابط لمواقع خارجية. لا نتحمل مسؤولية ممارسات الخصوصية الخاصة بهذه المواقع ونشجعك على مراجعة سياسات الخصوصية الخاصة بها.
+          لا تتحمل شركة دونا بيلا المسؤولية عن أي أضرار غير مباشرة أو عرضية أو تبعية تنشأ عن استخدام خدماتنا أو موقعنا الإلكتروني. تقتصر مسؤوليتنا الكاملة تجاه أي مطالبة على المبلغ الذي قمت بدفعه مقابل الخدمة المعنية، وذلك إلى أقصى حد يسمح به قانون دولة الإمارات.
         {% else %}
-          Our website may contain links to external sites. We are not responsible for the privacy practices of those sites and encourage you to review their privacy policies.
+          Donna Bella shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services or website. Our total liability for any claim is limited to the amount paid by you for the specific service in question, to the maximum extent permitted by UAE law.
         {% endif %}
       </p>
     </div>
 
-    <!-- 8. Changes -->
+    <!-- 8. Governing Law -->
     <div class="pp-section">
       <div class="pp-section-title">
         <span class="pp-section-num">08</span>
-        {% if is_arabic %}تغييرات على هذه السياسة{% else %}Changes to This Policy{% endif %}
+        {% if is_arabic %}القانون الواجب التطبيق{% else %}Governing Law{% endif %}
       </div>
       <p class="pp-text">
         {% if is_arabic %}
-          نحتفظ بالحق في تحديث سياسة الخصوصية هذه في أي وقت. سنُعلمك بأي تغييرات جوهرية عن طريق نشر السياسة المُحدَّثة على هذه الصفحة مع تحديث تاريخ "آخر تحديث".
+          تخضع شروط الخدمة هذه وتُفسر وفقاً لقوانين إمارة دبي والقوانين الاتحادية لدولة الإمارات العربية المتحدة. وتخضع أي نزاعات تنشأ عن هذه الشروط للاختصاص القضائي الحصري لمحاكم دبي.
         {% else %}
-          We reserve the right to update this privacy policy at any time. We will notify you of material changes by posting the updated policy on this page with a revised "Last updated" date.
+          These Terms of Service shall be governed by and construed in accordance with the laws of the Emirate of Dubai and the federal laws of the United Arab Emirates. Any disputes arising from these Terms shall be subject to the exclusive jurisdiction of the Dubai courts.
         {% endif %}
       </p>
     </div>
 
-    <!-- 9. Contact -->
+    <!-- 9. Contact Us -->
     <div class="pp-section">
       <div class="pp-section-title">
         <span class="pp-section-num">09</span>
@@ -329,9 +339,9 @@
       </div>
       <p class="pp-text">
         {% if is_arabic %}
-          إذا كانت لديك أسئلة حول سياسة الخصوصية هذه، يُرجى التواصل معنا:
+          إذا كان لديك أي أسئلة أو استفسارات تتعلق بشروط الخدمة هذه، يرجى التواصل معنا:
         {% else %}
-          If you have any questions about this Privacy Policy, please reach out:
+          If you have any questions or concerns regarding these Terms of Service, please reach out:
         {% endif %}
       </p>
       <div class="pp-contact-grid">
@@ -341,7 +351,7 @@
         </div>
         <div class="pp-contact-card">
           <div class="pp-contact-label">{% if is_arabic %}البريد الإلكتروني{% else %}Email{% endif %}</div>
-          <div class="pp-contact-val"><a href="mailto:dafer1111@hotmail.com">dafer1111@hotmail.com</a></div>
+          <div class="pp-contact-val"><a href="mailto:donnabella.home.services@gmail.com">donnabella.home.services@gmail.com</a></div>
         </div>
         <div class="pp-contact-card">
           <div class="pp-contact-label">{% if is_arabic %}الموقع{% else %}Location{% endif %}</div>

@@ -8,24 +8,13 @@
  * ------------------------------------------------------------
  */
 {
-  "layout": "marketing-agency",
   "sections": {
-    "header": {
-      "type": "marketing-agency-header",
-      "settings": {}
-    },
     "privacy-policy": {
       "type": "privacy-policy",
-      "settings": {}
-    },
-    "footer": {
-      "type": "marketing-agency-footer",
       "settings": {}
     }
   },
   "order": [
-    "header",
-    "privacy-policy",
-    "footer"
+    "privacy-policy"
   ]
 }
