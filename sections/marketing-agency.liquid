@@ -235,13 +235,16 @@
         <p class="nls-stag">{% if is_arabic %}للاثنين · مساج{% else %}For Two · Massage{% endif %}</p>
         <h3 class="nls-stitle">{% if is_arabic %}مساج للأزواج{% else %}Couples Massage{% endif %}</h3>
         <p class="nls-ssub">{% if is_arabic %}استرخاء، معاً{% else %}Unwind, together{% endif %}</p>
-        <p class="nls-sdesc">{% if is_arabic %}جلسة مساج لشخصين جنباً إلى جنب، للتخلص من التوتر واستعادة الهدوء معاً.{% else %}A side-by-side massage for two — release tension and restore calm, together.{% endif %}</p>
-        <div class="nls-sfoot">
-          <div class="nls-sfoot-left">
-            <div class="nls-sprice"><sup>AED </sup>470</div>
-            <span class="nls-spill">{% if is_arabic %}لشخصين{% else %}For 2 people{% endif %}</span>
-          </div>
-          <button type="button" class="nls-add" data-svc-id="c-massage" data-svc-price="470" data-svc-name="{% if is_arabic %}مساج للأزواج{% else %}Couples Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button>
+        <div class="nls-opts">
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}مساج للأزواج{% else %}Couple Massage{% endif %}<small>{% if is_arabic %}مساج للزوجين جنباً إلى جنب{% else %}Side-by-side massage for two{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>550</div>
+              <button type="button" class="nls-add" data-svc-id="c-massage" data-svc-price="550" data-svc-name="{% if is_arabic %}مساج للأزواج{% else %}Couple Massage{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}تدليك أنسجة عميقة للزوجين{% else %}Couple Deep Tissue{% endif %}<small>{% if is_arabic %}ضغط قوي للزوجين جنباً إلى جنب{% else %}Firm side-by-side relief for two{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>700</div>
+              <button type="button" class="nls-add" data-svc-id="c-deep" data-svc-price="700" data-svc-name="{% if is_arabic %}تدليك أنسجة عميقة للزوجين{% else %}Couple Deep Tissue{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
+          <div class="nls-opt"><div class="nls-opt-name">{% if is_arabic %}تدليك سويدي للزوجين{% else %}Couple Swedish{% endif %}<small>{% if is_arabic %}استرخاء للزوجين جنباً إلى جنب{% else %}Relaxing side-by-side strokes for two{% endif %}</small></div>
+            <div class="nls-opt-end"><div class="nls-opt-price"><sup>AED </sup>550</div>
+              <button type="button" class="nls-add" data-svc-id="c-swedish" data-svc-price="550" data-svc-name="{% if is_arabic %}تدليك سويدي للزوجين{% else %}Couple Swedish{% endif %}">{% if is_arabic %}أضف{% else %}Add{% endif %}</button></div></div>
         </div>
       </div>
     </div>
