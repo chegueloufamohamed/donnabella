@@ -115,6 +115,14 @@
             "link_size": 15
           }
         },
+        "menu_zXpJHj": {
+          "type": "menu",
+          "settings": {
+            "menu": "privacy-and-terms",
+            "heading_size": 18,
+            "link_size": 15
+          }
+        },
         "newsletter_YYcRHr": {
           "type": "newsletter",
           "settings": {
@@ -128,6 +136,7 @@
       "block_order": [
         "brand_riG6Lz",
         "menu_7hXpmy",
+        "menu_zXpJHj",
         "newsletter_YYcRHr"
       ],
       "settings": {

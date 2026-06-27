@@ -1,0 +1,484 @@
+{% comment %}
+  DONNA BELLA — INTRO / EXPERIENCE SELECTOR SECTION
+  Sits directly under the hero video.
+  Three cards: For Her · For Him · For Couples
+  Same design language as the existing service sections.
+{% endcomment %}
+
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+{% assign text_dir = 'ltr' %}
+{% if is_arabic %}{% assign text_dir = 'rtl' %}{% endif %}
+
+{% comment %} Default text strings — defined as assigns to avoid Liquid parser issues with apostrophes and em dashes {% endcomment %}
+{% assign default_subtitle_en = "Whether it's a moment for yourself, a treat for him, or a shared ritual together. Donna Bella comes to your door." %}
+{% assign default_subtitle_ar = "سواء كنتِ تبحثين عن لحظة خاصة لكِ، أو تدليل شريككِ، أو تجربة مشتركة. دونا بيلا تصل إلى باب منزلكِ." %}
+{% assign default_her_desc_en = "Massage, facials, nails, hair, and waxing. Everything you need, delivered to your door." %}
+{% assign default_her_desc_ar = "مساج، فيشل، أظافر، شعر، وإزالة شعر. كل ما تحتاجينه في منزلكِ." %}
+{% assign default_him_desc_en = "Sports and deep tissue massage, men's facials, and full grooming care. Without leaving home." %}
+{% assign default_him_desc_ar = "مساج رياضي وعلاجي، فيشل للرجل، وعناية متكاملة. بدون الحاجة للخروج." %}
+{% assign default_couples_desc_en = "Side-by-side experiences with two specialists arriving together at your home." %}
+{% assign default_couples_desc_ar = "تجارب متزامنة للأزواج مع أخصائيتين تصلان معاً إلى منزلكِ." %}
+
+
+{% liquid
+  assign id = section.id
+%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ── Wrapper ──────────────────────────────────────────────────── */
+#shopify-section-{{ id }} .db-intro-wrapper {
+  width: 100vw; position: relative; left: 50%; right: 50%;
+  margin-left: -50vw; margin-right: -50vw; overflow: hidden;
+}
+
+#shopify-section-{{ id }} .db-intro-section {
+  position: relative;
+  padding: {{ section.settings.padding_top }}px 40px {{ section.settings.padding_bottom }}px;
+  display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(ellipse 70% 60% at 10% 30%, rgba(255,182,193,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 70% at 90% 70%, rgba(100,149,237,0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(199,160,221,0.07) 0%, transparent 60%),
+    linear-gradient(135deg, #0e0814 0%, #1a1028 40%, #100c20 70%, #0a0712 100%);
+  direction: {{ text_dir }};
+  overflow: hidden;
+}
+
+/* ── Ambient orbs ─────────────────────────────────────────────── */
+#shopify-section-{{ id }} .db-intro-orb {
+  position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
+  animation: db-intro-float-{{ id }} 10s ease-in-out infinite;
+}
+#shopify-section-{{ id }} .db-intro-orb-1 {
+  width: 500px; height: 500px; top: -120px;
+  {% if is_arabic %}right: -80px;{% else %}left: -80px;{% endif %}
+  background: radial-gradient(circle, rgba(255,182,193,0.18) 0%, transparent 70%);
+}
+#shopify-section-{{ id }} .db-intro-orb-2 {
+  width: 420px; height: 420px; bottom: -100px;
+  {% if is_arabic %}left: 5%;{% else %}right: 5%;{% endif %}
+  background: radial-gradient(circle, rgba(100,149,237,0.15) 0%, transparent 70%);
+  animation-delay: 4s;
+}
+#shopify-section-{{ id }} .db-intro-orb-3 {
+  width: 300px; height: 300px; top: 40%; left: 50%; transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(199,160,221,0.12) 0%, transparent 70%);
+  animation-delay: 7s;
+}
+
+@keyframes db-intro-float-{{ id }} {
+  0%,100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-28px) scale(1.04); }
+}
+
+/* ── Inner container ──────────────────────────────────────────── */
+#shopify-section-{{ id }} .db-intro-inner {
+  position: relative; z-index: 2; width: 100%; max-width: 1300px; margin: 0 auto;
+}
+
+/* ── Header ───────────────────────────────────────────────────── */
+#shopify-section-{{ id }} .db-intro-header {
+  text-align: center; margin-bottom: 64px;
+}
+#shopify-section-{{ id }} .db-intro-eyebrow {
+  display: inline-block; font-family: 'Montserrat', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: {% if is_arabic %}0{% else %}5px{% endif %};
+  text-transform: uppercase; padding: 8px 24px; border-radius: 50px; margin-bottom: 24px;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.09);
+  border: 1px solid rgba(199,160,221,0.4);
+  color: rgba(220,195,235,0.95);
+  box-shadow: 0 0 20px rgba(199,160,221,0.2), inset 0 1px 0 rgba(255,255,255,0.12);
+}
+#shopify-section-{{ id }} .db-intro-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 5.5vw, 72px);
+  font-weight: 300; line-height: 1.1; color: #fff; margin-bottom: 20px;
+  text-shadow: 0 0 60px rgba(255,255,255,0.12), 0 2px 4px rgba(0,0,0,0.3);
+}
+#shopify-section-{{ id }} .db-intro-title em {
+  font-style: italic; font-weight: 400; color: rgba(220,195,235,0.95);
+}
+#shopify-section-{{ id }} .db-intro-divider {
+  display: flex; align-items: center; justify-content: center; gap: 16px; margin: 20px 0;
+}
+#shopify-section-{{ id }} .db-intro-divider span {
+  display: block; height: 1px; width: 60px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+}
+#shopify-section-{{ id }} .db-intro-divider i {
+  display: block; width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,0.5); box-shadow: 0 0 10px rgba(255,255,255,0.6);
+}
+#shopify-section-{{ id }} .db-intro-subtitle {
+  font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 300;
+  letter-spacing: 0.8px; color: rgba(255,255,255,0.5);
+  max-width: 560px; margin: 0 auto; line-height: 1.85;
+  {% if is_arabic %}font-size: 16px; letter-spacing: 0;{% endif %}
+}
+
+/* ── Three cards grid ─────────────────────────────────────────── */
+#shopify-section-{{ id }} .db-trio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+#shopify-section-{{ id }} .db-trio-card {
+  position: relative; border-radius: 28px; overflow: hidden;
+  padding: 48px 36px 40px;
+  backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.07);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -1px 0 rgba(255,255,255,0.04);
+  transition: transform 0.45s cubic-bezier(0.23,1,0.32,1), box-shadow 0.45s ease, background 0.3s ease;
+  text-align: {% if is_arabic %}right{% else %}left{% endif %};
+  cursor: pointer;
+}
+#shopify-section-{{ id }} .db-trio-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
+  opacity: 0.6;
+}
+#shopify-section-{{ id }} .db-trio-card::after {
+  content: ''; position: absolute; inset: 0; border-radius: 28px;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Per-card accent colours */
+#shopify-section-{{ id }} .db-trio-card--her {
+  background: rgba(255,182,193,0.07);
+  border-color: rgba(255,182,193,0.2);
+}
+#shopify-section-{{ id }} .db-trio-card--her:hover {
+  transform: translateY(-10px) scale(1.02);
+  background: rgba(255,182,193,0.13);
+  border-color: rgba(255,200,215,0.45);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.32), 0 0 50px rgba(255,182,193,0.18), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+#shopify-section-{{ id }} .db-trio-card--him {
+  background: rgba(100,149,237,0.07);
+  border-color: rgba(100,149,237,0.18);
+}
+#shopify-section-{{ id }} .db-trio-card--him:hover {
+  transform: translateY(-10px) scale(1.02);
+  background: rgba(100,149,237,0.13);
+  border-color: rgba(130,175,255,0.45);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.32), 0 0 50px rgba(100,149,237,0.2), inset 0 1px 0 rgba(255,255,255,0.22);
+}
+#shopify-section-{{ id }} .db-trio-card--couples {
+  background: rgba(199,160,221,0.07);
+  border-color: rgba(199,160,221,0.18);
+}
+#shopify-section-{{ id }} .db-trio-card--couples:hover {
+  transform: translateY(-10px) scale(1.02);
+  background: rgba(199,160,221,0.13);
+  border-color: rgba(210,180,235,0.45);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.32), 0 0 50px rgba(199,160,221,0.2), inset 0 1px 0 rgba(255,255,255,0.22);
+}
+
+/* Icon badge */
+#shopify-section-{{ id }} .db-trio-icon {
+  width: 64px; height: 64px; border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 28px; position: relative; z-index: 1;
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.2);
+  transition: transform 0.3s ease;
+  {% if is_arabic %}margin-left: auto; margin-right: 0;{% endif %}
+}
+#shopify-section-{{ id }} .db-trio-card--her   .db-trio-icon { background: rgba(255,182,193,0.18); border-color: rgba(255,182,193,0.35); }
+#shopify-section-{{ id }} .db-trio-card--him   .db-trio-icon { background: rgba(100,149,237,0.18); border-color: rgba(100,149,237,0.35); }
+#shopify-section-{{ id }} .db-trio-card--couples .db-trio-icon { background: rgba(199,160,221,0.18); border-color: rgba(199,160,221,0.35); }
+#shopify-section-{{ id }} .db-trio-card:hover .db-trio-icon { transform: scale(1.1); }
+#shopify-section-{{ id }} .db-trio-icon svg {
+  width: 30px; height: 30px; stroke: rgba(255,255,255,0.92);
+  fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Label pill */
+#shopify-section-{{ id }} .db-trio-label {
+  display: inline-block; font-family: 'Montserrat', sans-serif;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: {% if is_arabic %}0{% else %}4px{% endif %};
+  text-transform: uppercase; padding: 5px 14px; border-radius: 50px;
+  margin-bottom: 14px; position: relative; z-index: 1;
+}
+#shopify-section-{{ id }} .db-trio-card--her     .db-trio-label { background: rgba(255,182,193,0.2); color: rgba(255,210,220,0.9); border: 1px solid rgba(255,182,193,0.3); }
+#shopify-section-{{ id }} .db-trio-card--him     .db-trio-label { background: rgba(100,149,237,0.2); color: rgba(180,210,255,0.9); border: 1px solid rgba(100,149,237,0.3); }
+#shopify-section-{{ id }} .db-trio-card--couples .db-trio-label { background: rgba(199,160,221,0.2); color: rgba(220,195,240,0.9); border: 1px solid rgba(199,160,221,0.3); }
+
+/* Title & description */
+#shopify-section-{{ id }} .db-trio-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400;
+  color: #fff; margin-bottom: 14px; line-height: 1.15;
+  text-shadow: 0 0 30px rgba(255,255,255,0.15);
+  position: relative; z-index: 1;
+}
+#shopify-section-{{ id }} .db-trio-desc {
+  font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 300;
+  color: rgba(255,255,255,0.5); line-height: 1.8; letter-spacing: 0.3px;
+  margin-bottom: 32px; position: relative; z-index: 1;
+  {% if is_arabic %}font-size: 14px; letter-spacing: 0;{% endif %}
+}
+
+/* Services list inside card */
+#shopify-section-{{ id }} .db-trio-services {
+  list-style: none; margin: 0 0 32px; padding: 0;
+  display: flex; flex-direction: column; gap: 9px;
+  position: relative; z-index: 1;
+}
+#shopify-section-{{ id }} .db-trio-services li {
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 400;
+  color: rgba(255,255,255,0.55); letter-spacing: 0.3px;
+  display: flex; align-items: center; gap: 10px;
+  {% if is_arabic %}flex-direction: row-reverse; text-align: right;{% endif %}
+}
+#shopify-section-{{ id }} .db-trio-services li::before {
+  content: ''; display: block; width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0;
+}
+#shopify-section-{{ id }} .db-trio-card--her     .db-trio-services li::before { background: rgba(255,182,193,0.7); }
+#shopify-section-{{ id }} .db-trio-card--him     .db-trio-services li::before { background: rgba(100,149,237,0.7); }
+#shopify-section-{{ id }} .db-trio-card--couples .db-trio-services li::before { background: rgba(199,160,221,0.7); }
+
+/* CTA button */
+#shopify-section-{{ id }} .db-trio-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 500;
+  letter-spacing: {% if is_arabic %}0{% else %}2px{% endif %};
+  text-transform: uppercase; text-decoration: none; padding: 14px 28px;
+  border-radius: 50px; position: relative; z-index: 1;
+  transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9);
+}
+#shopify-section-{{ id }} .db-trio-card--her     .db-trio-btn:hover { background: rgba(255,182,193,0.25); border-color: rgba(255,182,193,0.5); color: #fff; }
+#shopify-section-{{ id }} .db-trio-card--him     .db-trio-btn:hover { background: rgba(100,149,237,0.25); border-color: rgba(100,149,237,0.5); color: #fff; }
+#shopify-section-{{ id }} .db-trio-card--couples .db-trio-btn:hover { background: rgba(199,160,221,0.25); border-color: rgba(199,160,221,0.5); color: #fff; }
+#shopify-section-{{ id }} .db-trio-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+/* ── Mobile ────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  #shopify-section-{{ id }} .db-intro-section { padding-left: 24px; padding-right: 24px; }
+  #shopify-section-{{ id }} .db-trio-grid { gap: 18px; }
+  #shopify-section-{{ id }} .db-trio-card { padding: 36px 26px 32px; }
+}
+@media (max-width: 768px) {
+  #shopify-section-{{ id }} .db-trio-grid { grid-template-columns: 1fr; gap: 16px; }
+  #shopify-section-{{ id }} .db-trio-card { padding: 32px 24px 28px; }
+  #shopify-section-{{ id }} .db-intro-title { font-size: clamp(32px, 8vw, 52px); }
+  #shopify-section-{{ id }} .db-intro-section { padding-left: 20px; padding-right: 20px; }
+  #shopify-section-{{ id }} .db-trio-icon { width: 54px; height: 54px; }
+}
+</style>
+
+<div class="db-intro-wrapper">
+  <div class="db-intro-section">
+
+    <!-- Ambient orbs -->
+    <div class="db-intro-orb db-intro-orb-1"></div>
+    <div class="db-intro-orb db-intro-orb-2"></div>
+    <div class="db-intro-orb db-intro-orb-3"></div>
+
+    <div class="db-intro-inner">
+
+      <!-- Header -->
+      <div class="db-intro-header">
+        <div class="db-intro-eyebrow">
+          {% if is_arabic %}{{ section.settings.eyebrow_ar | default: 'Donna Bella' }}{% else %}{{ section.settings.eyebrow | default: 'Donna Bella' }}{% endif %}
+        </div>
+        <h2 class="db-intro-title">
+          {% if is_arabic %}
+            {{ section.settings.title_ar | default: 'تجربة مصممة' }} <em>{{ section.settings.title_em_ar | default: 'خصيصاً لكِ' }}</em>
+          {% else %}
+            {{ section.settings.title | default: 'An Experience Designed' }} <em>{{ section.settings.title_em | default: 'For You' }}</em>
+          {% endif %}
+        </h2>
+        <div class="db-intro-divider"><span></span><i></i><span></span></div>
+        <p class="db-intro-subtitle">
+          {% if is_arabic %}
+            {{ section.settings.subtitle_ar | default: default_subtitle_ar }}
+          {% else %}
+            {{ section.settings.subtitle | default: default_subtitle_en }}
+          {% endif %}
+        </p>
+      </div>
+
+      <!-- Three cards -->
+      <div class="db-trio-grid">
+
+        <!-- FOR HER -->
+        <div class="db-trio-card db-trio-card--her">
+          <div class="db-trio-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </div>
+          <span class="db-trio-label">{% if is_arabic %}لها{% else %}For Her{% endif %}</span>
+          <h3 class="db-trio-title">
+            {% if is_arabic %}{{ section.settings.her_title_ar | default: 'عناية فاخرة للمرأة' }}{% else %}{{ section.settings.her_title | default: 'Luxury for Women' }}{% endif %}
+          </h3>
+          <p class="db-trio-desc">
+            {% if is_arabic %}{{ section.settings.her_desc_ar | default: default_her_desc_ar }}{% else %}{{ section.settings.her_desc | default: default_her_desc_en }}{% endif %}
+          </p>
+          <ul class="db-trio-services">
+            {% if is_arabic %}
+              <li>مساج استرخائي وعلاجي</li>
+              <li>فيشل وعناية بالبشرة</li>
+              <li>مانيكير وباديكير</li>
+              <li>تصفيف وعلاج الشعر</li>
+              <li>إزالة الشعر بالواكس</li>
+            {% else %}
+              <li>Relaxing & therapeutic massage</li>
+              <li>Facials & skin care</li>
+              <li>Manicure & pedicure</li>
+              <li>Hair styling & treatments</li>
+              <li>Waxing & hair removal</li>
+            {% endif %}
+          </ul>
+          <a href="{{ section.settings.her_link | default: '#' }}" class="db-trio-btn">
+            {% if is_arabic %}{{ section.settings.her_btn_ar | default: 'اكتشفي الخدمات' }}{% else %}{{ section.settings.her_btn | default: 'Explore Services' }}{% endif %}
+            <svg viewBox="0 0 24 24"><polyline points="{% if is_arabic %}15 18 9 12 15 6{% else %}9 18 15 12 9 6{% endif %}"/></svg>
+          </a>
+        </div>
+
+        <!-- FOR HIM -->
+        <div class="db-trio-card db-trio-card--him">
+          <div class="db-trio-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          </div>
+          <span class="db-trio-label">{% if is_arabic %}له{% else %}For Him{% endif %}</span>
+          <h3 class="db-trio-title">
+            {% if is_arabic %}{{ section.settings.him_title_ar | default: 'عناية الرجل في المنزل' }}{% else %}{{ section.settings.him_title | default: 'Grooming for Men' }}{% endif %}
+          </h3>
+          <p class="db-trio-desc">
+            {% if is_arabic %}{{ section.settings.him_desc_ar | default: default_him_desc_ar }}{% else %}{{ section.settings.him_desc | default: default_him_desc_en }}{% endif %}
+          </p>
+          <ul class="db-trio-services">
+            {% if is_arabic %}
+              <li>مساج رياضي وأنسجة عميقة</li>
+              <li>فيشل وعناية بالبشرة للرجل</li>
+              <li>مساج الظهر والأكتاف</li>
+              <li>علاج بالضغط للتعافي</li>
+              <li>جلسات الاسترخاء والتجديد</li>
+            {% else %}
+              <li>Sports & deep tissue massage</li>
+              <li>Men's facial & skin care</li>
+              <li>Back & shoulder therapy</li>
+              <li>Pressure point recovery</li>
+              <li>Relaxation & rejuvenation</li>
+            {% endif %}
+          </ul>
+          <a href="{{ section.settings.him_link | default: '#' }}" class="db-trio-btn">
+            {% if is_arabic %}{{ section.settings.him_btn_ar | default: 'اكتشف الخدمات' }}{% else %}{{ section.settings.him_btn | default: 'Explore Services' }}{% endif %}
+            <svg viewBox="0 0 24 24"><polyline points="{% if is_arabic %}15 18 9 12 15 6{% else %}9 18 15 12 9 6{% endif %}"/></svg>
+          </a>
+        </div>
+
+        <!-- FOR COUPLES -->
+        <div class="db-trio-card db-trio-card--couples">
+          <div class="db-trio-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span class="db-trio-label">{% if is_arabic %}للأزواج{% else %}For Couples{% endif %}</span>
+          <h3 class="db-trio-title">
+            {% if is_arabic %}{{ section.settings.couples_title_ar | default: 'لحظات مشتركة لا تُنسى' }}{% else %}{{ section.settings.couples_title | default: 'Shared Moments' }}{% endif %}
+          </h3>
+          <p class="db-trio-desc">
+            {% if is_arabic %}{{ section.settings.couples_desc_ar | default: default_couples_desc_ar }}{% else %}{{ section.settings.couples_desc | default: default_couples_desc_en }}{% endif %}
+          </p>
+          <ul class="db-trio-services">
+            {% if is_arabic %}
+              <li>مساج متزامن للأزواج</li>
+              <li>فيشل جنباً إلى جنب</li>
+              <li>مانيكير وباديكير للاثنين</li>
+              <li>باقات خاصة بمناسبة الأعياد</li>
+              <li>جلسات عرائس وبراعم الزفاف</li>
+            {% else %}
+              <li>Side-by-side couples massage</li>
+              <li>Dual facials together</li>
+              <li>Mani & pedi for two</li>
+              <li>Special occasion packages</li>
+              <li>Bridal shower & group sessions</li>
+            {% endif %}
+          </ul>
+          <a href="{{ section.settings.couples_link | default: '#' }}" class="db-trio-btn">
+            {% if is_arabic %}{{ section.settings.couples_btn_ar | default: 'اكتشفوا الباقات' }}{% else %}{{ section.settings.couples_btn | default: 'Explore Packages' }}{% endif %}
+            <svg viewBox="0 0 24 24"><polyline points="{% if is_arabic %}15 18 9 12 15 6{% else %}9 18 15 12 9 6{% endif %}"/></svg>
+          </a>
+        </div>
+
+      </div>
+      <!-- /trio grid -->
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DB · Experience Selector",
+  "class": "db-intro-section",
+  "settings": [
+    { "type": "header", "content": "🇬🇧 Header — English" },
+    { "type": "text",     "id": "eyebrow",    "label": "Eyebrow (EN)",  "default": "Donna Bella — At Home" },
+    { "type": "text",     "id": "title",      "label": "Title (EN)",    "default": "An Experience Designed" },
+    { "type": "text",     "id": "title_em",   "label": "Title italic (EN)", "default": "For You" },
+    { "type": "textarea", "id": "subtitle",   "label": "Subtitle (EN)", "default": "Whether it's a moment for yourself, a treat for him, or a shared ritual together — Donna Bella comes to your door." },
+
+    { "type": "header", "content": "🇸🇦 العنوان — العربية" },
+    { "type": "text",     "id": "eyebrow_ar",  "label": "الوسم (AR)",    "default": "دونا بيلا — خدمات منزلية" },
+    { "type": "text",     "id": "title_ar",    "label": "العنوان (AR)",  "default": "تجربة مصممة" },
+    { "type": "text",     "id": "title_em_ar", "label": "العنوان المائل (AR)", "default": "خصيصاً لكِ" },
+    { "type": "textarea", "id": "subtitle_ar", "label": "الوصف (AR)",   "default": "سواء كنتِ تبحثين عن لحظة خاصة لكِ، أو تدليل شريككِ، أو تجربة مشتركة — دونا بيلا تصل إلى باب منزلكِ." },
+
+    { "type": "header", "content": "💗 For Her" },
+    { "type": "text",     "id": "her_title",    "label": "Title (EN)",       "default": "Luxury for Women" },
+    { "type": "textarea", "id": "her_desc",     "label": "Description (EN)", "default": "Massage, facials, nails, hair, and waxing — everything you need, delivered to your door." },
+    { "type": "text",     "id": "her_btn",      "label": "Button text (EN)", "default": "Explore Services" },
+    { "type": "url",      "id": "her_link",     "label": "Button link" },
+    { "type": "text",     "id": "her_title_ar", "label": "العنوان (AR)",     "default": "عناية فاخرة للمرأة" },
+    { "type": "textarea", "id": "her_desc_ar",  "label": "الوصف (AR)",      "default": "مساج، فيشل، أظافر، شعر، وإزالة شعر — كل ما تحتاجينه في منزلكِ." },
+    { "type": "text",     "id": "her_btn_ar",   "label": "نص الزر (AR)",    "default": "اكتشفي الخدمات" },
+
+    { "type": "header", "content": "💙 For Him" },
+    { "type": "text",     "id": "him_title",    "label": "Title (EN)",       "default": "Grooming for Men" },
+    { "type": "textarea", "id": "him_desc",     "label": "Description (EN)", "default": "Sports & deep tissue massage, men's facials, and full grooming care — without leaving home." },
+    { "type": "text",     "id": "him_btn",      "label": "Button text (EN)", "default": "Explore Services" },
+    { "type": "url",      "id": "him_link",     "label": "Button link" },
+    { "type": "text",     "id": "him_title_ar", "label": "العنوان (AR)",     "default": "عناية الرجل في المنزل" },
+    { "type": "textarea", "id": "him_desc_ar",  "label": "الوصف (AR)",      "default": "مساج رياضي وعلاجي، فيشل للرجل، وعناية متكاملة — بدون الحاجة للخروج." },
+    { "type": "text",     "id": "him_btn_ar",   "label": "نص الزر (AR)",    "default": "اكتشف الخدمات" },
+
+    { "type": "header", "content": "💜 For Couples" },
+    { "type": "text",     "id": "couples_title",    "label": "Title (EN)",       "default": "Shared Moments" },
+    { "type": "textarea", "id": "couples_desc",     "label": "Description (EN)", "default": "Side-by-side experiences with two specialists arriving together at your home." },
+    { "type": "text",     "id": "couples_btn",      "label": "Button text (EN)", "default": "Explore Packages" },
+    { "type": "url",      "id": "couples_link",     "label": "Button link" },
+    { "type": "text",     "id": "couples_title_ar", "label": "العنوان (AR)",     "default": "لحظات مشتركة لا تُنسى" },
+    { "type": "textarea", "id": "couples_desc_ar",  "label": "الوصف (AR)",      "default": "تجارب متزامنة للأزواج مع أخصائيتين تصلان معاً إلى منزلكِ." },
+    { "type": "text",     "id": "couples_btn_ar",   "label": "نص الزر (AR)",    "default": "اكتشفوا الباقات" },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top",    "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing",    "default": 96 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 96 }
+  ],
+  "blocks": [],
+  "presets": [
+    { "name": "DB · Experience Selector", "category": "Donna Bella" }
+  ]
+}
+{% endschema %}
