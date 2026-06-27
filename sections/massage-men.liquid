@@ -1,0 +1,681 @@
+{% comment %}
+  Massage — Men — Belladona Care
+  Bilingual section: auto-detects EN/AR via request.locale
+  Save as: sections/massage-men.liquid
+  Add to page via: Customize → Page → Add section → Massage Men
+{% endcomment %}
+
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign dir = 'rtl' %}
+{% endif %}
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div class="mm-{{ section.id }}" dir="{{ dir }}">
+<style>
+  .mm-{{ section.id }} .mm-mini-icon,
+.mm-{{ section.id }} .mm-prenatal-icon,
+.mm-{{ section.id }} .mm-dur-icon {
+  display: none !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+  .mm-{{ section.id }} {
+    --bg:        {{ section.settings.bg_color }};
+    --bg-dark:   #2f3d4d;
+    --bg-light:  #4d6275;
+    --gold:      {{ section.settings.gold_color }};
+    --gold-dim:  rgba(201,169,110,0.18);
+    --gold-line: rgba(201,169,110,0.35);
+    --white:     #ffffff;
+    --white-60:  rgba(255,255,255,0.6);
+    --white-20:  rgba(255,255,255,0.08);
+    --white-10:  rgba(255,255,255,0.05);
+    --glass:     rgba(255,255,255,0.06);
+    --glass-b:   rgba(255,255,255,0.12);
+    --serif:  'Cormorant Garamond', Georgia, serif;
+    --sans:   'Jost', sans-serif;
+    --arabic: 'Cairo', sans-serif;
+    --font-main:    {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
+    --font-display: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %};
+    background-color: var(--bg);
+    color: var(--white);
+    font-family: var(--font-main);
+    font-weight: 300;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  @keyframes mm-fadeUp-{{ section.id }} { to { opacity: 1; transform: translateY(0); } }
+  @keyframes mm-ring-{{ section.id }} {
+    0%,100% { opacity: 0.4; transform: translate(-50%,-50%) scale(1); }
+    50%      { opacity: 0.8; transform: translate(-50%,-50%) scale(1.04); }
+  }
+
+  /* ── HERO ── */
+  .mm-{{ section.id }} .mm-hero {
+    position: relative; min-height: 58vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 80px 30px 60px; overflow: hidden;
+  }
+  .mm-{{ section.id }} .mm-hero::before {
+    content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.1) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none;
+  }
+  .mm-{{ section.id }} .mm-hero::after {
+    content: ''; position: absolute; width: 380px; height: 380px; border-radius: 50%;
+    border: 1px solid var(--gold-line); top: 50%; left: 50%;
+    transform: translate(-50%,-50%); pointer-events: none;
+    animation: mm-ring-{{ section.id }} 4s ease-in-out infinite;
+  }
+  .mm-{{ section.id }} .mm-eyebrow {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.4em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); margin-bottom: 20px; position: relative; z-index: 1;
+    opacity: 0; transform: translateY(16px);
+    animation: mm-fadeUp-{{ section.id }} 0.8s ease 0.2s forwards;
+  }
+  .mm-{{ section.id }} .mm-title {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 9vw, 100px);
+    font-weight: {% if is_arabic %}400{% else %}300{% endif %};
+    font-style: {% if is_arabic %}normal{% else %}italic{% endif %};
+    line-height: {% if is_arabic %}1.2{% else %}0.95{% endif %};
+    letter-spacing: {% if is_arabic %}0{% else %}-0.01em{% endif %};
+    color: var(--white); position: relative; z-index: 1;
+    opacity: 0; transform: translateY(20px);
+    animation: mm-fadeUp-{{ section.id }} 0.9s ease 0.4s forwards;
+  }
+  .mm-{{ section.id }} .mm-title span { color: var(--gold); font-style: normal; font-weight: 500; }
+  .mm-{{ section.id }} .mm-desc {
+    margin-top: 26px; font-size: 13px;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.12em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--white-60); position: relative; z-index: 1;
+    opacity: 0; transform: translateY(16px);
+    animation: mm-fadeUp-{{ section.id }} 0.9s ease 0.6s forwards;
+  }
+  .mm-{{ section.id }} .mm-divider {
+    margin-top: 40px; width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0; animation: mm-fadeUp-{{ section.id }} 0.9s ease 0.8s forwards;
+  }
+
+  /* ── LAYOUT ── */
+  .mm-{{ section.id }} .mm-section { position: relative; z-index: 1; padding: 60px 0 80px; }
+  .mm-{{ section.id }} .mm-section + .mm-section { padding-top: 20px; }
+  .mm-{{ section.id }} .mm-inner { max-width: 1160px; margin: 0 auto; padding: 0 30px; }
+
+  /* ── SECTION LABEL ── */
+  .mm-{{ section.id }} .mm-label {
+    display: flex; align-items: center; gap: 18px; margin-bottom: 50px;
+    opacity: 0;
+    transform: translateX({% if is_arabic %}20px{% else %}-20px{% endif %});
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .mm-{{ section.id }} .mm-label.visible { opacity: 1; transform: translateX(0); }
+  .mm-{{ section.id }} .mm-label-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(to {% if is_arabic %}left{% else %}right{% endif %}, var(--gold-line), transparent);
+  }
+  .mm-{{ section.id }} .mm-label-text {
+    font-size: 10px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.45em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); white-space: nowrap;
+  }
+
+  /* ── COUPLE CARDS ── */
+  .mm-{{ section.id }} .mm-couples-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-bottom: 2px; }
+  .mm-{{ section.id }} .mm-couple-card {
+    position: relative; background: var(--glass); border: 1px solid var(--glass-b);
+    padding: 44px 36px 40px; overflow: hidden; cursor: default;
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease, background 0.4s, border-color 0.4s;
+  }
+  .mm-{{ section.id }} .mm-couple-card.visible { opacity: 1; transform: translateY(0); }
+  .mm-{{ section.id }} .mm-couple-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
+  .mm-{{ section.id }} .mm-couple-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .mm-{{ section.id }} .mm-couple-card:hover::before { opacity: 1; }
+  .mm-{{ section.id }} .mm-card-num {
+    font-family: var(--serif); font-size: 72px; font-weight: 300;
+    color: rgba(201,169,110,0.1); line-height: 1; position: absolute; top: 20px;
+    {% if is_arabic %}left{% else %}right{% endif %}: 24px;
+    user-select: none; transition: color 0.4s;
+  }
+  .mm-{{ section.id }} .mm-couple-card:hover .mm-card-num { color: rgba(201,169,110,0.2); }
+  .mm-{{ section.id }} .mm-card-tag {
+    font-size: 9px; font-weight: 500;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.4em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); margin-bottom: 14px;
+  }
+  .mm-{{ section.id }} .mm-card-title { font-family: var(--font-display); font-size: 26px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; line-height: 1.2; margin-bottom: 8px; color: var(--white); }
+  .mm-{{ section.id }} .mm-card-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 13px; color: var(--gold); margin-bottom: 16px; opacity: 0.9; }
+  .mm-{{ section.id }} .mm-card-desc { font-size: 12.5px; line-height: 1.75; color: var(--white-60); margin-bottom: 28px; }
+  .mm-{{ section.id }} .mm-card-footer { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--glass-b); padding-top: 18px; margin-top: auto; }
+  .mm-{{ section.id }} .mm-card-price { font-family: var(--serif); font-size: 32px; font-weight: 300; color: var(--white); }
+  .mm-{{ section.id }} .mm-card-price sup { font-size: 14px; font-family: var(--sans); font-weight: 300; vertical-align: super; opacity: 0.7; }
+  .mm-{{ section.id }} .mm-card-dur { font-size: 11px; letter-spacing: 0.1em; color: var(--white-60); text-align: {% if is_arabic %}start{% else %}right{% endif %}; }
+  .mm-{{ section.id }} .mm-dur-icon { display: block; color: var(--gold); font-size: 14px; margin-bottom: 3px; text-align: {% if is_arabic %}start{% else %}right{% endif %}; }
+
+  /* ── LIST CARDS ── */
+  .mm-{{ section.id }} .mm-list-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; }
+  .mm-{{ section.id }} .mm-list-card {
+    position: relative; background: var(--glass); border: 1px solid var(--glass-b);
+    padding: 32px 32px 28px; display: flex; gap: 22px; align-items: flex-start;
+    overflow: hidden; cursor: default;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s, border-color 0.3s;
+  }
+  .mm-{{ section.id }} .mm-list-card.visible { opacity: 1; transform: translateY(0); }
+  .mm-{{ section.id }} .mm-list-card:hover { background: rgba(255,255,255,0.09); border-color: var(--gold-line); }
+  .mm-{{ section.id }} .mm-list-num {
+    font-family: var(--serif); font-size: 36px; font-weight: 300;
+    color: var(--gold); opacity: 0.35; line-height: 1;
+    flex-shrink: 0; min-width: 38px; transition: opacity 0.3s;
+  }
+  .mm-{{ section.id }} .mm-list-card:hover .mm-list-num { opacity: 0.7; }
+  .mm-{{ section.id }} .mm-list-body { flex: 1; min-width: 0; }
+  .mm-{{ section.id }} .mm-list-title { font-family: var(--font-display); font-size: 20px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 4px; line-height: 1.2; }
+  .mm-{{ section.id }} .mm-list-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 12px; color: var(--gold); margin-bottom: 10px; opacity: 0.85; }
+  .mm-{{ section.id }} .mm-list-desc { font-size: 12px; line-height: 1.7; color: var(--white-60); margin-bottom: 18px; }
+  .mm-{{ section.id }} .mm-list-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .mm-{{ section.id }} .mm-list-price { font-family: var(--serif); font-size: 24px; font-weight: 300; color: var(--white); }
+  .mm-{{ section.id }} .mm-list-price sup { font-size: 11px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .mm-{{ section.id }} .mm-list-dur { font-size: 10px; letter-spacing: 0.1em; color: var(--white-60); text-align: {% if is_arabic %}start{% else %}right{% endif %}; line-height: 1.5; }
+  .mm-{{ section.id }} .mm-dur-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); opacity: 0.5; margin-{% if is_arabic %}left{% else %}right{% endif %}: 5px; vertical-align: middle; }
+
+  /* ── WIDE CARDS ── */
+  .mm-{{ section.id }} .mm-wide-card {
+    background: var(--glass); border: 1px solid var(--glass-b);
+    padding: 36px 40px; display: grid; grid-template-columns: 1fr 1fr auto;
+    gap: 40px; align-items: center;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+  .mm-{{ section.id }} .mm-wide-card + .mm-wide-card { border-top: none; }
+  .mm-{{ section.id }} .mm-wide-card.visible { opacity: 1; transform: translateY(0); }
+  .mm-{{ section.id }} .mm-wide-card:hover { background: rgba(255,255,255,0.09); border-color: var(--gold-line); }
+  .mm-{{ section.id }} .mm-wide-title { font-family: var(--font-display); font-size: 22px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 4px; }
+  .mm-{{ section.id }} .mm-wide-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 12px; color: var(--gold); opacity: 0.85; }
+  .mm-{{ section.id }} .mm-wide-desc { font-size: 12px; line-height: 1.7; color: var(--white-60); }
+  .mm-{{ section.id }} .mm-wide-right { text-align: {% if is_arabic %}start{% else %}right{% endif %}; }
+  .mm-{{ section.id }} .mm-wide-price { font-family: var(--serif); font-size: 28px; font-weight: 300; color: var(--white); }
+  .mm-{{ section.id }} .mm-wide-price sup { font-size: 12px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .mm-{{ section.id }} .mm-wide-dur { font-size: 10px; color: var(--white-60); margin-top: 4px; letter-spacing: 0.08em; }
+
+  /* ── MINI CARDS ── */
+  .mm-{{ section.id }} .mm-mini-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+  .mm-{{ section.id }} .mm-mini-card {
+    background: var(--glass); border: 1px solid var(--glass-b);
+    padding: 30px 26px; text-align: center;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+  .mm-{{ section.id }} .mm-mini-card.visible { opacity: 1; transform: translateY(0); }
+  .mm-{{ section.id }} .mm-mini-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold-line); }
+  .mm-{{ section.id }} .mm-mini-icon { font-size: 24px; margin-bottom: 12px; display: block; }
+  .mm-{{ section.id }} .mm-mini-title { font-family: var(--font-display); font-size: 18px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 6px; line-height: 1.2; }
+  .mm-{{ section.id }} .mm-mini-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 11px; color: var(--gold); margin-bottom: 10px; opacity: 0.85; }
+  .mm-{{ section.id }} .mm-mini-desc { font-size: 11.5px; line-height: 1.65; color: var(--white-60); margin-bottom: 18px; }
+  .mm-{{ section.id }} .mm-mini-price { font-family: var(--serif); font-size: 26px; font-weight: 300; color: var(--white); }
+  .mm-{{ section.id }} .mm-mini-price sup { font-size: 11px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .mm-{{ section.id }} .mm-mini-dur { font-size: 10px; color: var(--white-60); margin-top: 5px; letter-spacing: 0.06em; }
+
+  /* ── PRENATAL BANNER ── */
+  .mm-{{ section.id }} .mm-prenatal {
+    background: linear-gradient(to {% if is_arabic %}left{% else %}right{% endif %}, var(--bg-dark), var(--bg-light), var(--bg-dark));
+    border: 1px solid var(--glass-b);
+    border-{% if is_arabic %}right{% else %}left{% endif %}: 3px solid var(--gold);
+    padding: 36px 40px; display: flex; align-items: center; gap: 30px;
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .mm-{{ section.id }} .mm-prenatal.visible { opacity: 1; transform: translateY(0); }
+  .mm-{{ section.id }} .mm-prenatal-icon { font-size: 40px; flex-shrink: 0; }
+  .mm-{{ section.id }} .mm-prenatal-content { flex: 1; }
+  .mm-{{ section.id }} .mm-prenatal-title { font-family: var(--font-display); font-size: 24px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); margin-bottom: 4px; }
+  .mm-{{ section.id }} .mm-prenatal-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 12px; color: var(--gold); margin-bottom: 10px; }
+  .mm-{{ section.id }} .mm-prenatal-desc { font-size: 12px; line-height: 1.7; color: var(--white-60); }
+  .mm-{{ section.id }} .mm-prenatal-right { text-align: {% if is_arabic %}start{% else %}right{% endif %}; flex-shrink: 0; }
+  .mm-{{ section.id }} .mm-prenatal-from {
+    font-size: 9px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.3em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); margin-bottom: 4px;
+  }
+  .mm-{{ section.id }} .mm-prenatal-price { font-family: var(--serif); font-size: 36px; font-weight: 300; color: var(--white); }
+  .mm-{{ section.id }} .mm-prenatal-price sup { font-size: 14px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .mm-{{ section.id }} .mm-prenatal-dur { font-size: 10px; color: var(--white-60); margin-top: 4px; }
+
+  /* ── HIGHLIGHT / PACKAGE ── */
+  .mm-{{ section.id }} .mm-highlight {
+    position: relative;
+    background: linear-gradient(135deg, rgba(201,169,110,0.14) 0%, rgba(201,169,110,0.04) 100%);
+    border: 1px solid var(--gold-line);
+    padding: 48px 48px 42px; display: grid; grid-template-columns: 1fr auto;
+    gap: 30px; align-items: center; overflow: hidden;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease, background 0.4s;
+    cursor: default;
+  }
+  .mm-{{ section.id }} .mm-highlight.visible { opacity: 1; transform: translateY(0); }
+  .mm-{{ section.id }} .mm-highlight:hover { background: linear-gradient(135deg, rgba(201,169,110,0.2) 0%, rgba(201,169,110,0.07) 100%); }
+  .mm-{{ section.id }} .mm-highlight::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent 10%, var(--gold) 50%, transparent 90%); }
+  .mm-{{ section.id }} .mm-highlight-badge {
+    position: absolute; top: 18px;
+    {% if is_arabic %}left{% else %}right{% endif %}: 18px;
+    background: var(--gold); color: var(--bg-dark);
+    font-size: 9px; font-weight: 600;
+    letter-spacing: {% if is_arabic %}0.05em{% else %}0.3em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    padding: 5px 12px; border-radius: 20px;
+  }
+  .mm-{{ section.id }} .mm-highlight-title { font-family: var(--font-display); font-size: 34px; font-weight: {% if is_arabic %}500{% else %}400{% endif %}; color: var(--white); line-height: 1.15; margin-bottom: 6px; }
+  .mm-{{ section.id }} .mm-highlight-sub { font-family: var(--font-display); font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; font-size: 14px; color: var(--gold); margin-bottom: 14px; }
+  .mm-{{ section.id }} .mm-highlight-desc { font-size: 13px; line-height: 1.75; color: var(--white-60); }
+  .mm-{{ section.id }} .mm-highlight-right { text-align: {% if is_arabic %}start{% else %}right{% endif %}; flex-shrink: 0; }
+  .mm-{{ section.id }} .mm-highlight-label {
+    font-size: 9px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.35em{% endif %};
+    {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+    color: var(--gold); margin-bottom: 6px;
+  }
+  .mm-{{ section.id }} .mm-highlight-price { font-family: var(--serif); font-size: 52px; font-weight: 300; color: var(--white); line-height: 1; }
+  .mm-{{ section.id }} .mm-highlight-price sup { font-size: 18px; font-family: var(--sans); vertical-align: super; opacity: 0.7; }
+  .mm-{{ section.id }} .mm-highlight-dur { margin-top: 10px; font-size: 11px; color: var(--white-60); letter-spacing: 0.08em; }
+
+  /* ── BOTTOM ── */
+  .mm-{{ section.id }} .mm-bottom { text-align: center; padding: 80px 30px 100px; position: relative; z-index: 1; opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .mm-{{ section.id }} .mm-bottom.visible { opacity: 1; transform: translateY(0); }
+  .mm-{{ section.id }} .mm-bottom-line { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 30px; }
+  .mm-{{ section.id }} .mm-bottom-rule { width: 60px; height: 1px; background: var(--gold-line); }
+  .mm-{{ section.id }} .mm-bottom-diamond { color: var(--gold); font-size: 10px; }
+  .mm-{{ section.id }} .mm-bottom h2 { font-family: var(--font-display); font-size: clamp(30px, 5vw, 56px); font-weight: 300; font-style: {% if is_arabic %}normal{% else %}italic{% endif %}; color: var(--white); line-height: 1.2; margin-bottom: 16px; }
+  .mm-{{ section.id }} .mm-bottom p { font-size: 12px; letter-spacing: {% if is_arabic %}0.05em{% else %}0.2em{% endif %}; {% unless is_arabic %}text-transform: uppercase;{% endunless %} color: var(--white-60); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .mm-{{ section.id }} .mm-couples-grid { grid-template-columns: 1fr; }
+    .mm-{{ section.id }} .mm-list-grid    { grid-template-columns: 1fr; }
+    .mm-{{ section.id }} .mm-mini-grid    { grid-template-columns: 1fr 1fr; }
+    .mm-{{ section.id }} .mm-highlight    { grid-template-columns: 1fr; }
+    .mm-{{ section.id }} .mm-highlight-right { text-align: start; }
+    .mm-{{ section.id }} .mm-wide-card    { grid-template-columns: 1fr; gap: 16px; }
+    .mm-{{ section.id }} .mm-wide-right   { text-align: start; }
+    .mm-{{ section.id }} .mm-prenatal     { flex-direction: column; text-align: center; }
+    .mm-{{ section.id }} .mm-prenatal-right { text-align: center; }
+  }
+  @media (max-width: 580px) {
+    .mm-{{ section.id }} .mm-mini-grid   { grid-template-columns: 1fr; }
+    .mm-{{ section.id }} .mm-couple-card { padding: 32px 24px; }
+  }
+</style>
+
+<!-- ════════ HERO ════════ -->
+<section class="mm-hero">
+  <p class="mm-eyebrow">{% if is_arabic %}{{ section.settings.eyebrow_ar }}{% else %}{{ section.settings.eyebrow_en }}{% endif %}</p>
+  <h1 class="mm-title">
+    {% if is_arabic %}فن<br><span>اللمسة الشافية</span>
+    {% else %}The Art of<br><span>Healing Touch</span>
+    {% endif %}
+  </h1>
+  <p class="mm-desc">{% if is_arabic %}علاجات تدليك فاخرة · خدمة منزلية{% else %}Premium Massage Therapies · Home Service{% endif %}</p>
+  <div class="mm-divider"></div>
+</section>
+
+<!-- ════════ SIGNATURE TREATMENTS ════════ -->
+<section class="mm-section"><div class="mm-inner">
+  <div class="mm-label" data-mm-reveal>
+    <span class="mm-label-text">{% if is_arabic %}العلاجات المميزة{% else %}Signature Treatments{% endif %}</span>
+    <div class="mm-label-line"></div>
+  </div>
+
+  <div class="mm-list-grid">
+
+    <!-- Hot Stone -->
+    <div class="mm-list-card" data-mm-reveal data-delay="0">
+      <span class="mm-list-num">01</span>
+      <div class="mm-list-body">
+        <h3 class="mm-list-title">{% if is_arabic %}تدليك الحجارة الساخنة{% else %}Hot Stone Massage{% endif %}</h3>
+        <p class="mm-list-sub">{% if is_arabic %}من التوتر الثقيل إلى الهدوء التام{% else %}From heavy tension to weightless calm{% endif %}</p>
+        <p class="mm-list-desc">{% if is_arabic %}حجارة ناعمة ساخنة مدمجة مع تقنيات خبيرة لإذابة توتر العضلات بلطف وتعزيز الدورة الدموية في بيئة فاخرة هادئة.{% else %}Smooth, heated stones combined with expert techniques to gently melt muscle tension and enhance circulation in a serene, luxurious setting.{% endif %}</p>
+        <div class="mm-list-meta">
+          <div class="mm-list-price"><sup>AED </sup>350</div>
+          <div class="mm-list-dur"><span class="mm-dur-dot"></span>{% if is_arabic %}ساعة · ساعة و30 دقيقة{% else %}1 hr · 1 hr 30 min{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thai -->
+    <div class="mm-list-card" data-mm-reveal data-delay="100">
+      <span class="mm-list-num">02</span>
+      <div class="mm-list-body">
+        <h3 class="mm-list-title">{% if is_arabic %}التدليك التايلاندي{% else %}Thai Massage{% endif %}</h3>
+        <p class="mm-list-sub">{% if is_arabic %}حيث تلتقي التقنية القديمة بالتجديد الراقي{% else %}Where ancient technique meets refined renewal{% endif %}</p>
+        <p class="mm-list-desc">{% if is_arabic %}إطالة موجَّهة وضغط مُستهدَف لتحرير التوتر وتعزيز المرونة واستعادة التدفق الطبيعي للطاقة.{% else %}Guided stretching and targeted pressure to release tension, enhance flexibility, and restore the natural flow of energy.{% endif %}</p>
+        <div class="mm-list-meta">
+          <div class="mm-list-price"><sup>AED </sup>300</div>
+          <div class="mm-list-dur"><span class="mm-dur-dot"></span>{% if is_arabic %}ساعة · ساعة و30 دقيقة{% else %}1 hr · 1 hr 30 min{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lymphatic -->
+    <div class="mm-list-card" data-mm-reveal data-delay="0">
+      <span class="mm-list-num">03</span>
+      <div class="mm-list-body">
+        <h3 class="mm-list-title">{% if is_arabic %}تصريف الليمفاوي{% else %}Lymphatic Drainage{% endif %}</h3>
+        <p class="mm-list-sub">{% if is_arabic %}تخلص مما يُثقل كاهلكِ{% else %}Release what weighs you down{% endif %}</p>
+        <p class="mm-list-desc">{% if is_arabic %}علاج إيقاعي لطيف مصمم لتحفيز الدورة الدموية وتقليل احتباس السوائل ودعم عملية إزالة السموم الطبيعية في الجسم. مثالي لتخفيف الانتفاخ واستعادة التوازن.{% else %}A gentle, rhythmic therapy designed to stimulate circulation, reduce fluid retention, and support the body's natural detox process. Ideal for relieving puffiness and restoring balance.{% endif %}</p>
+        <div class="mm-list-meta">
+          <div class="mm-list-price"><sup>AED </sup>375</div>
+          <div class="mm-list-dur"><span class="mm-dur-dot"></span>{% if is_arabic %}ساعة · ساعة و30 دقيقة{% else %}1 hr · 1 hr 30 min{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Balinese -->
+    <div class="mm-list-card" data-mm-reveal data-delay="100">
+      <span class="mm-list-num">04</span>
+      <div class="mm-list-body">
+        <h3 class="mm-list-title">{% if is_arabic %}مساج بالي{% else %}Balinese Massage{% endif %}</h3>
+        <p class="mm-list-sub">{% if is_arabic %}حركات انسيابية ناعمة لانسجام عميق{% else %}Smooth, flowing strokes for deep harmony{% endif %}</p>
+        <p class="mm-list-desc">{% if is_arabic %}علاج تقليدي يدمج الإطالة اللطيفة والضغط ونقاط الانعكاس لتنشيط الدورة الدموية ومنح الجسم استرخاءً عميقاً.{% else %}A traditional therapy using gentle stretches, acupressure, and aromatherapy oils to boost blood circulation and bring deep relaxation.{% endif %}</p>
+        <div class="mm-list-meta">
+          <div class="mm-list-price"><sup>AED </sup>300</div>
+          <div class="mm-list-dur"><span class="mm-dur-dot"></span>{% if is_arabic %}ساعة · ساعة و30 دقيقة{% else %}1 hr · 1 hr 30 min{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deep Tissue -->
+    <div class="mm-list-card" data-mm-reveal data-delay="0">
+      <span class="mm-list-num">05</span>
+      <div class="mm-list-body">
+        <h3 class="mm-list-title">{% if is_arabic %}تدليك الأنسجة العميقة{% else %}Deep Tissue Massage{% endif %}</h3>
+        <p class="mm-list-sub">{% if is_arabic %}مسار أعمق نحو الراحة الحقيقية{% else %}A deeper path to true relief{% endif %}</p>
+        <p class="mm-list-desc">{% if is_arabic %}ضغط قوي ومُستهدَف للوصول إلى الطبقات العميقة من العضلات وتحرير التوتر المزمن والعقد الصلبة.{% else %}Firm, targeted pressure to reach the deeper layers of muscle and release chronic tension and tight knots.{% endif %}</p>
+        <div class="mm-list-meta">
+          <div class="mm-list-price"><sup>AED </sup>375</div>
+          <div class="mm-list-dur"><span class="mm-dur-dot"></span>{% if is_arabic %}ساعة · ساعة و30 دقيقة{% else %}1 hr · 1 hr 30 min{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lava Shell -->
+    <div class="mm-list-card" data-mm-reveal data-delay="100">
+      <span class="mm-list-num">06</span>
+      <div class="mm-list-body">
+        <h3 class="mm-list-title">{% if is_arabic %}مساج مهدئ باللافا شيل (الأصداف الحارة){% else %}Soothing Massage with Lava Shells{% endif %}</h3>
+        <p class="mm-list-sub">{% if is_arabic %}أصداف دافئة لاسترخاء عضلي أعمق{% else %}Warm shells for deeper muscle melting{% endif %}</p>
+        <p class="mm-list-desc">{% if is_arabic %}علاج مريح للغاية يستخدم أصداف البحر المسخنة طبيعياً لتنزلق بلطف على العضلات، مما يزيل التوتر ويمنح عقلك هدوءاً تاماً.{% else %}A deeply comforting treatment using naturally heated clam shells to gently glide over muscles, relieving tension and promoting a peaceful state of mind.{% endif %}</p>
+        <div class="mm-list-meta">
+          <div class="mm-list-price"><sup>AED </sup>415</div>
+          <div class="mm-list-dur"><span class="mm-dur-dot"></span>{% if is_arabic %}ساعة · ساعة و30 دقيقة{% else %}1 hr · 1 hr 30 min{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- ════════ FOCUSED RELIEF ════════ -->
+<section class="mm-section"><div class="mm-inner">
+  <div class="mm-label" data-mm-reveal>
+    <span class="mm-label-text">{% if is_arabic %}تخفيف مُركَّز{% else %}Focused Relief{% endif %}</span>
+    <div class="mm-label-line"></div>
+  </div>
+
+  <!-- Head & Shoulder -->
+  <div class="mm-wide-card" data-mm-reveal>
+    <div>
+      <h3 class="mm-wide-title">{% if is_arabic %}مساج الرأس والكتف{% else %}Head & Shoulder Massage{% endif %}</h3>
+      <p class="mm-wide-sub">{% if is_arabic %}تخفيف التوتر، استعادة الراحة{% else %}Release tension, restore ease{% endif %}</p>
+    </div>
+    <p class="mm-wide-desc">{% if is_arabic %}مساج مُركّز يستهدف الرأس والرقبة والكتفين لإذابة التوتر والضغوط اليومية في المناطق الأكثر تأثراً بالعمل اليومي.{% else %}A focused massage targeting the head, neck, and shoulders to melt away daily stress and tension in key areas.{% endif %}</p>
+    <div class="mm-wide-right">
+      <div class="mm-wide-price"><sup>AED </sup>150</div>
+      <div class="mm-wide-dur">{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div>
+    </div>
+  </div>
+
+  <!-- Back & Shoulder -->
+  <div class="mm-wide-card" data-mm-reveal>
+    <div>
+      <h3 class="mm-wide-title">{% if is_arabic %}مساج الظهر والكتف{% else %}Back & Shoulder Massage{% endif %}</h3>
+      <p class="mm-wide-sub">{% if is_arabic %}راحة حيث تحتاجها أكثر{% else %}Relief where you need it most{% endif %}</p>
+    </div>
+    <p class="mm-wide-desc">{% if is_arabic %}يُركِّز على تخفيف التوتر في الظهر والكتفين والرقبة باستخدام تقنيات مُستهدَفة لراحة دقيقة ودائمة.{% else %}Focuses on relieving tension in the back, shoulders, and neck using targeted techniques for precise, lasting relief.{% endif %}</p>
+    <div class="mm-wide-right">
+      <div class="mm-wide-price"><sup>AED </sup>165</div>
+      <div class="mm-wide-dur">{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div>
+    </div>
+  </div>
+
+  <!-- Hand Massage -->
+  <div class="mm-wide-card" data-mm-reveal>
+    <div>
+      <h3 class="mm-wide-title">{% if is_arabic %}تدليك اليدين{% else %}Hand Massage{% endif %}</h3>
+      <p class="mm-wide-sub">{% if is_arabic %}راحة لطيفة، ارتياح دائم{% else %}Gentle relief, lasting comfort{% endif %}</p>
+    </div>
+    <p class="mm-wide-desc">{% if is_arabic %}علاج مُهدِّئ مصمم لتخفيف التوتر في اليدين والأصابع والمعصمين — مثالي كإضافة أو خدمة منفردة.{% else %}A soothing treatment designed to relieve tension in the hands, fingers, and wrists — perfect as an add-on or standalone.{% endif %}</p>
+    <div class="mm-wide-right">
+      <div class="mm-wide-price"><sup>AED </sup>60</div>
+      <div class="mm-wide-dur">{% if is_arabic %}20 دقيقة{% else %}20 min{% endif %}</div>
+    </div>
+  </div>
+
+</div></section>
+
+<!-- ════════ REFLEXOLOGY ════════ -->
+<section class="mm-section"><div class="mm-inner">
+  <div class="mm-label" data-mm-reveal>
+    <span class="mm-label-text">{% if is_arabic %}الانعكاسية{% else %}Reflexology{% endif %}</span>
+    <div class="mm-label-line"></div>
+  </div>
+
+  <div class="mm-mini-grid">
+
+    <div class="mm-mini-card" data-mm-reveal data-delay="0">
+      <span class="mm-mini-icon">🦶</span>
+      <h3 class="mm-mini-title">{% if is_arabic %}الانعكاسية{% else %}Reflexology{% endif %}</h3>
+      <p class="mm-mini-sub">{% if is_arabic %}التوازن يبدأ من قدميكَ{% else %}Balance begins at your feet{% endif %}</p>
+      <p class="mm-mini-desc">{% if is_arabic %}علاج علاجي للقدمين يُطبِّق ضغطاً مُستهدَفاً على نقاط محددة مرتبطة بمناطق مختلفة من الجسم.{% else %}Therapeutic foot treatment applying targeted pressure to specific points linked to different areas of the body.{% endif %}</p>
+      <div class="mm-mini-price"><sup>AED </sup>300</div>
+      <div class="mm-mini-dur">{% if is_arabic %}ساعة و30 دقيقة{% else %}1 hr 30 min{% endif %}</div>
+    </div>
+
+    <div class="mm-mini-card" data-mm-reveal data-delay="100">
+      <span class="mm-mini-icon">🦶</span>
+      <h3 class="mm-mini-title">{% if is_arabic %}مساج القدمين{% else %}Foot Massage{% endif %}</h3>
+      <p class="mm-mini-sub">{% if is_arabic %}انتعاش وحيوية للقدمين المتعبتين{% else %}Refresh tired feet{% endif %}</p>
+      <p class="mm-mini-desc">{% if is_arabic %}تخلص من التوتر والتعب بمساج مُركّز يستهدف نقاط الضغط الأساسية في القدمين لتعزيز العافية والصحة العامة.{% else %}Relieve stress and tension with a focused massage that targets key pressure points in the feet, promoting overall wellness.{% endif %}</p>
+      <div class="mm-mini-price"><sup>AED </sup>150</div>
+      <div class="mm-mini-dur">{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div>
+    </div>
+
+    <div class="mm-mini-card" data-mm-reveal data-delay="200">
+      <span class="mm-mini-icon">🦶</span>
+      <h3 class="mm-mini-title">{% if is_arabic %}تدليك انعكاسي{% else %}Reflexology Massage{% endif %}</h3>
+      <p class="mm-mini-sub">{% if is_arabic %}استرخِي من خلال كل نقطة ضغط{% else %}Relax through every pressure point{% endif %}</p>
+      <p class="mm-mini-desc">{% if is_arabic %}تدليك علاجي للقدمين يُطبِّق ضغطاً مُستهدَفاً على نقاط انعكاسية مرتبطة بمناطق مختلفة من الجسم.{% else %}Therapeutic foot massage applying targeted pressure to reflex points linked to different areas of the body.{% endif %}</p>
+      <div class="mm-mini-price"><sup>AED </sup>65</div>
+      <div class="mm-mini-dur">{% if is_arabic %}15 دقيقة · ساعة{% else %}15 min · 1 hr{% endif %}</div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- ════════ FACE & LIFT ════════ -->
+<section class="mm-section"><div class="mm-inner">
+  <div class="mm-label" data-mm-reveal>
+    <span class="mm-label-text">{% if is_arabic %}الوجه والرفع{% else %}Face & Lift{% endif %}</span>
+    <div class="mm-label-line"></div>
+  </div>
+
+  <div class="mm-list-grid">
+
+    <div class="mm-list-card" data-mm-reveal data-delay="0">
+      <span class="mm-list-num">✦</span>
+      <div class="mm-list-body">
+        <h3 class="mm-list-title">{% if is_arabic %}تدليك نحت الوجه{% else %}Face Slimming Massage{% endif %}</h3>
+        <p class="mm-list-sub">{% if is_arabic %}نحتِي بثقة{% else %}Contour with confidence{% endif %}</p>
+        <p class="mm-list-desc">{% if is_arabic %}تدليك وجه مُستهدَف مصمم لنحت وجهكِ الطبيعي ورفعه وإبراز ملامحه.{% else %}A targeted facial massage designed to sculpt, lift, and define your natural features.{% endif %}</p>
+        <div class="mm-list-meta">
+          <div class="mm-list-price"><sup>AED </sup>200</div>
+          <div class="mm-list-dur"><span class="mm-dur-dot"></span>{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mm-list-card" data-mm-reveal data-delay="100">
+      <span class="mm-list-num">✦</span>
+      <div class="mm-list-body">
+        <h3 class="mm-list-title">{% if is_arabic %}تدليك رفع الوجه{% else %}Facial Lifting Massage{% endif %}</h3>
+        <p class="mm-list-sub">{% if is_arabic %}رفع طبيعي، إشراق مرئي{% else %}Natural lift, visible glow{% endif %}</p>
+        <p class="mm-list-desc">{% if is_arabic %}علاج وجه مُستهدَف مصمم لرفع الجلد وشده وتقويته بشكل طبيعي — دون أي تدخل.{% else %}A targeted facial therapy designed to lift, tone, and firm the skin naturally — without any intervention.{% endif %}</p>
+        <div class="mm-list-meta">
+          <div class="mm-list-price"><sup>AED </sup>200</div>
+          <div class="mm-list-dur"><span class="mm-dur-dot"></span>{% if is_arabic %}30 دقيقة{% else %}30 min{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- ════════ PRENATAL ════════ -->
+<section class="mm-section"><div class="mm-inner">
+  <div class="mm-label" data-mm-reveal>
+    <span class="mm-label-text">{% if is_arabic %}عناية متخصصة{% else %}Specialist Care{% endif %}</span>
+    <div class="mm-label-line"></div>
+  </div>
+
+  <div class="mm-prenatal" data-mm-reveal>
+    <div class="mm-prenatal-icon">🤰</div>
+    <div class="mm-prenatal-content">
+      <h3 class="mm-prenatal-title">{% if is_arabic %}تدليك ما قبل الولادة{% else %}Prenatal Massage{% endif %}</h3>
+      <p class="mm-prenatal-sub">{% if is_arabic %}عناية لطيفة في رحلة جميلة{% else %}Gentle care for a beautiful journey{% endif %}</p>
+      <p class="mm-prenatal-desc">{% if is_arabic %}علاج لطيف وداعم مصمم خصيصاً للأمهات الحوامل — يمنح الراحة والتخفيف ولحظة من الهدوء الخالص خلال أحد أجمل فصول الحياة.{% else %}A gentle, supportive therapy designed specifically for expectant mothers — providing comfort, relief, and a moment of pure calm during one of life's most beautiful chapters.{% endif %}</p>
+    </div>
+    <div class="mm-prenatal-right">
+      <div class="mm-prenatal-from">{% if is_arabic %}يبدأ من{% else %}Starting from{% endif %}</div>
+      <div class="mm-prenatal-price"><sup>AED </sup>262</div>
+      <div class="mm-prenatal-dur">{% if is_arabic %}ساعة · ساعة و30 دقيقة{% else %}1 hr · 1 hr 30 min{% endif %}</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ════════ PACKAGE ════════ -->
+<section class="mm-section"><div class="mm-inner">
+  <div class="mm-label" data-mm-reveal>
+    <span class="mm-label-text">{% if is_arabic %}أفضل قيمة{% else %}Best Value{% endif %}</span>
+    <div class="mm-label-line"></div>
+  </div>
+
+  <div class="mm-highlight" data-mm-reveal>
+    <span class="mm-highlight-badge">{% if is_arabic %}أفضل قيمة{% else %}Best Value{% endif %}</span>
+    <div>
+      <h2 class="mm-highlight-title">{% if is_arabic %}باقة تدليك الكرسي<br>5 + 1{% else %}Chair Massage<br>5 + 1 Package{% endif %}</h2>
+      <p class="mm-highlight-sub">{% if is_arabic %}المزيد من الجلسات، المزيد من الراحة{% else %}More sessions, more relief{% endif %}</p>
+      <p class="mm-highlight-desc">{% if is_arabic %}خمس جلسات تدليك منشطة بالكرسي مع جلسة مجانية مُضمَّنة — الطريقة المثالية لجعل العافية جزءاً منتظماً من روتينكِ.{% else %}Five revitalizing chair massage sessions with one complimentary session included — the perfect way to make well-being a regular part of your routine.{% endif %}</p>
+    </div>
+    <div class="mm-highlight-right">
+      <div class="mm-highlight-label">{% if is_arabic %}سعر الباقة{% else %}Package Price{% endif %}</div>
+      <div class="mm-highlight-price"><sup>AED </sup>1000</div>
+      <div class="mm-highlight-dur">{% if is_arabic %}ساعة لكل جلسة · 6 جلسات في المجموع{% else %}1 hr per session · 6 sessions total{% endif %}</div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ════════ BOTTOM ════════ -->
+<div class="mm-bottom" data-mm-reveal>
+  <div class="mm-bottom-line">
+    <div class="mm-bottom-rule"></div>
+    <span class="mm-bottom-diamond">◆</span>
+    <div class="mm-bottom-rule"></div>
+  </div>
+  <h2>{% if is_arabic %}كل لمسة،<br>خطوة نحو السكينة{% else %}Every touch,<br><em>a step toward serenity</em>{% endif %}</h2>
+  <p>{% if is_arabic %}جميع الخدمات متاحة في منزلكَ في جميع أنحاء الإمارات{% else %}All services available at your home across the UAE{% endif %}</p>
+</div>
+
+</div>
+
+<script>
+  (function() {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const el = e.target, delay = parseInt(el.dataset.delay || 0);
+          setTimeout(() => el.classList.add('visible'), delay);
+          obs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.mm-{{ section.id }} [data-mm-reveal]').forEach(el => obs.observe(el));
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Massage Men",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🎨 Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#405264"
+    },
+    {
+      "type": "color",
+      "id": "gold_color",
+      "label": "Gold accent",
+      "default": "#7fb5a0"
+    },
+    {
+      "type": "header",
+      "content": "🇬🇧 Hero — English"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_en",
+      "label": "Eyebrow text (EN)",
+      "default": "Belladona Care · Dubai"
+    },
+    {
+      "type": "header",
+      "content": "🇸🇦 Hero — العربية"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_ar",
+      "label": "النص الصغير فوق العنوان (AR)",
+      "default": "بيلادونا كير · دبي"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Massage Men"
+    }
+  ]
+}
+{% endschema %}
