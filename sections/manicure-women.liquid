@@ -10,7 +10,7 @@
 {% assign dir = 'ltr' %}
 {% if is_arabic %}{% assign dir = 'rtl' %}{% endif %}
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500;600&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 
 <div class="nls-{{ section.id }}" dir="{{ dir }}">
 <style>
@@ -21,9 +21,9 @@
     --white: #ffffff; --white-60: rgba(255,255,255,0.6);
     --glass: rgba(255,255,255,0.06); --glass-b: rgba(255,255,255,0.11);
     --serif: 'Cormorant Garamond', Georgia, serif;
-    --sans: 'Jost', sans-serif; --arabic: 'Cairo', sans-serif;
+    --sans: 'Montserrat', sans-serif; --arabic: 'Tajawal', sans-serif;
     --font-main: {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
-    --font-display: {% if is_arabic %}var(--arabic){% else %}var(--serif){% endif %};
+    --font-display: {% if is_arabic %}'Cairo', sans-serif{% else %}var(--serif){% endif %};
     --nls-top: 150px; /* ← cart vertical position; increase to push down */
     background-color: var(--bg); color: var(--white);
     font-family: var(--font-main); font-weight: 300;

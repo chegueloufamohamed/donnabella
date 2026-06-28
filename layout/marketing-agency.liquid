@@ -8,6 +8,7 @@
     <meta name="description" content="{{ page_description | escape }}">
   {% endif %}
   <link rel="canonical" href="{{ canonical_url }}">
+  {% render 'custom-fonts' %}
   {{ content_for_header }}
   {{ 'styles.css' | asset_url | stylesheet_tag }}
 </head>

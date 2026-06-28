@@ -36,12 +36,12 @@
 {% if section.settings.title_font == 'Raleway' or section.settings.card_text_font == 'Raleway' %}{% assign needs_google_fonts = true %}{% assign google_fonts_list = google_fonts_list | append: 'Raleway:wght@300;400;600;700&' %}{% endif %}
 {% if section.settings.title_font == 'Nunito' or section.settings.card_text_font == 'Nunito' %}{% assign needs_google_fonts = true %}{% assign google_fonts_list = google_fonts_list | append: 'Nunito:wght@300;400;600;700&' %}{% endif %}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
 {% if needs_google_fonts %}
-  <link href="https://fonts.googleapis.com/css2?family={{ google_fonts_list }}family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  
 {% else %}
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  
 {% endif %}
 
 <style>
