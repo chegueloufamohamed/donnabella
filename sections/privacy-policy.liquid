@@ -321,10 +321,25 @@
       </p>
     </div>
 
-    <!-- 9. Contact -->
+    <!-- 9. Cancellations & Refunds -->
     <div class="pp-section">
       <div class="pp-section-title">
         <span class="pp-section-num">09</span>
+        {% if is_arabic %}الإلغاء، الحجوزات والاسترداد{% else %}Cancellations, Bookings & Refunds{% endif %}
+      </div>
+      <p class="pp-text">
+        {% if is_arabic %}
+          سيتم معالجة وإرجاع أي مبالغ مستردة ناتجة عن إلغاء الحجز، الشكاوى، أو أي مطالبات أخرى بالاسترداد خلال 10 أيام عمل.
+        {% else %}
+          Any refunds requested due to booking cancellations, complaints, or any other service disputes will be processed and credited within 10 working days.
+        {% endif %}
+      </p>
+    </div>
+
+    <!-- 10. Contact -->
+    <div class="pp-section">
+      <div class="pp-section-title">
+        <span class="pp-section-num">10</span>
         {% if is_arabic %}تواصل معنا{% else %}Contact Us{% endif %}
       </div>
       <p class="pp-text">
