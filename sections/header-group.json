@@ -133,6 +133,14 @@
             "link": "/"
           }
         },
+        "mega_parent_fHyCiW": {
+          "type": "mega_parent",
+          "settings": {
+            "nav_title": "Services",
+            "nav_title_ar": "خدماتنا",
+            "link": "shopify://pages/services"
+          }
+        },
         "mega_parent_mhJFKM": {
           "type": "mega_parent",
           "settings": {
@@ -176,6 +184,7 @@
       },
       "block_order": [
         "mega_parent_jFWGzB",
+        "mega_parent_fHyCiW",
         "mega_parent_mhJFKM",
         "mega_parent_tq4bxn",
         "mega_parent_6cHLck",

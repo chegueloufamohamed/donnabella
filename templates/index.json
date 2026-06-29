@@ -596,6 +596,127 @@
         "padding_top": 80,
         "padding_bottom": 80
       }
+    },
+    "ou_partners_Jhh8yM": {
+      "type": "ou-partners",
+      "blocks": {
+        "partner_AUbVXD": {
+          "type": "partner",
+          "settings": {
+            "name": "Lumière Beauty Lounge",
+            "type": "Beauty Centre",
+            "location": "Dubai Marina, Dubai",
+            "desc": "A premium beauty destination offering a full range of treatments in a luxurious setting.",
+            "tags": "Nails, Facials, Waxing",
+            "name_ar": "لوميير بيوتي لاونج",
+            "type_ar": "مركز تجميل",
+            "location_ar": "دبي مارينا، دبي",
+            "desc_ar": "وجهة تجميل فاخرة تقدم مجموعة كاملة من العلاجات في أجواء راقية.",
+            "tags_ar": "أظافر, فيشل, شمع"
+          }
+        },
+        "partner_nEi3d6": {
+          "type": "partner",
+          "settings": {
+            "name": "Saffron Wellness Spa",
+            "type": "Wellness & Spa",
+            "location": "Downtown Dubai",
+            "desc": "Award-winning spa specialising in holistic wellness, deep tissue massage, and rejuvenating skin rituals.",
+            "tags": "Massage, Skin Care, Hot Stone",
+            "name_ar": "سافرون ويلنس سبا",
+            "type_ar": "مركز صحة وسبا",
+            "location_ar": "وسط مدينة دبي",
+            "desc_ar": "سبا حائز على جوائز متخصص في العافية الشاملة والمساج العلاجي وطقوس تجديد البشرة.",
+            "tags_ar": "مساج, بشرة, حجارة ساخنة"
+          }
+        },
+        "partner_3GcGga": {
+          "type": "partner",
+          "settings": {
+            "name": "Rose & Gold Studio",
+            "type": "Nail & Hair Studio",
+            "location": "Jumeirah, Dubai",
+            "desc": "Boutique studio renowned for flawless nail artistry, hair styling, and personalised beauty experiences.",
+            "tags": "Nails, Hair, Blow Dry",
+            "name_ar": "روز آند غولد ستوديو",
+            "type_ar": "استوديو أظافر وشعر",
+            "location_ar": "الجميرا، دبي",
+            "desc_ar": "استوديو بوتيك مشهور بفن الأظافر المتقن وتصفيف الشعر وتجارب التجميل الشخصية.",
+            "tags_ar": "أظافر, شعر, سشوار"
+          }
+        },
+        "partner_w3EL6i": {
+          "type": "partner",
+          "settings": {
+            "name": "Velvet Skin Clinic",
+            "type": "Skin & Aesthetics",
+            "location": "Business Bay, Dubai",
+            "desc": "Leading skin clinic offering advanced facials, laser treatments, and bespoke skincare consultations.",
+            "tags": "Facials, Skin Care, Lashes",
+            "name_ar": "فيلفيت سكن كلينيك",
+            "type_ar": "عيادة بشرة وتجميل",
+            "location_ar": "بيزنس باي، دبي",
+            "desc_ar": "عيادة بشرة رائدة تقدم جلسات فيشل متقدمة وعلاجات الليزر واستشارات العناية المخصصة.",
+            "tags_ar": "فيشل, بشرة, رموش"
+          }
+        },
+        "partner_MHfaq8": {
+          "type": "partner",
+          "settings": {
+            "name": "The Ivory Retreat",
+            "type": "Luxury Spa",
+            "location": "Palm Jumeirah, Dubai",
+            "desc": "An exclusive retreat offering couples packages, aromatherapy, and signature full-body treatments.",
+            "tags": "Couples, Massage, Aromatherapy",
+            "name_ar": "ذا آيفوري ريتريت",
+            "type_ar": "سبا فاخر",
+            "location_ar": "نخلة الجميرا، دبي",
+            "desc_ar": "ملاذ حصري يقدم باقات للأزواج والعلاج العطري وجلسات العناية الكاملة بالجسم.",
+            "tags_ar": "أزواج, مساج, أروماثيرابي"
+          }
+        },
+        "partner_amqBht": {
+          "type": "partner",
+          "settings": {
+            "name": "Ora Beauty House",
+            "type": "Full-Service Salon",
+            "location": "Al Barsha, Dubai",
+            "desc": "A full-service women's salon delivering everything from haircare and waxing to manicures and brow shaping.",
+            "tags": "Hair, Waxing, Brows",
+            "name_ar": "أورا بيوتي هاوس",
+            "type_ar": "صالون متكامل الخدمات",
+            "location_ar": "البرشاء، دبي",
+            "desc_ar": "صالون نسائي متكامل يقدم كل شيء من العناية بالشعر والشمع إلى الأظافر وتشكيل الحواجب.",
+            "tags_ar": "شعر, شمع, حواجب"
+          }
+        }
+      },
+      "block_order": [
+        "partner_AUbVXD",
+        "partner_nEi3d6",
+        "partner_3GcGga",
+        "partner_w3EL6i",
+        "partner_MHfaq8",
+        "partner_amqBht"
+      ],
+      "name": "DB · Partners",
+      "settings": {
+        "eyebrow": "Trusted Partners",
+        "title": "Our Beauty",
+        "title_em": "Partners",
+        "subtitle": "We collaborate with leading beauty centres to bring you the highest standards of care and luxury.",
+        "eyebrow_ar": "شركاؤنا الموثوقون",
+        "title_ar": "مراكز التجميل",
+        "title_em_ar": "المعتمدة",
+        "subtitle_ar": "نتعاون مع أبرز مراكز التجميل لضمان أعلى مستويات الجودة والرفاهية لعملائنا.",
+        "cta_link": "",
+        "cta_text": "Get in touch",
+        "cta_label": "Are you a beauty centre looking to partner with us?",
+        "cta_text_ar": "تواصلي معنا",
+        "cta_label_ar": "هل أنتِ مركز تجميل وتريدين الانضمام؟",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     }
   },
   "order": [
@@ -605,6 +726,7 @@
     "for_him_Nbb7Wa",
     "for_couples_V394AA",
     "book_now_x9a6bR",
-    "faq_glassy_section_rfjURH"
+    "faq_glassy_section_rfjURH",
+    "ou_partners_Jhh8yM"
   ]
 }

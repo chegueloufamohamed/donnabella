@@ -1,0 +1,783 @@
+{% comment %}
+  Partners Section — Donna Bella
+  Bilingual EN/AR — carousel of beauty centre partners
+  Save as: sections/db-partners.liquid
+{% endcomment %}
+
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}{% assign is_arabic = true %}{% endif %}
+{% assign dir = 'ltr' %}
+{% if is_arabic %}{% assign dir = 'rtl' %}{% endif %}
+
+{% liquid assign id = section.id %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Tajawal:wght@300;400;500;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+#shopify-section-{{ id }} .db-partners-section {
+  --bg:        #405264;
+  --bg-dark:   #2f3d4d;
+  --bg-deeper: #354656;
+  --gold:      #c9a96e;
+  --gold-line: rgba(201, 169, 110, 0.35);
+  --glass:     rgba(255, 255, 255, 0.06);
+  --glass-b:   rgba(255, 255, 255, 0.11);
+  --white:     #ffffff;
+  --white-60:  rgba(255, 255, 255, 0.6);
+  --white-30:  rgba(255, 255, 255, 0.3);
+  --white-10:  rgba(255, 255, 255, 0.1);
+  --serif:     'Cormorant Garamond', Georgia, serif;
+  --sans:      'Montserrat', sans-serif;
+  --font-main:    {% if is_arabic %}'Tajawal', sans-serif{% else %}var(--sans){% endif %};
+  --font-display: {% if is_arabic %}'Cairo', sans-serif{% else %}var(--serif){% endif %};
+
+  background-color: var(--bg-dark);
+  color: var(--white);
+  font-family: var(--font-main);
+  padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  position: relative;
+  overflow: hidden;
+  direction: {{ dir }};
+}
+
+#shopify-section-{{ id }} .db-partners-section::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 10% 20%, rgba(201,169,110,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 80%, rgba(201,169,110,0.04) 0%, transparent 60%);
+}
+
+/* ── Inner container ── */
+#shopify-section-{{ id }} .db-partners-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 30px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ── */
+#shopify-section-{{ id }} .db-partners-header {
+  text-align: center;
+  margin-bottom: 52px;
+}
+
+#shopify-section-{{ id }} .db-partners-eyebrow {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: {% if is_arabic %}0.05em{% else %}0.42em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  color: var(--gold);
+  margin-bottom: 18px;
+  padding: 7px 20px;
+  border: 1px solid var(--gold-line);
+  border-radius: 50px;
+  background: rgba(201,169,110,0.08);
+}
+
+#shopify-section-{{ id }} .db-partners-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 58px);
+  font-weight: 300;
+  {% unless is_arabic %}font-style: italic;{% endunless %}
+  color: var(--white);
+  margin: 0 0 16px;
+  line-height: 1.15;
+  text-shadow: 0 0 40px rgba(255,255,255,0.08);
+}
+
+#shopify-section-{{ id }} .db-partners-title span {
+  color: var(--gold);
+  {% unless is_arabic %}font-style: normal; font-weight: 400;{% endunless %}
+}
+
+#shopify-section-{{ id }} .db-partners-subtitle {
+  font-size: 13px; font-weight: 300;
+  color: var(--white-60);
+  letter-spacing: {% if is_arabic %}0.03em{% else %}0.08em{% endif %};
+  max-width: 480px; margin: 0 auto;
+  line-height: 1.8;
+}
+
+#shopify-section-{{ id }} .db-partners-divider {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; margin: 20px auto 0; max-width: 200px;
+}
+#shopify-section-{{ id }} .db-partners-divider span {
+  display: block; height: 1px; flex: 1;
+  background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+}
+#shopify-section-{{ id }} .db-partners-divider i {
+  display: block; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold); opacity: 0.6;
+}
+
+/* ── Carousel wrapper ── */
+#shopify-section-{{ id }} .db-carousel-outer {
+  position: relative;
+}
+
+#shopify-section-{{ id }} .db-carousel-track-wrap {
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  padding: 8px 0 16px;
+}
+
+#shopify-section-{{ id }} .db-carousel-track-wrap:active { cursor: grabbing; }
+
+#shopify-section-{{ id }} .db-carousel-track {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+/* ── Partner card ── */
+#shopify-section-{{ id }} .db-partner-card {
+  flex: 0 0 calc(33.333% - 14px);
+  min-width: 0;
+  background: var(--glass);
+  border: 1px solid var(--glass-b);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), border-color 0.3s, box-shadow 0.4s;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+#shopify-section-{{ id }} .db-partner-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(201,169,110,0.6) 50%, transparent 100%);
+  opacity: 0; transition: opacity 0.3s;
+}
+
+#shopify-section-{{ id }} .db-partner-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--gold-line);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+
+#shopify-section-{{ id }} .db-partner-card:hover::before { opacity: 1; }
+
+/* Logo area */
+#shopify-section-{{ id }} .db-partner-logo {
+  width: 100%; height: 180px;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid var(--glass-b);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+
+#shopify-section-{{ id }} .db-partner-card:hover .db-partner-logo {
+  background: rgba(255,255,255,0.07);
+}
+
+#shopify-section-{{ id }} .db-partner-logo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition: opacity 0.3s, transform 0.5s ease;
+}
+
+#shopify-section-{{ id }} .db-partner-card:hover .db-partner-logo img {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+/* Placeholder */
+#shopify-section-{{ id }} .db-partner-logo-placeholder {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  width: 100%; height: 100%;
+}
+
+#shopify-section-{{ id }} .db-partner-logo-placeholder svg {
+  width: 32px; height: 32px;
+  stroke: var(--gold); fill: none;
+  stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0.5;
+}
+
+#shopify-section-{{ id }} .db-partner-logo-initials {
+  font-family: var(--font-display);
+  font-size: 30px; font-weight: 300;
+  color: var(--gold); opacity: 0.5;
+  {% unless is_arabic %}font-style: italic;{% endunless %}
+  letter-spacing: 2px;
+}
+
+/* Card body */
+#shopify-section-{{ id }} .db-partner-body {
+  padding: 22px 20px 20px;
+  text-align: {% if is_arabic %}right{% else %}left{% endif %};
+}
+
+#shopify-section-{{ id }} .db-partner-type {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: {% if is_arabic %}0.04em{% else %}0.35em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  color: var(--gold); opacity: 0.85;
+  margin-bottom: 7px;
+}
+
+#shopify-section-{{ id }} .db-partner-name {
+  font-family: var(--font-display);
+  font-size: 22px; font-weight: 400;
+  color: var(--white);
+  margin-bottom: 7px; line-height: 1.2;
+  text-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+#shopify-section-{{ id }} .db-partner-location {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--white-60);
+  margin-bottom: 11px;
+  {% if is_arabic %}flex-direction: row-reverse; justify-content: flex-end;{% endif %}
+}
+
+#shopify-section-{{ id }} .db-partner-location svg {
+  width: 11px; height: 11px;
+  stroke: var(--gold); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  flex-shrink: 0; opacity: 0.7;
+}
+
+#shopify-section-{{ id }} .db-partner-desc {
+  font-size: 12px; font-weight: 300;
+  color: var(--white-60); line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+/* Tags — gold only, no blush */
+#shopify-section-{{ id }} .db-partner-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  {% if is_arabic %}justify-content: flex-end;{% endif %}
+}
+
+#shopify-section-{{ id }} .db-partner-tag {
+  font-size: 9px; font-weight: 500;
+  letter-spacing: {% if is_arabic %}0.02em{% else %}0.12em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  padding: 4px 10px; border-radius: 50px;
+  background: rgba(201,169,110,0.1);
+  border: 1px solid var(--gold-line);
+  color: rgba(201,169,110,0.85);
+}
+
+/* ── Nav arrows ── */
+#shopify-section-{{ id }} .db-carousel-nav {
+  display: flex; justify-content: center; align-items: center;
+  gap: 12px; margin-top: 36px;
+}
+
+#shopify-section-{{ id }} .db-carousel-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--glass);
+  border: 1px solid var(--glass-b);
+  color: var(--white-60);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+#shopify-section-{{ id }} .db-carousel-btn:hover {
+  background: rgba(201,169,110,0.15);
+  border-color: var(--gold-line);
+  color: var(--gold);
+}
+
+#shopify-section-{{ id }} .db-carousel-btn:disabled {
+  opacity: 0.25; pointer-events: none;
+}
+
+#shopify-section-{{ id }} .db-carousel-btn svg {
+  width: 16px; height: 16px; stroke: currentColor;
+  fill: none; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Dots */
+#shopify-section-{{ id }} .db-carousel-dots {
+  display: flex; align-items: center; gap: 8px;
+}
+
+#shopify-section-{{ id }} .db-carousel-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--white-30);
+  transition: all 0.3s ease;
+  cursor: pointer; border: none; padding: 0;
+}
+
+#shopify-section-{{ id }} .db-carousel-dot.active {
+  background: var(--gold);
+  width: 20px; border-radius: 3px;
+}
+
+/* ── Bottom CTA ── */
+#shopify-section-{{ id }} .db-partners-cta {
+  text-align: center;
+  margin-top: 52px;
+  padding-top: 40px;
+  border-top: 1px solid var(--glass-b);
+}
+
+#shopify-section-{{ id }} .db-partners-cta-text {
+  font-size: 13px; font-weight: 300;
+  color: var(--white-60);
+  letter-spacing: {% if is_arabic %}0.03em{% else %}0.08em{% endif %};
+  margin-bottom: 18px;
+}
+
+#shopify-section-{{ id }} .db-partners-cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: {% if is_arabic %}0.03em{% else %}0.18em{% endif %};
+  {% unless is_arabic %}text-transform: uppercase;{% endunless %}
+  text-decoration: none; padding: 14px 32px;
+  border: 1px solid var(--gold-line); border-radius: 50px;
+  background: rgba(201,169,110,0.1); color: var(--gold);
+  transition: all 0.3s ease;
+}
+
+#shopify-section-{{ id }} .db-partners-cta-btn:hover {
+  background: rgba(201,169,110,0.2);
+  border-color: var(--gold);
+  color: var(--white);
+}
+
+#shopify-section-{{ id }} .db-partners-cta-btn svg {
+  width: 14px; height: 14px; stroke: currentColor;
+  fill: none; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+
+/* ── Marquee strip — unchanged from original ── */
+#shopify-section-{{ id }} .db-partners-marquee-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--glass-b);
+  border-bottom: 1px solid var(--glass-b);
+  padding: 18px 0;
+  margin-top: 28px;
+  background: rgba(0,0,0,0.08);
+}
+
+#shopify-section-{{ id }} .db-partners-marquee {
+  display: flex; gap: 60px;
+  animation: db-marquee-{{ id }} 28s linear infinite;
+  width: max-content;
+}
+
+#shopify-section-{{ id }} .db-partners-marquee-wrap:hover .db-partners-marquee {
+  animation-play-state: paused;
+}
+
+@keyframes db-marquee-{{ id }} {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+#shopify-section-{{ id }} .db-marquee-item {
+  display: flex; align-items: center; gap: 16px;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+#shopify-section-{{ id }} .db-marquee-item span {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 300;
+  {% unless is_arabic %}font-style: italic;{% endunless %}
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+}
+
+#shopify-section-{{ id }} .db-partners-marquee-wrap:hover .db-marquee-item span {
+  color: rgba(255,255,255,0.7);
+}
+
+#shopify-section-{{ id }} .db-marquee-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--gold); opacity: 0.4; flex-shrink: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  #shopify-section-{{ id }} .db-partner-card {
+    flex: 0 0 calc(50% - 10px);
+  }
+}
+
+@media (max-width: 600px) {
+  #shopify-section-{{ id }} .db-partner-card {
+    flex: 0 0 calc(100% - 0px);
+  }
+  #shopify-section-{{ id }} .db-partners-inner { padding: 0 20px; }
+}
+</style>
+
+<div class="db-partners-section">
+  <div class="db-partners-inner">
+
+    <!-- Header -->
+    <div class="db-partners-header">
+      <div class="db-partners-eyebrow">
+        {% if is_arabic %}{{ section.settings.eyebrow_ar | default: 'شركاؤنا الموثوقون' }}{% else %}{{ section.settings.eyebrow | default: 'Trusted Partners' }}{% endif %}
+      </div>
+      <h2 class="db-partners-title">
+        {% if is_arabic %}
+          {{ section.settings.title_ar | default: 'مراكز التجميل' }} <span>{{ section.settings.title_em_ar | default: 'المعتمدة' }}</span>
+        {% else %}
+          {{ section.settings.title | default: 'Our Beauty' }} <span>{{ section.settings.title_em | default: 'Partners' }}</span>
+        {% endif %}
+      </h2>
+      <div class="db-partners-divider"><span></span><i></i><span></span></div>
+      <p class="db-partners-subtitle">
+        {% if is_arabic %}
+          {{ section.settings.subtitle_ar | default: 'نتعاون مع أبرز مراكز التجميل لضمان أعلى مستويات الجودة والرفاهية لعملائنا.' }}
+        {% else %}
+          {{ section.settings.subtitle | default: 'We collaborate with leading beauty centres to bring you the highest standards of care and luxury.' }}
+        {% endif %}
+      </p>
+    </div>
+
+    <!-- Carousel -->
+    <div class="db-carousel-outer">
+      <div class="db-carousel-track-wrap" id="dbCarouselWrap-{{ id }}">
+        <div class="db-carousel-track" id="dbCarouselTrack-{{ id }}">
+
+          {% for block in section.blocks %}
+            {% if block.type == 'partner' %}
+
+              {% if is_arabic %}
+                {% assign p_name     = block.settings.name_ar     | default: block.settings.name %}
+                {% assign p_type     = block.settings.type_ar     | default: block.settings.type %}
+                {% assign p_location = block.settings.location_ar | default: block.settings.location %}
+                {% assign p_desc     = block.settings.desc_ar     | default: block.settings.desc %}
+                {% assign p_tags     = block.settings.tags_ar     | default: block.settings.tags %}
+              {% else %}
+                {% assign p_name     = block.settings.name %}
+                {% assign p_type     = block.settings.type %}
+                {% assign p_location = block.settings.location %}
+                {% assign p_desc     = block.settings.desc %}
+                {% assign p_tags     = block.settings.tags %}
+              {% endif %}
+
+              {% assign tag_list = p_tags | split: ',' %}
+              {% assign initials = p_name | slice: 0, 2 | upcase %}
+
+              <div class="db-partner-card" {{ block.shopify_attributes }}>
+
+                <div class="db-partner-logo">
+                  {% if block.settings.image != blank %}
+                    {{ block.settings.image | image_url: width: 600 | image_tag:
+                      loading: 'lazy',
+                      alt: p_name
+                    }}
+                  {% else %}
+                    <div class="db-partner-logo-placeholder">
+                      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                      <div class="db-partner-logo-initials">{{ initials }}</div>
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="db-partner-body">
+                  {% if p_type != blank %}
+                    <div class="db-partner-type">{{ p_type }}</div>
+                  {% endif %}
+                  <div class="db-partner-name">{{ p_name }}</div>
+                  {% if p_location != blank %}
+                    <div class="db-partner-location">
+                      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                      {{ p_location }}
+                    </div>
+                  {% endif %}
+                  {% if p_desc != blank %}
+                    <div class="db-partner-desc">{{ p_desc }}</div>
+                  {% endif %}
+                  {% if p_tags != blank %}
+                    <div class="db-partner-tags">
+                      {% for tag in tag_list %}
+                        {% assign t = tag | strip %}
+                        {% if t != blank %}
+                          <span class="db-partner-tag">{{ t }}</span>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+
+              </div>
+
+            {% endif %}
+          {% endfor %}
+
+        </div>
+      </div>
+
+
+      <!-- Marquee strip — exactly as original -->
+      <div class="db-partners-marquee-wrap">
+        <div class="db-partners-marquee">
+          {% for block in section.blocks %}
+            {% if block.type == 'partner' %}
+              {% if is_arabic %}
+                {% assign mn = block.settings.name_ar | default: block.settings.name %}
+              {% else %}
+                {% assign mn = block.settings.name %}
+              {% endif %}
+              {% unless mn == blank %}
+                <div class="db-marquee-item">
+                  <span>{{ mn }}</span>
+                  <div class="db-marquee-dot"></div>
+                </div>
+              {% endunless %}
+            {% endif %}
+          {% endfor %}
+          {% comment %} Duplicate for seamless loop {% endcomment %}
+          {% for block in section.blocks %}
+            {% if block.type == 'partner' %}
+              {% if is_arabic %}
+                {% assign mn = block.settings.name_ar | default: block.settings.name %}
+              {% else %}
+                {% assign mn = block.settings.name %}
+              {% endif %}
+              {% unless mn == blank %}
+                <div class="db-marquee-item">
+                  <span>{{ mn }}</span>
+                  <div class="db-marquee-dot"></div>
+                </div>
+              {% endunless %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Nav -->
+      <div class="db-carousel-nav">
+        <button class="db-carousel-btn" id="dbPrev-{{ id }}" aria-label="Previous">
+          <svg viewBox="0 0 24 24"><polyline points="{% if is_arabic %}9 18 15 12 9 6{% else %}15 18 9 12 15 6{% endif %}"/></svg>
+        </button>
+        <div class="db-carousel-dots" id="dbDots-{{ id }}"></div>
+        <button class="db-carousel-btn" id="dbNext-{{ id }}" aria-label="Next">
+          <svg viewBox="0 0 24 24"><polyline points="{% if is_arabic %}15 18 9 12 15 6{% else %}9 18 15 12 9 6{% endif %}"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    {% if section.settings.cta_link != blank %}
+      <div class="db-partners-cta">
+        <p class="db-partners-cta-text">
+          {% if is_arabic %}{{ section.settings.cta_label_ar | default: 'هل أنتِ مركز تجميل وتريدين الانضمام؟' }}{% else %}{{ section.settings.cta_label | default: 'Are you a beauty centre looking to partner with us?' }}{% endif %}
+        </p>
+        <a href="{{ section.settings.cta_link }}" class="db-partners-cta-btn">
+          {% if is_arabic %}{{ section.settings.cta_text_ar | default: 'تواصلي معنا' }}{% else %}{{ section.settings.cta_text | default: 'Get in touch' }}{% endif %}
+          <svg viewBox="0 0 24 24"><polyline points="{% if is_arabic %}15 18 9 12 15 6{% else %}9 18 15 12 9 6{% endif %}"/></svg>
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var isAr   = {{ is_arabic | json }};
+  var track  = document.getElementById('dbCarouselTrack-{{ id }}');
+  var wrap   = document.getElementById('dbCarouselWrap-{{ id }}');
+  var prevBtn = document.getElementById('dbPrev-{{ id }}');
+  var nextBtn = document.getElementById('dbNext-{{ id }}');
+  var dotsEl  = document.getElementById('dbDots-{{ id }}');
+  if (!track || !wrap) return;
+
+  var cards      = Array.from(track.querySelectorAll('.db-partner-card'));
+  var current    = 0;
+  var perView    = 3;
+  var gap        = 20;
+  var dragging   = false;
+  var startX     = 0;
+  var dragDelta  = 0;
+
+  function getPerView() {
+    var w = wrap.offsetWidth;
+    if (w < 600) return 1;
+    if (w < 1024) return 2;
+    return 3;
+  }
+
+  function maxIndex() {
+    return Math.max(0, cards.length - perView);
+  }
+
+  function cardWidth() {
+    if (cards.length === 0) return 0;
+    return (wrap.offsetWidth - gap * (perView - 1)) / perView;
+  }
+
+  function goTo(idx) {
+    perView = getPerView();
+    idx = Math.max(0, Math.min(idx, maxIndex()));
+    current = idx;
+    var offset = current * (cardWidth() + gap);
+    track.style.transform = isAr
+      ? 'translateX(' + offset + 'px)'
+      : 'translateX(-' + offset + 'px)';
+    updateDots();
+    updateBtns();
+  }
+
+  function updateBtns() {
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current >= maxIndex();
+  }
+
+  function buildDots() {
+    dotsEl.innerHTML = '';
+    perView = getPerView();
+    var total = maxIndex() + 1;
+    for (var i = 0; i < total; i++) {
+      var d = document.createElement('button');
+      d.className = 'db-carousel-dot' + (i === current ? ' active' : '');
+      d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      d.dataset.idx = i;
+      dotsEl.appendChild(d);
+    }
+  }
+
+  function updateDots() {
+    Array.from(dotsEl.querySelectorAll('.db-carousel-dot')).forEach(function (d, i) {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  /* Set card sizes */
+  function layout() {
+    perView = getPerView();
+    var cw = cardWidth();
+    cards.forEach(function (c) { c.style.flex = '0 0 ' + cw + 'px'; });
+    buildDots();
+    goTo(current);
+  }
+
+  prevBtn.addEventListener('click', function () { goTo(isAr ? current + 1 : current - 1); });
+  nextBtn.addEventListener('click', function () { goTo(isAr ? current - 1 : current + 1); });
+
+  dotsEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('.db-carousel-dot');
+    if (btn) goTo(parseInt(btn.dataset.idx));
+  });
+
+  /* Drag / swipe */
+  wrap.addEventListener('mousedown', function (e) {
+    dragging = true; startX = e.clientX; dragDelta = 0;
+    track.style.transition = 'none';
+  });
+  window.addEventListener('mousemove', function (e) {
+    if (!dragging) return;
+    dragDelta = e.clientX - startX;
+    var base = current * (cardWidth() + gap);
+    var pos  = isAr ? base - dragDelta : -(base) + dragDelta;
+    track.style.transform = 'translateX(' + (isAr ? base - dragDelta : -base + dragDelta) + 'px)';
+  });
+  window.addEventListener('mouseup', function () {
+    if (!dragging) return;
+    dragging = false;
+    track.style.transition = '';
+    var threshold = cardWidth() / 4;
+    if (dragDelta < -threshold) goTo(isAr ? current - 1 : current + 1);
+    else if (dragDelta > threshold) goTo(isAr ? current + 1 : current - 1);
+    else goTo(current);
+  });
+
+  wrap.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; dragDelta = 0; track.style.transition = 'none'; }, { passive: true });
+  wrap.addEventListener('touchmove',  function (e) {
+    dragDelta = e.touches[0].clientX - startX;
+    var base = current * (cardWidth() + gap);
+    track.style.transform = 'translateX(' + (isAr ? base - dragDelta : -base + dragDelta) + 'px)';
+  }, { passive: true });
+  wrap.addEventListener('touchend', function () {
+    track.style.transition = '';
+    var threshold = cardWidth() / 4;
+    if (dragDelta < -threshold) goTo(isAr ? current - 1 : current + 1);
+    else if (dragDelta > threshold) goTo(isAr ? current + 1 : current - 1);
+    else goTo(current);
+  });
+
+  window.addEventListener('resize', layout);
+  layout();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "DB · Partners",
+  "class": "db-partners-section",
+  "settings": [
+    { "type": "header", "content": "🇬🇧 Header — English" },
+    { "type": "text",     "id": "eyebrow",   "label": "Eyebrow (EN)",      "default": "Trusted Partners" },
+    { "type": "text",     "id": "title",     "label": "Title (EN)",        "default": "Our Beauty" },
+    { "type": "text",     "id": "title_em",  "label": "Title italic (EN)", "default": "Partners" },
+    { "type": "textarea", "id": "subtitle",  "label": "Subtitle (EN)",     "default": "We collaborate with leading beauty centres to bring you the highest standards of care and luxury." },
+    { "type": "header", "content": "🇸🇦 العربية" },
+    { "type": "text",     "id": "eyebrow_ar",  "label": "الوسم (AR)",          "default": "شركاؤنا الموثوقون" },
+    { "type": "text",     "id": "title_ar",    "label": "العنوان (AR)",        "default": "مراكز التجميل" },
+    { "type": "text",     "id": "title_em_ar", "label": "العنوان المائل (AR)", "default": "المعتمدة" },
+    { "type": "textarea", "id": "subtitle_ar", "label": "الوصف (AR)",          "default": "نتعاون مع أبرز مراكز التجميل لضمان أعلى مستويات الجودة والرفاهية لعملائنا." },
+    { "type": "header", "content": "CTA Button" },
+    { "type": "url",  "id": "cta_link",     "label": "Button link" },
+    { "type": "text", "id": "cta_text",     "label": "Button text (EN)",        "default": "Get in touch" },
+    { "type": "text", "id": "cta_label",    "label": "Label above button (EN)", "default": "Are you a beauty centre looking to partner with us?" },
+    { "type": "text", "id": "cta_text_ar",  "label": "نص الزر (AR)",           "default": "تواصلي معنا" },
+    { "type": "text", "id": "cta_label_ar", "label": "النص فوق الزر (AR)",    "default": "هل أنتِ مركز تجميل وتريدين الانضمام؟" },
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top",    "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Top spacing",    "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Bottom spacing", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "partner",
+      "name": "Partner",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Logo / Cover image" },
+        { "type": "header",   "content": "🇬🇧 English" },
+        { "type": "text",     "id": "name",     "label": "Centre name (EN)",            "default": "Lumière Beauty Lounge" },
+        { "type": "text",     "id": "type",     "label": "Type (EN)",                   "default": "Beauty Centre" },
+        { "type": "text",     "id": "location", "label": "Location (EN)",               "default": "Dubai Marina, Dubai" },
+        { "type": "textarea", "id": "desc",     "label": "Description (EN)",            "default": "A premium beauty destination offering a full range of treatments in a luxurious setting." },
+        { "type": "text",     "id": "tags",     "label": "Tags — comma separated (EN)", "default": "Nails, Facials, Massage" },
+        { "type": "header",   "content": "🇸🇦 العربية" },
+        { "type": "text",     "id": "name_ar",     "label": "اسم المركز (AR)",                   "default": "لوميير بيوتي لاونج" },
+        { "type": "text",     "id": "type_ar",     "label": "النوع (AR)",                        "default": "مركز تجميل" },
+        { "type": "text",     "id": "location_ar", "label": "الموقع (AR)",                       "default": "دبي مارينا، دبي" },
+        { "type": "textarea", "id": "desc_ar",     "label": "الوصف (AR)",                        "default": "وجهة تجميل فاخرة تقدم مجموعة كاملة من العلاجات في أجواء راقية." },
+        { "type": "text",     "id": "tags_ar",     "label": "التصنيفات — مفصولة بفاصلة (AR)",   "default": "أظافر, فيشل, مساج" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "DB · Partners",
+      "category": "Donna Bella",
+      "blocks": [
+        { "type": "partner", "settings": { "name": "Lumière Beauty Lounge", "type": "Beauty Centre", "location": "Dubai Marina, Dubai", "desc": "A premium beauty destination offering a full range of treatments in a luxurious setting.", "tags": "Nails, Facials, Waxing", "name_ar": "لوميير بيوتي لاونج", "type_ar": "مركز تجميل", "location_ar": "دبي مارينا، دبي", "desc_ar": "وجهة تجميل فاخرة تقدم مجموعة كاملة من العلاجات في أجواء راقية.", "tags_ar": "أظافر, فيشل, شمع" } },
+        { "type": "partner", "settings": { "name": "Saffron Wellness Spa", "type": "Wellness & Spa", "location": "Downtown Dubai", "desc": "Award-winning spa specialising in holistic wellness, deep tissue massage, and rejuvenating skin rituals.", "tags": "Massage, Skin Care, Hot Stone", "name_ar": "سافرون ويلنس سبا", "type_ar": "مركز صحة وسبا", "location_ar": "وسط مدينة دبي", "desc_ar": "سبا حائز على جوائز متخصص في العافية الشاملة والمساج العلاجي وطقوس تجديد البشرة.", "tags_ar": "مساج, بشرة, حجارة ساخنة" } },
+        { "type": "partner", "settings": { "name": "Rose & Gold Studio", "type": "Nail & Hair Studio", "location": "Jumeirah, Dubai", "desc": "Boutique studio renowned for flawless nail artistry, hair styling, and personalised beauty experiences.", "tags": "Nails, Hair, Blow Dry", "name_ar": "روز آند غولد ستوديو", "type_ar": "استوديو أظافر وشعر", "location_ar": "الجميرا، دبي", "desc_ar": "استوديو بوتيك مشهور بفن الأظافر المتقن وتصفيف الشعر وتجارب التجميل الشخصية.", "tags_ar": "أظافر, شعر, سشوار" } },
+        { "type": "partner", "settings": { "name": "Velvet Skin Clinic", "type": "Skin & Aesthetics", "location": "Business Bay, Dubai", "desc": "Leading skin clinic offering advanced facials, laser treatments, and bespoke skincare consultations.", "tags": "Facials, Skin Care, Lashes", "name_ar": "فيلفيت سكن كلينيك", "type_ar": "عيادة بشرة وتجميل", "location_ar": "بيزنس باي، دبي", "desc_ar": "عيادة بشرة رائدة تقدم جلسات فيشل متقدمة وعلاجات الليزر واستشارات العناية المخصصة.", "tags_ar": "فيشل, بشرة, رموش" } },
+        { "type": "partner", "settings": { "name": "The Ivory Retreat", "type": "Luxury Spa", "location": "Palm Jumeirah, Dubai", "desc": "An exclusive retreat offering couples packages, aromatherapy, and signature full-body treatments.", "tags": "Couples, Massage, Aromatherapy", "name_ar": "ذا آيفوري ريتريت", "type_ar": "سبا فاخر", "location_ar": "نخلة الجميرا، دبي", "desc_ar": "ملاذ حصري يقدم باقات للأزواج والعلاج العطري وجلسات العناية الكاملة بالجسم.", "tags_ar": "أزواج, مساج, أروماثيرابي" } },
+        { "type": "partner", "settings": { "name": "Ora Beauty House", "type": "Full-Service Salon", "location": "Al Barsha, Dubai", "desc": "A full-service women's salon delivering everything from haircare and waxing to manicures and brow shaping.", "tags": "Hair, Waxing, Brows", "name_ar": "أورا بيوتي هاوس", "type_ar": "صالون متكامل الخدمات", "location_ar": "البرشاء، دبي", "desc_ar": "صالون نسائي متكامل يقدم كل شيء من العناية بالشعر والشمع إلى الأظافر وتشكيل الحواجب.", "tags_ar": "شعر, شمع, حواجب" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

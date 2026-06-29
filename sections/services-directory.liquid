@@ -1,5 +1,5 @@
 {% comment %}
-  Services Directory — Belladona Care
+  Services Directory — Donna Bella
   Bilingual page index listing all services: Massage, Nails, Hair Care, Skin Care, Waxing, Eyelashes & Brows.
   Organized with Women first, Couples second, Men third.
   Save as: sections/services-directory.liquid
@@ -19,22 +19,32 @@
 <div class="sd-{{ section.id }}" dir="{{ dir }}">
 <style>
   .sd-{{ section.id }} {
-    --bg-dark:   #1b1f23;
-    --bg-card:   rgba(255, 255, 255, 0.03);
-    --gold:      #c9a96e;
-    --gold-line: rgba(201, 169, 110, 0.25);
-    --white:     #ffffff;
-    --white-60:  rgba(255, 255, 255, 0.6);
-    --white-30:  rgba(255, 255, 255, 0.3);
-    --glass-b:   rgba(255, 255, 255, 0.08);
-    --serif:     'Cormorant Garamond', Georgia, serif;
-    --sans:      'Montserrat', sans-serif;
-    --arabic:    'Tajawal', sans-serif;
-    
+    --serif:   'Cormorant Garamond', Georgia, serif;
+    --sans:    'Montserrat', sans-serif;
+    --arabic:  'Tajawal', sans-serif;
+
     --font-main:    {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
     --font-display: {% if is_arabic %}'Cairo', sans-serif{% else %}var(--serif){% endif %};
 
-    background-color: var(--bg-dark);
+    /* Colour palette — matches the Women/Him/Couples service pages */
+    --bg:          #405264;
+    --bg-dark:     #2f3d4d;
+    --bg-deeper:   #354656;
+    --gold:        #c9a96e;
+    --gold-line:   rgba(201, 169, 110, 0.35);
+    --blush:       #c9a0a0;
+    --blush-line:  rgba(201, 160, 160, 0.3);
+    --bg-card:     rgba(255, 255, 255, 0.06);
+    --border:      rgba(255, 255, 255, 0.11);
+    --accent-her:     var(--blush);
+    --accent-him:     rgba(160, 190, 220, 0.9);
+    --accent-couples: rgba(201, 169, 110, 0.9);
+    --white:      #ffffff;
+    --white-60:   rgba(255, 255, 255, 0.6);
+    --white-30:   rgba(255, 255, 255, 0.3);
+    --white-10:   rgba(255, 255, 255, 0.1);
+
+    background-color: var(--bg);
     color: var(--white);
     font-family: var(--font-main);
     padding: 80px 20px 120px;
@@ -46,7 +56,7 @@
     margin: 0 auto;
   }
 
-  /* Hero / Header */
+  /* ── Header ─────────────────────────────────────────────────── */
   .sd-{{ section.id }} .sd-header {
     text-align: center;
     margin-bottom: 70px;
@@ -58,7 +68,7 @@
     display: block;
     width: 60px;
     height: 1px;
-    background: var(--gold);
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
     margin: 24px auto 0;
   }
 
@@ -70,165 +80,186 @@
     color: var(--white);
     margin: 0 0 16px;
     letter-spacing: -0.01em;
+    text-shadow: 0 0 60px rgba(255,255,255,0.1);
   }
+
   .sd-{{ section.id }} .sd-title span {
     color: var(--gold);
     {% unless is_arabic %}font-style: normal; font-weight: 500;{% endunless %}
   }
 
   .sd-{{ section.id }} .sd-subtitle {
-    font-size: 14px;
-    font-weight: 300;
+    font-size: 11px;
+    font-weight: 600;
     color: var(--white-60);
-    letter-spacing: 0.1em;
+    letter-spacing: {% if is_arabic %}0{% else %}5px{% endif %};
     text-transform: uppercase;
     margin: 0;
   }
 
-  /* Grid Layout */
+  /* ── Grid ────────────────────────────────────────────────────── */
   .sd-{{ section.id }} .sd-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 24px;
   }
 
   @media (max-width: 991px) {
-    .sd-{{ section.id }} .sd-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .sd-{{ section.id }} .sd-grid { grid-template-columns: repeat(2, 1fr); }
   }
-
   @media (max-width: 640px) {
-    .sd-{{ section.id }} .sd-grid {
-      grid-template-columns: 1fr;
-    }
+    .sd-{{ section.id }} .sd-grid { grid-template-columns: 1fr; }
+    .sd-{{ section.id }} { padding: 60px 16px 80px; }
   }
 
-  /* Category Cards */
+  /* ── Cards ───────────────────────────────────────────────────── */
   .sd-{{ section.id }} .sd-card {
     background: var(--bg-card);
-    border: 1px solid var(--glass-b);
-    padding: 35px 30px;
-    border-radius: 12px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s;
+    border: 1px solid var(--border);
+    padding: 36px 30px 32px;
+    border-radius: 24px;
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s ease, border-color 0.3s;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.12);
   }
 
+  /* Top shimmer line */
   .sd-{{ section.id }} .sd-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    opacity: 0;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
+    opacity: 0.5;
     transition: opacity 0.3s;
   }
 
-  .sd-{{ section.id }} .sd-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--gold-line);
+  /* Radial glass sheen */
+  .sd-{{ section.id }} .sd-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,255,255,0.05) 0%, transparent 60%);
+    pointer-events: none;
   }
 
-  .sd-{{ section.id }} .sd-card:hover::before {
-    opacity: 1;
+  /* Accent top bar on hover — colour per card */
+  .sd-{{ section.id }} .sd-card .sd-card-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 24px 24px 0 0;
   }
 
+  .sd-{{ section.id }} .sd-card:hover { transform: translateY(-6px); border-color: var(--gold-line); box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
+  .sd-{{ section.id }} .sd-card:hover::before { opacity: 1; }
+  .sd-{{ section.id }} .sd-card:hover .sd-card-accent { opacity: 1; }
+
+  /* ── Card Title ──────────────────────────────────────────────── */
   .sd-{{ section.id }} .sd-card-title {
     font-family: var(--font-display);
     font-size: 28px;
     font-weight: 400;
     color: var(--white);
     margin: 0 0 25px;
-    padding-bottom: 15px;
+    padding-bottom: 16px;
     border-bottom: 1px solid var(--white-10);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    text-shadow: 0 0 20px rgba(255,255,255,0.15);
+    position: relative;
+    z-index: 1;
   }
 
-  .sd-{{ section.id }} .sd-card-title span {
-    color: var(--gold);
+  .sd-{{ section.id }} .sd-card-title .sd-card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    opacity: 0.4;
+    letter-spacing: 1px;
   }
 
-  /* Section Groups (Women, Couples, Men) */
+  /* ── Group labels (Women / Couples / Men) ────────────────────── */
   .sd-{{ section.id }} .sd-group {
-    margin-bottom: 25px;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
   }
-
-  .sd-{{ section.id }} .sd-group:last-child {
-    margin-bottom: 0;
-  }
+  .sd-{{ section.id }} .sd-group:last-child { margin-bottom: 0; }
 
   .sd-{{ section.id }} .sd-group-title {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    letter-spacing: 0.15em;
+    letter-spacing: {% if is_arabic %}0{% else %}4px{% endif %};
     text-transform: uppercase;
-    color: var(--gold);
     margin: 0 0 12px;
     display: flex;
     align-items: center;
     gap: 8px;
-    opacity: 0.85;
   }
 
   .sd-{{ section.id }} .sd-group-title::after {
     content: '';
     flex: 1;
     height: 1px;
-    background: var(--gold-line);
   }
 
-  /* Service Lists */
-  .sd-{{ section.id }} .sd-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+  /* Her group */
+  .sd-{{ section.id }} .sd-group--her .sd-group-title { color: var(--blush); }
+  .sd-{{ section.id }} .sd-group--her .sd-group-title::after { background: var(--blush-line); }
+  /* Couples group */
+  .sd-{{ section.id }} .sd-group--couples .sd-group-title { color: var(--gold); }
+  .sd-{{ section.id }} .sd-group--couples .sd-group-title::after { background: var(--gold-line); }
+  /* Him group */
+  .sd-{{ section.id }} .sd-group--him .sd-group-title { color: rgba(160,190,220,0.9); }
+  .sd-{{ section.id }} .sd-group--him .sd-group-title::after { background: rgba(160,190,220,0.2); }
 
-  .sd-{{ section.id }} .sd-item {
-    margin-bottom: 8px;
-  }
-
-  .sd-{{ section.id }} .sd-item:last-child {
-    margin-bottom: 0;
-  }
+  /* ── Service links ───────────────────────────────────────────── */
+  .sd-{{ section.id }} .sd-list { list-style: none; padding: 0; margin: 0; }
+  .sd-{{ section.id }} .sd-item { margin-bottom: 8px; }
+  .sd-{{ section.id }} .sd-item:last-child { margin-bottom: 0; }
 
   .sd-{{ section.id }} .sd-link {
-    font-size: 13.5px;
+    font-family: var(--font-main);
+    font-size: 13px;
     font-weight: 300;
     color: var(--white-60);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     transition: color 0.25s, transform 0.25s;
+    letter-spacing: {% if is_arabic %}0{% else %}0.3px{% endif %};
   }
 
   .sd-{{ section.id }} .sd-link::before {
-    content: '•';
-    color: var(--gold);
-    opacity: 0.5;
+    content: '';
+    display: block;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
     transition: opacity 0.25s;
+    opacity: 0.5;
   }
 
-  .sd-{{ section.id }} .sd-link:hover {
-    color: var(--white);
-    transform: translateX(4px);
-  }
-  
-  .sd-{{ section.id }}[dir="rtl"] .sd-link:hover {
-    transform: translateX(-4px);
-  }
+  /* Dot colour per group */
+  .sd-{{ section.id }} .sd-group--her     .sd-link::before { background: var(--blush); opacity: 0.7; }
+  .sd-{{ section.id }} .sd-group--couples .sd-link::before { background: var(--gold); opacity: 0.7; }
+  .sd-{{ section.id }} .sd-group--him     .sd-link::before { background: rgba(160,190,220,0.9); }
 
-  .sd-{{ section.id }} .sd-link:hover::before {
-    opacity: 1;
-  }
+  .sd-{{ section.id }} .sd-link:hover { color: var(--white); }
+  .sd-{{ section.id }} .sd-link:hover::before { opacity: 1; }
+
+  .sd-{{ section.id }}[dir="ltr"] .sd-link:hover { transform: translateX(4px); }
+  .sd-{{ section.id }}[dir="rtl"] .sd-link:hover { transform: translateX(-4px); }
 
   .sd-{{ section.id }} .sd-empty {
     font-size: 12px;
@@ -239,7 +270,7 @@
 </style>
 
 <div class="sd-container">
-  <!-- Section Header -->
+
   <header class="sd-header">
     <h1 class="sd-title">
       {% if is_arabic %}دليل <span>الخدمات</span>{% else %}Services <span>Directory</span>{% endif %}
@@ -249,18 +280,17 @@
     </p>
   </header>
 
-  <!-- Directory Grid -->
   <div class="sd-grid">
-    
+
     <!-- 1. MASSAGE -->
     <div class="sd-card">
+      <div class="sd-card-accent" style="background: linear-gradient(90deg, transparent 10%, var(--gold) 50%, transparent 90%);"></div>
       <h2 class="sd-card-title">
         {% if is_arabic %}المساج{% else %}Massage{% endif %}
-        <span>01</span>
+        <span class="sd-card-num">01</span>
       </h2>
 
-      <!-- Women (First) -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--her">
         <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/women#massage" class="sd-link">{% if is_arabic %}مساج أروماثيرابي{% else %}Aromatherapy Massage{% endif %}</a></li>
@@ -273,8 +303,7 @@
         </ul>
       </div>
 
-      <!-- Couples (Second) -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--couples">
         <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/couples#massage" class="sd-link">{% if is_arabic %}مساج للأزواج{% else %}Couples Massage{% endif %}</a></li>
@@ -283,8 +312,7 @@
         </ul>
       </div>
 
-      <!-- Men (Third) -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--him">
         <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/men#massage" class="sd-link">{% if is_arabic %}تدليك الأنسجة العميقة للرجال{% else %}Men's Deep Tissue{% endif %}</a></li>
@@ -297,13 +325,13 @@
 
     <!-- 2. NAILS -->
     <div class="sd-card">
+      <div class="sd-card-accent" style="background: linear-gradient(90deg, transparent 10%, var(--gold) 50%, transparent 90%);"></div>
       <h2 class="sd-card-title">
         {% if is_arabic %}الأظافر{% else %}Nails{% endif %}
-        <span>02</span>
+        <span class="sd-card-num">02</span>
       </h2>
 
-      <!-- Women -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--her">
         <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/women#nails" class="sd-link">{% if is_arabic %}مانيكير وباديكير{% else %}Manicure & Pedicure{% endif %}</a></li>
@@ -316,16 +344,14 @@
         </ul>
       </div>
 
-      <!-- Couples -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--couples">
         <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/couples#nails" class="sd-link">{% if is_arabic %}مانيكير وباديكير للأزواج{% else %}Couples Mani-Pedi{% endif %}</a></li>
         </ul>
       </div>
 
-      <!-- Men -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--him">
         <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/men#nails" class="sd-link">{% if is_arabic %}مانيكير للرجال{% else %}Gent Manicure{% endif %}</a></li>
@@ -336,13 +362,13 @@
 
     <!-- 3. HAIR CARE -->
     <div class="sd-card">
+      <div class="sd-card-accent" style="background: linear-gradient(90deg, transparent 10%, var(--gold) 50%, transparent 90%);"></div>
       <h2 class="sd-card-title">
         {% if is_arabic %}الشعر{% else %}Hair Care{% endif %}
-        <span>03</span>
+        <span class="sd-card-num">03</span>
       </h2>
 
-      <!-- Women -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--her">
         <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/women#hair" class="sd-link">{% if is_arabic %}قص شعر{% else %}Hair Cut{% endif %}</a></li>
@@ -350,16 +376,14 @@
         </ul>
       </div>
 
-      <!-- Couples -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--couples">
         <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/couples#hair" class="sd-link">{% if is_arabic %}تصفيف الشعر للأزواج{% else %}Couples Hair Styling{% endif %}</a></li>
         </ul>
       </div>
 
-      <!-- Men -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--him">
         <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/men#grooming" class="sd-link">{% if is_arabic %}قص شعر للرجال{% else %}Men's Haircut{% endif %}</a></li>
@@ -369,43 +393,41 @@
 
     <!-- 4. SKIN CARE -->
     <div class="sd-card">
+      <div class="sd-card-accent" style="background: linear-gradient(90deg, transparent 10%, var(--gold) 50%, transparent 90%);"></div>
       <h2 class="sd-card-title">
         {% if is_arabic %}العناية بالبشرة{% else %}Skin Care{% endif %}
-        <span>04</span>
+        <span class="sd-card-num">04</span>
       </h2>
 
-      <!-- Women -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--her">
         <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/women#skin" class="sd-link">{% if is_arabic %}حمام زيت ساخن للشعر{% else %}Hair Hot Oil Treatment{% endif %}</a></li>
         </ul>
       </div>
 
-      <!-- Couples -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--couples">
         <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/couples#skin" class="sd-link">{% if is_arabic %}العناية بالبشرة للأزواج{% else %}Couples Skin Care{% endif %}</a></li>
         </ul>
       </div>
 
-      <!-- Men -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--him">
         <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
         <p class="sd-empty">{% if is_arabic %}لا توجد خدمات حالياً{% else %}No active services{% endif %}</p>
       </div>
     </div>
 
-    <!-- 5. WAXING & THREADING -->
+    <!-- 5. WAXING -->
     <div class="sd-card">
+      <div class="sd-card-accent" style="background: linear-gradient(90deg, transparent 10%, var(--gold) 50%, transparent 90%);"></div>
       <h2 class="sd-card-title">
         {% if is_arabic %}إزالة الشعر{% else %}Waxing{% endif %}
-        <span>05</span>
+        <span class="sd-card-num">05</span>
       </h2>
 
-      <!-- Women -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--her">
         <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/women#waxing" class="sd-link">{% if is_arabic %}شمع الجسم كامل{% else %}Wax Full Body{% endif %}</a></li>
@@ -416,30 +438,28 @@
         </ul>
       </div>
 
-      <!-- Couples -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--couples">
         <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/couples#waxing" class="sd-link">{% if is_arabic %}إزالة الشعر بالشمع للأزواج{% else %}Couples Waxing{% endif %}</a></li>
         </ul>
       </div>
 
-      <!-- Men -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--him">
         <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
         <p class="sd-empty">{% if is_arabic %}لا توجد خدمات حالياً{% else %}No active services{% endif %}</p>
       </div>
     </div>
 
-    <!-- 6. EYELASHES & BROWS -->
+    <!-- 6. LASHES & BROWS -->
     <div class="sd-card">
+      <div class="sd-card-accent" style="background: linear-gradient(90deg, transparent 10%, var(--gold) 50%, transparent 90%);"></div>
       <h2 class="sd-card-title">
         {% if is_arabic %}الرموش والحواجب{% else %}Lashes & Brows{% endif %}
-        <span>06</span>
+        <span class="sd-card-num">06</span>
       </h2>
 
-      <!-- Women -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--her">
         <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
         <ul class="sd-list">
           <li class="sd-item"><a href="/pages/women#lashes-brows" class="sd-link">{% if is_arabic %}تركيب رموش هجينة{% else %}Hybrid Lashes Full Set{% endif %}</a></li>
@@ -448,14 +468,12 @@
         </ul>
       </div>
 
-      <!-- Couples -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--couples">
         <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
         <p class="sd-empty">{% if is_arabic %}لا توجد خدمات حالياً{% else %}No active services{% endif %}</p>
       </div>
 
-      <!-- Men -->
-      <div class="sd-group">
+      <div class="sd-group sd-group--him">
         <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
         <p class="sd-empty">{% if is_arabic %}لا توجد خدمات حالياً{% else %}No active services{% endif %}</p>
       </div>
@@ -470,9 +488,7 @@
   "name": "Services Directory",
   "settings": [],
   "presets": [
-    {
-      "name": "Services Directory"
-    }
+    { "name": "Services Directory" }
   ]
 }
 {% endschema %}
