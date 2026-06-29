@@ -1,0 +1,478 @@
+{% comment %}
+  Services Directory — Belladona Care
+  Bilingual page index listing all services: Massage, Nails, Hair Care, Skin Care, Waxing, Eyelashes & Brows.
+  Organized with Women first, Couples second, Men third.
+  Save as: sections/services-directory.liquid
+{% endcomment %}
+
+{% assign current_locale = request.locale.iso_code %}
+{% assign is_arabic = false %}
+{% if current_locale contains 'ar' %}
+  {% assign is_arabic = true %}
+{% endif %}
+
+{% assign dir = 'ltr' %}
+{% if is_arabic %}
+  {% assign dir = 'rtl' %}
+{% endif %}
+
+<div class="sd-{{ section.id }}" dir="{{ dir }}">
+<style>
+  .sd-{{ section.id }} {
+    --bg-dark:   #1b1f23;
+    --bg-card:   rgba(255, 255, 255, 0.03);
+    --gold:      #c9a96e;
+    --gold-line: rgba(201, 169, 110, 0.25);
+    --white:     #ffffff;
+    --white-60:  rgba(255, 255, 255, 0.6);
+    --white-30:  rgba(255, 255, 255, 0.3);
+    --glass-b:   rgba(255, 255, 255, 0.08);
+    --serif:     'Cormorant Garamond', Georgia, serif;
+    --sans:      'Montserrat', sans-serif;
+    --arabic:    'Tajawal', sans-serif;
+    
+    --font-main:    {% if is_arabic %}var(--arabic){% else %}var(--sans){% endif %};
+    --font-display: {% if is_arabic %}'Cairo', sans-serif{% else %}var(--serif){% endif %};
+
+    background-color: var(--bg-dark);
+    color: var(--white);
+    font-family: var(--font-main);
+    padding: 80px 20px 120px;
+    min-height: 100vh;
+  }
+
+  .sd-{{ section.id }} .sd-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Hero / Header */
+  .sd-{{ section.id }} .sd-header {
+    text-align: center;
+    margin-bottom: 70px;
+    position: relative;
+  }
+
+  .sd-{{ section.id }} .sd-header::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 24px auto 0;
+  }
+
+  .sd-{{ section.id }} .sd-title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 300;
+    {% unless is_arabic %}font-style: italic;{% endunless %}
+    color: var(--white);
+    margin: 0 0 16px;
+    letter-spacing: -0.01em;
+  }
+  .sd-{{ section.id }} .sd-title span {
+    color: var(--gold);
+    {% unless is_arabic %}font-style: normal; font-weight: 500;{% endunless %}
+  }
+
+  .sd-{{ section.id }} .sd-subtitle {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--white-60);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  /* Grid Layout */
+  .sd-{{ section.id }} .sd-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  @media (max-width: 991px) {
+    .sd-{{ section.id }} .sd-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .sd-{{ section.id }} .sd-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Category Cards */
+  .sd-{{ section.id }} .sd-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-b);
+    padding: 35px 30px;
+    border-radius: 12px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sd-{{ section.id }} .sd-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .sd-{{ section.id }} .sd-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--gold-line);
+  }
+
+  .sd-{{ section.id }} .sd-card:hover::before {
+    opacity: 1;
+  }
+
+  .sd-{{ section.id }} .sd-card-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--white);
+    margin: 0 0 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--white-10);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sd-{{ section.id }} .sd-card-title span {
+    color: var(--gold);
+  }
+
+  /* Section Groups (Women, Couples, Men) */
+  .sd-{{ section.id }} .sd-group {
+    margin-bottom: 25px;
+  }
+
+  .sd-{{ section.id }} .sd-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .sd-{{ section.id }} .sd-group-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.85;
+  }
+
+  .sd-{{ section.id }} .sd-group-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold-line);
+  }
+
+  /* Service Lists */
+  .sd-{{ section.id }} .sd-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sd-{{ section.id }} .sd-item {
+    margin-bottom: 8px;
+  }
+
+  .sd-{{ section.id }} .sd-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .sd-{{ section.id }} .sd-link {
+    font-size: 13.5px;
+    font-weight: 300;
+    color: var(--white-60);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.25s, transform 0.25s;
+  }
+
+  .sd-{{ section.id }} .sd-link::before {
+    content: '•';
+    color: var(--gold);
+    opacity: 0.5;
+    transition: opacity 0.25s;
+  }
+
+  .sd-{{ section.id }} .sd-link:hover {
+    color: var(--white);
+    transform: translateX(4px);
+  }
+  
+  .sd-{{ section.id }}[dir="rtl"] .sd-link:hover {
+    transform: translateX(-4px);
+  }
+
+  .sd-{{ section.id }} .sd-link:hover::before {
+    opacity: 1;
+  }
+
+  .sd-{{ section.id }} .sd-empty {
+    font-size: 12px;
+    color: var(--white-30);
+    font-style: italic;
+    margin: 0;
+  }
+</style>
+
+<div class="sd-container">
+  <!-- Section Header -->
+  <header class="sd-header">
+    <h1 class="sd-title">
+      {% if is_arabic %}دليل <span>الخدمات</span>{% else %}Services <span>Directory</span>{% endif %}
+    </h1>
+    <p class="sd-subtitle">
+      {% if is_arabic %}اختر فئة لتصفح الخدمات وتأكيد الحجز{% else %}Explore Categories & Select to Book{% endif %}
+    </p>
+  </header>
+
+  <!-- Directory Grid -->
+  <div class="sd-grid">
+    
+    <!-- 1. MASSAGE -->
+    <div class="sd-card">
+      <h2 class="sd-card-title">
+        {% if is_arabic %}المساج{% else %}Massage{% endif %}
+        <span>01</span>
+      </h2>
+
+      <!-- Women (First) -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/women#massage" class="sd-link">{% if is_arabic %}مساج أروماثيرابي{% else %}Aromatherapy Massage{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#massage" class="sd-link">{% if is_arabic %}تدليك الأنسجة العميقة{% else %}Deep Tissue Massage{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#massage" class="sd-link">{% if is_arabic %}تدليك الحجارة الساخنة{% else %}Hot Stone Massage{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#massage" class="sd-link">{% if is_arabic %}التدليك التايلاندي{% else %}Thai Massage{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#massage" class="sd-link">{% if is_arabic %}تصريف الليمفاوي{% else %}Lymphatic Drainage{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#massage" class="sd-link">{% if is_arabic %}مساج بالي{% else %}Balinese Massage{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#massage" class="sd-link">{% if is_arabic %}مساج الأصداف الحارة (لافا شيل){% else %}Lava Shells Massage{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Couples (Second) -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/couples#massage" class="sd-link">{% if is_arabic %}مساج للأزواج{% else %}Couples Massage{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/couples#massage" class="sd-link">{% if is_arabic %}تدليك أنسجة عميقة للزوجين{% else %}Couple Deep Tissue{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/couples#massage" class="sd-link">{% if is_arabic %}تدليك سويدي للزوجين{% else %}Couple Swedish{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Men (Third) -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/men#massage" class="sd-link">{% if is_arabic %}تدليك الأنسجة العميقة للرجال{% else %}Men's Deep Tissue{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/men#massage" class="sd-link">{% if is_arabic %}مساج أروماثيرابي للرجال{% else %}Men's Aromatherapy{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/men#massage" class="sd-link">{% if is_arabic %}مساج الرأس والكتف{% else %}Head & Shoulder Massage{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/men#massage" class="sd-link">{% if is_arabic %}مساج القدمين{% else %}Foot Massage{% endif %}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2. NAILS -->
+    <div class="sd-card">
+      <h2 class="sd-card-title">
+        {% if is_arabic %}الأظافر{% else %}Nails{% endif %}
+        <span>02</span>
+      </h2>
+
+      <!-- Women -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/women#nails" class="sd-link">{% if is_arabic %}مانيكير وباديكير{% else %}Manicure & Pedicure{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#nails-gel" class="sd-link">{% if is_arabic %}وصلات أكريليك{% else %}Acrylic Extensions{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#nails-gel" class="sd-link">{% if is_arabic %}وصلات جل{% else %}Gel Extensions{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#nails-gel" class="sd-link">{% if is_arabic %}وصلات بولي جل{% else %}Polygel Extensions{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#nails-gel" class="sd-link">{% if is_arabic %}ماني-بيدي مع طلاء جل{% else %}Mani-Pedi with Gel{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#nails-gel" class="sd-link">{% if is_arabic %}قص وتشكيل الأظافر{% else %}Cut & Shape{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#nails-gel" class="sd-link">{% if is_arabic %}رسم ونقش أظافر{% else %}Nail Art{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Couples -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/couples#nails" class="sd-link">{% if is_arabic %}مانيكير وباديكير للأزواج{% else %}Couples Mani-Pedi{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Men -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/men#nails" class="sd-link">{% if is_arabic %}مانيكير للرجال{% else %}Gent Manicure{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/men#nails" class="sd-link">{% if is_arabic %}باديكير للرجال{% else %}Gent Pedicure{% endif %}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 3. HAIR CARE -->
+    <div class="sd-card">
+      <h2 class="sd-card-title">
+        {% if is_arabic %}الشعر{% else %}Hair Care{% endif %}
+        <span>03</span>
+      </h2>
+
+      <!-- Women -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/women#hair" class="sd-link">{% if is_arabic %}قص شعر{% else %}Hair Cut{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#hair-treatment" class="sd-link">{% if is_arabic %}سشوار غسيل وتصفيف{% else %}Blow Dry & Styling{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Couples -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/couples#hair" class="sd-link">{% if is_arabic %}تصفيف الشعر للأزواج{% else %}Couples Hair Styling{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Men -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/men#grooming" class="sd-link">{% if is_arabic %}قص شعر للرجال{% else %}Men's Haircut{% endif %}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 4. SKIN CARE -->
+    <div class="sd-card">
+      <h2 class="sd-card-title">
+        {% if is_arabic %}العناية بالبشرة{% else %}Skin Care{% endif %}
+        <span>04</span>
+      </h2>
+
+      <!-- Women -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/women#skin" class="sd-link">{% if is_arabic %}حمام زيت ساخن للشعر{% else %}Hair Hot Oil Treatment{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Couples -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/couples#skin" class="sd-link">{% if is_arabic %}العناية بالبشرة للأزواج{% else %}Couples Skin Care{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Men -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
+        <p class="sd-empty">{% if is_arabic %}لا توجد خدمات حالياً{% else %}No active services{% endif %}</p>
+      </div>
+    </div>
+
+    <!-- 5. WAXING & THREADING -->
+    <div class="sd-card">
+      <h2 class="sd-card-title">
+        {% if is_arabic %}إزالة الشعر{% else %}Waxing{% endif %}
+        <span>05</span>
+      </h2>
+
+      <!-- Women -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/women#waxing" class="sd-link">{% if is_arabic %}شمع الجسم كامل{% else %}Wax Full Body{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#waxing" class="sd-link">{% if is_arabic %}شمع الذراع كامل{% else %}Wax Full Arm{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#waxing" class="sd-link">{% if is_arabic %}شمع الساق كاملة{% else %}Wax Full Leg{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#waxing" class="sd-link">{% if is_arabic %}شمع برازيلي / بكيني{% else %}Wax Brazilian / Bikini{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#waxing" class="sd-link">{% if is_arabic %}كامل الوجه بالخيط / الشمع{% else %}Full Face Threading/Wax{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Couples -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/couples#waxing" class="sd-link">{% if is_arabic %}إزالة الشعر بالشمع للأزواج{% else %}Couples Waxing{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Men -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
+        <p class="sd-empty">{% if is_arabic %}لا توجد خدمات حالياً{% else %}No active services{% endif %}</p>
+      </div>
+    </div>
+
+    <!-- 6. EYELASHES & BROWS -->
+    <div class="sd-card">
+      <h2 class="sd-card-title">
+        {% if is_arabic %}الرموش والحواجب{% else %}Lashes & Brows{% endif %}
+        <span>06</span>
+      </h2>
+
+      <!-- Women -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}النساء{% else %}Women{% endif %}</h3>
+        <ul class="sd-list">
+          <li class="sd-item"><a href="/pages/women#lashes-brows" class="sd-link">{% if is_arabic %}تركيب رموش هجينة{% else %}Hybrid Lashes Full Set{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#lashes-brows" class="sd-link">{% if is_arabic %}تركيب رموش كلاسيك{% else %}Classic Lashes Full Set{% endif %}</a></li>
+          <li class="sd-item"><a href="/pages/women#lashes-brows" class="sd-link">{% if is_arabic %}صبغ وتحديد الحواجب{% else %}Eyebrow Tinting{% endif %}</a></li>
+        </ul>
+      </div>
+
+      <!-- Couples -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الأزواج{% else %}Couples{% endif %}</h3>
+        <p class="sd-empty">{% if is_arabic %}لا توجد خدمات حالياً{% else %}No active services{% endif %}</p>
+      </div>
+
+      <!-- Men -->
+      <div class="sd-group">
+        <h3 class="sd-group-title">{% if is_arabic %}الرجال{% else %}Men{% endif %}</h3>
+        <p class="sd-empty">{% if is_arabic %}لا توجد خدمات حالياً{% else %}No active services{% endif %}</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+{% schema %}
+{
+  "name": "Services Directory",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Services Directory"
+    }
+  ]
+}
+{% endschema %}
