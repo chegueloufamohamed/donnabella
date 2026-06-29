@@ -673,30 +673,30 @@
       // Construct beautiful text message
       var msg = "";
       if (IS_AR) {
-        msg += "مرحباً دونا بيلا! 🌸\n";
+        msg += "مرحباً دونا بيلا!\n";
         msg += "أود تأكيد حجز الخدمات التالية عبر الواتساب:\n\n";
-        msg += "📅 التاريخ: " + info.date + "\n";
-        msg += "⏰ الوقت: " + info.time + "\n\n";
-        msg += "💅 الخدمات المطلوبة:\n";
+        msg += "التاريخ: " + info.date + "\n";
+        msg += "الوقت: " + info.time + "\n\n";
+        msg += "الخدمات المطلوبة:\n";
         cart.forEach(function(item) {
           msg += "- " + item.name + " (" + CUR + " " + item.price + ")\n";
         });
-        msg += "\n💰 الإجمالي: " + CUR + " " + total + "\n";
+        msg += "\nالإجمالي: " + CUR + " " + total + "\n";
         if (info.note) {
-          msg += "📝 ملاحظة: " + info.note + "\n";
+          msg += "ملاحظة: " + info.note + "\n";
         }
       } else {
-        msg += "Hi Donna Bella! 🌸\n";
+        msg += "Hi Donna Bella!\n";
         msg += "I would like to book the following services via WhatsApp:\n\n";
-        msg += "📅 Date: " + info.date + "\n";
-        msg += "⏰ Time: " + info.time + "\n\n";
-        msg += "💅 Selected Services:\n";
+        msg += "Date: " + info.date + "\n";
+        msg += "Time: " + info.time + "\n\n";
+        msg += "Selected Services:\n";
         cart.forEach(function(item) {
           msg += "- " + item.name + " (" + CUR + " " + item.price + ")\n";
         });
-        msg += "\n💰 Total: " + CUR + " " + total + "\n";
+        msg += "\nTotal: " + CUR + " " + total + "\n";
         if (info.note) {
-          msg += "📝 Note: " + info.note + "\n";
+          msg += "Note: " + info.note + "\n";
         }
       }
 
